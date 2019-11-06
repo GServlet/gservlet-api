@@ -11,6 +11,7 @@
 * [Building from source](#building-from-source)
 * [Features](#features)
 * [Status](#status)
+* [Contributing](#contributing)
 * [Inspiration](#inspiration)
 * [License](#license)
 * [Contact](#contact)
@@ -56,6 +57,10 @@ To build the distribution bundle run:
 ## Status
 
 The current release of GServlet is 1.0
+
+## Contributing
+
+New contributors are always welcome. We collected some helpful hints on how to get started on our website at Contribute to GServlet
 
 ## Inspiration
 
