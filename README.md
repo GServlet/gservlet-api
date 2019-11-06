@@ -7,7 +7,6 @@
 
 ## Table of contents
 * [Description](#description)
-* [Technologies](#technologies)
 * [Setup](#setup)
 * [Building from source](#building-from-source)
 * [Features](#features)
@@ -17,12 +16,10 @@
 * [Contact](#contact)
 
 ## Description
-Add more general information about project. What the purpose of the project is? Motivation?
 
-## Technologies
-* Tech 1 - version 1.0
-* Tech 2 - version 2.0
-* Tech 3 - version 3.0
+GServlet is an open source project aiming to use the Groovy language and its provided modules to simplify Servlet API web development.
+More information can be found on the homepage where you can find 
+the online documentation and the JavaDocs can be browsed.
 
 ## Setup
 
@@ -33,6 +30,7 @@ Add more general information about project. What the purpose of the project is? 
     > mvn clean install
 
 ### Documentation
+
 The documentation is based on [Asciidoctor](http://asciidoctor.org/). By default only the HTML
 output is enabled. To also generate the PDF output use:
 
@@ -50,18 +48,21 @@ To build the distribution bundle run:
 
 
 ## Features
-List of features ready and TODOs for future development
+
 * Awesome feature 1
 * Awesome feature 2
 * Awesome feature 3
 
 ## Status
-Project is: _in progress_, _finished_, _no longer continue_ and why?
+
+The current release of GServlet is 1.0
 
 ## Inspiration
+
 This project is inspired by the Groovlets.
 
 ## License
+
 GServlet is an Open Source software released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html).
 
 ## Contact
