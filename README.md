@@ -26,18 +26,27 @@ Add more general information about project. What the purpose of the project is? 
 
 ## Setup
 
-## Code Examples
-Show examples of usage:
-`put-your-code-here`
-
-For offline use, distribution bundles downloaded from [SourceForge](https://sourceforge.net/projects/hibernate/files/hibernate-search/)
-also include the reference documentation for the downloaded version in PDF and HTML format. 
-
 ## Building from source
 
     > git clone git@github.com:gservlet/gservlet-api.git
     > cd gservlet-api
     > mvn clean install
+
+### Documentation
+The documentation is based on [Asciidoctor](http://asciidoctor.org/). By default only the HTML
+output is enabled. To also generate the PDF output use:
+
+    > mvn clean install -Pdocumentation-pdf
+
+The built documentation can be find in the following location:
+  
+    > ./documentation/target/asciidoctor/docs
+
+### Distribution
+
+To build the distribution bundle run:
+
+    > mvn clean install -Pdocumentation-pdf,dist
 
 
 ## Features
