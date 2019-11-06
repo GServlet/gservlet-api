@@ -46,5 +46,6 @@ Project is: _in progress_, _finished_, _no longer continue_ and why?
 This project is inspired by the Groovlets.
 
 ## License
+GServlet is Open Source software released under the Apache 2.0 license (http://www.apache.org/licenses/LICENSE-2.0.html).
 
 ## Contact
