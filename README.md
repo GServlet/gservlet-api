@@ -7,7 +7,7 @@
 
 ## Table of contents
 * [Description](#description)
-* [Getting Started](#setup)
+* [Getting Started](#getting-started)
 * [Building from source](#building-from-source)
 * [Features](#features)
 * [Status](#status)
@@ -21,7 +21,7 @@ GServlet is an open source project aiming to use the Groovy language and its pro
 More information can be found on the homepage where you can find 
 the online documentation and the JavaDocs can be browsed.
 
-## Setup
+## Getting Started
 
 ## Building from source
 
