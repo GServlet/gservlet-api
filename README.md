@@ -7,7 +7,7 @@
 
 ## Table of contents
 * [Description](#description)
-* [Setup](#setup)
+* [Getting Started](#setup)
 * [Building from source](#building-from-source)
 * [Features](#features)
 * [Status](#status)
