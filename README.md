@@ -18,8 +18,8 @@
 ## Description
 
 GServlet is an open source project aiming to use the Groovy language and its provided modules to simplify Servlet API web development.
-More information can be found on the homepage where you can find 
-the online documentation and the JavaDocs can be browsed.
+More information can be found on the [homepage](https://gservlet.org) where you can find 
+the online [documentation](https://gservlet.org/docs) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for this current release can be browsed.
 
 ## Getting Started
 
@@ -67,9 +67,11 @@ To build the distribution bundle run:
 
 ## Features
 
-* Awesome feature 1
-* Awesome feature 2
-* Awesome feature 3
+* Groovy Scripting
+* Live Development
+* Hot Reloading
+* JSON and XMl Support
+* RDMS interaction
 
 ## Status
 
