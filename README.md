@@ -70,7 +70,7 @@ To build the distribution bundle run:
 * Groovy Scripting
 * Live Development
 * Hot Reloading
-* JSON and XMl Support
+* JSON and XML Support
 * RDMS interaction
 
 ## Status
