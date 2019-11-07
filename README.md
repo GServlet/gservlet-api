@@ -23,6 +23,24 @@ the online documentation and the JavaDocs can be browsed.
 
 ## Getting Started
 
+### From Maven
+
+```xml
+<dependency>
+ <groupId>gservlet<groupId/>
+ <artifactId>gservlet-api</artifactId>
+ <version>1.0</version>
+</dependency>
+```
+
+### From Gradle
+
+```groovy
+ dependencies {
+    implementation 'gservlet:gservlet-api:1.0'
+ }
+```
+
 ## Building from source
 
     > git clone git@github.com:gservlet/gservlet-api.git
@@ -31,14 +49,14 @@ the online documentation and the JavaDocs can be browsed.
 
 ### Documentation
 
-The documentation is based on [Asciidoctor](http://asciidoctor.org/). By default only the HTML
+The documentation generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). By default only the HTML
 output is enabled. To also generate the PDF output use:
 
     > mvn clean install -Pdocumentation-pdf
 
-The built documentation can be find in the following location:
+The built documentation can then be found in the following location:
   
-    > ./documentation/target/asciidoctor/docs
+    > ./target/asciidoctor/docs
 
 ### Distribution
 
@@ -55,7 +73,7 @@ To build the distribution bundle run:
 
 ## Status
 
-The current release of GServlet is 1.0
+The current version of GServlet is 1.0
 
 ## Contributing
 
