@@ -3,10 +3,11 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 
-> GServlet is an open source project inspired from the Groovlets, aiming to use the Groovy language and its provided modules to simplify Servlet API web development.
+> GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules to simplify Servlet API web development.
 
 ## Table of contents
 * [Description](#description)
+* [Requirements](#requirements)
 * [Getting Started](#getting-started)
 * [Building from source](#building-from-source)
 * [Features](#features)
@@ -17,9 +18,11 @@
 
 ## Description
 
-GServlet is an open source project aiming to use the Groovy language and its provided modules to simplify Servlet API web development.
+GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules to simplify Servlet API web development.
 More information can be found on the [homepage](https://gservlet.org) where you can find 
 the online [documentation](https://gservlet.org/docs) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for this current release can be browsed.
+
+### Requirements
 
 ## Getting Started
 
@@ -71,7 +74,7 @@ To build the distribution bundle run:
 * Live Development
 * Hot Reloading
 * JSON and XML Support
-* RDMS interaction
+* RDMS Support
 
 ## Status
 
@@ -79,7 +82,7 @@ The current version of GServlet is 1.0
 
 ## Contributing
 
-New contributors are always welcome. We collected some helpful hints on how to get started on our website at Contribute to GServlet
+New contributors are always welcome. We collected some helpful hints on how to get started on our website at [Contribute to GServlet](https://gservlet.org/contribute)
 
 ## License
 
