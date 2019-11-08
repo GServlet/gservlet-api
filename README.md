@@ -22,7 +22,7 @@ GServlet is an open source project inspired from the Groovlets, which aims to us
 More information can be found on the [homepage](https://gservlet.org) where you can find 
 the online [documentation](https://gservlet.org/docs) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for this current release can be browsed.
 
-### Requirements
+## Requirements
 
 ## Getting Started
 
