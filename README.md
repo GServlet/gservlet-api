@@ -32,7 +32,7 @@ the online [documentation](https://gservlet.org/docs) and the [JavaDocs](https:/
 <dependency>
  <groupId>gservlet<groupId/>
  <artifactId>gservlet-api</artifactId>
- <version>1.0</version>
+ <version>1.0.0</version>
 </dependency>
 ```
 
@@ -40,7 +40,7 @@ the online [documentation](https://gservlet.org/docs) and the [JavaDocs](https:/
 
 ```groovy
  dependencies {
-    implementation 'gservlet:gservlet-api:1.0'
+    implementation 'gservlet:gservlet-api:1.0.0'
  }
 ```
 
@@ -78,7 +78,7 @@ To build the distribution bundle run:
 
 ## Status
 
-The current version of GServlet is 1.0
+The current version of GServlet is 1.0.0
 
 ## Contributing
 
