@@ -48,6 +48,10 @@ the online [documentation](https://gservlet.org/docs) and the [JavaDocs](https:/
 
 ## Requirements
 
+* Java 7+
+* Java IDE (Eclipse, IntelliJ Idea, Netbeans..)
+* Java EE 8 compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
+
 ## Getting Started
 
 ### From Maven
@@ -149,7 +153,7 @@ output is enabled. To also generate the PDF output use:
 
 The built documentation can then be found in the following location:
   
-    > ./target/asciidoctor/docs
+    > ./target/docs/asciidoc
 
 ### Distribution
 
