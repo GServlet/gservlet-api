@@ -7,10 +7,11 @@
 
 ## Table of contents
 * [Description](#description)
+* [Features](#features)
 * [Requirements](#requirements)
 * [Getting Started](#getting-started)
 * [Building from source](#building-from-source)
-* [Features](#features)
+* [Versioning](#versioning)
 * [Status](#status)
 * [Contributing](#contributing)
 * [License](#license)
@@ -46,6 +47,14 @@ session.counter = session.counter + 1
 More information can be found on the [homepage](https://gservlet.org) where you can find 
 the online [documentation](https://gservlet.org/docs) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for this current release can be browsed as well.
 
+## Features
+
+* Groovy Scripting
+* Live Development
+* Hot Reloading
+* JSON and XML Support
+* RDMS Support
+
 ## Requirements
 
 * Java 7+
@@ -62,7 +71,7 @@ If you are just getting started with GServlet, you may want to begin using it by
 <dependency>
  <groupId>gservlet<groupId/>
  <artifactId>gservlet-api</artifactId>
- <version>1.0</version>
+ <version>1.0.0</version>
 </dependency>
 ```
 
@@ -70,7 +79,7 @@ If you are just getting started with GServlet, you may want to begin using it by
 
 ```groovy
  dependencies {
-    implementation 'gservlet:gservlet-api:1.0'
+    implementation 'gservlet:gservlet-api:1.0.0'
  }
 ```
 
@@ -163,18 +172,13 @@ To build the distribution bundle run:
 
     > mvn clean install -Pdocumentation-pdf,dist
 
+## Versioning
 
-## Features
-
-* Groovy Scripting
-* Live Development
-* Hot Reloading
-* JSON and XML Support
-* RDMS Support
+We version GServlet by following [Semantic Versioning](https://semver.org), which is a general template that everyone uses and understands.
 
 ## Status
 
-The current version of GServlet is 1.0
+The current version of GServlet is 1.0.0
 
 ## Contributing
 
