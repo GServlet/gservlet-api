@@ -44,7 +44,7 @@ html.html { // html is implicitly bound to new MarkupBuilder(out)
 session.counter = session.counter + 1
 ```
 
-More information can be found on the [homepage](https://gservlet.org) where you can find 
+More information can be found on the project [homepage](https://gservlet.org) where you can find 
 the online [documentation](https://gservlet.org/docs) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for this current release can be browsed as well.
 
 ## Features
