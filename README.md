@@ -49,7 +49,7 @@ the online [documentation](https://gservlet.org/docs) and the [JavaDocs](https:/
 ## Requirements
 
 * Java 7+
-* Java IDE (Eclipse, IntelliJ IDEA, Netbeans..)
+* Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
 * Java EE 8 compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 
 ## Getting Started
