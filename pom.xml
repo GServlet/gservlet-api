@@ -6,7 +6,9 @@
 	<artifactId>gservlet-api</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
-	<description>The main vision of this project is to use the Groovy language and its provided modules (JSON, SQL, etc.) to simplify Servlet API web development. </description>
+	<description>
+	  GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules to simplify Servlet API web development.
+	</description>
 	<properties>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<groovy.version>2.5.4</groovy.version>
