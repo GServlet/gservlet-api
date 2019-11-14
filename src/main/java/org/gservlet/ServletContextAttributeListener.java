@@ -3,8 +3,7 @@ package org.gservlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeEvent;
 
-public class ServletContextAttributeListener extends BaseListener
-		implements javax.servlet.ServletContextAttributeListener {
+public class ServletContextAttributeListener extends BaseListener implements javax.servlet.ServletContextAttributeListener {
 
 	protected ServletContextAttributeEvent event;
 
