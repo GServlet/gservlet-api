@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
-
 import org.junit.Test;
 
 public class DatabaseManagerTest {
