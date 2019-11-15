@@ -12,7 +12,7 @@ public class ScriptManagerTest {
 
 	@Test
 	public void loadScripts() throws Exception {
-		File folder = new File("src/test/resources/scripts");
+		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(mock(ServletContext.class));
 		File[] files = folder.listFiles();

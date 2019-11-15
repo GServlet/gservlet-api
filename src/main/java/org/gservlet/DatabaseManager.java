@@ -32,12 +32,12 @@ public class DatabaseManager {
 
 	protected void init() throws Exception {
 		setupDataSource();
-		watch(new File(context.getRealPath("/") + File.separator + Constants.CONFIG_DIRECTORY));
+		watch(new File(context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER));
 	}
 
 	protected void setupDataSource() throws Exception {
 		File configuration = new File(
-				context.getRealPath("/") + File.separator + Constants.CONFIG_DIRECTORY + 
+				context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER + 
 				File.separator + Constants.DB_CONFIG_FILE);
 		if (configuration.exists()) {
 			Properties properties = loadConfiguration(configuration);
@@ -85,7 +85,7 @@ public class DatabaseManager {
 	 * @throws Exception throws an Exception if the configuration file is invalid
 	 * @return the properties of the configuration file
 	 */
-	public Properties loadConfiguration(final File configuration) throws Exception {
+	public Properties loadConfiguration(File configuration) throws Exception {
 		Properties properties = new Properties();
 		FileReader reader = new FileReader(configuration);
 		properties.load(reader);
@@ -110,7 +110,7 @@ public class DatabaseManager {
 	 * @param properties the configuration file properties
 	 * @return true if the required configuration file properties are not missing
 	 */
-	public boolean isConfigurationValid(final Properties properties) {
+	public boolean isConfigurationValid(Properties properties) {
 		return properties.containsKey("db.driver") && properties.containsKey("db.url")
 				&& properties.containsKey("db.user") && properties.containsKey("db.password")
 				&& properties.containsKey("db.minPoolSize") && properties.containsKey("db.maxPoolSize");
@@ -126,7 +126,7 @@ public class DatabaseManager {
 	 *         created
 	 * 
 	 */
-	protected DataSource createDataSource(final Properties properties) {
+	public DataSource createDataSource(Properties properties) {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName(properties.getProperty("db.driver").trim());
 		dataSource.setUrl(properties.getProperty("db.url").trim());
