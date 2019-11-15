@@ -4,8 +4,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequestAttributeEvent;
 import javax.servlet.http.HttpServletRequest;
 
-public class ServletRequestAttributeListener extends BaseListener
-		implements javax.servlet.ServletRequestAttributeListener {
+public class ServletRequestAttributeListener extends BaseListener implements javax.servlet.ServletRequestAttributeListener {
 
 	protected ServletRequestAttributeEvent event;
 
