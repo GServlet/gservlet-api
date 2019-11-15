@@ -3,8 +3,7 @@ package org.gservlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
 
-public class HttpSessionAttributeListener extends BaseListener
-		implements javax.servlet.http.HttpSessionAttributeListener {
+public class HttpSessionAttributeListener extends BaseListener implements javax.servlet.http.HttpSessionAttributeListener {
 
 	protected HttpSessionBindingEvent event;
 
