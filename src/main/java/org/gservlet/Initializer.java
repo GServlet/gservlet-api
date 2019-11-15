@@ -226,4 +226,10 @@ public class Initializer {
 			}
 		}
 	}
+
+	public Map<String, DynamicInvocationHandler> getHandlers() {
+		return handlers;
+	}
+	
+	
 }
