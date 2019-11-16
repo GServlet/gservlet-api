@@ -19,6 +19,7 @@ public class InitializerTest {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ServletContext context = mock(ServletContext.class);
+		when(context.getRealPath("/")).thenReturn(folder.getAbsolutePath());
 		when(context.addFilter(isA(String.class),isA(Filter.class))).thenReturn(mock(FilterRegistration.Dynamic.class));
 		when(context.addServlet(isA(String.class),isA(Servlet.class))).thenReturn(mock(ServletRegistration.Dynamic.class));
 		Initializer initializer = new Initializer(context);

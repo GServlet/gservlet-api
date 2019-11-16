@@ -7,6 +7,7 @@ import javax.servlet.ServletContext;
 import static org.mockito.Mockito.mock;
 import org.gservlet.annotation.Servlet;
 import org.junit.Test;
+import static org.mockito.Mockito.when;
 
 public class ScriptManagerTest {
 
@@ -14,7 +15,9 @@ public class ScriptManagerTest {
 	public void loadScripts() throws Exception {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
-		ScriptManager scriptManager = new ScriptManager(mock(ServletContext.class));
+		ServletContext context = mock(ServletContext.class);
+		when(context.getRealPath("/")).thenReturn(folder.getAbsolutePath());
+		ScriptManager scriptManager = new ScriptManager(context);
 		File[] files = folder.listFiles();
 		if(files!=null) {
 			for(File script : files) {
