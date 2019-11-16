@@ -15,7 +15,7 @@ public class ScriptManager {
 	protected final GroovyScriptEngine engine;
 
 	public ScriptManager(File folder) throws Exception {
-		this.engine = createScriptEngine(folder);
+		engine = createScriptEngine(folder);
 	}
 
 	public Object loadScript(File script) throws Exception {
@@ -24,12 +24,18 @@ public class ScriptManager {
 
 	protected GroovyScriptEngine createScriptEngine(File folder) throws Exception {
 		URL[] urls = { folder.toURI().toURL(),
-				ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER)};
+				ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER) };
 		GroovyScriptEngine engine = new GroovyScriptEngine(urls);
-		CompilerConfiguration configuration = new CompilerConfiguration();
-		final ClassPool classPool = ClassPool.getDefault();
+		ClassPool classPool = ClassPool.getDefault();
 		classPool.insertClassPath(new LoaderClassPath(engine.getParentClassLoader()));
-		configuration.setBytecodePostprocessor(new BytecodeProcessor() {
+		CompilerConfiguration configuration = new CompilerConfiguration();
+		configuration.setBytecodePostprocessor(createBytecodeProcessor(classPool));
+		engine.setConfig(configuration);
+		return engine;
+	}
+
+	protected BytecodeProcessor createBytecodeProcessor(final ClassPool classPool) {
+		return new BytecodeProcessor() {
 			public byte[] processBytecode(String name, byte[] original) {
 				ByteArrayInputStream stream = new ByteArrayInputStream(original);
 				try {
@@ -62,8 +68,7 @@ public class ScriptManager {
 						} else if (value.indexOf("SessionAttributeListener") != -1) {
 							clazz.setSuperclass(classPool.get(HttpSessionAttributeListener.class.getName()));
 							return clazz.toBytecode();
-						}
-						else if (value.indexOf("Dao") != -1) {
+						} else if (value.indexOf("Dao") != -1) {
 							clazz.setSuperclass(classPool.get(BaseDao.class.getName()));
 							return clazz.toBytecode();
 						}
@@ -73,8 +78,6 @@ public class ScriptManager {
 				}
 				return original;
 			}
-		});
-		engine.setConfig(configuration);
-		return engine;
+		};
 	}
 }
