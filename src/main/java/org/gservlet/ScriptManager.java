@@ -14,18 +14,19 @@ import javassist.LoaderClassPath;
 public class ScriptManager {
 
 	protected final ServletContext context;
+	protected final GroovyScriptEngine engine;
 
-	public ScriptManager(ServletContext context) {
+	public ScriptManager(ServletContext context) throws Exception {
 		this.context = context;
+		this.engine = createScriptEngine();
 	}
 
 	public Object loadScript(File script) throws Exception {
-		return createScriptEngine(script.getParentFile()).loadScriptByName(script.getName()).newInstance();
+		return engine.loadScriptByName(script.getName()).newInstance();
 	}
 
-	protected GroovyScriptEngine createScriptEngine(File folder) throws Exception {
-		URL[] urls = { folder.toURI().toURL(),
-				new File(context.getRealPath("/") + "/" + Constants.SCRIPTS_FOLDER).toURI().toURL(),
+	protected GroovyScriptEngine createScriptEngine() throws Exception {
+		URL[] urls = { new File(context.getRealPath("/") + "/" + Constants.SCRIPTS_FOLDER).toURI().toURL(),
 				ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER)};
 		GroovyScriptEngine engine = new GroovyScriptEngine(urls);
 		CompilerConfiguration configuration = new CompilerConfiguration();
