@@ -17,7 +17,6 @@ import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
-
 import org.gservlet.annotation.ContextAttributeListener;
 import org.gservlet.annotation.ContextListener;
 import org.gservlet.annotation.Filter;
@@ -38,8 +37,9 @@ public class Initializer {
 		this.context = context;
 		this.handlers = new HashMap<String, DynamicInvocationHandler>();
 		context.setAttribute(Constants.HANDLERS, handlers);
-		this.scriptManager = new ScriptManager(context);
-		init(new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER));
+		File folder = new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER);
+		this.scriptManager = new ScriptManager(folder);
+		init(folder);
 	}
 
 	protected void init(File folder) throws Exception {
@@ -230,6 +230,5 @@ public class Initializer {
 	public Map<String, DynamicInvocationHandler> getHandlers() {
 		return handlers;
 	}
-	
 	
 }

@@ -3,11 +3,9 @@ package org.gservlet;
 import static org.junit.Assert.*;
 import java.io.File;
 import java.lang.annotation.Annotation;
-import javax.servlet.ServletContext;
-import static org.mockito.Mockito.mock;
 import org.gservlet.annotation.Servlet;
 import org.junit.Test;
-import static org.mockito.Mockito.when;
+
 
 public class ScriptManagerTest {
 
@@ -15,9 +13,7 @@ public class ScriptManagerTest {
 	public void loadScripts() throws Exception {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
-		ServletContext context = mock(ServletContext.class);
-		when(context.getRealPath("/")).thenReturn(folder.getAbsolutePath());
-		ScriptManager scriptManager = new ScriptManager(context);
+		ScriptManager scriptManager = new ScriptManager(folder);
 		File[] files = folder.listFiles();
 		if(files!=null) {
 			for(File script : files) {

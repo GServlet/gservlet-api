@@ -3,7 +3,6 @@ package org.gservlet;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
-import javax.servlet.ServletContext;
 import org.codehaus.groovy.control.BytecodeProcessor;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import groovy.util.GroovyScriptEngine;
@@ -13,20 +12,18 @@ import javassist.LoaderClassPath;
 
 public class ScriptManager {
 
-	protected final ServletContext context;
 	protected final GroovyScriptEngine engine;
 
-	public ScriptManager(ServletContext context) throws Exception {
-		this.context = context;
-		this.engine = createScriptEngine();
+	public ScriptManager(File folder) throws Exception {
+		this.engine = createScriptEngine(folder);
 	}
 
 	public Object loadScript(File script) throws Exception {
 		return engine.loadScriptByName(script.getName()).newInstance();
 	}
 
-	protected GroovyScriptEngine createScriptEngine() throws Exception {
-		URL[] urls = { new File(context.getRealPath("/") + "/" + Constants.SCRIPTS_FOLDER).toURI().toURL(),
+	protected GroovyScriptEngine createScriptEngine(File folder) throws Exception {
+		URL[] urls = { folder.toURI().toURL(),
 				ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER)};
 		GroovyScriptEngine engine = new GroovyScriptEngine(urls);
 		CompilerConfiguration configuration = new CompilerConfiguration();
