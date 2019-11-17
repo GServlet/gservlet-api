@@ -18,8 +18,8 @@ public class ScriptManager {
 		engine = createScriptEngine(folder);
 	}
 
-	public Object loadScript(File script) throws Exception {
-		return engine.loadScriptByName(script.getName()).newInstance();
+	public Object loadScript(String name) throws Exception {
+		return engine.loadScriptByName(name).newInstance();
 	}
 
 	protected GroovyScriptEngine createScriptEngine(File folder) throws Exception {

@@ -65,7 +65,7 @@ public class Initializer {
 	}
 
 	public void loadScript(File script) throws Exception {
-		Object object = scriptManager.loadScript(script);
+		Object object = scriptManager.loadScript(script.getName());
 		register(object);
 	}
 
@@ -177,16 +177,16 @@ public class Initializer {
 		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
 		if (reload) {
 			new FileWatcher().addListener(new FileAdapter() {
-				public void onCreated(String fileName) {
-					logger.info("reloading script " + fileName);
-					reload(new File(folder + "/" + fileName));
+				public void onCreated(String script) {
+					logger.info("reloading script " + script);
+					reload(script);
 				}
 
 			}).watch(folder);
 		}
 	}
 
-	protected void reload(File script) {
+	protected void reload(String script) {
 		try {
 			Object object = scriptManager.loadScript(script);
 			Annotation[] annotations = object.getClass().getAnnotations();

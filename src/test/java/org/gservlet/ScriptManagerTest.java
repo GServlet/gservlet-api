@@ -17,7 +17,7 @@ public class ScriptManagerTest {
 		File[] files = folder.listFiles();
 		if(files!=null) {
 			for(File script : files) {
-				Object object = scriptManager.loadScript(script);
+				Object object = scriptManager.loadScript(script.getName());
 				Annotation[] annotations = object.getClass().getAnnotations();
 				for(Annotation annotation : annotations) {
 				   if(annotation instanceof Servlet) {
