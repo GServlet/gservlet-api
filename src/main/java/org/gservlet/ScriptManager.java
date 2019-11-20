@@ -25,7 +25,7 @@ public class ScriptManager {
 	protected GroovyScriptEngine createScriptEngine(File folder) throws Exception {
 		URL[] urls = { folder.toURI().toURL(),
 				ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER) };
-		GroovyScriptEngine engine = new GroovyScriptEngine(urls);
+		GroovyScriptEngine engine = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
 		ClassPool classPool = ClassPool.getDefault();
 		classPool.insertClassPath(new LoaderClassPath(engine.getParentClassLoader()));
 		CompilerConfiguration configuration = new CompilerConfiguration();
