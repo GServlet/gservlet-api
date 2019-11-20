@@ -19,12 +19,12 @@ public class ScriptManagerTest {
 			for(File script : files) {
 				Object object = scriptManager.loadScript(script.getName());
 				Annotation[] annotations = object.getClass().getAnnotations();
-				for(Annotation annotation : annotations) {
-				   if(annotation instanceof Servlet) {
+				for(Annotation current : annotations) {
+				   if(current instanceof Servlet) {
 					   assertEquals("ServletTest",object.getClass().getName());
 					   assertEquals(HttpServlet.class.getName(), object.getClass().getSuperclass().getName());
-					   Servlet servletAnnotation = (Servlet) annotation;
-					   assertEquals("/servlet", servletAnnotation.value()[0]);
+					   Servlet annotation = (Servlet) current;
+					   assertEquals("/servlet", annotation.value()[0]);
 				   }
 				}
 			}
