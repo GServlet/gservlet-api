@@ -5,8 +5,6 @@ import javax.servlet.ServletContextAttributeEvent;
 
 public class ServletContextAttributeListener extends BaseListener implements javax.servlet.ServletContextAttributeListener {
 
-	protected ServletContextAttributeEvent event;
-
 	@Override
 	public void attributeAdded(ServletContextAttributeEvent event) {
 		route(event, "add");
@@ -22,21 +20,16 @@ public class ServletContextAttributeListener extends BaseListener implements jav
 		route(event, "replace");
 	}
 
-	private void route(ServletContextAttributeEvent event, String methodName) {
-		this.event = event;
-		route(event, methodName);
-	}
-
 	public ServletContextAttributeEvent getEvent() {
-		return event;
+		return getEvent();
 	}
 
 	public String getName() {
-		return event.getName();
+		return getEvent().getName();
 	}
 
 	public ServletContext getContext() {
-		ServletContext context = event.getServletContext();
+		ServletContext context = getEvent().getServletContext();
 		ServletContext wrapper = (ServletContext) context.getAttribute(Constants.CONTEXT_WRAPPER);
 		if (wrapper == null) {
 			wrapper = new ContextWrapper(context);
@@ -46,7 +39,7 @@ public class ServletContextAttributeListener extends BaseListener implements jav
 	}
 
 	public Object getValue() {
-		return event.getValue();
+		return getEvent().getValue();
 	}
 
 }

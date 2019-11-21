@@ -5,8 +5,6 @@ import javax.servlet.http.HttpSessionBindingEvent;
 
 public class HttpSessionAttributeListener extends BaseListener implements javax.servlet.http.HttpSessionAttributeListener {
 
-	protected HttpSessionBindingEvent event;
-
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent event) {
 		route(event, "add");
@@ -23,20 +21,15 @@ public class HttpSessionAttributeListener extends BaseListener implements javax.
 	}
 
 	public HttpSessionBindingEvent getEvent() {
-		return event;
-	}
-
-	private void route(HttpSessionBindingEvent event, String methodName) {
-		this.event = event;
-		invoke(methodName);
+		return (HttpSessionBindingEvent) event;
 	}
 
 	public String getName() {
-		return event.getName();
+		return getEvent().getName();
 	}
 
 	public HttpSession getSession() {
-		HttpSession session = event.getSession();
+		HttpSession session = getEvent().getSession();
 		HttpSession wrapper = (HttpSession) session.getAttribute(Constants.SESSION_WRAPPER);
 		if (wrapper == null) {
 			wrapper = new SessionWrapper(session);
@@ -46,7 +39,7 @@ public class HttpSessionAttributeListener extends BaseListener implements javax.
 	}
 
 	public Object getValue() {
-		return event.getValue();
+		return getEvent().getValue();
 	}
 
 }

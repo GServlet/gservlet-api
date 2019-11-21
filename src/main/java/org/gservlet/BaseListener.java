@@ -2,7 +2,14 @@ package org.gservlet;
 
 public class BaseListener {
 
-	public void invoke(String method) {
+	protected Object event ;
+	
+	protected void route(Object event, String methodName) {
+		this.event = event;
+		invoke(methodName);
+	}
+	
+	protected void invoke(String method) {
 		try {
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {

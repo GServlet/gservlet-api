@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ServletRequestAttributeListener extends BaseListener implements javax.servlet.ServletRequestAttributeListener {
 
-	protected ServletRequestAttributeEvent event;
-
 	@Override
 	public void attributeAdded(ServletRequestAttributeEvent event) {
 		route(event, "add");
@@ -23,20 +21,17 @@ public class ServletRequestAttributeListener extends BaseListener implements jav
 		route(event, "replace");
 	}
 
-	private void route(ServletRequestAttributeEvent event, String methodName) {
-		route(event, methodName);
-	}
 
 	public ServletRequestAttributeEvent getEvent() {
-		return event;
+		return (ServletRequestAttributeEvent) event;
 	}
 
 	public String getName() {
-		return event.getName();
+		return getEvent().getName();
 	}
 
 	public ServletContext getContext() {
-		ServletContext context = event.getServletContext();
+		ServletContext context = getEvent().getServletContext();
 		ServletContext wrapper = (ServletContext) context.getAttribute(Constants.CONTEXT_WRAPPER);
 		if (wrapper == null) {
 			wrapper = new ContextWrapper(context);
@@ -46,7 +41,7 @@ public class ServletRequestAttributeListener extends BaseListener implements jav
 	}
 
 	public HttpServletRequest getRequest() {
-		HttpServletRequest request = (HttpServletRequest) event.getServletRequest();
+		HttpServletRequest request = (HttpServletRequest) getEvent().getServletRequest();
 		HttpServletRequest wrapper = (HttpServletRequest) request.getAttribute(Constants.REQUEST_WRAPPER);
 		if (wrapper == null) {
 			wrapper = new RequestWrapper(request);
@@ -56,7 +51,7 @@ public class ServletRequestAttributeListener extends BaseListener implements jav
 	}
 
 	public Object getValue() {
-		return event.getValue();
+		return getEvent().getValue();
 	}
 
 }

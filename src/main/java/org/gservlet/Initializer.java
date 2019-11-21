@@ -12,6 +12,7 @@ import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
+import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
@@ -168,7 +169,7 @@ public class Initializer {
 			context.addListener(listener);
 		} else if (object instanceof ServletContextListener) {
 			ServletContextListener contextListener = (ServletContextListener) object;
-			contextListener.contextInitialized(context);
+			contextListener.contextInitialized(new ServletContextEvent(context));
 		}
 		handlers.put(object.getClass().getName(), handler);
 	}
@@ -222,7 +223,7 @@ public class Initializer {
 			Object target = handler.getTarget();
 			if (target instanceof ServletContextListener) {
 				ServletContextListener contextListener = (ServletContextListener) target;
-				contextListener.contextDestroyed(context);
+				contextListener.contextDestroyed(new ServletContextEvent(context));
 			}
 		}
 	}

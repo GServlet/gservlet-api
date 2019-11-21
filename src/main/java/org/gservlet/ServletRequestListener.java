@@ -7,8 +7,6 @@ import javax.servlet.http.HttpSession;
 
 public class ServletRequestListener extends BaseListener implements javax.servlet.ServletRequestListener {
 
-	protected ServletRequestEvent event;
-
 	@Override
 	public void requestInitialized(ServletRequestEvent event) {
 		route(event, "init");
@@ -19,13 +17,8 @@ public class ServletRequestListener extends BaseListener implements javax.servle
 		route(event, "destroy");
 	}
 
-	private void route(ServletRequestEvent event, String methodName) {
-		this.event = event;
-		invoke(methodName);
-	}
-
 	public HttpServletRequest getRequest() {
-		HttpServletRequest request = (HttpServletRequest) event.getServletRequest();
+		HttpServletRequest request = (HttpServletRequest) getEvent().getServletRequest();
 		HttpServletRequest wrapper = (HttpServletRequest) request.getAttribute(Constants.REQUEST_WRAPPER);
 		if (wrapper == null) {
 			wrapper = new RequestWrapper(request);
@@ -45,7 +38,7 @@ public class ServletRequestListener extends BaseListener implements javax.servle
 	}
 
 	public ServletContext getContext() {
-		ServletContext context = event.getServletContext();
+		ServletContext context = getEvent().getServletContext();
 		ServletContext wrapper = (ServletContext) context.getAttribute(Constants.CONTEXT_WRAPPER);
 		if (wrapper == null) {
 			wrapper = new ContextWrapper(context);
@@ -55,7 +48,7 @@ public class ServletRequestListener extends BaseListener implements javax.servle
 	}
 
 	public ServletRequestEvent getEvent() {
-		return event;
+		return getEvent();
 	}
 
 }
