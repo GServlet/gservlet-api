@@ -8,7 +8,7 @@ class CustomerDao {
 		customers << [firstName : "Mamadou Lamine", lastName : "Sy"]
 		customers << [firstName : "Moussa", lastName : "Fall"]
 		customers << [firstName : "Demba", lastName : "Sy"]
-		//customers << [firstName : "Bamba", lastName : "Fall"]
+		customers << [firstName : "Bamba", lastName : "Fall"]
 		return customers
 	}
 	
