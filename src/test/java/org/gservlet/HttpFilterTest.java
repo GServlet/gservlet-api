@@ -21,7 +21,7 @@ public class HttpFilterTest {
 
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void testEvents() throws Exception {
+	public void test() throws Exception {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
