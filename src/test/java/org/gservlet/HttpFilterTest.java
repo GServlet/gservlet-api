@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import org.gservlet.annotation.Servlet;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
