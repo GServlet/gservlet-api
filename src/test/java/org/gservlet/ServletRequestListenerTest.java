@@ -36,9 +36,9 @@ public class ServletRequestListenerTest {
 		doAnswer(initializeMap).when(context).setAttribute(anyString(),any());
 		ServletRequestEvent event = new ServletRequestEvent(context, mock(ServletRequest.class));
 		listener.requestInitialized(event);
-		assertEquals("requestInitialized", map.get("state1"));
+		assertEquals("requestInitialized", map.get("state"));
 		listener.requestDestroyed(event);
-		assertEquals("requestDestroyed", map.get("state2"));
+		assertEquals("requestDestroyed", map.get("state"));
 		assertNotNull(map.get("contextWrapper"));
 		
 	}
