@@ -2,8 +2,6 @@ package org.gservlet;
 
 import static org.junit.Assert.*;
 import java.io.File;
-import java.lang.annotation.Annotation;
-import org.gservlet.annotation.Servlet;
 import org.junit.Test;
 
 
@@ -18,15 +16,7 @@ public class ScriptManagerTest {
 		if(files!=null) {
 			for(File script : files) {
 				Object object = scriptManager.loadScript(script.getName());
-				Annotation[] annotations = object.getClass().getAnnotations();
-				for(Annotation current : annotations) {
-				   if(current instanceof Servlet) {
-					   assertEquals("HttpServlet",object.getClass().getName());
-					   assertEquals(HttpServlet.class, object.getClass().getSuperclass());
-					   Servlet annotation = (Servlet) current;
-					   assertEquals("/servlet", annotation.value()[0]);
-				   }
-				}
+				assertNotNull(object);
 			}
 		}
 	}
