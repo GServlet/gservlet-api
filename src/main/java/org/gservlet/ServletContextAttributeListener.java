@@ -21,7 +21,7 @@ public class ServletContextAttributeListener extends BaseListener implements jav
 	}
 
 	public ServletContextAttributeEvent getEvent() {
-		return getEvent();
+		return (ServletContextAttributeEvent) event;
 	}
 
 	public String getName() {
