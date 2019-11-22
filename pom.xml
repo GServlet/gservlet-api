@@ -10,6 +10,25 @@
 	  GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules
 	  to simplify Servlet API web development.
 	</description>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Mamadou Lamine Ba</name>
+			<email>laminba2003@gmail.com</email>
+			<organization>None</organization>
+			<organizationUrl>https://github.com/laminba2003</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git://github.com/GServlet/gservlet-api.git</connection>
+		<developerConnection>scm:git:ssh://github.com/GServlet/gservlet-api.git</developerConnection>
+		<url>https://github.com/GServlet/gservlet-api/tree/master</url>
+	</scm>
 	<properties>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<groovy.version>2.5.4</groovy.version>
@@ -69,7 +88,7 @@
 			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<plugins>
