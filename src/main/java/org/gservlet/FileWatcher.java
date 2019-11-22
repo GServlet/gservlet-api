@@ -18,7 +18,7 @@ public class FileWatcher {
 	protected final List<FileListener> listeners;
 
 	public FileWatcher() {
-		this.listeners = new ArrayList<FileListener>();
+		listeners = new ArrayList<FileListener>();
 	}
 
 	@SuppressWarnings("unchecked")
