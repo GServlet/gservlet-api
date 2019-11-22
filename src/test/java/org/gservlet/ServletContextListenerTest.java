@@ -35,9 +35,9 @@ public class ServletContextListenerTest {
 		doAnswer(initializeMap).when(context).setAttribute(anyString(),any());
 		ServletContextEvent event = new ServletContextEvent(context);
 		listener.contextInitialized(event);
-		assertEquals("contextInitialized", map.get("state1"));
+		assertEquals("contextInitialized", map.get("state"));
 		listener.contextDestroyed(event);
-		assertEquals("contextDestroyed", map.get("state2"));
+		assertEquals("contextDestroyed", map.get("state"));
 		assertNotNull(map.get("contextWrapper"));
 		
 	}
