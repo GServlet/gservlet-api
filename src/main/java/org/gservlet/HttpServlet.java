@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -58,14 +57,13 @@ public abstract class HttpServlet extends javax.servlet.http.HttpServlet {
 		invoke(methodName);
 	}
 
-	private void invoke(String methodName) {
+	private void invoke(String method) {
 		response.setContentType("text/html");
 		try {
 			injectDaoIfPresent();
-			Method method = getClass().getDeclaredMethod(methodName);
-			method.invoke(this);
+			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
-			logger.info("no method " + methodName + " has been declared for the servlet " + this.getClass().getName());
+			logger.info("no method " + method + " has been declared for the servlet " + this.getClass().getName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
