@@ -2,7 +2,7 @@ package org.gservlet;
 
 public class BaseListener {
 
-	protected Object event ;
+	protected Object event;
 	
 	protected void route(Object event, String methodName) {
 		this.event = event;
