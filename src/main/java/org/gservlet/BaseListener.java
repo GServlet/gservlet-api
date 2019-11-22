@@ -4,9 +4,9 @@ public class BaseListener {
 
 	protected Object event;
 	
-	protected void route(Object event, String methodName) {
+	protected void route(Object event, String method) {
 		this.event = event;
-		invoke(methodName);
+		invoke(method);
 	}
 	
 	protected void invoke(String method) {
