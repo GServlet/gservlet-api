@@ -1,5 +1,4 @@
 import org.gservlet.annotation.SessionAttributeListener
-import javax.servlet.http.HttpSessionBindingEvent;
 
 @SessionAttributeListener
 class HttpSessionAttributeListener {
@@ -15,4 +14,5 @@ class HttpSessionAttributeListener {
 	void attributeReplaced() {
 		event.name = "attributeReplaced"
 	}
+	
 }
