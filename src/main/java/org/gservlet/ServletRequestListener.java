@@ -48,7 +48,7 @@ public class ServletRequestListener extends BaseListener implements javax.servle
 	}
 
 	public ServletRequestEvent getEvent() {
-		return getEvent();
+		return (ServletRequestEvent) event;
 	}
 
 }
