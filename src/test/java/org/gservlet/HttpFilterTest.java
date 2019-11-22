@@ -29,7 +29,7 @@ public class HttpFilterTest {
 		assertNotNull(filter);
 		Annotation[] annotations = filter.getClass().getAnnotations();
 		for(Annotation current : annotations) {
-		   if(current instanceof Servlet) {
+		   if(current instanceof org.gservlet.annotation.Filter) {
 			   assertEquals("HttpFilter",filter.getClass().getName());
 			   org.gservlet.annotation.Filter annotation = (org.gservlet.annotation.Filter) current;
 			   assertEquals("/*", annotation.value()[0]);
