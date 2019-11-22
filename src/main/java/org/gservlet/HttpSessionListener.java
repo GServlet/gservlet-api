@@ -7,12 +7,12 @@ public class HttpSessionListener extends BaseListener implements javax.servlet.h
 
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {
-		route(event, "create");
+		route(event, "sessionCreated");
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
-		route(event, "destroy");
+		route(event, "sessionDestroyed");
 	}
 
 	public HttpSession getSession() {

@@ -9,12 +9,12 @@ public class ServletRequestListener extends BaseListener implements javax.servle
 
 	@Override
 	public void requestInitialized(ServletRequestEvent event) {
-		route(event, "init");
+		route(event, "requestInitialized");
 	}
 
 	@Override
 	public void requestDestroyed(ServletRequestEvent event) {
-		route(event, "destroy");
+		route(event, "requestDestroyed");
 	}
 
 	public HttpServletRequest getRequest() {

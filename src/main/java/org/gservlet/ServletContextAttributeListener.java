@@ -7,17 +7,17 @@ public class ServletContextAttributeListener extends BaseListener implements jav
 
 	@Override
 	public void attributeAdded(ServletContextAttributeEvent event) {
-		route(event, "add");
+		route(event, "attributeAdded");
 	}
 
 	@Override
 	public void attributeRemoved(ServletContextAttributeEvent event) {
-		route(event, "remove");
+		route(event, "attributeRemoved");
 	}
 
 	@Override
 	public void attributeReplaced(ServletContextAttributeEvent event) {
-		route(event, "replace");
+		route(event, "attributeReplaced");
 	}
 
 	public ServletContextAttributeEvent getEvent() {

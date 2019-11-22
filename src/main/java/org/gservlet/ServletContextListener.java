@@ -7,12 +7,12 @@ public class ServletContextListener extends BaseListener implements javax.servle
 
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		route(event, "init");
+		route(event, "contextInitialized");
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
-		route(event, "destroy");
+		route(event, "contextDestroyed");
 	}
 
 	public ServletContext getContext() {

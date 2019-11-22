@@ -7,17 +7,17 @@ public class HttpSessionAttributeListener extends BaseListener implements javax.
 
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent event) {
-		route(event, "add");
+		route(event, "attributeAdded");
 	}
 
 	@Override
 	public void attributeRemoved(HttpSessionBindingEvent event) {
-		route(event, "remove");
+		route(event, "attributeRemoved");
 	}
 
 	@Override
 	public void attributeReplaced(HttpSessionBindingEvent event) {
-		route(event, "replace");
+		route(event, "attributeReplaced");
 	}
 
 	public HttpSessionBindingEvent getEvent() {

@@ -8,17 +8,17 @@ public class ServletRequestAttributeListener extends BaseListener implements jav
 
 	@Override
 	public void attributeAdded(ServletRequestAttributeEvent event) {
-		route(event, "add");
+		route(event, "attributeAdded");
 	}
 
 	@Override
 	public void attributeRemoved(ServletRequestAttributeEvent event) {
-		route(event, "remove");
+		route(event, "attributeRemoved");
 	}
 
 	@Override
 	public void attributeReplaced(ServletRequestAttributeEvent event) {
-		route(event, "replace");
+		route(event, "attributeReplaced");
 	}
 
 
