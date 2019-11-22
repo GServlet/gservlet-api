@@ -21,7 +21,7 @@ public class ScriptManagerTest {
 				Annotation[] annotations = object.getClass().getAnnotations();
 				for(Annotation current : annotations) {
 				   if(current instanceof Servlet) {
-					   assertEquals("Servlet",object.getClass().getName());
+					   assertEquals("HttpServlet",object.getClass().getName());
 					   assertEquals(HttpServlet.class, object.getClass().getSuperclass());
 					   Servlet annotation = (Servlet) current;
 					   assertEquals("/servlet", annotation.value()[0]);
