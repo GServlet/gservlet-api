@@ -3,7 +3,6 @@ package org.gservlet;
 import static groovy.json.JsonOutput.toJson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Method;
 import java.util.logging.Logger;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -29,8 +28,7 @@ public abstract class Filter implements javax.servlet.Filter {
 	public void init(FilterConfig config) throws ServletException {
 		this.config = config;
 		try {
-			Method method = getClass().getDeclaredMethod("init");
-			method.invoke(this);
+			getClass().getDeclaredMethod("init").invoke(this);
 		} catch (NoSuchMethodException e) {
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,8 +42,7 @@ public abstract class Filter implements javax.servlet.Filter {
 		this.response = response;
 		this.chain = chain;
 		try {
-			Method method = getClass().getDeclaredMethod("filter");
-			method.invoke(this);
+			getClass().getDeclaredMethod("filter").invoke(this);
 		} catch (NoSuchMethodException e) {
 			logger.info("no method filter has been declared for the filter " + this.getClass().getName());
 		} catch (Exception e) {
