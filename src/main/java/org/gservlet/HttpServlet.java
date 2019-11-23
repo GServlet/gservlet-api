@@ -69,18 +69,16 @@ public abstract class HttpServlet extends javax.servlet.http.HttpServlet {
 		}
 	}
 
-	private void injectDaoIfPresent() throws Exception {
-		Class<?> clazz = this.getClass();
-		while (clazz != null) {
-			for (Field field : clazz.getDeclaredFields()) {
-				if (field.getType().isAnnotationPresent(Dao.class)) {
+	private synchronized void injectDaoIfPresent() throws Exception {
+		for (Field field : this.getClass().getDeclaredFields()) {
+			if (field.getType().isAnnotationPresent(Dao.class)) {
+				field.setAccessible(true);
+				if (field.get(this) == null) {
 					BaseDao dao = (BaseDao) field.getType().newInstance();
 					dao.setConnection(getConnection());
-					field.setAccessible(true);
 					field.set(this, dao);
 				}
 			}
-			clazz = clazz.getSuperclass();
 		}
 	}
 
