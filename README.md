@@ -69,7 +69,7 @@ If you are just getting started with GServlet, you may want to begin by creating
 
 ```xml
 <dependency>
- <groupId>gservlet<groupId/>
+ <groupId>org.gservlet<groupId/>
  <artifactId>gservlet-api</artifactId>
  <version>1.0.0</version>
 </dependency>
@@ -79,7 +79,7 @@ If you are just getting started with GServlet, you may want to begin by creating
 
 ```groovy
  dependencies {
-    implementation 'gservlet:gservlet-api:1.0.0'
+    implementation 'org.gservlet:gservlet-api:1.0.0'
  }
 ```
 
