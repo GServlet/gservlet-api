@@ -38,6 +38,7 @@
 		<asciidoctor.version>1.5.6</asciidoctor.version>
 		<junit.version>4.11</junit.version>
 		<mockito.version>2.28.2</mockito.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<dependency>
