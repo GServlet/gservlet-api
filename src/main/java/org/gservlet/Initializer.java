@@ -1,3 +1,22 @@
+/**
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
 package org.gservlet;
 
 import java.io.File;
@@ -12,12 +31,12 @@ import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
+import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
-
 import org.gservlet.annotation.ContextAttributeListener;
 import org.gservlet.annotation.ContextListener;
 import org.gservlet.annotation.Filter;
@@ -38,8 +57,9 @@ public class Initializer {
 		this.context = context;
 		this.handlers = new HashMap<String, DynamicInvocationHandler>();
 		context.setAttribute(Constants.HANDLERS, handlers);
-		this.scriptManager = new ScriptManager(context);
-		init(new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER));
+		File folder = new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER);
+		this.scriptManager = new ScriptManager(folder);
+		init(folder);
 	}
 
 	protected void init(File folder) throws Exception {
@@ -65,7 +85,7 @@ public class Initializer {
 	}
 
 	public void loadScript(File script) throws Exception {
-		Object object = scriptManager.loadScript(script);
+		Object object = scriptManager.loadScript(script.getName());
 		register(object);
 	}
 
@@ -168,7 +188,7 @@ public class Initializer {
 			context.addListener(listener);
 		} else if (object instanceof ServletContextListener) {
 			ServletContextListener contextListener = (ServletContextListener) object;
-			contextListener.contextInitialized(context);
+			contextListener.contextInitialized(new ServletContextEvent(context));
 		}
 		handlers.put(object.getClass().getName(), handler);
 	}
@@ -177,16 +197,16 @@ public class Initializer {
 		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
 		if (reload) {
 			new FileWatcher().addListener(new FileAdapter() {
-				public void onCreated(String fileName) {
-					logger.info("reloading script " + fileName);
-					reload(new File(folder + "/" + fileName));
+				public void onCreated(String script) {
+					logger.info("reloading script " + script);
+					reload(script);
 				}
 
 			}).watch(folder);
 		}
 	}
 
-	protected void reload(File script) {
+	protected void reload(String script) {
 		try {
 			Object object = scriptManager.loadScript(script);
 			Annotation[] annotations = object.getClass().getAnnotations();
@@ -222,8 +242,13 @@ public class Initializer {
 			Object target = handler.getTarget();
 			if (target instanceof ServletContextListener) {
 				ServletContextListener contextListener = (ServletContextListener) target;
-				contextListener.contextDestroyed(context);
+				contextListener.contextDestroyed(new ServletContextEvent(context));
 			}
 		}
 	}
+
+	public Map<String, DynamicInvocationHandler> getHandlers() {
+		return handlers;
+	}
+	
 }

@@ -4,11 +4,31 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.gservlet</groupId>
 	<artifactId>gservlet-api</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<description>
-	  GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules to simplify Servlet API web development.
+	  GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules
+	  to simplify Servlet API web development.
 	</description>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Mamadou Lamine Ba</name>
+			<email>laminba2003@gmail.com</email>
+			<organization>GServlet</organization>
+			<organizationUrl>https://gservlet.org</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git://github.com/GServlet/gservlet-api.git</connection>
+		<developerConnection>scm:git:ssh://github.com/GServlet/gservlet-api.git</developerConnection>
+		<url>https://github.com/GServlet/gservlet-api/tree/master</url>
+	</scm>
 	<properties>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<groovy.version>2.5.4</groovy.version>
@@ -16,6 +36,8 @@
 		<servlet.version>3.0.1</servlet.version>
 		<commons.dbcp.version>2.2.0</commons.dbcp.version>
 		<asciidoctor.version>1.5.6</asciidoctor.version>
+		<junit.version>4.11</junit.version>
+		<mockito.version>2.28.2</mockito.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -54,6 +76,20 @@
 			<artifactId>javassist</artifactId>
 			<version>${javassist.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -95,6 +131,90 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>4.3.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<format>xml</format>
+					<maxmem>256m</maxmem>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.2.1</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.9.1</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 </project>

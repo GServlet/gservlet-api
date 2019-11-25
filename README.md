@@ -128,7 +128,7 @@ class CorsFilter {
 }
 ```
 
-### Your First Groovy Listener
+### Your First Groovy RequestListener
 
 ##### ServletRequestListener.groovy 
 
@@ -138,16 +138,18 @@ import org.gservlet.annotation.RequestListener
 @RequestListener
 class ServletRequestListener {
 	
-   void init() {
+   void requestInitialized() {
      println "request initialized"
    }
 	
-   void destroy() {
+   void requestDestroyed() {
      println "request destroyed"
    }
 
 }
 ```
+
+For more information about how to create the other listeners, please read the [documentation](https://gservlet.org/documentation).
 
 ## Building from source
 

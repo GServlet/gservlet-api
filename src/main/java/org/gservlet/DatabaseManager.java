@@ -1,3 +1,22 @@
+/**
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
 package org.gservlet;
 
 import java.io.File;
@@ -32,12 +51,12 @@ public class DatabaseManager {
 
 	protected void init() throws Exception {
 		setupDataSource();
-		watch(new File(context.getRealPath("/") + File.separator + Constants.CONFIG_DIRECTORY));
+		watch(new File(context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER));
 	}
 
 	protected void setupDataSource() throws Exception {
 		File configuration = new File(
-				context.getRealPath("/") + File.separator + Constants.CONFIG_DIRECTORY + 
+				context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER + 
 				File.separator + Constants.DB_CONFIG_FILE);
 		if (configuration.exists()) {
 			Properties properties = loadConfiguration(configuration);
@@ -85,7 +104,7 @@ public class DatabaseManager {
 	 * @throws Exception throws an Exception if the configuration file is invalid
 	 * @return the properties of the configuration file
 	 */
-	public Properties loadConfiguration(final File configuration) throws Exception {
+	public Properties loadConfiguration(File configuration) throws Exception {
 		Properties properties = new Properties();
 		FileReader reader = new FileReader(configuration);
 		properties.load(reader);
@@ -110,7 +129,7 @@ public class DatabaseManager {
 	 * @param properties the configuration file properties
 	 * @return true if the required configuration file properties are not missing
 	 */
-	public boolean isConfigurationValid(final Properties properties) {
+	public boolean isConfigurationValid(Properties properties) {
 		return properties.containsKey("db.driver") && properties.containsKey("db.url")
 				&& properties.containsKey("db.user") && properties.containsKey("db.password")
 				&& properties.containsKey("db.minPoolSize") && properties.containsKey("db.maxPoolSize");
@@ -126,7 +145,7 @@ public class DatabaseManager {
 	 *         created
 	 * 
 	 */
-	protected DataSource createDataSource(final Properties properties) {
+	public DataSource createDataSource(Properties properties) {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName(properties.getProperty("db.driver").trim());
 		dataSource.setUrl(properties.getProperty("db.url").trim());

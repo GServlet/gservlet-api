@@ -1,3 +1,22 @@
+/**
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
 package org.gservlet;
 
 import static groovy.json.JsonOutput.toJson;
@@ -5,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -58,31 +76,28 @@ public abstract class HttpServlet extends javax.servlet.http.HttpServlet {
 		invoke(methodName);
 	}
 
-	private void invoke(String methodName) {
+	private void invoke(String method) {
 		response.setContentType("text/html");
 		try {
 			injectDaoIfPresent();
-			Method method = getClass().getDeclaredMethod(methodName);
-			method.invoke(this);
+			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
-			logger.info("no method " + methodName + " has been declared for the servlet " + this.getClass().getName());
+			logger.info("no method " + method + " has been declared for the servlet " + this.getClass().getName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void injectDaoIfPresent() throws Exception {
-		Class<?> clazz = this.getClass();
-		while (clazz != null) {
-			for (Field field : clazz.getDeclaredFields()) {
-				if (field.getType().isAnnotationPresent(Dao.class)) {
+	private synchronized void injectDaoIfPresent() throws Exception {
+		for (Field field : this.getClass().getDeclaredFields()) {
+			if (field.getType().isAnnotationPresent(Dao.class)) {
+				field.setAccessible(true);
+				if (field.get(this) == null) {
 					BaseDao dao = (BaseDao) field.getType().newInstance();
 					dao.setConnection(getConnection());
-					field.setAccessible(true);
 					field.set(this, dao);
 				}
 			}
-			clazz = clazz.getSuperclass();
 		}
 	}
 

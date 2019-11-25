@@ -1,5 +1,5 @@
 = GServlet User Manual
-Mamadou Lamine Ba <https://github.com/lamineba[@lamineba]>
+Mamadou Lamine Ba <https://github.com/laminba2003[@laminba2003]>
 :revnumber: {project-version}
 :example-caption!:
 ifndef::imagesdir[:imagesdir: images]
@@ -16,18 +16,14 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 :source-highlighter: highlightjs
 :source-language: asciidoc
 
-This manual assumes that you are familiar with Groovy and you have already a basic knowledge of the Servlet API web development. For the newcomers in Java EE, you can find enough materials online to grasp the subject. If you are a developer with a Java background and want to get up to speed on GServlet, this manual will give you what you need to get started. Learning Groovy is quite simple as it tries to be as natural as possible for Java developers. We invite you to have a look at its https://groovy-lang.org/documentation.html[documentation], which explains all the details of the language.
+This manual assumes that you are familiar with Groovy and you have already a basic knowledge of the Servlet API web development. For the newcomers, you can find enough materials online to grasp the subject. If you are a developer with a Java background and want to get up to speed on GServlet, this manual will give you what you need to get started. Learning Groovy is quite simple as it tries to be as natural as possible for Java developers. We invite you to have a look at its https://groovy-lang.org/documentation.html[documentation], which explains all the details of the language.
 
-
-= Introduction
+= Getting Started
 
 == What is GServlet?
 
-The main vision of this project is to use the Groovy language and its provided modules (JSON, SQL, etc.) to simplify Servlet API web development. This API is designed to be non-intrusive and it will not affect the current structure of your Java EE project. You are free to groovify your existing Java Servlets over time or to use the both languages within the same codebase. We will consider a live development as a mandatory feature, even if it is well-known that the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[_ServletContext_] class will throw an _IllegalStateException_ when adding a new https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Servlet.html[_Servlet_], https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html[_Filter_], or https://docs.oracle.com/javase/8/docs/api/java/util/EventListener.html[_Listener_] after its initialization. We implemented a Hot Reloading feature into the project allowing you to push out new changes and features without having to stop your web application.
-
-=== The Inspiration
-
-This project was inspired by the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. Groovlets are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, request, response to access the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_], and https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[_HttpServletResponse_] objects. We have access to the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[_HttpSession_] with the session variable. If we want to output data, we can use _out_, _sout_, and _html_. This is more like a script as it does not have a class wrapper. The goal is to bring the same logic to enhance the Servlet API with the Groovy language.
+The main goal is to use the Groovy language and its provided modules (JSON, SQL, etc.) to simplify Servlet API web development. This API is designed to be non-intrusive and it will not affect the current structure of your Java EE project as you can use both languages within the same codebase. We implemented a live development and a hot reloading feature into the API allowing you to push out new changes and features without having to stop your web application.
+This project was inspired by the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. Groovlets are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, request, response to access the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_], and https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[_HttpServletResponse_] objects. We have access to the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[_HttpSession_] with the session variable. If we want to output data, we can use _out_, _sout_, and _html_. This is more like a script as it does not have a class wrapper.
 
 .Groovlet 
 [#src-listing] 
@@ -51,15 +47,9 @@ session.counter = session.counter + 1
 
 ----
 
-=== Scripting the JVM
-
-This section describes the characteristics of scripting languages and how they can be used by Java programmers. Most scripting languages are dynamically typed. This enables you to create new variables without declaring the variable type _(the interpreter assigns the type based on the type of the object associated with the variable)_, and you can reuse the same variable for objects of different types _(type conversion is performed automatically)_. Although scripting languages are usually interpreted at runtime, they can be compiled into Java bytecode that can then be executed on the Java Virtual Machine (JVM). Scripting languages can be faster and easier to use for certain problems, so it is sometimes chosen by Java developers. This assertion is true in our case and with GServlet, our Groovy scripts are compiled into Java bytecode. Their recompilation after a modification is conditioned by the value of an environment variable named **_servlet.reload_**. When you set its value to true, your scripts will be monitored for changes.
-
-= Getting Started
-
 == Installation
 
-If you are just getting started with GServlet, you may want to begin using it by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. it is named **gservlet-api** and you just need to name a dependency on it in your project.
+To get started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. it is named **gservlet-api** and you just need to name a dependency on it in your project.
 
 === From Maven
 
@@ -70,7 +60,7 @@ If you are just getting started with GServlet, you may want to begin using it by
 <dependency>
 	<groupId>org.gservlet</groupId>
 	<artifactId>gservlet-api</artifactId>
-	<version>1.0</version>
+	<version>1.0.0</version>
 </dependency>
 ----
 
@@ -85,15 +75,35 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.gservlet:gservlet-api:1.0'
+    implementation 'org.gservlet:gservlet-api:1.0.0'
 }
 ----
 
 == Your First GServlet Project
 
-In this section, we will guide through the steps of creating your first GServlet project with the Eclipse IDE.
+In this section, we will guide through the steps of creating your first project with the Eclipse IDE. It is highly recommended to install through the Eclipse Marketplace, the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)] which adds full-featured IDE support including editors, wizards, content assist, debugging, refactoring and searching to make the development with Groovy more enjoyable.
 
-== Your First Groovy Servlet
+image::https://marketplace.eclipse.org/sites/default/files/script_0.png[alt=GDT]
+
+=== Creating a Dynamic Web Project 
+
+With Eclipse, let's create a dynamic web project that we will call demo
+
+image::create-web-project.png[alt=Web Project]
+
+Once it is done, let's convert it to a maven project with a right click to the project : Configure -> Convert to Maven Project
+
+image::convert-maven.png[alt=Maven Project]
+
+After the pom.xml is generated, we are going now to reference the GServlet API as a dependency
+
+image::project-pom.png[alt=Maven pom]
+
+We need also to create the required **scripts** folder where our Groovy scripts will be created before we can move to write our first Groovy servlet. 
+
+image::scripts-folder.png[alt=Scripts Folder]
+
+=== Your First Groovy Servlet
 
 .CustomerServlet.groovy 
 [#src-listing] 
@@ -130,7 +140,7 @@ class CustomerServlet {
 }
 ----
 
-== Your First Groovy Filter
+=== Your First Groovy Filter
 
 .CorsFilter.groovy 
 [#src-listing] 
@@ -154,7 +164,7 @@ class CorsFilter {
 }
 ----
 
-== Your First Groovy Listener
+=== Your First Groovy Listener
 
 .ServletRequestListener.groovy 
 [#src-listing] 
@@ -635,7 +645,7 @@ See the https://www.apache.org/licenses/LICENSE-2.0[LICENSE] page for details.
 
 == Authors
 
-GServlet was written by Mamadou Lamine Ba.
+GServlet was written by https://github.com/laminba2003[Mamadou Lamine Ba].
 
 
 == Contributing
