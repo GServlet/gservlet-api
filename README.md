@@ -1,6 +1,6 @@
 # GServlet API
 
-[![Build Status @ Travis](https://api.travis-ci.com/GServlet/gservlet-api.svg?branch=develop)](https://travis-ci.com/GServlet/gservlet-api)
+[![Build Status @ Travis](https://api.travis-ci.com/GServlet/gservlet-api.svg?branch=master)](https://travis-ci.com/GServlet/gservlet-api)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules to simplify Servlet API web development.
@@ -128,7 +128,7 @@ class CorsFilter {
 }
 ```
 
-### Your First Groovy Listener
+### Your First Groovy RequestListener
 
 ##### ServletRequestListener.groovy 
 
@@ -138,11 +138,11 @@ import org.gservlet.annotation.RequestListener
 @RequestListener
 class ServletRequestListener {
 	
-   void init() {
+   void requestInitialized() {
      println "request initialized"
    }
 	
-   void destroy() {
+   void requestDestroyed() {
      println "request destroyed"
    }
 
