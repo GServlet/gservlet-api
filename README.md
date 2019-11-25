@@ -1,7 +1,8 @@
 # GServlet API
 
-[![Build Status @ Travis](https://api.travis-ci.com/GServlet/gservlet-api.svg?branch=master)](https://travis-ci.com/GServlet/gservlet-api)
-[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![Build Status @ Travis](https://api.travis-ci.com/GServlet/gservlet-api.png?branch=master)](https://travis-ci.com/GServlet/gservlet-api)
+[![Coverage Status](https://coveralls.io/repos/github/GServlet/gservlet-api/badge.png?branch=master)](https://coveralls.io/github/GServlet/gservlet-api?branch=master)
+[![License](http://img.shields.io/:license-apache-blue.png)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules to simplify Servlet API web development.
 
@@ -45,7 +46,7 @@ session.counter = session.counter + 1
 ```
 
 More information can be found on the project [homepage](https://gservlet.org) where you can find 
-the online [documentation](https://gservlet.org/docs) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for this current release can be browsed as well.
+the online [documentation](https://gservlet.org/documentation) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for this current release can be browsed as well.
 
 ## Features
 
