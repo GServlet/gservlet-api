@@ -7,7 +7,12 @@ class CustomerServlet {
 	CustomerDao dao
 	
 	void get() {
-		json(dao.customers)
+		def customers = []
+		customers << [firstName : "Mamadou Lamine", lastName : "Sy"]
+		customers << [firstName : "Moussa", lastName : "Fall"]
+		customers << [firstName : "Demba", lastName : "Sy"]
+		customers << [firstName : "Bamba", lastName : "Fall"]
+		json(customers)
 	}
 	
 	
