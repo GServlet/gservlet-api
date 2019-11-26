@@ -1,11 +1,8 @@
-import org.gservlet.annotation.Dao
 import org.gservlet.annotation.Servlet
 
 @Servlet("/customers")
 class CustomerServlet {
-	
-	CustomerDao dao
-	
+
 	void get() {
 		def customers = []
 		customers << [firstName : "Mamadou Lamine", lastName : "Sy"]
