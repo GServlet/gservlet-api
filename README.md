@@ -158,20 +158,13 @@ For more information about how to create the other listeners, please read the [d
 
 ### Documentation
 
-The documentation generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). By default only the HTML
-output is enabled. To also generate the PDF output use:
+The documentation generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). By default only the HTML output is enabled.
 
-    > mvn clean install -Pdocumentation-pdf
+    > mvn clean generate-resources
 
 The built documentation can then be found in the following location:
   
-    > ./target/docs/asciidoc
-
-### Distribution
-
-To build the distribution bundle run:
-
-    > mvn clean install -Pdocumentation-pdf,dist
+    > ./target/generated-docs
 
 ## Versioning
 
