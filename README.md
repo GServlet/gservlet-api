@@ -20,7 +20,7 @@
 
 GServlet is an open source project inspired from the [Groovlets](http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html), which aims to use the Groovy language and its provided modules to simplify Servlet API web development.
 Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. 
-Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, request, response to access the [_HttpServletRequest_](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html), and [_HttpServletResponse_](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html) objects. We have access to the [_HttpSession_](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html) with the session variable. 
+Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the [_HttpServletRequest_](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html), and [_HttpServletResponse_](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html) objects. We have access to the [_HttpSession_](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html) with the _session_ variable. 
 If we want to output data, we can use _out_, _sout_, and _html_. This is more like a script as it does not have a class wrapper.
 
 ### Groovlet 
