@@ -87,9 +87,6 @@ public class ScriptManager {
 						} else if (value.indexOf("SessionAttributeListener") != -1) {
 							clazz.setSuperclass(classPool.get(HttpSessionAttributeListener.class.getName()));
 							return clazz.toBytecode();
-						} else if (value.indexOf("Dao") != -1) {
-							clazz.setSuperclass(classPool.get(BaseDao.class.getName()));
-							return clazz.toBytecode();
 						}
 					}
 				} catch (Exception e) {

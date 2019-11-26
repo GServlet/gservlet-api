@@ -23,14 +23,12 @@ import static groovy.json.JsonOutput.toJson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.lang.reflect.Field;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.gservlet.annotation.Dao;
 import groovy.json.JsonSlurper;
 import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
@@ -79,25 +77,11 @@ public abstract class HttpServlet extends javax.servlet.http.HttpServlet {
 	private void invoke(String method) {
 		response.setContentType("text/html");
 		try {
-			injectDaoIfPresent();
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
 			logger.info("no method " + method + " has been declared for the servlet " + this.getClass().getName());
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	private synchronized void injectDaoIfPresent() throws Exception {
-		for (Field field : this.getClass().getDeclaredFields()) {
-			if (field.getType().isAnnotationPresent(Dao.class)) {
-				field.setAccessible(true);
-				if (field.get(this) == null) {
-					BaseDao dao = (BaseDao) field.getType().newInstance();
-					dao.setConnection(getConnection());
-					field.set(this, dao);
-				}
-			}
 		}
 	}
 
