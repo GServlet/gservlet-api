@@ -67,16 +67,43 @@ public class SessionWrapper implements HttpSession {
 		return session.getServletContext();
 	}
 
+	/**
+	 *
+	 * @deprecated As of Version 2.1, this method is deprecated and has no
+	 *             replacement. It will be removed in a future version of the Java
+	 *             Servlet API.
+	 *
+	 * @return the {@link HttpSessionContext} for this session.
+	 */
 	@Deprecated
 	public javax.servlet.http.HttpSessionContext getSessionContext() {
 		return session.getSessionContext();
 	}
 
+	/**
+	 * @deprecated As of Version 2.2, this method is replaced by
+	 *             {@link #getAttribute}.
+	 *
+	 * @param name a string specifying the name of the object
+	 *
+	 * @return the object with the specified name
+	 *
+	 * @exception IllegalStateException if this method is called on an invalidated  session
+	 */
 	@Deprecated
 	public Object getValue(String name) {
 		return session.getValue(name);
 	}
 
+	/**
+	 * @deprecated As of Version 2.2, this method is replaced by
+	 *             {@link #getAttributeNames}
+	 *
+	 * @return an array of <code>String</code> objects specifying the names of all
+	 *         the objects bound to this session
+	 *
+	 * @exception IllegalStateException if this method is called on an invalidated session
+	 */
 	@Deprecated
 	public String[] getValueNames() {
 		return session.getValueNames();
@@ -92,6 +119,16 @@ public class SessionWrapper implements HttpSession {
 		return session.isNew();
 	}
 
+	/**
+	 * @deprecated As of Version 2.2, this method is replaced by
+	 *             {@link #setAttribute}
+	 *
+	 * @param name  the name to which the object is bound; cannot be null
+	 *
+	 * @param value the object to be bound; cannot be null
+	 *
+	 * @exception IllegalStateException if this method is called on an invalidated session
+	 */
 	@Deprecated
 	public void putValue(String name, Object value) {
 		session.putValue(name, value);
@@ -102,6 +139,14 @@ public class SessionWrapper implements HttpSession {
 		session.removeAttribute(name);
 	}
 
+	/**
+	 * @deprecated As of Version 2.2, this method is replaced by
+	 *             {@link #removeAttribute}
+	 *
+	 * @param name the name of the object to remove from this session
+	 *
+	 * @exception IllegalStateException if this method is called on an invalidated session
+	 */
 	@Deprecated
 	public void removeValue(String name) {
 		session.removeValue(name);

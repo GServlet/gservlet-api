@@ -61,10 +61,6 @@ public class ContextWrapper implements ServletContext {
 		return context.addFilter(arg0, arg1);
 	}
 
-	public javax.servlet.ServletRegistration.Dynamic addJspFile(String arg0, String arg1) {
-		return null;
-	}
-
 	@Override
 	public void addListener(String arg0) {
 		context.addListener(arg0);
@@ -210,10 +206,6 @@ public class ContextWrapper implements ServletContext {
 		return context.getRealPath(arg0);
 	}
 
-	public String getRequestCharacterEncoding() {
-		return null;
-	}
-
 	@Override
 	public RequestDispatcher getRequestDispatcher(String arg0) {
 		return context.getRequestDispatcher(arg0);
@@ -234,15 +226,29 @@ public class ContextWrapper implements ServletContext {
 		return context.getResourcePaths(arg0);
 	}
 
-	public String getResponseCharacterEncoding() {
-		return null;
-	}
-
 	@Override
 	public String getServerInfo() {
 		return context.getServerInfo();
 	}
 
+	/**
+     * @deprecated	As of Java Servlet API 2.1, with no direct replacement.
+     *
+     * <p>This method was originally defined to retrieve a servlet
+     * from a <code>ServletContext</code>. In this version, this method
+     * always returns <code>null</code> and remains only to preserve
+     * binary compatibility. This method will be permanently removed
+     * in a future version of the Java Servlet API.
+     *
+     * <p>In lieu of this method, servlets can share information using the
+     * <code>ServletContext</code> class and can perform shared business logic
+     * by invoking methods on common non-servlet classes.
+     *
+     * @param name the servlet name
+     * @return the {@code javax.servlet.Servlet Servlet} with the given name
+     * @throws ServletException if an exception has occurred that interfaces
+     * with servlet's normal operation
+     */
 	@Deprecated
 	public Servlet getServlet(String arg0) throws ServletException {
 		return context.getServlet(arg0);
@@ -253,6 +259,18 @@ public class ContextWrapper implements ServletContext {
 		return context.getServletContextName();
 	}
 
+	/**
+     * @deprecated	As of Java Servlet API 2.1, with no replacement.
+     *
+     * <p>This method was originally defined to return an
+     * <code>Enumeration</code>
+     * of all the servlet names known to this context. In this version,
+     * this method always returns an empty <code>Enumeration</code> and
+     * remains only to preserve binary compatibility. This method will
+     * be permanently removed in a future version of the Java Servlet API.
+     *
+     * @return an <code>Enumeration</code> of {@code javax.servlet.Servlet Servlet} names
+     */
 	@Deprecated
 	public Enumeration<String> getServletNames() {
 		return context.getServletNames();
@@ -268,6 +286,19 @@ public class ContextWrapper implements ServletContext {
 		return context.getServletRegistrations();
 	}
 
+	/**
+     * @deprecated	As of Java Servlet API 2.0, with no replacement.
+     *
+     * <p>This method was originally defined to return an
+     * <code>Enumeration</code> of all the servlets known to this servlet
+     * context.
+     * In this version, this method always returns an empty enumeration and
+     * remains only to preserve binary compatibility. This method
+     * will be permanently removed in a future version of the Java
+     * Servlet API.
+     *
+     * @return an <code>Enumeration</code> of {@code javax.servlet.Servlet Servlet}
+     */
 	@Deprecated
 	public Enumeration<Servlet> getServlets() {
 		return context.getServlets();
@@ -276,14 +307,6 @@ public class ContextWrapper implements ServletContext {
 	@Override
 	public SessionCookieConfig getSessionCookieConfig() {
 		return context.getSessionCookieConfig();
-	}
-
-	public int getSessionTimeout() {
-		return 0;
-	}
-
-	public String getVirtualServerName() {
-		return null;
 	}
 
 	@Override
@@ -316,15 +339,7 @@ public class ContextWrapper implements ServletContext {
 		return context.setInitParameter(arg0, arg1);
 	}
 
-	public void setRequestCharacterEncoding(String arg0) {
-	}
-
-	public void setResponseCharacterEncoding(String arg0) {
-	}
-
-	public void setSessionTimeout(int arg0) {
-	}
-
+	@Override
 	public void setSessionTrackingModes(Set<SessionTrackingMode> arg0) {
 	}
 
@@ -335,10 +350,6 @@ public class ContextWrapper implements ServletContext {
 	public Object propertyMissing(String property) {
 		Object value = getAttribute(property);
 		return value != null ? value : getInitParameter(property);
-	}
-
-	public void remove(String name) {
-		removeAttribute(name);
 	}
 
 }
