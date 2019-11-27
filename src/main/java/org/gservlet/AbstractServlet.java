@@ -39,7 +39,7 @@ import groovy.xml.MarkupBuilder;
 public abstract class AbstractServlet extends HttpServlet {
 
 	protected final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
-	protected static final ThreadLocal<HttpServletRequest> threadLocal = new ThreadLocal<HttpServletRequest>();
+	protected static final ThreadLocal<HttpServletRequest> threadLocal = new ThreadLocal<>();
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -144,7 +144,7 @@ public abstract class AbstractServlet extends HttpServlet {
 		return builder;
 	}
 
-	public Object parse(InputStream inputStream) throws IOException {
+	public Object parse(InputStream inputStream) {
 		return new JsonSlurper().parse(inputStream);
 	}
 

@@ -56,7 +56,7 @@ public class Initializer {
 
 	public Initializer(ServletContext context) throws Exception {
 		this.context = context;
-		this.handlers = new HashMap<String, DynamicInvocationHandler>();
+		this.handlers = new HashMap<>();
 		context.setAttribute(Constants.HANDLERS, handlers);
 		File folder = new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER);
 		this.scriptManager = new ScriptManager(folder);
@@ -95,27 +95,14 @@ public class Initializer {
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof Servlet) {
 				addServlet(context, (Servlet) annotation, object);
-			}
-			if (annotation instanceof Filter) {
+			} 
+			else if (annotation instanceof Filter) {
 				addFilter(context, (Filter) annotation, object);
 			}
-			if (annotation instanceof ContextListener) {
-				addListener(context, annotation, object);
-			}
-			if (annotation instanceof RequestListener) {
-				addListener(context, annotation, object);
-			}
-			if (annotation instanceof ContextAttributeListener) {
-				addListener(context, annotation, object);
-			}
-			if (annotation instanceof RequestAttributeListener) {
-				addListener(context, annotation, object);
-			}
-			if (annotation instanceof SessionListener) {
-				addListener(context, annotation, object);
-			}
-			if (annotation instanceof SessionAttributeListener) {
-				addListener(context, annotation, object);
+			else if (annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
+					|| annotation instanceof RequestListener || annotation instanceof RequestAttributeListener
+					|| annotation instanceof SessionListener || annotation instanceof SessionAttributeListener) {
+				addListener(context, object);
 			}
 		}
 	}
@@ -166,7 +153,7 @@ public class Initializer {
 		}
 	}
 
-	protected void addListener(ServletContext context, Annotation annotation, Object object) {
+	protected void addListener(ServletContext context, Object object) {
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
 		EventListener listener = null;
 		if (object instanceof ServletContextAttributeListener) {
@@ -198,6 +185,7 @@ public class Initializer {
 		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
 		if (reload) {
 			new FileWatcher().addListener(new FileAdapter() {
+				@Override
 				public void onCreated(String script) {
 					logger.info("reloading script " + script);
 					reload(script);
@@ -251,5 +239,5 @@ public class Initializer {
 	public Map<String, DynamicInvocationHandler> getHandlers() {
 		return handlers;
 	}
-	
+
 }

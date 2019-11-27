@@ -24,7 +24,7 @@ public class InitializerTest {
 		when(context.addServlet(isA(String.class),isA(Servlet.class))).thenReturn(mock(ServletRegistration.Dynamic.class));
 		Initializer initializer = new Initializer(context);
 		initializer.loadScripts(folder);
-		assertEquals(7, initializer.getHandlers().size());
+		assertEquals(8, initializer.getHandlers().size());
 	}
 
 }
