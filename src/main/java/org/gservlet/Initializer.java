@@ -85,12 +85,12 @@ public class Initializer {
 		}
 	}
 
-	public void loadScript(File script) throws Exception {
+	protected void loadScript(File script) throws Exception {
 		Object object = scriptManager.loadScript(script.getName());
 		register(object);
 	}
 
-	public void register(Object object) throws Exception {
+	protected void register(Object object) throws Exception {
 		Annotation[] annotations = object.getClass().getAnnotations();
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof Servlet) {
