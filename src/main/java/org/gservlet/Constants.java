@@ -29,5 +29,8 @@ public final class Constants {
 	public static final String DB_CONFIG_FILE = "db.properties";
 	public static final String HANDLERS = "handlers";
 	public static final String REQUEST_FILTER = "requestFilter";
-	
+
+	private Constants() {
+	}
+
 }

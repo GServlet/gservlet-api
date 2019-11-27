@@ -38,15 +38,14 @@ import javax.servlet.SessionCookieConfig;
 import javax.servlet.SessionTrackingMode;
 import javax.servlet.descriptor.JspConfigDescriptor;
 
-@SuppressWarnings("deprecation")
 public class ContextWrapper implements ServletContext {
 
 	protected final ServletContext context;
-	
+
 	public ContextWrapper(ServletContext context) {
 		this.context = context;
 	}
-	
+
 	@Override
 	public Dynamic addFilter(String arg0, String arg1) {
 		return context.addFilter(arg0, arg1);
@@ -244,7 +243,7 @@ public class ContextWrapper implements ServletContext {
 		return context.getServerInfo();
 	}
 
-	@Override
+	@Deprecated
 	public Servlet getServlet(String arg0) throws ServletException {
 		return context.getServlet(arg0);
 	}
@@ -254,7 +253,7 @@ public class ContextWrapper implements ServletContext {
 		return context.getServletContextName();
 	}
 
-	@Override
+	@Deprecated
 	public Enumeration<String> getServletNames() {
 		return context.getServletNames();
 	}
@@ -269,7 +268,7 @@ public class ContextWrapper implements ServletContext {
 		return context.getServletRegistrations();
 	}
 
-	@Override
+	@Deprecated
 	public Enumeration<Servlet> getServlets() {
 		return context.getServlets();
 	}
@@ -279,7 +278,6 @@ public class ContextWrapper implements ServletContext {
 		return context.getSessionCookieConfig();
 	}
 
-	
 	public int getSessionTimeout() {
 		return 0;
 	}
@@ -293,7 +291,7 @@ public class ContextWrapper implements ServletContext {
 		context.log(arg0);
 	}
 
-	@Override
+	@Deprecated
 	public void log(Exception arg0, String arg1) {
 		context.log(arg0, arg1);
 	}
@@ -329,16 +327,16 @@ public class ContextWrapper implements ServletContext {
 
 	public void setSessionTrackingModes(Set<SessionTrackingMode> arg0) {
 	}
-	
-	public void propertyMissing(String property,Object value) {
-		setAttribute(property,value);
+
+	public void propertyMissing(String property, Object value) {
+		setAttribute(property, value);
 	}
-	
+
 	public Object propertyMissing(String property) {
 		Object value = getAttribute(property);
 		return value != null ? value : getInitParameter(property);
 	}
-	
+
 	public void remove(String name) {
 		removeAttribute(name);
 	}

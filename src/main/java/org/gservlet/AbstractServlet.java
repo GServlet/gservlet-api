@@ -42,30 +42,37 @@ public abstract class AbstractServlet extends HttpServlet {
 	protected HttpServletResponse response;
 	protected final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
 
+	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		route(request, response, "get");
 	}
 
+	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		route(request, response, "post");
 	}
 
+	@Override
 	public void doPut(HttpServletRequest request, HttpServletResponse response) {
 		route(request, response, "put");
 	}
 
+	@Override
 	public void doDelete(HttpServletRequest request, HttpServletResponse response) {
 		route(request, response, "delete");
 	}
 
+	@Override
 	public void doHead(HttpServletRequest request, HttpServletResponse response) {
 		route(request, response, "head");
 	}
 
+	@Override
 	public void doTrace(HttpServletRequest request, HttpServletResponse response) {
 		route(request, response, "trace");
 	}
 
+	@Override
 	public void doOptions(HttpServletRequest request, HttpServletResponse response) {
 		route(request, response, "options");
 	}

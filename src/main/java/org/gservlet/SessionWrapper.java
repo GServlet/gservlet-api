@@ -22,17 +22,15 @@ package org.gservlet;
 import java.util.Enumeration;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 
-@SuppressWarnings("deprecation")
 public class SessionWrapper implements HttpSession {
 
-    protected final transient HttpSession session;
-    
-    public SessionWrapper(HttpSession session) {
-    	this.session = session;
-    }
-   
+	protected final HttpSession session;
+
+	public SessionWrapper(HttpSession session) {
+		this.session = session;
+	}
+
 	@Override
 	public Object getAttribute(String name) {
 		return session.getAttribute(name);
@@ -68,17 +66,17 @@ public class SessionWrapper implements HttpSession {
 		return session.getServletContext();
 	}
 
-	@Override
-	public HttpSessionContext getSessionContext() {
+	@Deprecated
+	public javax.servlet.http.HttpSessionContext getSessionContext() {
 		return session.getSessionContext();
 	}
 
-	@Override
+	@Deprecated
 	public Object getValue(String name) {
 		return session.getValue(name);
 	}
 
-	@Override
+	@Deprecated
 	public String[] getValueNames() {
 		return session.getValueNames();
 	}
@@ -93,7 +91,7 @@ public class SessionWrapper implements HttpSession {
 		return session.isNew();
 	}
 
-	@Override
+	@Deprecated
 	public void putValue(String name, Object value) {
 		session.putValue(name, value);
 	}
@@ -103,25 +101,25 @@ public class SessionWrapper implements HttpSession {
 		session.removeAttribute(name);
 	}
 
-	@Override
+	@Deprecated
 	public void removeValue(String name) {
 		session.removeValue(name);
 	}
 
 	@Override
 	public void setAttribute(String name, Object value) {
-		session.setAttribute(name,value);
+		session.setAttribute(name, value);
 	}
 
 	@Override
 	public void setMaxInactiveInterval(int interval) {
 		session.setMaxInactiveInterval(interval);
 	}
-	
-	public void propertyMissing(String property,Object value) {
-		setAttribute(property,value);
+
+	public void propertyMissing(String property, Object value) {
+		setAttribute(property, value);
 	}
-	
+
 	public Object propertyMissing(String property) {
 		return getAttribute(property);
 	}
