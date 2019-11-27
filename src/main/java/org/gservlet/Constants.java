@@ -19,7 +19,7 @@
 
 package org.gservlet;
 
-public interface Constants {
+public final class Constants {
 
 	public static final String SCRIPTS_FOLDER = "scripts";
 	public static final String DATASOURCE = "dataSource";
