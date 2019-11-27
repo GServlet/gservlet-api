@@ -1,6 +1,9 @@
 # GServlet (https://gservlet.org/)
 
 [![Build Status @ Travis](https://api.travis-ci.com/GServlet/gservlet-api.png?branch=master)](https://travis-ci.com/GServlet/gservlet-api)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=bugs)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=security_rating)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
 [![Coverage Status](https://coveralls.io/repos/github/GServlet/gservlet-api/badge.png?branch=master)](https://coveralls.io/github/GServlet/gservlet-api?branch=master)
 [![License](http://img.shields.io/:license-apache-blue.png)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
