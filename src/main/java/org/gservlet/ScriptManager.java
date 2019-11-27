@@ -24,7 +24,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.codehaus.groovy.control.BytecodeProcessor;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import groovy.util.GroovyScriptEngine;
@@ -48,13 +47,13 @@ public class ScriptManager {
 	protected GroovyScriptEngine createScriptEngine(File folder) throws Exception {
 		URL[] urls = { folder.toURI().toURL(),
 				ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER) };
-		GroovyScriptEngine engine = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
+		GroovyScriptEngine gse = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
 		ClassPool classPool = ClassPool.getDefault();
-		classPool.insertClassPath(new LoaderClassPath(engine.getParentClassLoader()));
+		classPool.insertClassPath(new LoaderClassPath(gse.getParentClassLoader()));
 		CompilerConfiguration configuration = new CompilerConfiguration();
 		configuration.setBytecodePostprocessor(createBytecodeProcessor(classPool));
-		engine.setConfig(configuration);
-		return engine;
+		gse.setConfig(configuration);
+		return gse;
 	}
 
 	protected BytecodeProcessor createBytecodeProcessor(final ClassPool classPool) {
@@ -86,7 +85,7 @@ public class ScriptManager {
 							clazz.setSuperclass(classPool.get(AbstractRequestAttributeListener.class.getName()));
 							return clazz.toBytecode();
 						} else if (value.indexOf("SessionListener") != -1) {
-							clazz.setSuperclass(classPool.get(HttpSessionListener.class.getName()));
+							clazz.setSuperclass(classPool.get(AbstractSessionListener.class.getName()));
 							return clazz.toBytecode();
 						} else if (value.indexOf("SessionAttributeListener") != -1) {
 							clazz.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));

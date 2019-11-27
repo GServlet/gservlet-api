@@ -21,8 +21,9 @@ package org.gservlet;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
-public class HttpSessionListener extends BaseListener implements javax.servlet.http.HttpSessionListener {
+public abstract class AbstractSessionListener extends BaseListener implements HttpSessionListener {
 
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {

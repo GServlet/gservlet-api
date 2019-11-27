@@ -71,6 +71,7 @@ public class DatabaseManager {
 		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
 		if (reload) {
 			new FileWatcher().addListener(new FileAdapter() {
+				@Override
 				public void onCreated(String fileName) {
 					if (fileName.equals(Constants.DB_CONFIG_FILE)) {
 						logger.info("reloading configuration file " + fileName);
