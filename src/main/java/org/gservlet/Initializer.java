@@ -56,7 +56,7 @@ public class Initializer {
 
 	public Initializer(ServletContext context) throws Exception {
 		this.context = context;
-		this.handlers = new HashMap<String, DynamicInvocationHandler>();
+		this.handlers = new HashMap<>();
 		context.setAttribute(Constants.HANDLERS, handlers);
 		File folder = new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER);
 		this.scriptManager = new ScriptManager(folder);
