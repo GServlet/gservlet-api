@@ -21,9 +21,10 @@ package org.gservlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequestAttributeEvent;
+import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.http.HttpServletRequest;
 
-public class ServletRequestAttributeListener extends BaseListener implements javax.servlet.ServletRequestAttributeListener {
+public abstract class AbstractRequestAttributeListener extends BaseListener implements ServletRequestAttributeListener {
 
 	@Override
 	public void attributeAdded(ServletRequestAttributeEvent event) {

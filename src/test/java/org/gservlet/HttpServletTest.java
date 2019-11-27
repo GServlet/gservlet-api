@@ -24,13 +24,13 @@ public class HttpServletTest {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		HttpServlet servlet = (HttpServlet) scriptManager.loadScript("HttpServlet.groovy");
+		AbstractServlet servlet = (AbstractServlet) scriptManager.loadScript("HttpServlet.groovy");
 		assertNotNull(servlet);
 		Annotation[] annotations = servlet.getClass().getAnnotations();
 		for(Annotation current : annotations) {
 			   if(current instanceof Servlet) {
 				   assertEquals("HttpServlet",servlet.getClass().getName());
-				   assertEquals(HttpServlet.class, servlet.getClass().getSuperclass());
+				   assertEquals(AbstractServlet.class, servlet.getClass().getSuperclass());
 				   Servlet annotation = (Servlet) current;
 				   assertEquals("/servlet", annotation.value()[0]);
 			   }

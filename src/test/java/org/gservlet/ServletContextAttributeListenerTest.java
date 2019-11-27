@@ -14,7 +14,7 @@ public class ServletContextAttributeListenerTest {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		ServletContextAttributeListener listener = (ServletContextAttributeListener) scriptManager.loadScript("ServletContextAttributeListener.groovy");
+		AbstractContextAttributeListener listener = (AbstractContextAttributeListener) scriptManager.loadScript("ServletContextAttributeListener.groovy");
 		assertNotNull(listener);
 		ServletContextAttributeEvent event = new ServletContextAttributeEvent(mock(ServletContext.class), "myAttribute", "myValue");
 		listener.attributeAdded(event);

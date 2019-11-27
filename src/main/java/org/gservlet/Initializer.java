@@ -187,8 +187,8 @@ public class Initializer {
 		}
 		if (listener != null) {
 			context.addListener(listener);
-		} else if (object instanceof ServletContextListener) {
-			ServletContextListener contextListener = (ServletContextListener) object;
+		} else if (object instanceof AbstractContextListener) {
+			AbstractContextListener contextListener = (AbstractContextListener) object;
 			contextListener.contextInitialized(new ServletContextEvent(context));
 		}
 		handlers.put(object.getClass().getName(), handler);
@@ -241,8 +241,8 @@ public class Initializer {
 	public void destroy() {
 		for (DynamicInvocationHandler handler : handlers.values()) {
 			Object target = handler.getTarget();
-			if (target instanceof ServletContextListener) {
-				ServletContextListener contextListener = (ServletContextListener) target;
+			if (target instanceof AbstractContextListener) {
+				AbstractContextListener contextListener = (AbstractContextListener) target;
 				contextListener.contextDestroyed(new ServletContextEvent(context));
 			}
 		}

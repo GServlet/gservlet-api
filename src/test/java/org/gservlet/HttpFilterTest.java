@@ -24,7 +24,7 @@ public class HttpFilterTest {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		Filter filter = (Filter) scriptManager.loadScript("HttpFilter.groovy");
+		AbstractFilter filter = (AbstractFilter) scriptManager.loadScript("HttpFilter.groovy");
 		assertNotNull(filter);
 		Annotation[] annotations = filter.getClass().getAnnotations();
 		for(Annotation current : annotations) {

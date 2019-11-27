@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
@@ -36,13 +37,13 @@ import javax.servlet.http.HttpSession;
 import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
 
-public abstract class Filter implements javax.servlet.Filter {
+public abstract class AbstractFilter implements Filter {
 
 	protected FilterConfig config;
 	protected FilterChain chain;
 	protected ServletRequest request;
 	protected ServletResponse response;
-	protected Logger logger = Logger.getLogger(Filter.class.getName());
+	protected Logger logger = Logger.getLogger(AbstractFilter.class.getName());
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
