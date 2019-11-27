@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
@@ -76,7 +77,7 @@ public class DatabaseManager {
 						try {
 							setupDataSource();
 						} catch (Exception e) {
-							e.printStackTrace();
+							logger.log(Level.INFO, "exception during reload", e);
 						}
 					}
 				}
@@ -91,7 +92,7 @@ public class DatabaseManager {
 				dataSource.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, "exception during destroy method", e);
 		}
 	}
 

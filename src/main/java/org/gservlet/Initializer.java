@@ -26,6 +26,7 @@ import java.util.EnumSet;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -233,7 +234,7 @@ public class Initializer {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, "exception during reload", e);
 		}
 	}
 

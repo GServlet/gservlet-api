@@ -19,9 +19,14 @@
 
 package org.gservlet;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class BaseListener {
 
 	protected Object event;
+	protected final Logger logger = Logger.getLogger(BaseListener.class.getName());
+
 	
 	protected void route(Object event, String method) {
 		this.event = event;
@@ -33,7 +38,7 @@ public class BaseListener {
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, "exception during invoke method", e);
 		}
 	}
 

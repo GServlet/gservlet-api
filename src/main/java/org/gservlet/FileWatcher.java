@@ -31,10 +31,13 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FileWatcher {
 
 	protected final List<FileListener> listeners;
+	protected final Logger logger = Logger.getLogger(FileWatcher.class.getName());
 
 	public FileWatcher() {
 		listeners = new ArrayList<FileListener>();
@@ -77,7 +80,7 @@ public class FileWatcher {
 							}
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+						logger.log(Level.INFO, "exception during watch", e);
 					}
 				}
 			}).start();

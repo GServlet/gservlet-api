@@ -22,6 +22,9 @@ package org.gservlet;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.codehaus.groovy.control.BytecodeProcessor;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import groovy.util.GroovyScriptEngine;
@@ -32,6 +35,7 @@ import javassist.LoaderClassPath;
 public class ScriptManager {
 
 	protected final GroovyScriptEngine engine;
+	protected final Logger logger = Logger.getLogger(ScriptManager.class.getName());
 
 	public ScriptManager(File folder) throws Exception {
 		engine = createScriptEngine(folder);
@@ -90,7 +94,7 @@ public class ScriptManager {
 						}
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.log(Level.INFO, "exception during processBytecode method", e);
 				}
 				return original;
 			}
