@@ -90,7 +90,7 @@ public class Initializer {
 		register(object);
 	}
 
-	protected void register(Object object) throws Exception {
+	protected void register(Object object) {
 		Annotation[] annotations = object.getClass().getAnnotations();
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof Servlet) {

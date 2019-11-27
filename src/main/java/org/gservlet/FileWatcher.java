@@ -40,7 +40,7 @@ public class FileWatcher {
 	protected final Logger logger = Logger.getLogger(FileWatcher.class.getName());
 
 	public FileWatcher() {
-		listeners = new ArrayList<FileListener>();
+		listeners = new ArrayList<>();
 	}
 
 	@SuppressWarnings("unchecked")
