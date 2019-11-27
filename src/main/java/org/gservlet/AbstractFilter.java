@@ -39,16 +39,14 @@ import groovy.xml.MarkupBuilder;
 
 public abstract class AbstractFilter implements Filter {
 
-	protected FilterConfig config;
-	protected FilterChain chain;
-	protected ServletRequest request;
-	protected ServletResponse response;
+	protected static FilterConfig config;
+	protected static final ThreadLocal<HttpServletRequest> threadLocal = new ThreadLocal<HttpServletRequest>();
 	protected Logger logger = Logger.getLogger(AbstractFilter.class.getName());
-
+	
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		this.config = config;
 		try {
+			AbstractFilter.config = config;
 			getClass().getDeclaredMethod("init").invoke(this);
 		} catch (NoSuchMethodException e) {
 		} catch (Exception e) {
@@ -59,9 +57,9 @@ public abstract class AbstractFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		this.request = request;
-		this.response = response;
-		this.chain = chain;
+		threadLocal.set((HttpServletRequest) request);
+		threadLocal.get().setAttribute(Constants.SERVLET_RESPONSE,response);
+		threadLocal.get().setAttribute(Constants.FILTER_CHAIN, chain);
 		try {
 			getClass().getDeclaredMethod("filter").invoke(this);
 		} catch (NoSuchMethodException e) {
@@ -72,7 +70,8 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public void next() throws IOException, ServletException {
-		chain.doFilter(request, response);
+		FilterChain chain = (FilterChain) threadLocal.get().getAttribute(Constants.FILTER_CHAIN);
+		chain.doFilter(threadLocal.get(), getResponse());
 	}
 
 	@Override
@@ -80,11 +79,11 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public HttpServletRequest getRequest() {
-		return new RequestWrapper((HttpServletRequest) request);
+		return new RequestWrapper((HttpServletRequest) threadLocal.get());
 	}
 
 	public HttpSession getSession() {
-		return new SessionWrapper(((HttpServletRequest) request).getSession(true));
+		return new SessionWrapper(((HttpServletRequest) threadLocal.get()).getSession(true));
 	}
 
 	public ServletContext getContext() {
@@ -92,23 +91,19 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public HttpServletResponse getResponse() {
-		return (HttpServletResponse) response;
+		return (HttpServletResponse) threadLocal.get().getAttribute(Constants.SERVLET_RESPONSE);
 	}
 
 	public FilterConfig getConfig() {
 		return config;
 	}
 
-	public FilterChain getChain() {
-		return chain;
-	}
-
 	public Sql getConnection() {
-		return (Sql) request.getAttribute(Constants.CONNECTION);
+		return (Sql) threadLocal.get().getAttribute(Constants.CONNECTION);
 	}
 
 	public PrintWriter getOut() throws IOException {
-		return response.getWriter();
+		return getResponse().getWriter();
 	}
 
 	public void json(Object object) throws IOException {
@@ -121,13 +116,9 @@ public abstract class AbstractFilter implements Filter {
 	}
 	
 	public MarkupBuilder getHtml() throws IOException {
-		MarkupBuilder builder = (MarkupBuilder) request.getAttribute("MarkupBuilder");
-		if(builder==null) {
-			getResponse().setHeader("Content-Type", "text/html");
-			getResponse().getWriter().println("<!DOCTYPE html>");
-			builder = new MarkupBuilder(response.getWriter());
-			request.setAttribute("MarkupBuilder",builder);
-		}
+		MarkupBuilder builder = new MarkupBuilder(getOut());
+		getResponse().setHeader("Content-Type", "text/html");
+		getResponse().getWriter().println("<!DOCTYPE html>");
 		return builder;
 	}
 

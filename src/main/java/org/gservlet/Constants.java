@@ -22,13 +22,15 @@ package org.gservlet;
 public final class Constants {
 
 	public static final String SCRIPTS_FOLDER = "scripts";
-	public static final String DATASOURCE = "dataSource";
-	public static final String CONNECTION = "connection";
+	public static final String DATASOURCE = "gservlet.dataSource";
+	public static final String CONNECTION = "gservlet.connection";
 	public static final String RELOAD = "gservlet.reload";
 	public static final String CONFIG_FOLDER = "conf";
 	public static final String DB_CONFIG_FILE = "db.properties";
-	public static final String HANDLERS = "handlers";
-	public static final String REQUEST_FILTER = "requestFilter";
+	public static final String HANDLERS = "gservlet.handlers";
+	public static final String REQUEST_FILTER = "gservlet.requestFilter";
+	public static final String SERVLET_RESPONSE = "servlet.response";
+	public static final String FILTER_CHAIN = "servlet.filterChain";
 
 	private Constants() {
 	}

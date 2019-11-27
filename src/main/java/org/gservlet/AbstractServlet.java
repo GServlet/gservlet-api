@@ -38,9 +38,8 @@ import groovy.xml.MarkupBuilder;
 @SuppressWarnings("serial")
 public abstract class AbstractServlet extends HttpServlet {
 
-	protected HttpServletRequest request;
-	protected HttpServletResponse response;
 	protected final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
+	protected static final ThreadLocal<HttpServletRequest> threadLocal = new ThreadLocal<HttpServletRequest>();
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -78,13 +77,12 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	private void route(HttpServletRequest request, HttpServletResponse response, String methodName) {
-		this.request = request;
-		this.response = response;
+		request.setAttribute(Constants.SERVLET_RESPONSE, response);
+		threadLocal.set(request);
 		invoke(methodName);
 	}
 
 	private void invoke(String method) {
-		response.setContentType("text/html");
 		try {
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
@@ -95,44 +93,44 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	public HttpServletRequest getRequest() {
-		return new RequestWrapper(request);
+		return new RequestWrapper(threadLocal.get());
 	}
 
 	public HttpSession getSession() {
-		return new SessionWrapper(request.getSession(true));
+		return new SessionWrapper(threadLocal.get().getSession(true));
 	}
 
 	public ServletContext getContext() {
-		return new ContextWrapper(request.getServletContext());
+		return new ContextWrapper(threadLocal.get().getServletContext());
 	}
 
 	public HttpServletResponse getResponse() {
-		return response;
+		return (HttpServletResponse) threadLocal.get().getAttribute(Constants.SERVLET_RESPONSE);
 	}
 
 	public Sql getConnection() {
-		return (Sql) request.getAttribute(Constants.CONNECTION);
+		return (Sql) threadLocal.get().getAttribute(Constants.CONNECTION);
 	}
 
 	public void forward(String location) {
 		try {
-			request.getRequestDispatcher(location).forward(request, response);
+			threadLocal.get().getRequestDispatcher(location).forward(threadLocal.get(), getResponse());
 		} catch (ServletException | IOException e) {
 			logger.log(Level.INFO, "exception during forward method", e);
 		}
 	}
 
 	public void redirect(String location) throws IOException {
-		response.sendRedirect(location);
+		getResponse().sendRedirect(location);
 	}
 
 	public PrintWriter getOut() throws IOException {
-		return response.getWriter();
+		return getResponse().getWriter();
 	}
 
 	public void json(Object object) throws IOException {
-		response.setHeader("Content-Type", "application/json");
-		response.getWriter().write(toJson(object));
+		getResponse().setHeader("Content-Type", "application/json");
+		getResponse().getWriter().write(toJson(object));
 	}
 
 	public String stringify(Object object) {
@@ -140,10 +138,9 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	public MarkupBuilder getHtml() throws IOException {
-		MarkupBuilder builder = new MarkupBuilder(response.getWriter());
-		response.setHeader("Content-Type", "text/html");
-		response.getWriter().println("<!DOCTYPE html>");
-		request.setAttribute("MarkupBuilder", builder);
+		MarkupBuilder builder = new MarkupBuilder(getOut());
+		getResponse().setHeader("Content-Type", "text/html");
+		getResponse().getWriter().println("<!DOCTYPE html>");
 		return builder;
 	}
 
