@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
+import org.gservlet.annotation.SessionAttributeListener;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 
@@ -15,6 +16,7 @@ public class HttpSessionAttributeListenerTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		AbstractSessionAttributeListener listener = (AbstractSessionAttributeListener) scriptManager.loadScript("HttpSessionAttributeListener.groovy");
+		assertTrue(listener.getClass().isAnnotationPresent(SessionAttributeListener.class));
 		assertNotNull(listener);
 		HttpSessionBindingEvent event = new HttpSessionBindingEvent(mock(HttpSession.class), "myAttribute");
 		listener.attributeAdded(event);

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeEvent;
+import org.gservlet.annotation.ContextAttributeListener;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 
@@ -15,6 +16,7 @@ public class ServletContextAttributeListenerTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		AbstractContextAttributeListener listener = (AbstractContextAttributeListener) scriptManager.loadScript("ServletContextAttributeListener.groovy");
+		assertTrue(listener.getClass().isAnnotationPresent(ContextAttributeListener.class));
 		assertNotNull(listener);
 		ServletContextAttributeEvent event = new ServletContextAttributeEvent(mock(ServletContext.class), "myAttribute", "myValue");
 		listener.attributeAdded(event);

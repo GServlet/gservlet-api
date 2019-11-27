@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+
+import org.gservlet.annotation.ContextListener;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -23,6 +25,7 @@ public class ServletContextListenerTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		AbstractContextListener listener = (AbstractContextListener) scriptManager.loadScript("ServletContextListener.groovy");
+		assertTrue(listener.getClass().isAnnotationPresent(ContextListener.class));
 		assertNotNull(listener);
 		final Map<Object,Object> map = new HashMap<Object,Object>();
 		Answer initializeMap = new Answer() {
