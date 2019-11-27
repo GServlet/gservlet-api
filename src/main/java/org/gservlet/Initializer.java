@@ -95,7 +95,11 @@ public class Initializer {
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof Servlet) {
 				addServlet(context, (Servlet) annotation, object);
-			} else if (annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
+			} 
+			else if (annotation instanceof Filter) {
+				addFilter(context, (Filter) annotation, object);
+			}
+			else if (annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
 					|| annotation instanceof RequestListener || annotation instanceof RequestAttributeListener
 					|| annotation instanceof SessionListener || annotation instanceof SessionAttributeListener) {
 				addListener(context, object);

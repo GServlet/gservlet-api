@@ -1,7 +1,7 @@
 import org.gservlet.annotation.SessionListener
 
 @SessionListener
-class ServletContextListener {
+class HttpSessionListener {
 	
 	void sessionCreated() {
 		session.setAttribute("state","sessionCreated");
