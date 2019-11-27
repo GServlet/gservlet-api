@@ -80,32 +80,15 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public HttpServletRequest getRequest() {
-		HttpServletRequest wrapper = (HttpServletRequest) request.getAttribute(Constants.REQUEST_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new RequestWrapper((HttpServletRequest) request);
-			request.setAttribute(Constants.REQUEST_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new RequestWrapper((HttpServletRequest) request);
 	}
 
 	public HttpSession getSession() {
-		HttpSession session = getRequest().getSession(true);
-		HttpSession wrapper = (HttpSession) session.getAttribute(Constants.SESSION_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new SessionWrapper(session);
-			session.setAttribute(Constants.SESSION_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new SessionWrapper(((HttpServletRequest) request).getSession(true));
 	}
 
 	public ServletContext getContext() {
-		ServletContext context = getRequest().getServletContext();
-		ServletContext wrapper = (ServletContext) context.getAttribute(Constants.CONTEXT_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new ContextWrapper(context);
-			context.setAttribute(Constants.CONTEXT_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new ContextWrapper(getRequest().getServletContext());
 	}
 
 	public HttpServletResponse getResponse() {
@@ -133,7 +116,7 @@ public abstract class AbstractFilter implements Filter {
 		getResponse().getWriter().write(toJson(object));
 	}
 
-	public String stringify(Object object) throws IOException {
+	public String stringify(Object object) {
 		return toJson(object);
 	}
 	

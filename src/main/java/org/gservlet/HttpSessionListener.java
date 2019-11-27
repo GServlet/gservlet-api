@@ -35,13 +35,7 @@ public class HttpSessionListener extends BaseListener implements javax.servlet.h
 	}
 
 	public HttpSession getSession() {
-		HttpSession session = getEvent().getSession();
-		HttpSession wrapper = (HttpSession) session.getAttribute(Constants.SESSION_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new SessionWrapper(session);
-			session.setAttribute(Constants.SESSION_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new SessionWrapper(getEvent().getSession());
 	}
 
 	public HttpSessionEvent getEvent() {

@@ -38,8 +38,6 @@ public class ServletContextListenerTest {
 		assertEquals("contextInitialized", map.get("state"));
 		listener.contextDestroyed(event);
 		assertEquals("contextDestroyed", map.get("state"));
-		assertNotNull(map.get("contextWrapper"));
-		
 	}
 
 }

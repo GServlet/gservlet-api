@@ -88,32 +88,15 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	public HttpServletRequest getRequest() {
-		HttpServletRequest wrapper = (HttpServletRequest) request.getAttribute(Constants.REQUEST_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new RequestWrapper(request);
-			request.setAttribute(Constants.REQUEST_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new RequestWrapper(request);
 	}
 
 	public HttpSession getSession() {
-		HttpSession session = request.getSession(true);
-		HttpSession wrapper = (HttpSession) session.getAttribute(Constants.SESSION_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new SessionWrapper(session);
-			session.setAttribute(Constants.SESSION_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new SessionWrapper(request.getSession(true));
 	}
 
 	public ServletContext getContext() {
-		ServletContext context = request.getServletContext();
-		ServletContext wrapper = (ServletContext) context.getAttribute(Constants.CONTEXT_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new ContextWrapper(context);
-			context.setAttribute(Constants.CONTEXT_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new ContextWrapper(request.getServletContext());
 	}
 
 	public HttpServletResponse getResponse() {
@@ -145,18 +128,15 @@ public abstract class AbstractServlet extends HttpServlet {
 		response.getWriter().write(toJson(object));
 	}
 
-	public String stringify(Object object) throws IOException {
+	public String stringify(Object object) {
 		return toJson(object);
 	}
 
 	public MarkupBuilder getHtml() throws IOException {
-		MarkupBuilder builder = (MarkupBuilder) request.getAttribute("MarkupBuilder");
-		if (builder == null) {
-			response.setHeader("Content-Type", "text/html");
-			response.getWriter().println("<!DOCTYPE html>");
-			builder = new MarkupBuilder(response.getWriter());
-			request.setAttribute("MarkupBuilder", builder);
-		}
+		MarkupBuilder builder = new MarkupBuilder(response.getWriter());
+		response.setHeader("Content-Type", "text/html");
+		response.getWriter().println("<!DOCTYPE html>");
+		request.setAttribute("MarkupBuilder", builder);
 		return builder;
 	}
 

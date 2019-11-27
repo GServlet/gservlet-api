@@ -36,13 +36,7 @@ public abstract class AbstractContextListener extends BaseListener implements Se
 	}
 
 	public ServletContext getContext() {
-		ServletContext context = (ServletContext) getEvent().getServletContext();
-		ServletContext wrapper = (ServletContext) context.getAttribute(Constants.CONTEXT_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new ContextWrapper(context);
-			context.setAttribute(Constants.CONTEXT_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new ContextWrapper(getEvent().getServletContext());
 	}
 	
 	public ServletContextEvent getEvent() {

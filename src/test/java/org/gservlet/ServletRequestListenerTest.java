@@ -39,8 +39,6 @@ public class ServletRequestListenerTest {
 		assertEquals("requestInitialized", map.get("state"));
 		listener.requestDestroyed(event);
 		assertEquals("requestDestroyed", map.get("state"));
-		assertNotNull(map.get("contextWrapper"));
-		
 	}
 
 }
