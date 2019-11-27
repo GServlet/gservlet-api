@@ -8,16 +8,16 @@ public class ConstantsTest {
 
 	@Test
 	public void test() {
-		assertEquals("scripts", Constants.SCRIPTS_FOLDER);
-		assertEquals("gservlet.dataSource", Constants.DATASOURCE);
-		assertEquals("gservlet.connection", Constants.CONNECTION);
-		assertEquals("gservlet.reload", Constants.RELOAD);
-		assertEquals("conf", Constants.CONFIG_FOLDER);
-		assertEquals("db.properties", Constants.DB_CONFIG_FILE);
-		assertEquals("gservlet.handlers", Constants.HANDLERS);
-		assertEquals("gservlet.requestFilter", Constants.REQUEST_FILTER);
-		assertEquals("servlet.response", Constants.SERVLET_RESPONSE);
-		assertEquals("servlet.filterChain", Constants.FILTER_CHAIN);
+		assertEquals(Constants.SCRIPTS_FOLDER, "scripts");
+		assertEquals(Constants.DATASOURCE, "gservlet.dataSource");
+		assertEquals(Constants.CONNECTION, "gservlet.connection");
+		assertEquals(Constants.RELOAD, "gservlet.reload");
+		assertEquals(Constants.CONFIG_FOLDER, "conf");
+		assertEquals(Constants.DB_CONFIG_FILE, "db.properties");
+		assertEquals(Constants.HANDLERS, "gservlet.handlers");
+		assertEquals(Constants.REQUEST_FILTER, "gservlet.requestFilter");
+		assertEquals(Constants.SERVLET_RESPONSE, "servlet.response");
+		assertEquals(Constants.FILTER_CHAIN, "servlet.filterChain");
 	}
 
 }
