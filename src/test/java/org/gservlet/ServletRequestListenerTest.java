@@ -23,7 +23,7 @@ public class ServletRequestListenerTest {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		ServletRequestListener listener = (ServletRequestListener) scriptManager.loadScript("ServletRequestListener.groovy");
+		AbstractRequestListener listener = (AbstractRequestListener) scriptManager.loadScript("ServletRequestListener.groovy");
 		assertNotNull(listener);
 		final Map<Object,Object> map = new HashMap<Object,Object>();
 		Answer initializeMap = new Answer() {

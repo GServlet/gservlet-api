@@ -68,28 +68,28 @@ public class ScriptManager {
 					for (Object annotation : annotations) {
 						String value = annotation.toString();
 						if (value.indexOf("Servlet") != -1) {
-							clazz.setSuperclass(classPool.get(HttpServlet.class.getName()));
+							clazz.setSuperclass(classPool.get(AbstractServlet.class.getName()));
 							return clazz.toBytecode();
 						} else if (value.indexOf("Filter") != -1) {
-							clazz.setSuperclass(classPool.get(Filter.class.getName()));
+							clazz.setSuperclass(classPool.get(AbstractFilter.class.getName()));
 							return clazz.toBytecode();
 						} else if (value.indexOf("ContextListener") != -1) {
-							clazz.setSuperclass(classPool.get(ServletContextListener.class.getName()));
+							clazz.setSuperclass(classPool.get(AbstractContextListener.class.getName()));
 							return clazz.toBytecode();
 						} else if (value.indexOf("RequestListener") != -1) {
-							clazz.setSuperclass(classPool.get(ServletRequestListener.class.getName()));
+							clazz.setSuperclass(classPool.get(AbstractRequestListener.class.getName()));
 							return clazz.toBytecode();
 						} else if (value.indexOf("ContextAttributeListener") != -1) {
-							clazz.setSuperclass(classPool.get(ServletContextAttributeListener.class.getName()));
+							clazz.setSuperclass(classPool.get(AbstractContextAttributeListener.class.getName()));
 							return clazz.toBytecode();
 						} else if (value.indexOf("RequestAttributeListener") != -1) {
-							clazz.setSuperclass(classPool.get(ServletRequestAttributeListener.class.getName()));
+							clazz.setSuperclass(classPool.get(AbstractRequestAttributeListener.class.getName()));
 							return clazz.toBytecode();
 						} else if (value.indexOf("SessionListener") != -1) {
 							clazz.setSuperclass(classPool.get(HttpSessionListener.class.getName()));
 							return clazz.toBytecode();
 						} else if (value.indexOf("SessionAttributeListener") != -1) {
-							clazz.setSuperclass(classPool.get(HttpSessionAttributeListener.class.getName()));
+							clazz.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));
 							return clazz.toBytecode();
 						}
 					}

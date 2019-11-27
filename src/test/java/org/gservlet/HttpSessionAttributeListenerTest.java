@@ -14,7 +14,7 @@ public class HttpSessionAttributeListenerTest {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		HttpSessionAttributeListener listener = (HttpSessionAttributeListener) scriptManager.loadScript("HttpSessionAttributeListener.groovy");
+		AbstractSessionAttributeListener listener = (AbstractSessionAttributeListener) scriptManager.loadScript("HttpSessionAttributeListener.groovy");
 		assertNotNull(listener);
 		HttpSessionBindingEvent event = new HttpSessionBindingEvent(mock(HttpSession.class), "myAttribute");
 		listener.attributeAdded(event);

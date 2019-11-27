@@ -21,12 +21,18 @@ package org.gservlet;
 
 import java.io.IOException;
 import java.util.Map;
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.gservlet.annotation.Servlet;
 
-public class RequestFilter implements javax.servlet.Filter {
+public class RequestFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -45,11 +51,11 @@ public class RequestFilter implements javax.servlet.Filter {
 			Map<String, DynamicInvocationHandler> servletHandlers = (Map<String, DynamicInvocationHandler>) context.getAttribute(Constants.HANDLERS);
 			for (DynamicInvocationHandler handler : servletHandlers.values()) {
 				Object target = handler.getTarget();
-				if (target instanceof HttpServlet && !handler.isRegistered()) {
+				if (target instanceof AbstractServlet && !handler.isRegistered()) {
 					Servlet annotation = target.getClass().getAnnotation(Servlet.class);
 					String path = annotation.value()[0];
 					if (httpServletRequest.getRequestURI().endsWith(path)) {
-						HttpServlet servlet = (HttpServlet) target;
+						AbstractServlet servlet = (AbstractServlet) target;
 						String method = httpServletRequest.getMethod();
 						if (method.equalsIgnoreCase("get")) {
 							servlet.doGet(httpServletRequest, httpServletResponse);

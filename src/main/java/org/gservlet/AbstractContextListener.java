@@ -21,8 +21,9 @@ package org.gservlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
-public class ServletContextListener extends BaseListener implements javax.servlet.ServletContextListener {
+public abstract class AbstractContextListener extends BaseListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent event) {

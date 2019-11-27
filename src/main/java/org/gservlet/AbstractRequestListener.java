@@ -21,10 +21,11 @@ package org.gservlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequestEvent;
+import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class ServletRequestListener extends BaseListener implements javax.servlet.ServletRequestListener {
+public abstract class AbstractRequestListener extends BaseListener implements ServletRequestListener {
 
 	@Override
 	public void requestInitialized(ServletRequestEvent event) {

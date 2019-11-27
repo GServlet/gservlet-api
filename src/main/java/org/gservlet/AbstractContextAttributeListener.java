@@ -21,8 +21,9 @@ package org.gservlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeEvent;
+import javax.servlet.ServletContextAttributeListener;
 
-public class ServletContextAttributeListener extends BaseListener implements javax.servlet.ServletContextAttributeListener {
+public abstract class AbstractContextAttributeListener extends BaseListener implements ServletContextAttributeListener {
 
 	@Override
 	public void attributeAdded(ServletContextAttributeEvent event) {

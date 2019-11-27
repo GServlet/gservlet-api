@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,11 +36,11 @@ import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
 
 @SuppressWarnings("serial")
-public abstract class HttpServlet extends javax.servlet.http.HttpServlet {
+public abstract class AbstractServlet extends HttpServlet {
 
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
-	protected final Logger logger = Logger.getLogger(HttpServlet.class.getName());
+	protected final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		route(request, response, "get");
