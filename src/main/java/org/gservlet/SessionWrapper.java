@@ -19,6 +19,7 @@
 
 package org.gservlet;
 
+import java.io.Serializable;
 import java.util.Enumeration;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -108,7 +109,7 @@ public class SessionWrapper implements HttpSession {
 
 	@Override
 	public void setAttribute(String name, Object value) {
-		session.setAttribute(name, value);
+		session.setAttribute(name, (Serializable) value);
 	}
 
 	@Override
