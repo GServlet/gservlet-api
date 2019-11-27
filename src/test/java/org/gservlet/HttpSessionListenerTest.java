@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
+import org.gservlet.annotation.SessionListener;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -23,6 +24,7 @@ public class HttpSessionListenerTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		AbstractSessionListener listener = (AbstractSessionListener) scriptManager.loadScript("HttpSessionListener.groovy");
+		assertTrue(listener.getClass().isAnnotationPresent(SessionListener.class));
 		assertNotNull(listener);
 		final Map<Object,Object> map = new HashMap<Object,Object>();
 		Answer initializeMap = new Answer() {

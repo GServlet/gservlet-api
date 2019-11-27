@@ -5,6 +5,8 @@ import java.io.File;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestAttributeEvent;
+
+import org.gservlet.annotation.RequestAttributeListener;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 
@@ -16,6 +18,7 @@ public class ServletRequestAttributeListenerTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		AbstractRequestAttributeListener listener = (AbstractRequestAttributeListener) scriptManager.loadScript("ServletRequestAttributeListener.groovy");
+		assertTrue(listener.getClass().isAnnotationPresent(RequestAttributeListener.class));
 		assertNotNull(listener);
 		ServletRequestAttributeEvent event = new ServletRequestAttributeEvent(mock(ServletContext.class), mock(ServletRequest.class), "myAttribute", "myValue");
 		listener.attributeAdded(event);

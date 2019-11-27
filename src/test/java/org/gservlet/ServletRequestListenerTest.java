@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
+
+import org.gservlet.annotation.RequestListener;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -24,6 +26,7 @@ public class ServletRequestListenerTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		AbstractRequestListener listener = (AbstractRequestListener) scriptManager.loadScript("ServletRequestListener.groovy");
+		assertTrue(listener.getClass().isAnnotationPresent(RequestListener.class));
 		assertNotNull(listener);
 		final Map<Object,Object> map = new HashMap<Object,Object>();
 		Answer initializeMap = new Answer() {
