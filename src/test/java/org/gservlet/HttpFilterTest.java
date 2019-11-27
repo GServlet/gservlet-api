@@ -45,8 +45,6 @@ public class HttpFilterTest {
 		doAnswer(initializeMap).when(request).setAttribute(anyString(),any());
 		filter.doFilter(request, mock(ServletResponse.class), mock(FilterChain.class));
 		assertEquals("filtering", map.get("state"));
-		assertNotNull(map.get("requestWrapper"));
-		
 	}
 
 }

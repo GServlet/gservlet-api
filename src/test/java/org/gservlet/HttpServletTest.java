@@ -58,8 +58,6 @@ public class HttpServletTest {
 		assertEquals("trace", map.get("state"));
 		servlet.doHead(request, mock(HttpServletResponse.class));
 		assertEquals("head", map.get("state"));
-		assertNotNull(map.get("requestWrapper"));
-		
 	}
 
 }

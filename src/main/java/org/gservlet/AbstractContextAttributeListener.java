@@ -49,13 +49,7 @@ public abstract class AbstractContextAttributeListener extends BaseListener impl
 	}
 
 	public ServletContext getContext() {
-		ServletContext context = getEvent().getServletContext();
-		ServletContext wrapper = (ServletContext) context.getAttribute(Constants.CONTEXT_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new ContextWrapper(context);
-			context.setAttribute(Constants.CONTEXT_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new ContextWrapper(getEvent().getServletContext());
 	}
 
 	public Object getValue() {

@@ -48,13 +48,7 @@ public abstract class AbstractSessionAttributeListener extends BaseListener impl
 	}
 
 	public HttpSession getSession() {
-		HttpSession session = getEvent().getSession();
-		HttpSession wrapper = (HttpSession) session.getAttribute(Constants.SESSION_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new SessionWrapper(session);
-			session.setAttribute(Constants.SESSION_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new SessionWrapper(getEvent().getSession());
 	}
 
 	public Object getValue() {
