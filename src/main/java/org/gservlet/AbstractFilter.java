@@ -49,6 +49,7 @@ public abstract class AbstractFilter implements Filter {
 			AbstractFilter.config = config;
 			getClass().getDeclaredMethod("init").invoke(this);
 		} catch (NoSuchMethodException e) {
+			// the exception is ignored if there is no init method
 		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during init method", e);
 		}
@@ -76,6 +77,7 @@ public abstract class AbstractFilter implements Filter {
 
 	@Override
 	public void destroy() {
+		// no implementation provided
 	}
 
 	public HttpServletRequest getRequest() {
