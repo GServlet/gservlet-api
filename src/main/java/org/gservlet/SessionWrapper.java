@@ -19,13 +19,14 @@
 
 package org.gservlet;
 
+import java.io.Serializable;
 import java.util.Enumeration;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 
-@SuppressWarnings("deprecation")
-public class SessionWrapper implements HttpSession {
+@SuppressWarnings({ "deprecation", "serial" })
+public class SessionWrapper implements HttpSession, Serializable {
 
     protected final HttpSession session;
     

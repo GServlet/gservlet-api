@@ -23,6 +23,7 @@ import static groovy.json.JsonOutput.toJson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -81,7 +82,7 @@ public abstract class HttpServlet extends javax.servlet.http.HttpServlet {
 		} catch (NoSuchMethodException e) {
 			logger.info("no method " + method + " has been declared for the servlet " + this.getClass().getName());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, "exception during invoke method", e);
 		}
 	}
 
@@ -126,7 +127,7 @@ public abstract class HttpServlet extends javax.servlet.http.HttpServlet {
 		try {
 			request.getRequestDispatcher(location).forward(request, response);
 		} catch (ServletException | IOException e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, "exception during forward method", e);
 		}
 	}
 

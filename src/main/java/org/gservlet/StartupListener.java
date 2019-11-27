@@ -19,6 +19,7 @@
 
 package org.gservlet;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -39,7 +40,7 @@ public class StartupListener implements ServletContextListener {
 			initializer = new Initializer(context);
 			databaseManager = new DatabaseManager(context);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.INFO, "exception during contextInitialized method", e);
 		}
 		logger.info("application started on context " + context.getContextPath());
 	}
