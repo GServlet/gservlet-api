@@ -38,7 +38,7 @@ public class FileWatcher implements Runnable {
 
 	protected final List<FileListener> listeners;
 	protected final Logger logger = Logger.getLogger(FileWatcher.class.getName());
-	protected final File folder;
+	protected final File folder; 
 
 	public FileWatcher(File folder) {
 		listeners = new ArrayList<>();
@@ -56,27 +56,27 @@ public class FileWatcher implements Runnable {
 			WatchService watcher = FileSystems.getDefault().newWatchService();
 			Path path = Paths.get(folder.getAbsolutePath());
 			path.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
-			while (true) {
-				pollEvents(watcher);
+			boolean valid = true;
+			while (valid) {
+				valid = pollEvents(watcher);
 			}
 		} catch (IOException e) {
 			logger.log(Level.INFO, "exception during watch", e);
 		}
 	}
 
-	private void pollEvents(WatchService watcher) {
+	private boolean pollEvents(WatchService watcher) {
 		try {
 			WatchKey key = watcher.take();
 			for (WatchEvent<?> event : key.pollEvents()) {
 				notifyListeners(event.kind(), event.context().toString());
-				if (!key.reset()) {
-					break;
-				}
 			}
+			return key.reset();
 		} catch (InterruptedException e) {
 			logger.log(Level.INFO, "exception during watch", e);
 			Thread.currentThread().interrupt();
 		}
+		return false;
 	}
 
 	public FileWatcher addListener(FileListener listener) {
