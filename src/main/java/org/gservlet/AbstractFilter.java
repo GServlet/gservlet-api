@@ -58,7 +58,7 @@ public abstract class AbstractFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		requestContext.set(new RequestContext((HttpServletRequest)request, (HttpServletResponse)response, chain));;
+		requestContext.set(new RequestContext((HttpServletRequest)request, (HttpServletResponse)response, chain));
 		try {
 			getClass().getDeclaredMethod("filter").invoke(this);
 		} catch (NoSuchMethodException e) {
