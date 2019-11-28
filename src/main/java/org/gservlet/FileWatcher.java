@@ -21,7 +21,6 @@ package org.gservlet;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
-import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -57,29 +56,26 @@ public class FileWatcher implements Runnable {
 			WatchService watcher = FileSystems.getDefault().newWatchService();
 			Path path = Paths.get(folder.getAbsolutePath());
 			path.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
-			WatchKey key;
 			while (true) {
-				try {
-					key = watcher.take();
-					for (WatchEvent<?> event : key.pollEvents()) {
-						WatchEvent.Kind<?> kind = event.kind();
-						String file = event.context().toString();
-						if (kind == OVERFLOW) {
-							continue;
-						} else {
-							notifyListeners(kind, file);
-						}
-						if (!key.reset()) {
-							break;
-						}
-					}
-				} catch (InterruptedException e) {
-					logger.log(Level.INFO, "exception during watch", e);
-					Thread.currentThread().interrupt();
-				}
+				pollEvents(watcher);
 			}
 		} catch (IOException e) {
 			logger.log(Level.INFO, "exception during watch", e);
+		}
+	}
+
+	private void pollEvents(WatchService watcher) {
+		try {
+			WatchKey key = watcher.take();
+			for (WatchEvent<?> event : key.pollEvents()) {
+				notifyListeners(event.kind(), event.context().toString());
+				if (!key.reset()) {
+					break;
+				}
+			}
+		} catch (InterruptedException e) {
+			logger.log(Level.INFO, "exception during watch", e);
+			Thread.currentThread().interrupt();
 		}
 	}
 
