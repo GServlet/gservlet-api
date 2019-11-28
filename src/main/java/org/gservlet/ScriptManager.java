@@ -21,6 +21,7 @@ package org.gservlet;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +37,7 @@ public class ScriptManager {
 	protected final GroovyScriptEngine engine;
 	protected final Logger logger = Logger.getLogger(ScriptManager.class.getName());
 
-	public ScriptManager(File folder) throws Exception {
+	public ScriptManager(File folder) throws MalformedURLException  {
 		engine = createScriptEngine(folder);
 	}
 
@@ -44,7 +45,7 @@ public class ScriptManager {
 		return engine.loadScriptByName(name).newInstance();
 	}
 
-	protected GroovyScriptEngine createScriptEngine(File folder) throws Exception {
+	protected GroovyScriptEngine createScriptEngine(File folder) throws MalformedURLException  {
 		URL[] urls = { folder.toURI().toURL(),
 				ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER) };
 		GroovyScriptEngine gse = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
