@@ -55,11 +55,16 @@ public class HttpFilterTest {
 		doAnswer(initializeMap).when(request).setAttribute(anyString(),any());
 		filter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 		assertEquals("filtering", map.get("state"));
+		filter.init(null);
+		assertEquals("init", map.get("state"));
+		filter.destroy();
+		assertEquals("destroy", map.get("state"));
 		assertEquals(RequestWrapper.class, filter.getRequest().getClass());
 		assertEquals(SessionWrapper.class, filter.getSession().getClass());
 		assertEquals(ContextWrapper.class, filter.getContext().getClass());
 		DefaultRequestFilter defaultRequestFilter = new DefaultRequestFilter();
 		assertFalse(defaultRequestFilter.getClass().isAnnotationPresent(WebListener.class));
+		defaultRequestFilter.init(null);
 		AbstractServlet servlet = (AbstractServlet) scriptManager.loadScript("HttpServlet.groovy");
 		assertNotNull(servlet);
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(servlet);
@@ -72,6 +77,7 @@ public class HttpFilterTest {
 			defaultRequestFilter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 			assertEquals(method, map.get("state"));
 		}
+		defaultRequestFilter.destroy();
 	}
 	
 	@Test
