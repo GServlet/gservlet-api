@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
-
 import org.gservlet.annotation.ContextListener;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
