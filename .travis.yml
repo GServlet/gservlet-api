@@ -6,7 +6,7 @@ branches:
 git:
   depth: false
 env:
-  - gservlet.reload=true
+  - GSERVLET_RELOAD=true
 addons:
   sonarcloud:
     organization: "gservlet"
