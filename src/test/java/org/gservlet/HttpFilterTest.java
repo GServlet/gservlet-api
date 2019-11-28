@@ -8,6 +8,7 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.FilterChain;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Test;
@@ -52,6 +53,9 @@ public class HttpFilterTest {
 		assertEquals(RequestWrapper.class, filter.getRequest().getClass());
 		assertEquals(SessionWrapper.class, filter.getSession().getClass());
 		assertEquals(ContextWrapper.class, filter.getContext().getClass());
+		DefaultRequestFilter defaultRequestFilter = new DefaultRequestFilter();
+		defaultRequestFilter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
+		assertFalse(defaultRequestFilter.getClass().isAnnotationPresent(WebListener.class));
 	}
 	
 	@Test

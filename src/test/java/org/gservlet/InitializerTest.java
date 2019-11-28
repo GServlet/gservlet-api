@@ -25,6 +25,10 @@ public class InitializerTest {
 		Initializer initializer = new Initializer(context);
 		initializer.loadScripts(folder);
 		assertEquals(8, initializer.getHandlers().size());
+		for (DynamicInvocationHandler handler : initializer.getHandlers().values()) {
+			assertNotNull(handler.getTarget());
+			assertTrue(handler.isRegistered());
+		}
 	}
 
 }
