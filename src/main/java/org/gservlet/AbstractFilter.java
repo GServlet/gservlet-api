@@ -19,22 +19,28 @@
 
 package org.gservlet;
 
+import static groovy.json.JsonOutput.toJson;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import groovy.sql.Sql;
+import groovy.xml.MarkupBuilder;
 
-@SuppressWarnings("serial")
-public abstract class AbstractFilter extends AbstractServlet implements Filter {
+public abstract class AbstractFilter implements Filter {
 
 	protected FilterConfig config;
+	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
 	protected final Logger logger = Logger.getLogger(AbstractFilter.class.getName());
 	
 	@Override
@@ -72,12 +78,56 @@ public abstract class AbstractFilter extends AbstractServlet implements Filter {
 		// no implementation provided
 	}
 	
+	public RequestContext getRequestContext() {
+		return requestContext.get();
+	}
+
+	public HttpServletRequest getRequest() {
+		return new RequestWrapper(getRequestContext().getRequest());
+	}
+
+	public HttpSession getSession() {
+		return new SessionWrapper(getRequestContext().getSession());
+	}
+
+	public ServletContext getContext() {
+		return new ContextWrapper(getRequestContext().getServletContext());
+	}
+
+	public HttpServletResponse getResponse() {
+		return getRequestContext().getResponse();
+	}
+	
 	public FilterChain getFilterChain() {
 		return getRequestContext().getFilterChain();
 	}
 
 	public FilterConfig getConfig() {
 		return config;
+	}
+
+	public Sql getConnection() {
+		return (Sql) getRequestContext().getRequest().getAttribute(Constants.CONNECTION);
+	}
+
+	public PrintWriter getOut() throws IOException {
+		return getResponse().getWriter();
+	}
+
+	public void json(Object object) throws IOException {
+		getResponse().setHeader("Content-Type", "application/json");
+		getResponse().getWriter().write(toJson(object));
+	}
+
+	public String stringify(Object object) {
+		return toJson(object);
+	}
+	
+	public MarkupBuilder getHtml() throws IOException {
+		MarkupBuilder builder = new MarkupBuilder(getOut());
+		getResponse().setHeader("Content-Type", "text/html");
+		getResponse().getWriter().println("<!DOCTYPE html>");
+		return builder;
 	}
 
 }
