@@ -65,7 +65,7 @@ public class Initializer {
 
 	protected void init(File folder) throws Exception {
 		loadScripts(folder);
-		context.addFilter(Constants.REQUEST_FILTER, new RequestFilter())
+		context.addFilter(Constants.REQUEST_FILTER, new DefaultRequestFilter())
 				.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true, "/*");
 	}
 

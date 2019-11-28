@@ -5,9 +5,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
-
+import javax.servlet.http.HttpServletRequest;
 import org.gservlet.annotation.RequestListener;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -37,11 +36,14 @@ public class ServletRequestListenerTest {
 		};
 		ServletContext context = mock(ServletContext.class);
 		doAnswer(initializeMap).when(context).setAttribute(anyString(),any());
-		ServletRequestEvent event = new ServletRequestEvent(context, mock(ServletRequest.class));
+		ServletRequestEvent event = new ServletRequestEvent(context, mock(HttpServletRequest.class));
 		listener.requestInitialized(event);
 		assertEquals("requestInitialized", map.get("state"));
 		listener.requestDestroyed(event);
 		assertEquals("requestDestroyed", map.get("state"));
+		assertEquals(RequestWrapper.class, listener.getRequest().getClass());
+		assertEquals(SessionWrapper.class, listener.getSession().getClass());
+		assertEquals(ContextWrapper.class, listener.getContext().getClass());
 	}
 
 }

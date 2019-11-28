@@ -25,6 +25,8 @@ public class ServletContextAttributeListenerTest {
 		assertEquals("attributeRemoved", listener.getEvent().getName());
 		listener.attributeReplaced(event);
 		assertEquals("attributeReplaced", listener.getEvent().getName());
+		assertEquals("myValue", listener.getValue());
+		assertEquals(ContextWrapper.class, listener.getContext().getClass());
 	}
 
 }
