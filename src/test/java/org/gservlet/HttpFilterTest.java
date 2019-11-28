@@ -6,8 +6,8 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.FilterChain;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -43,7 +43,7 @@ public class HttpFilterTest {
 		};
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		doAnswer(initializeMap).when(request).setAttribute(anyString(),any());
-		filter.doFilter(request, mock(ServletResponse.class), mock(FilterChain.class));
+		filter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 		assertEquals("filtering", map.get("state"));
 	}
 

@@ -38,8 +38,8 @@ import groovy.xml.MarkupBuilder;
 @SuppressWarnings("serial")
 public abstract class AbstractServlet extends HttpServlet {
 
-	protected final ThreadLocal<HttpServletRequest> requestHolder = new ThreadLocal<>();
-	protected final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
+	protected ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
+	protected Logger logger = Logger.getLogger(AbstractServlet.class.getName());
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -77,8 +77,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	private void route(HttpServletRequest request, HttpServletResponse response, String methodName) {
-		request.setAttribute(Constants.SERVLET_RESPONSE, response);
-		requestHolder.set(request);
+		requestContext.set(new RequestContext(request, response));
 		invoke(methodName);
 	}
 
@@ -93,28 +92,29 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	public HttpServletRequest getRequest() {
-		return new RequestWrapper(requestHolder.get());
+		return new RequestWrapper(requestContext.get().getRequest());
 	}
 
 	public HttpSession getSession() {
-		return new SessionWrapper(requestHolder.get().getSession(true));
+		return new SessionWrapper(requestContext.get().getSession());
 	}
 
 	public ServletContext getContext() {
-		return new ContextWrapper(requestHolder.get().getServletContext());
+		return new ContextWrapper(requestContext.get().getServletContext());
 	}
 
 	public HttpServletResponse getResponse() {
-		return (HttpServletResponse) requestHolder.get().getAttribute(Constants.SERVLET_RESPONSE);
+		return requestContext.get().getResponse();
 	}
 
 	public Sql getConnection() {
-		return (Sql) requestHolder.get().getAttribute(Constants.CONNECTION);
+		return (Sql) requestContext.get().getRequest().getAttribute(Constants.CONNECTION);
 	}
 
 	public void forward(String location) {
 		try {
-			requestHolder.get().getRequestDispatcher(location).forward(requestHolder.get(), getResponse());
+			HttpServletRequest request = requestContext.get().getRequest(); 
+			request.getRequestDispatcher(location).forward(request, getResponse());
 		} catch (ServletException | IOException e) {
 			logger.log(Level.INFO, "exception during forward method", e);
 		}
