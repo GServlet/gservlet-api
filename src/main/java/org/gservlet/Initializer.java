@@ -181,17 +181,17 @@ public class Initializer {
 		handlers.put(object.getClass().getName(), handler);
 	}
 
-	protected void watch(final File folder) {
+	protected void watch(File folder) {
 		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
 		if (reload) {
-			new FileWatcher().addListener(new FileAdapter() {
+			new FileWatcher(folder).addListener(new FileAdapter() {
 				@Override
 				public void onCreated(String script) {
 					logger.info("reloading script " + script);
 					reload(script);
 				}
 
-			}).watch(folder);
+			}).watch();
 		}
 	}
 

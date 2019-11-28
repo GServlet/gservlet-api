@@ -71,7 +71,7 @@ public class DatabaseManager {
 	protected void watch(File folder) {
 		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
 		if (reload) {
-			new FileWatcher().addListener(new FileAdapter() {
+			new FileWatcher(folder).addListener(new FileAdapter() {
 				@Override
 				public void onCreated(String fileName) {
 					if (fileName.equals(Constants.DB_CONFIG_FILE)) {
@@ -83,7 +83,7 @@ public class DatabaseManager {
 						}
 					}
 				}
-			}).watch(folder);
+			}).watch();
 		}
 	}
 
