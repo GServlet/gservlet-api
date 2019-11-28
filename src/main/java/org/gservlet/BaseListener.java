@@ -37,6 +37,7 @@ public abstract class BaseListener {
 		try {
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
+			// the exception is ignored if the method does not exist
 		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during invoke method", e);
 		}

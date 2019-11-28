@@ -23,6 +23,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,7 +44,6 @@ public class FileWatcher {
 		listeners = new ArrayList<>();
 	}
 
-	@SuppressWarnings("unchecked")
 	public void watch(final File folder) {
 		if (folder.exists()) {
 			new Thread(new Runnable() {
@@ -58,18 +58,11 @@ public class FileWatcher {
 								key = watcher.take();
 								for (WatchEvent<?> event : key.pollEvents()) {
 									WatchEvent.Kind<?> kind = event.kind();
-									WatchEvent<Path> ev = (WatchEvent<Path>) event;
-									String file = ev.context().toString();
+									String file = event.context().toString();
 									if (kind == OVERFLOW) {
 										continue;
-									} else if (kind == ENTRY_CREATE) {
-										for (FileListener listener : listeners) {
-											listener.onCreated(file);
-										}
-									} else if (kind == ENTRY_DELETE) {
-										for (FileListener listener : listeners) {
-											listener.onDeleted(file);
-										}
+									} else {
+										notifyListeners(kind, file);
 									}
 								}
 								if (!key.reset()) {
@@ -80,7 +73,7 @@ public class FileWatcher {
 								Thread.currentThread().interrupt();
 							}
 						}
-					} catch (Exception e) {
+					} catch (IOException e) {
 						logger.log(Level.INFO, "exception during watch", e);
 					}
 				}
@@ -96,6 +89,18 @@ public class FileWatcher {
 	public FileWatcher removeListener(FileListener listener) {
 		listeners.remove(listener);
 		return this;
+	}
+	
+	private void notifyListeners(WatchEvent.Kind<?> kind, String file) {
+		if (kind == ENTRY_CREATE) {
+			for (FileListener listener : listeners) {
+				listener.onCreated(file);
+			}
+		} else if (kind == ENTRY_DELETE) {
+			for (FileListener listener : listeners) {
+				listener.onDeleted(file);
+			}
+		}
 	}
 
 }

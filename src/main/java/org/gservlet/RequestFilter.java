@@ -48,48 +48,40 @@ public class RequestFilter implements Filter {
 		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
 		if (reload) {
 			ServletContext context = request.getServletContext();
-			Map<String, DynamicInvocationHandler> servletHandlers = (Map<String, DynamicInvocationHandler>) context.getAttribute(Constants.HANDLERS);
+			Map<String, DynamicInvocationHandler> servletHandlers = (Map<String, DynamicInvocationHandler>) context
+					.getAttribute(Constants.HANDLERS);
 			for (DynamicInvocationHandler handler : servletHandlers.values()) {
 				Object target = handler.getTarget();
 				if (target instanceof AbstractServlet && !handler.isRegistered()) {
 					Servlet annotation = target.getClass().getAnnotation(Servlet.class);
 					String path = annotation.value()[0];
 					if (httpServletRequest.getRequestURI().endsWith(path)) {
-						AbstractServlet servlet = (AbstractServlet) target;
-						String method = httpServletRequest.getMethod();
-						if (method.equalsIgnoreCase("get")) {
-							servlet.doGet(httpServletRequest, httpServletResponse);
-							return;
-						} else if (method.equalsIgnoreCase("post")) {
-							servlet.doPost(httpServletRequest, httpServletResponse);
-							return;
-						}
-						else if (method.equalsIgnoreCase("put")) {
-							servlet.doPut(httpServletRequest, httpServletResponse);
-							return;
-						}
-						else if (method.equalsIgnoreCase("delete")) {
-							servlet.doDelete(httpServletRequest, httpServletResponse);
-							return;
-						}
-						else if (method.equalsIgnoreCase("head")) {
-							servlet.doHead(httpServletRequest, httpServletResponse);
-							return;
-						}
-						else if (method.equalsIgnoreCase("trace")) {
-							servlet.doTrace(httpServletRequest, httpServletResponse);
-							return;
-						}
-						else if (method.equalsIgnoreCase("options")) {
-							servlet.doOptions(httpServletRequest, httpServletResponse);
-							return;
-						}
+						run((AbstractServlet) target, httpServletRequest, httpServletResponse);
 					}
 				}
 			}
-			
+
 		}
 		chain.doFilter(request, response);
+	}
+
+	protected void run(AbstractServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+		String method = request.getMethod();
+		if (method.equalsIgnoreCase("get")) {
+			servlet.doGet(request, response);
+		} else if (method.equalsIgnoreCase("post")) {
+			servlet.doPost(request, response);
+		} else if (method.equalsIgnoreCase("put")) {
+			servlet.doPut(request, response);
+		} else if (method.equalsIgnoreCase("delete")) {
+			servlet.doDelete(request, response);
+		} else if (method.equalsIgnoreCase("head")) {
+			servlet.doHead(request, response);
+		} else if (method.equalsIgnoreCase("trace")) {
+			servlet.doTrace(request, response);
+		} else if (method.equalsIgnoreCase("options")) {
+			servlet.doOptions(request, response);
+		}
 	}
 
 	@Override
