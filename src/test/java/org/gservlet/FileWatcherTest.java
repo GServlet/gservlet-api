@@ -41,8 +41,8 @@ public class FileWatcherTest {
 		assertEquals(file.getName(), map.get("file.deleted"));
 	}
 	
-	public void wait(int seconds) throws InterruptedException {
-		Thread.sleep(seconds);
+	public void wait(int time) throws InterruptedException {
+		Thread.sleep(time);
 	}
 
 }
