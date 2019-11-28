@@ -5,6 +5,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.isA;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.FilterRegistration;
@@ -29,6 +32,20 @@ public class InitializerTest {
 			assertNotNull(handler.getTarget());
 			assertTrue(handler.isRegistered());
 		}
+		wait(2000);
+		File file = new File("src/test/resources/scripts/script.groovy");
+		PrintWriter printWriter = new PrintWriter(new FileWriter(file));
+		printWriter.println("import org.gservlet.annotation.Servlet");
+		printWriter.println("@Servlet(\"/servlet\")");
+		printWriter.println("class MyServlet {}");
+		printWriter.close();
+		wait(2000);
+		assertEquals(9, initializer.getHandlers().size());
+		file.delete();
+	}
+	
+	public void wait(int time) throws InterruptedException {
+		Thread.sleep(time);
 	}
 
 }
