@@ -21,6 +21,7 @@ package org.gservlet;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -38,7 +39,7 @@ public class DatabaseManager {
 
 	protected final Logger logger = Logger.getLogger(DatabaseManager.class.getName());
 
-	public DatabaseManager(ServletContext context) throws Exception {
+	public DatabaseManager(ServletContext context) throws IOException {
 		this.context = context;
 		init();
 	}
@@ -50,12 +51,12 @@ public class DatabaseManager {
 	 * @throws Exception throws an exception if the data source can't be configured
 	 */
 
-	protected void init() throws Exception {
+	protected void init() throws IOException {
 		setupDataSource();
 		watch(new File(context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER));
 	}
 
-	protected void setupDataSource() throws Exception {
+	protected void setupDataSource() throws IOException {
 		File configuration = new File(
 				context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER + 
 				File.separator + Constants.DB_CONFIG_FILE);
@@ -77,7 +78,7 @@ public class DatabaseManager {
 						logger.info("reloading configuration file " + fileName);
 						try {
 							setupDataSource();
-						} catch (Exception e) {
+						} catch (IOException e) {
 							logger.log(Level.INFO, "exception during reload", e);
 						}
 					}
@@ -106,7 +107,7 @@ public class DatabaseManager {
 	 * @throws Exception throws an Exception if the configuration file is invalid
 	 * @return the properties of the configuration file
 	 */
-	public Properties loadConfiguration(File configuration) throws Exception {
+	public Properties loadConfiguration(File configuration) throws IOException {
 		Properties properties = new Properties();
 		FileReader reader = new FileReader(configuration);
 		properties.load(reader);
