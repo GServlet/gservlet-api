@@ -56,23 +56,26 @@ public class FileWatcher implements Runnable {
 			WatchService watcher = FileSystems.getDefault().newWatchService();
 			Path path = Paths.get(folder.getAbsolutePath());
 			path.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
-			WatchKey key;
 			while (true) {
-				try {
-					key = watcher.take();
-					for (WatchEvent<?> event : key.pollEvents()) {
-						notifyListeners(event.kind(), event.context().toString());
-						if (!key.reset()) {
-							break;
-						}
-					}
-				} catch (InterruptedException e) {
-					logger.log(Level.INFO, "exception during watch", e);
-					Thread.currentThread().interrupt();
-				}
+				pollEvents(watcher);
 			}
 		} catch (IOException e) {
 			logger.log(Level.INFO, "exception during watch", e);
+		}
+	}
+
+	private void pollEvents(WatchService watcher) {
+		try {
+			WatchKey key = watcher.take();
+			for (WatchEvent<?> event : key.pollEvents()) {
+				notifyListeners(event.kind(), event.context().toString());
+				if (!key.reset()) {
+					break;
+				}
+			}
+		} catch (InterruptedException e) {
+			logger.log(Level.INFO, "exception during watch", e);
+			Thread.currentThread().interrupt();
 		}
 	}
 
