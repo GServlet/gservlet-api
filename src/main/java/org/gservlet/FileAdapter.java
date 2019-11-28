@@ -23,10 +23,12 @@ public class FileAdapter implements FileListener {
 
 	@Override
 	public void onCreated(String name) {
+		// no implementation provided
 	}
 
 	@Override
 	public void onDeleted(String name) {	
+		// no implementation provided
 	}
 
 }
