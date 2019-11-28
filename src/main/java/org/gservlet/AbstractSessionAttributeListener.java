@@ -40,7 +40,7 @@ public abstract class AbstractSessionAttributeListener extends BaseListener impl
 	}
 
 	public HttpSessionBindingEvent getEvent() {
-		return (HttpSessionBindingEvent) event;
+		return (HttpSessionBindingEvent) eventHolder.get();
 	}
 
 	public String getName() {

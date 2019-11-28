@@ -40,7 +40,7 @@ public abstract class AbstractSessionListener extends BaseListener implements Ht
 	}
 
 	public HttpSessionEvent getEvent() {
-		return (HttpSessionEvent) event;
+		return (HttpSessionEvent) eventHolder.get();
 	}
 
 }

@@ -40,7 +40,7 @@ public abstract class AbstractContextListener extends BaseListener implements Se
 	}
 	
 	public ServletContextEvent getEvent() {
-		return (ServletContextEvent) event;
+		return (ServletContextEvent) eventHolder.get();
 	}
 
 }

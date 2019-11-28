@@ -41,7 +41,7 @@ public abstract class AbstractContextAttributeListener extends BaseListener impl
 	}
 
 	public ServletContextAttributeEvent getEvent() {
-		return (ServletContextAttributeEvent) event;
+		return (ServletContextAttributeEvent) eventHolder.get();
 	}
 
 	public String getName() {

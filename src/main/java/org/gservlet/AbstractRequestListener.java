@@ -50,7 +50,7 @@ public abstract class AbstractRequestListener extends BaseListener implements Se
 	}
 
 	public ServletRequestEvent getEvent() {
-		return (ServletRequestEvent) event;
+		return (ServletRequestEvent) eventHolder.get();
 	}
 
 }
