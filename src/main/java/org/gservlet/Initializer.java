@@ -201,16 +201,7 @@ public class Initializer {
 			Annotation[] annotations = object.getClass().getAnnotations();
 			for (Annotation annotation : annotations) {
 				if (annotation instanceof Servlet) {
-					Servlet servlet = (Servlet) annotation;
-					String name = servlet.name().trim().equals("") ? object.getClass().getName() : servlet.name();
-					DynamicInvocationHandler handler = handlers.get(name);
-					if (handler != null) {
-						handler.setTarget(object);
-					} else {
-						handler = new DynamicInvocationHandler(object);
-						handler.setRegistered(false);
-						handlers.put(name, handler);
-					}
+					reloadServlet((Servlet) annotation, object);
 				} else if (annotation instanceof Filter || annotation instanceof RequestListener
 						|| annotation instanceof ContextAttributeListener
 						|| annotation instanceof RequestAttributeListener || annotation instanceof SessionListener
@@ -223,6 +214,18 @@ public class Initializer {
 			}
 		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during reload", e);
+		}
+	}
+	
+	protected void reloadServlet(Servlet servlet, Object object) {
+		String name = servlet.name().trim().equals("") ? object.getClass().getName() : servlet.name();
+		DynamicInvocationHandler handler = handlers.get(name);
+		if (handler != null) {
+			handler.setTarget(object);
+		} else {
+			handler = new DynamicInvocationHandler(object);
+			handler.setRegistered(false);
+			handlers.put(name, handler);
 		}
 	}
 
