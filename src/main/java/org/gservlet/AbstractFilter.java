@@ -97,6 +97,10 @@ public abstract class AbstractFilter implements Filter {
 	public HttpServletResponse getResponse() {
 		return getRequestContext().getResponse();
 	}
+	
+	public FilterChain getFilterChain() {
+		return getRequestContext().getFilterChain();
+	}
 
 	public FilterConfig getConfig() {
 		return config;
