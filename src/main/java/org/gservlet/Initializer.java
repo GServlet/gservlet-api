@@ -234,6 +234,7 @@ public class Initializer {
 				contextListener.contextDestroyed(new ServletContextEvent(context));
 			}
 		}
+		handlers.clear();
 	}
 
 	public Map<String, DynamicInvocationHandler> getHandlers() {
