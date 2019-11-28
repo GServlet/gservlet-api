@@ -43,7 +43,7 @@ public abstract class AbstractRequestAttributeListener extends BaseListener impl
 
 
 	public ServletRequestAttributeEvent getEvent() {
-		return (ServletRequestAttributeEvent) event;
+		return (ServletRequestAttributeEvent) eventHolder.get();
 	}
 
 	public String getName() {

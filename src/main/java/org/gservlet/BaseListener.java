@@ -24,12 +24,12 @@ import java.util.logging.Logger;
 
 public abstract class BaseListener {
 
-	protected Object event;
-	protected final Logger logger = Logger.getLogger(BaseListener.class.getName());
+	protected final ThreadLocal<Object> eventHolder = new ThreadLocal<>();
+	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
 	
 	protected void route(Object event, String method) {
-		this.event = event;
+		eventHolder.set(event);
 		invoke(method);
 	}
 	
