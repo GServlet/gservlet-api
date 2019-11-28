@@ -15,7 +15,7 @@ public class FileWatcherTest {
 	public void test() throws IOException, InterruptedException {
 		File folder = new File("src/test/resources");
 		final Map<String,String> map = new HashMap<String,String>();
-		FileWatcher watcher = new FileWatcher();
+		FileWatcher watcher = new FileWatcher(folder);
 		watcher.addListener(new FileAdapter() {
 			@Override
 			public void onCreated(String name) {
@@ -26,7 +26,7 @@ public class FileWatcherTest {
 				map.put("file.deleted", name);
 			}
 
-		}).watch(folder);
+		}).watch();
 		assertEquals(1, watcher.getListeners().size());
 		Thread.sleep(2000);
 		File file = new File("src/test/resources/test.txt");

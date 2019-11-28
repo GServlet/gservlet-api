@@ -35,55 +35,52 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FileWatcher {
+public class FileWatcher implements Runnable {
 
 	protected final List<FileListener> listeners;
 	protected final Logger logger = Logger.getLogger(FileWatcher.class.getName());
+	protected final File folder;
 
-	public FileWatcher() {
+	public FileWatcher(File folder) {
 		listeners = new ArrayList<>();
+		this.folder = folder;
 	}
 
-	public void watch(File folder) {
+	public void watch() {
 		if (folder.exists()) {
-			start(folder);
+			new Thread(this).start();
 		}
 	}
 
-	private void start(final File folder) {
-		Runnable runnable = new Runnable() {
-			public void run() {
+	public void run() {
+		try {
+			WatchService watcher = FileSystems.getDefault().newWatchService();
+			Path path = Paths.get(folder.getAbsolutePath());
+			path.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
+			WatchKey key;
+			while (true) {
 				try {
-					WatchService watcher = FileSystems.getDefault().newWatchService();
-					Path path = Paths.get(folder.getAbsolutePath());
-					path.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
-					WatchKey key;
-					while (true) {
-						try {
-							key = watcher.take();
-							for (WatchEvent<?> event : key.pollEvents()) {
-								WatchEvent.Kind<?> kind = event.kind();
-								String file = event.context().toString();
-								if (kind == OVERFLOW) {
-									continue;
-								} else {
-									notifyListeners(kind, file);
-								}
-								if (!key.reset()) {
-									break;
-								}
-							}
-						} catch (InterruptedException e) {
-							logger.log(Level.INFO, "exception during watch", e);
-							Thread.currentThread().interrupt();
+					key = watcher.take();
+					for (WatchEvent<?> event : key.pollEvents()) {
+						WatchEvent.Kind<?> kind = event.kind();
+						String file = event.context().toString();
+						if (kind == OVERFLOW) {
+							continue;
+						} else {
+							notifyListeners(kind, file);
+						}
+						if (!key.reset()) {
+							break;
 						}
 					}
-				} catch (IOException e) {
+				} catch (InterruptedException e) {
 					logger.log(Level.INFO, "exception during watch", e);
+					Thread.currentThread().interrupt();
 				}
 			}
-		};
-		new Thread(runnable).start();
+		} catch (IOException e) {
+			logger.log(Level.INFO, "exception during watch", e);
+		}
 	}
 
 	public FileWatcher addListener(FileListener listener) {
