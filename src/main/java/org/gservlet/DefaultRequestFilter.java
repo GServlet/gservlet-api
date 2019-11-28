@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.gservlet.annotation.Servlet;
 
-public class RequestFilter implements Filter {
+public class DefaultRequestFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -56,7 +56,7 @@ public class RequestFilter implements Filter {
 					Servlet annotation = target.getClass().getAnnotation(Servlet.class);
 					String path = annotation.value()[0];
 					if (httpServletRequest.getRequestURI().endsWith(path)) {
-						run((AbstractServlet) target, httpServletRequest, httpServletResponse);
+						forward((AbstractServlet) target, httpServletRequest, httpServletResponse);
 					}
 				}
 			}
@@ -65,7 +65,7 @@ public class RequestFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
-	protected void run(AbstractServlet servlet, HttpServletRequest request, HttpServletResponse response) {
+	protected void forward(AbstractServlet servlet, HttpServletRequest request, HttpServletResponse response) {
 		String method = request.getMethod();
 		if (method.equalsIgnoreCase("get")) {
 			servlet.doGet(request, response);

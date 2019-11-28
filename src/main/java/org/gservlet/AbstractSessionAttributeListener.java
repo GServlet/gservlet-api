@@ -20,9 +20,10 @@
 package org.gservlet;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
-public abstract class AbstractSessionAttributeListener extends BaseListener implements javax.servlet.http.HttpSessionAttributeListener {
+public abstract class AbstractSessionAttributeListener extends BaseListener implements HttpSessionAttributeListener {
 
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent event) {
