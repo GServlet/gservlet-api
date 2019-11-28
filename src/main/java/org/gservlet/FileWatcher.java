@@ -44,41 +44,45 @@ public class FileWatcher {
 		listeners = new ArrayList<>();
 	}
 
-	public void watch(final File folder) {
+	public void watch(File folder) {
 		if (folder.exists()) {
-			new Thread(new Runnable() {
-				public void run() {
-					try {
-						WatchService watcher = FileSystems.getDefault().newWatchService();
-						Path path = Paths.get(folder.getAbsolutePath());
-						path.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
-						WatchKey key;
-						while (true) {
-							try {
-								key = watcher.take();
-								for (WatchEvent<?> event : key.pollEvents()) {
-									WatchEvent.Kind<?> kind = event.kind();
-									String file = event.context().toString();
-									if (kind == OVERFLOW) {
-										continue;
-									} else {
-										notifyListeners(kind, file);
-									}
-								}
-								if (!key.reset()) {
-									break;
-								}
-							} catch (InterruptedException e) {
-								logger.log(Level.INFO, "exception during watch", e);
-								Thread.currentThread().interrupt();
-							}
-						}
-					} catch (IOException e) {
-						logger.log(Level.INFO, "exception during watch", e);
-					}
-				}
-			}).start();
+			start(folder);
 		}
+	}
+
+	private void start(final File folder) {
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					WatchService watcher = FileSystems.getDefault().newWatchService();
+					Path path = Paths.get(folder.getAbsolutePath());
+					path.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
+					WatchKey key;
+					while (true) {
+						try {
+							key = watcher.take();
+							for (WatchEvent<?> event : key.pollEvents()) {
+								WatchEvent.Kind<?> kind = event.kind();
+								String file = event.context().toString();
+								if (kind == OVERFLOW) {
+									continue;
+								} else {
+									notifyListeners(kind, file);
+								}
+							}
+							if (!key.reset()) {
+								break;
+							}
+						} catch (InterruptedException e) {
+							logger.log(Level.INFO, "exception during watch", e);
+							Thread.currentThread().interrupt();
+						}
+					}
+				} catch (IOException e) {
+					logger.log(Level.INFO, "exception during watch", e);
+				}
+			}
+		}).start();
 	}
 
 	public FileWatcher addListener(FileListener listener) {
@@ -90,7 +94,7 @@ public class FileWatcher {
 		listeners.remove(listener);
 		return this;
 	}
-	
+
 	private void notifyListeners(WatchEvent.Kind<?> kind, String file) {
 		if (kind == ENTRY_CREATE) {
 			for (FileListener listener : listeners) {
@@ -101,6 +105,10 @@ public class FileWatcher {
 				listener.onDeleted(file);
 			}
 		}
+	}
+
+	public List<FileListener> getListeners() {
+		return listeners;
 	}
 
 }
