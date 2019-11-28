@@ -314,6 +314,18 @@ public class ContextWrapper implements ServletContext {
 		context.log(arg0);
 	}
 
+	/**
+     * @deprecated	As of Java Servlet API 2.1, use
+     * 			{@link #log(String message, Throwable throwable)}
+     *			instead.
+     *
+     * <p>This method was originally defined to write an
+     * exception's stack trace and an explanatory error message
+     * to the servlet log file.
+     *
+     * @param exception the <code>Exception</code> error
+     * @param msg a <code>String</code> that describes the exception
+     */
 	@Deprecated
 	public void log(Exception arg0, String arg1) {
 		context.log(arg0, arg1);
@@ -341,6 +353,7 @@ public class ContextWrapper implements ServletContext {
 
 	@Override
 	public void setSessionTrackingModes(Set<SessionTrackingMode> arg0) {
+		context.setSessionTrackingModes(arg0);
 	}
 
 	public void propertyMissing(String property, Object value) {
