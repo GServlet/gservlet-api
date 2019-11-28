@@ -21,7 +21,6 @@ package org.gservlet;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
-import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -62,13 +61,7 @@ public class FileWatcher implements Runnable {
 				try {
 					key = watcher.take();
 					for (WatchEvent<?> event : key.pollEvents()) {
-						WatchEvent.Kind<?> kind = event.kind();
-						String file = event.context().toString();
-						if (kind == OVERFLOW) {
-							continue;
-						} else {
-							notifyListeners(kind, file);
-						}
+						notifyListeners(event.kind(), event.context().toString());
 						if (!key.reset()) {
 							break;
 						}
