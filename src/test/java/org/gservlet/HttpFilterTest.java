@@ -8,6 +8,7 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.FilterChain;
+import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +48,10 @@ public class HttpFilterTest {
 		    }
 		};
 		HttpServletRequest request = mock(HttpServletRequest.class);
+		ServletContext context = mock(ServletContext.class);
+		when(request.getServletContext()).thenReturn(context);
+		final Map<String, DynamicInvocationHandler> handlers = new HashMap<>();
+		when(context.getAttribute(Constants.HANDLERS)).thenReturn(handlers);
 		doAnswer(initializeMap).when(request).setAttribute(anyString(),any());
 		filter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 		assertEquals("filtering", map.get("state"));
@@ -54,8 +59,19 @@ public class HttpFilterTest {
 		assertEquals(SessionWrapper.class, filter.getSession().getClass());
 		assertEquals(ContextWrapper.class, filter.getContext().getClass());
 		DefaultRequestFilter defaultRequestFilter = new DefaultRequestFilter();
-		defaultRequestFilter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 		assertFalse(defaultRequestFilter.getClass().isAnnotationPresent(WebListener.class));
+		AbstractServlet servlet = (AbstractServlet) scriptManager.loadScript("HttpServlet.groovy");
+		assertNotNull(servlet);
+		DynamicInvocationHandler handler = new DynamicInvocationHandler(servlet);
+		handler.setRegistered(false);
+		handlers.put("servlet", handler);
+		when(request.getRequestURI()).thenReturn("/servlet");
+		String[] methods = {"get","post","put","delete","options","head","trace"};
+		for(String method : methods) {
+			when(request.getMethod()).thenReturn(method);
+			defaultRequestFilter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
+			assertEquals(method, map.get("state"));
+		}
 	}
 	
 	@Test
