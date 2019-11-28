@@ -5,6 +5,8 @@ branches:
     - master
 git:
   depth: false
+env:
+  - gservlet.reload=true
 addons:
   sonarcloud:
     organization: "gservlet"
