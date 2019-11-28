@@ -62,6 +62,7 @@ public class HttpFilterTest {
 		assertEquals(RequestWrapper.class, filter.getRequest().getClass());
 		assertEquals(SessionWrapper.class, filter.getSession().getClass());
 		assertEquals(ContextWrapper.class, filter.getContext().getClass());
+		assertNotNull(filter.getFilterChain());
 		DefaultRequestFilter defaultRequestFilter = new DefaultRequestFilter();
 		assertFalse(defaultRequestFilter.getClass().isAnnotationPresent(WebListener.class));
 		defaultRequestFilter.init(null);
@@ -98,10 +99,11 @@ public class HttpFilterTest {
 		assertEquals("<!DOCTYPE html>", out.toString().trim());
 		out = new StringWriter();
 		when(response.getWriter()).thenReturn(new PrintWriter(out));
-		Map<String,String> hashMap = new HashMap<>();
-		hashMap.put("key", "value");
-		filter.json(hashMap);
+		Map<String,String> map = new HashMap<>();
+		map.put("key", "value");
+		filter.json(map);
 		assertEquals("{\"key\":\"value\"}", out.toString());
+		assertEquals("{\"key\":\"value\"}", filter.stringify(map));
 	}
 
 }

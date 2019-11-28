@@ -86,10 +86,11 @@ public class HttpServletTest {
 		assertEquals("<!DOCTYPE html>", out.toString().trim());
 		out = new StringWriter();
 		when(response.getWriter()).thenReturn(new PrintWriter(out));
-		Map<String,String> hashMap = new HashMap<>();
-		hashMap.put("key", "value");
-		servlet.json(hashMap);
+		Map<String,String> map = new HashMap<>();
+		map.put("key", "value");
+		servlet.json(map);
 		assertEquals("{\"key\":\"value\"}", out.toString());
+		assertEquals("{\"key\":\"value\"}", servlet.stringify(map));
 	}
 
 }
