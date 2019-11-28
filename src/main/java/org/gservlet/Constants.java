@@ -24,7 +24,7 @@ public final class Constants {
 	public static final String SCRIPTS_FOLDER = "scripts";
 	public static final String DATASOURCE = "gservlet.dataSource";
 	public static final String CONNECTION = "gservlet.connection";
-	public static final String RELOAD = "gservlet.reload";
+	public static final String RELOAD = "GSERVLET_RELOAD";
 	public static final String CONFIG_FOLDER = "conf";
 	public static final String DB_CONFIG_FILE = "db.properties";
 	public static final String HANDLERS = "gservlet.handlers";
