@@ -20,7 +20,6 @@ public class DatabaseManagerTest {
 		assertTrue(databaseManager.isConfigurationValid(properties));
 		DataSource dataSource = databaseManager.createDataSource(properties);
 		assertNotNull(dataSource);
-		
 	}
 
 }

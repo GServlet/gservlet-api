@@ -16,7 +16,7 @@ public class FileWatcherTest {
 		File folder = new File("src/test/resources");
 		final Map<String, String> map = new HashMap<String, String>();
 		FileWatcher watcher = new FileWatcher(folder);
-		watcher.addListener(new FileAdapter() {
+		FileListener listener = new FileAdapter() {
 			@Override
 			public void onCreated(String name) {
 				map.put("file.created", name);
@@ -27,7 +27,8 @@ public class FileWatcherTest {
 				map.put("file.deleted", name);
 			}
 
-		}).watch();
+		};
+		watcher.addListener(listener).watch();
 		assertEquals(1, watcher.getListeners().size());
 		wait(2000);
 		File file = new File("src/test/resources/test.txt");
@@ -39,6 +40,8 @@ public class FileWatcherTest {
 		wait(2000);
 		assertEquals(file.getName(), map.get("file.created"));
 		assertEquals(file.getName(), map.get("file.deleted"));
+		watcher.removeListener(listener);
+		assertEquals(0, watcher.getListeners().size());
 	}
 	
 	public void wait(int time) throws InterruptedException {
