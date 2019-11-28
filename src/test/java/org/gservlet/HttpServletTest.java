@@ -2,6 +2,8 @@ package org.gservlet;
 
 import static org.junit.Assert.*;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +13,9 @@ import org.gservlet.annotation.Servlet;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import groovy.xml.MarkupBuilder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,7 +24,7 @@ public class HttpServletTest {
 
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void test() throws Exception {
+	public void testMethods() throws Exception {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
@@ -44,20 +48,48 @@ public class HttpServletTest {
 		};
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		doAnswer(initializeMap).when(request).setAttribute(anyString(),any());
-		servlet.doGet(request, mock(HttpServletResponse.class));
+		HttpServletResponse response = mock(HttpServletResponse.class);
+		servlet.doGet(request, response);
 		assertEquals("get", map.get("state"));
-		servlet.doPost(request, mock(HttpServletResponse.class));
+		servlet.doPost(request, response);
 		assertEquals("post", map.get("state"));
-		servlet.doPut(request, mock(HttpServletResponse.class));
+		servlet.doPut(request, response);
 		assertEquals("put", map.get("state"));
-		servlet.doDelete(request, mock(HttpServletResponse.class));
+		servlet.doDelete(request, response);
 		assertEquals("delete", map.get("state"));
-		servlet.doOptions(request, mock(HttpServletResponse.class));
+		servlet.doOptions(request, response);
 		assertEquals("options", map.get("state"));
-		servlet.doTrace(request, mock(HttpServletResponse.class));
+		servlet.doTrace(request, response);
 		assertEquals("trace", map.get("state"));
-		servlet.doHead(request, mock(HttpServletResponse.class));
+		servlet.doHead(request, response);
 		assertEquals("head", map.get("state"));
+		assertEquals(RequestWrapper.class, servlet.getRequest().getClass());
+		assertEquals(SessionWrapper.class, servlet.getSession().getClass());
+		assertEquals(ContextWrapper.class, servlet.getContext().getClass());
+	}
+	
+	@Test
+	public void testOutput() throws Exception {
+		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
+		assertEquals(true, folder.exists());
+		ScriptManager scriptManager = new ScriptManager(folder);
+		AbstractServlet servlet = (AbstractServlet) scriptManager.loadScript("HttpServlet.groovy");
+		assertNotNull(servlet);
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		HttpServletResponse response = mock(HttpServletResponse.class);
+		StringWriter out = new StringWriter();
+		when(response.getWriter()).thenReturn(new PrintWriter(out));
+		servlet.doGet(request, response);
+		assertNotNull(servlet.getOut());
+		MarkupBuilder builder = servlet.getHtml();
+		assertNotNull(builder);
+		assertEquals("<!DOCTYPE html>", out.toString().trim());
+		out = new StringWriter();
+		when(response.getWriter()).thenReturn(new PrintWriter(out));
+		Map<String,String> hashMap = new HashMap<>();
+		hashMap.put("key", "value");
+		servlet.json(hashMap);
+		assertEquals("{\"key\":\"value\"}", out.toString());
 	}
 
 }

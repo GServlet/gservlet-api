@@ -58,8 +58,8 @@ public abstract class AbstractFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		requestContext.set(new RequestContext((HttpServletRequest)request, (HttpServletResponse)response, chain));
 		try {
+			requestContext.set(new RequestContext((HttpServletRequest)request, (HttpServletResponse)response, chain));
 			getClass().getDeclaredMethod("filter").invoke(this);
 		} catch (NoSuchMethodException e) {
 			logger.info("no method filter has been declared for the filter " + this.getClass().getName());
@@ -77,21 +77,25 @@ public abstract class AbstractFilter implements Filter {
 	public void destroy() {
 		// no implementation provided
 	}
+	
+	public RequestContext getRequestContext() {
+		return requestContext.get();
+	}
 
 	public HttpServletRequest getRequest() {
-		return new RequestWrapper(requestContext.get().getRequest());
+		return new RequestWrapper(getRequestContext().getRequest());
 	}
 
 	public HttpSession getSession() {
-		return new SessionWrapper(requestContext.get().getSession());
+		return new SessionWrapper(getRequestContext().getSession());
 	}
 
 	public ServletContext getContext() {
-		return new ContextWrapper(requestContext.get().getServletContext());
+		return new ContextWrapper(getRequestContext().getServletContext());
 	}
 
 	public HttpServletResponse getResponse() {
-		return requestContext.get().getResponse();
+		return getRequestContext().getResponse();
 	}
 
 	public FilterConfig getConfig() {
@@ -99,7 +103,7 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public Sql getConnection() {
-		return (Sql) requestContext.get().getRequest().getAttribute(Constants.CONNECTION);
+		return (Sql) getRequestContext().getRequest().getAttribute(Constants.CONNECTION);
 	}
 
 	public PrintWriter getOut() throws IOException {
