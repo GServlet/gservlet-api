@@ -51,4 +51,13 @@ public class StartupListener implements ServletContextListener {
 		databaseManager.destroy();
 	}
 
+	public Initializer getInitializer() {
+		return initializer;
+	}
+
+	public DatabaseManager getDatabaseManager() {
+		return databaseManager;
+	}
+
+	
 }

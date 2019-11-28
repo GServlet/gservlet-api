@@ -87,17 +87,6 @@ public class DatabaseManager {
 		}
 	}
 
-	public void destroy() {
-		try {
-			BasicDataSource dataSource = (BasicDataSource) context.getAttribute(Constants.DATASOURCE);
-			if (dataSource != null) {
-				dataSource.close();
-			}
-		} catch (SQLException e) {
-			logger.log(Level.INFO, "exception during destroy method", e);
-		}
-	}
-
 	/**
 	 * <p>
 	 * Loads the configuration file properties
@@ -159,4 +148,14 @@ public class DatabaseManager {
 		return dataSource;
 	}
 
+	public void destroy() {
+		try {
+			BasicDataSource dataSource = (BasicDataSource) context.getAttribute(Constants.DATASOURCE);
+			if (dataSource != null) {
+				dataSource.close();
+			}
+		} catch (SQLException e) {
+			logger.log(Level.INFO, "exception during destroy method", e);
+		}
+	}
 }
