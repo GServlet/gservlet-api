@@ -106,7 +106,7 @@
 				<version>2.22.2</version>
 				<configuration>
 					<environmentVariables>
-						<gservlet.reload>true</gservlet.reload>
+						<gservlet_reload>true</gservlet_reload>
 					</environmentVariables>
 				</configuration>
 			</plugin>
