@@ -56,9 +56,9 @@ public class FileWatcher implements Runnable {
 			WatchService watcher = FileSystems.getDefault().newWatchService();
 			Path path = Paths.get(folder.getAbsolutePath());
 			path.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
-			boolean valid = true;
-			while (valid) {
-				valid = pollEvents(watcher);
+			boolean poll = true;
+			while (poll) {
+				poll = pollEvents(watcher);
 			}
 		} catch (IOException e) {
 			logger.log(Level.INFO, "exception during watch", e);
