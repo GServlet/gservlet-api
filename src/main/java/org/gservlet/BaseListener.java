@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 public abstract class BaseListener {
 
-	protected ThreadLocal<Object> eventHolder = new ThreadLocal<>();
+	protected final ThreadLocal<Object> eventHolder = new ThreadLocal<>();
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
 	
