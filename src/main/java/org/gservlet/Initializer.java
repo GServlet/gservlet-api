@@ -33,6 +33,7 @@ import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
@@ -54,22 +55,26 @@ public class Initializer {
 	protected final ScriptManager scriptManager;
 	protected final Logger logger = Logger.getLogger(Initializer.class.getName());
 
-	public Initializer(ServletContext context) throws Exception {
-		this.context = context;
-		this.handlers = new HashMap<>();
-		context.setAttribute(Constants.HANDLERS, handlers);
-		File folder = new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER);
-		this.scriptManager = new ScriptManager(folder);
-		init(folder);
+	public Initializer(ServletContext context) throws ServletException {
+		try {
+			this.context = context;
+			this.handlers = new HashMap<>();
+			context.setAttribute(Constants.HANDLERS, handlers);
+			File folder = new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER);
+			this.scriptManager = new ScriptManager(folder);
+			init(folder);
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
 	}
 
-	protected void init(File folder) throws Exception {
+	protected void init(File folder) throws ServletException {
 		loadScripts(folder);
 		context.addFilter(Constants.REQUEST_FILTER, new DefaultRequestFilter())
 				.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true, "/*");
 	}
 
-	public void loadScripts(File folder) throws Exception {
+	public void loadScripts(File folder) throws ServletException {
 		if (folder.exists()) {
 			File[] files = folder.listFiles();
 			if (files != null) {
@@ -85,21 +90,23 @@ public class Initializer {
 		}
 	}
 
-	protected void loadScript(File script) throws Exception {
-		Object object = scriptManager.loadScript(script.getName());
-		register(object);
+	protected void loadScript(File script) throws ServletException {
+		try {
+			Object object = scriptManager.loadScript(script.getName());
+			register(object);
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
 	}
 
-	protected void register(Object object) {
+	protected void register(Object object) throws ServletException {
 		Annotation[] annotations = object.getClass().getAnnotations();
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof Servlet) {
 				addServlet(context, (Servlet) annotation, object);
-			} 
-			else if (annotation instanceof Filter) {
+			} else if (annotation instanceof Filter) {
 				addFilter(context, (Filter) annotation, object);
-			}
-			else if (annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
+			} else if (annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
 					|| annotation instanceof RequestListener || annotation instanceof RequestAttributeListener
 					|| annotation instanceof SessionListener || annotation instanceof SessionAttributeListener) {
 				addListener(context, object);
@@ -107,7 +114,7 @@ public class Initializer {
 		}
 	}
 
-	protected void addServlet(ServletContext context, Servlet annotation, Object object) {
+	protected void addServlet(ServletContext context, Servlet annotation, Object object) throws ServletException {
 		String name = annotation.name().trim().equals("") ? object.getClass().getName() : annotation.name();
 		ServletRegistration registration = context.getServletRegistration(name);
 		if (registration == null) {
@@ -125,11 +132,11 @@ public class Initializer {
 		} else {
 			String message = "The servlet with the name " + name
 					+ " has already been registered. Please use a different name or package";
-			throw new RuntimeException(message);
+			throw new ServletException(message);
 		}
 	}
 
-	protected void addFilter(ServletContext context, Filter annotation, Object object) {
+	protected void addFilter(ServletContext context, Filter annotation, Object object) throws ServletException {
 		String name = object.getClass().getName();
 		FilterRegistration registration = context.getFilterRegistration(name);
 		if (registration == null) {
@@ -149,7 +156,7 @@ public class Initializer {
 		} else {
 			String message = "The filter with the name " + name
 					+ " has already been registered. Please use a different name or package";
-			throw new RuntimeException(message);
+			throw new ServletException(message);
 		}
 	}
 
@@ -216,7 +223,7 @@ public class Initializer {
 			logger.log(Level.INFO, "exception during reload", e);
 		}
 	}
-	
+
 	protected void reloadServlet(Servlet servlet, Object object) {
 		String name = servlet.name().trim().equals("") ? object.getClass().getName() : servlet.name();
 		DynamicInvocationHandler handler = handlers.get(name);
