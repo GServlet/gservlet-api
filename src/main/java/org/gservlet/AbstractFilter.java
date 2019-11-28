@@ -40,7 +40,7 @@ import groovy.xml.MarkupBuilder;
 public abstract class AbstractFilter implements Filter {
 
 	protected static FilterConfig config;
-	protected final ThreadLocal<HttpServletRequest> requestHolder = new ThreadLocal<>();
+	protected ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
 	protected Logger logger = Logger.getLogger(AbstractFilter.class.getName());
 	
 	@Override
@@ -58,9 +58,7 @@ public abstract class AbstractFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		requestHolder.set((HttpServletRequest) request);
-		requestHolder.get().setAttribute(Constants.SERVLET_RESPONSE,response);
-		requestHolder.get().setAttribute(Constants.FILTER_CHAIN, chain);
+		requestContext.set(new RequestContext((HttpServletRequest)request, (HttpServletResponse)response, chain));;
 		try {
 			getClass().getDeclaredMethod("filter").invoke(this);
 		} catch (NoSuchMethodException e) {
@@ -71,8 +69,8 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public void next() throws IOException, ServletException {
-		FilterChain chain = (FilterChain) requestHolder.get().getAttribute(Constants.FILTER_CHAIN);
-		chain.doFilter(requestHolder.get(), getResponse());
+		FilterChain chain = requestContext.get().getFilterChain();
+		chain.doFilter(requestContext.get().getRequest(), getResponse());
 	}
 
 	@Override
@@ -81,19 +79,19 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public HttpServletRequest getRequest() {
-		return new RequestWrapper(requestHolder.get());
+		return new RequestWrapper(requestContext.get().getRequest());
 	}
 
 	public HttpSession getSession() {
-		return new SessionWrapper(requestHolder.get().getSession(true));
+		return new SessionWrapper(requestContext.get().getSession());
 	}
 
 	public ServletContext getContext() {
-		return new ContextWrapper(requestHolder.get().getServletContext());
+		return new ContextWrapper(requestContext.get().getServletContext());
 	}
 
 	public HttpServletResponse getResponse() {
-		return (HttpServletResponse) requestHolder.get().getAttribute(Constants.SERVLET_RESPONSE);
+		return requestContext.get().getResponse();
 	}
 
 	public FilterConfig getConfig() {
@@ -101,7 +99,7 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public Sql getConnection() {
-		return (Sql) requestHolder.get().getAttribute(Constants.CONNECTION);
+		return (Sql) requestContext.get().getRequest().getAttribute(Constants.CONNECTION);
 	}
 
 	public PrintWriter getOut() throws IOException {

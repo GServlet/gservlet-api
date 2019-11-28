@@ -29,9 +29,7 @@ public final class Constants {
 	public static final String DB_CONFIG_FILE = "db.properties";
 	public static final String HANDLERS = "gservlet.handlers";
 	public static final String REQUEST_FILTER = "gservlet.requestFilter";
-	public static final String SERVLET_RESPONSE = "servlet.response";
-	public static final String FILTER_CHAIN = "servlet.filterChain";
-
+	
 	private Constants() {
 	}
 
