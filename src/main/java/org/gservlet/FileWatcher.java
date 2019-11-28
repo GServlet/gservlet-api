@@ -51,7 +51,7 @@ public class FileWatcher {
 	}
 
 	private void start(final File folder) {
-		new Thread(new Runnable() {
+		Runnable runnable = new Runnable() {
 			public void run() {
 				try {
 					WatchService watcher = FileSystems.getDefault().newWatchService();
@@ -69,9 +69,9 @@ public class FileWatcher {
 								} else {
 									notifyListeners(kind, file);
 								}
-							}
-							if (!key.reset()) {
-								break;
+								if (!key.reset()) {
+									break;
+								}
 							}
 						} catch (InterruptedException e) {
 							logger.log(Level.INFO, "exception during watch", e);
@@ -82,7 +82,8 @@ public class FileWatcher {
 					logger.log(Level.INFO, "exception during watch", e);
 				}
 			}
-		}).start();
+		};
+		new Thread(runnable).start();
 	}
 
 	public FileWatcher addListener(FileListener listener) {
