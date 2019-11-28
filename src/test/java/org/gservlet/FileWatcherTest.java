@@ -29,16 +29,20 @@ public class FileWatcherTest {
 
 		}).watch();
 		assertEquals(1, watcher.getListeners().size());
-		Thread.sleep(2000);
+		wait(2000);
 		File file = new File("src/test/resources/test.txt");
 		PrintWriter printWriter = new PrintWriter(new FileWriter(file));
 		printWriter.print("Some String");
 		printWriter.close();
-		Thread.sleep(2000);
+		wait(2000);
 		file.delete();
-		Thread.sleep(2000);
+		wait(2000);
 		assertEquals(file.getName(), map.get("file.created"));
 		assertEquals(file.getName(), map.get("file.deleted"));
+	}
+	
+	public void wait(int seconds) throws InterruptedException {
+		Thread.sleep(seconds);
 	}
 
 }
