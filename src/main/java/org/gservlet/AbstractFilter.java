@@ -39,14 +39,14 @@ import groovy.xml.MarkupBuilder;
 
 public abstract class AbstractFilter implements Filter {
 
-	protected static FilterConfig config;
+	protected FilterConfig config;
 	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
 	protected final Logger logger = Logger.getLogger(AbstractFilter.class.getName());
 	
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		try {
-			AbstractFilter.config = config;
+			this.config = config;
 			getClass().getDeclaredMethod("init").invoke(this);
 		} catch (NoSuchMethodException e) {
 			// the exception is ignored if there is no init method
@@ -99,7 +99,7 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public FilterConfig getConfig() {
-		return AbstractFilter.config;
+		return config;
 	}
 
 	public Sql getConnection() {
