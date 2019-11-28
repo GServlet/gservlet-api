@@ -2,6 +2,8 @@ package org.gservlet;
 
 import static org.junit.Assert.*;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import groovy.xml.MarkupBuilder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,7 +24,7 @@ public class HttpFilterTest {
 
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void test() throws Exception {
+	public void testFilter() throws Exception {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
@@ -45,6 +49,33 @@ public class HttpFilterTest {
 		doAnswer(initializeMap).when(request).setAttribute(anyString(),any());
 		filter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 		assertEquals("filtering", map.get("state"));
+		assertEquals(RequestWrapper.class, filter.getRequest().getClass());
+		assertEquals(SessionWrapper.class, filter.getSession().getClass());
+		assertEquals(ContextWrapper.class, filter.getContext().getClass());
+	}
+	
+	@Test
+	public void testOutput() throws Exception {
+		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
+		assertEquals(true, folder.exists());
+		ScriptManager scriptManager = new ScriptManager(folder);
+		AbstractFilter filter = (AbstractFilter) scriptManager.loadScript("HttpFilter.groovy");
+		assertNotNull(filter);
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		HttpServletResponse response = mock(HttpServletResponse.class);
+		StringWriter out = new StringWriter();
+		when(response.getWriter()).thenReturn(new PrintWriter(out));
+		filter.doFilter(request, response, mock(FilterChain.class));
+		assertNotNull(filter.getOut());
+		MarkupBuilder builder = filter.getHtml();
+		assertNotNull(builder);
+		assertEquals("<!DOCTYPE html>", out.toString().trim());
+		out = new StringWriter();
+		when(response.getWriter()).thenReturn(new PrintWriter(out));
+		Map<String,String> hashMap = new HashMap<>();
+		hashMap.put("key", "value");
+		filter.json(hashMap);
+		assertEquals("{\"key\":\"value\"}", out.toString());
 	}
 
 }
