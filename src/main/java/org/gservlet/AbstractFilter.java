@@ -40,8 +40,8 @@ import groovy.xml.MarkupBuilder;
 public abstract class AbstractFilter implements Filter {
 
 	protected static FilterConfig config;
-	protected ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
-	protected Logger logger = Logger.getLogger(AbstractFilter.class.getName());
+	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
+	protected final Logger logger = Logger.getLogger(AbstractFilter.class.getName());
 	
 	@Override
 	public void init(FilterConfig config) throws ServletException {

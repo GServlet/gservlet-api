@@ -38,8 +38,8 @@ import groovy.xml.MarkupBuilder;
 @SuppressWarnings("serial")
 public abstract class AbstractServlet extends HttpServlet {
 
-	protected ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
-	protected Logger logger = Logger.getLogger(AbstractServlet.class.getName());
+	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
+	protected final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
