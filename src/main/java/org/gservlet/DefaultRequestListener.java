@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import groovy.sql.Sql;
 
 @WebListener
-public class RequestListener implements ServletRequestListener {
+public class DefaultRequestListener implements ServletRequestListener {
 
 	@Override
 	public void requestInitialized(ServletRequestEvent event) {

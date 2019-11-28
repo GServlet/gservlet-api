@@ -6,12 +6,16 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequestEvent;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.gservlet.annotation.RequestListener;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import groovy.sql.Sql;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,6 +48,18 @@ public class ServletRequestListenerTest {
 		assertEquals(RequestWrapper.class, listener.getRequest().getClass());
 		assertEquals(SessionWrapper.class, listener.getSession().getClass());
 		assertEquals(ContextWrapper.class, listener.getContext().getClass());
+	}
+	
+	@Test
+	public void testDefaultListener() {
+		DefaultRequestListener listener = new DefaultRequestListener();
+		assertTrue(listener.getClass().isAnnotationPresent(WebListener.class));
+		ServletContext context = mock(ServletContext.class);
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		when(request.getAttribute(Constants.CONNECTION)).thenReturn(new Sql(new BasicDataSource()));
+		ServletRequestEvent event = new ServletRequestEvent(context, request);
+		listener.requestInitialized(event);
+		listener.requestDestroyed(event);
 	}
 
 }
