@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.FilterChain;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
+import org.gservlet.annotation.Filter;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -36,14 +36,9 @@ public class HttpFilterTest {
 		ScriptManager scriptManager = new ScriptManager(folder);
 		AbstractFilter filter = (AbstractFilter) scriptManager.loadScript("HttpFilter.groovy");
 		assertNotNull(filter);
-		Annotation[] annotations = filter.getClass().getAnnotations();
-		for(Annotation current : annotations) {
-		   if(current instanceof org.gservlet.annotation.Filter) {
-			   assertEquals("HttpFilter",filter.getClass().getName());
-			   org.gservlet.annotation.Filter annotation = (org.gservlet.annotation.Filter) current;
-			   assertEquals("/*", annotation.value()[0]);
-		   }
-		}
+		Filter annotation = filter.getClass().getAnnotation(Filter.class);
+		assertEquals("HttpFilter",filter.getClass().getName());
+		assertEquals("/*", annotation.value()[0]);
 		final Map<Object,Object> map = new HashMap<Object,Object>();
 		Answer initializeMap = new Answer() {
 		    public Object answer(InvocationOnMock invocation) throws Throwable {
