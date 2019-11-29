@@ -76,7 +76,7 @@ public abstract class AbstractServlet extends HttpServlet {
 		route(request, response, "options");
 	}
 
-	private void route(HttpServletRequest request, HttpServletResponse response, String methodName) {
+	public void route(HttpServletRequest request, HttpServletResponse response, String methodName) {
 		requestContext.set(new RequestContext(request, response));
 		invoke(methodName);
 	}
