@@ -1,7 +1,6 @@
 package org.gservlet;
 
 import java.io.IOException;
-import java.io.Serializable;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,13 +25,7 @@ public class RequestContext {
 	}
 
 	public HttpServletRequest getRequest() {
-		HttpServletRequest wrapper = (HttpServletRequest) request.getAttribute(Constants.REQUEST_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new RequestWrapper(request);
-			request.setAttribute(Constants.REQUEST_WRAPPER, wrapper);
-		}
-		return wrapper;
-
+		return new RequestWrapper(request);
 	}
 
 	public HttpServletResponse getResponse() {
@@ -42,27 +35,15 @@ public class RequestContext {
 	public FilterChain getFilterChain() {
 		return filterChain;
 	}
-	
+
 	public ServletContext getServletContext() {
-		ServletContext context = request.getServletContext();
-		ServletContext wrapper = (ServletContext) context.getAttribute(Constants.CONTEXT_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new ContextWrapper(context);
-			context.setAttribute(Constants.CONTEXT_WRAPPER, wrapper);
-		}
-		return wrapper;
+		return new ContextWrapper(request.getServletContext());
 	}
-	
+
 	public HttpSession getSession() {
-		HttpSession session = request.getSession(true);
-		HttpSession wrapper = (HttpSession) session.getAttribute(Constants.SESSION_WRAPPER);
-		if (wrapper == null) {
-			wrapper = new SessionWrapper(session);
-			session.setAttribute(Constants.SESSION_WRAPPER, (Serializable) wrapper);
-		}
-		return wrapper;
+		return new SessionWrapper(request.getSession(true));
 	}
-	
+
 	public MarkupBuilder getHtml() throws IOException {
 		MarkupBuilder builder = new MarkupBuilder(getResponse().getWriter());
 		getResponse().setHeader("Content-Type", "text/html");
