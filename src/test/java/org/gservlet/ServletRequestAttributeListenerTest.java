@@ -21,11 +21,11 @@ public class ServletRequestAttributeListenerTest {
 		assertNotNull(listener);
 		ServletRequestAttributeEvent event = new ServletRequestAttributeEvent(mock(ServletContext.class), mock(HttpServletRequest.class), "myAttribute", "myValue");
 		listener.attributeAdded(event);
-		assertEquals("attributeAdded", listener.getEvent().getName());
+		assertEquals("attributeAdded", listener.getName());
 		listener.attributeRemoved(event);
-		assertEquals("attributeRemoved", listener.getEvent().getName());
+		assertEquals("attributeRemoved", listener.getName());
 		listener.attributeReplaced(event);
-		assertEquals("attributeReplaced", listener.getEvent().getName());
+		assertEquals("attributeReplaced", listener.getName());
 		assertEquals("myValue", listener.getValue());
 		assertEquals(RequestWrapper.class, listener.getRequest().getClass());
 		assertEquals(ContextWrapper.class, listener.getContext().getClass());
