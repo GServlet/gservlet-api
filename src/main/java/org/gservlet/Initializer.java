@@ -58,10 +58,10 @@ public class Initializer {
 	public Initializer(ServletContext context) throws ServletException {
 		try {
 			this.context = context;
-			this.handlers = new HashMap<>();
+			handlers = new HashMap<>();
 			context.setAttribute(Constants.HANDLERS, handlers);
 			File folder = new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER);
-			this.scriptManager = new ScriptManager(folder);
+			scriptManager = new ScriptManager(folder);
 			init(folder);
 		} catch (Exception e) {
 			throw new ServletException(e);
