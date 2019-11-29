@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 
 public class SessionWrapper implements HttpSession {
 
-	protected final HttpSession session;
+	protected final transient HttpSession session;
 
 	public SessionWrapper(HttpSession session) {
 		this.session = session;

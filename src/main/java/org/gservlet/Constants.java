@@ -29,6 +29,10 @@ public final class Constants {
 	public static final String DB_CONFIG_FILE = "db.properties";
 	public static final String HANDLERS = "gservlet.handlers";
 	public static final String REQUEST_FILTER = "gservlet.requestFilter";
+	public static final String CONTEXT_WRAPPER = "gservlet.contextWrapper";
+	public static final String REQUEST_WRAPPER = "gservlet.requestWrapper";
+	public static final String SESSION_WRAPPER = "gservlet.sessionWrapper";
+
 	
 	private Constants() {
 	}
