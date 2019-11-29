@@ -1,5 +1,7 @@
 package org.gservlet;
 
+import java.io.Serializable;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +57,7 @@ public class RequestContext {
 		HttpSession wrapper = (HttpSession) session.getAttribute(Constants.SESSION_WRAPPER);
 		if (wrapper == null) {
 			wrapper = new SessionWrapper(session);
-			session.setAttribute(Constants.SESSION_WRAPPER, wrapper);
+			session.setAttribute(Constants.SESSION_WRAPPER, (Serializable) wrapper);
 		}
 		return wrapper;
 
