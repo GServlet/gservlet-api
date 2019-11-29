@@ -24,7 +24,8 @@ import java.util.Enumeration;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-public class SessionWrapper implements HttpSession {
+@SuppressWarnings("serial")
+public class SessionWrapper implements HttpSession, Serializable {
 
 	protected final transient HttpSession session;
 
