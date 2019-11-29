@@ -1,6 +1,7 @@
 # GServlet
 
 [![Build Status @ Travis](https://api.travis-ci.com/GServlet/gservlet-api.png?branch=master)](https://travis-ci.com/GServlet/gservlet-api)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=alert_status)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=bugs)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
