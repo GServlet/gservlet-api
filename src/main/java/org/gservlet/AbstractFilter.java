@@ -120,10 +120,7 @@ public abstract class AbstractFilter implements Filter {
 	}
 	
 	public MarkupBuilder getHtml() throws IOException {
-		MarkupBuilder builder = new MarkupBuilder(getOut());
-		getResponse().setHeader("Content-Type", "text/html");
-		getResponse().getWriter().println("<!DOCTYPE html>");
-		return builder;
+		return requestContext.get().getHtml();
 	}
 
 }

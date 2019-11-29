@@ -138,10 +138,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	public MarkupBuilder getHtml() throws IOException {
-		MarkupBuilder builder = new MarkupBuilder(getOut());
-		getResponse().setHeader("Content-Type", "text/html");
-		getResponse().getWriter().println("<!DOCTYPE html>");
-		return builder;
+		return requestContext.get().getHtml();
 	}
 
 	public Object parse(InputStream inputStream) {
