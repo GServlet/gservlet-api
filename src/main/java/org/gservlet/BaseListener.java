@@ -27,7 +27,6 @@ public abstract class BaseListener {
 	protected final ThreadLocal<Object> eventHolder = new ThreadLocal<>();
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
-	
 	protected void route(Object event, String method) {
 		eventHolder.set(event);
 		invoke(method);

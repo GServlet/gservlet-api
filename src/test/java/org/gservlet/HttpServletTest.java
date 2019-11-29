@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletContext;
@@ -34,15 +33,10 @@ public class HttpServletTest {
 		ScriptManager scriptManager = new ScriptManager(folder);
 		AbstractServlet servlet = (AbstractServlet) scriptManager.loadScript("HttpServlet.groovy");
 		assertNotNull(servlet);
-		Annotation[] annotations = servlet.getClass().getAnnotations();
-		for(Annotation current : annotations) {
-			   if(current instanceof Servlet) {
-				   assertEquals("HttpServlet",servlet.getClass().getName());
-				   assertEquals(AbstractServlet.class, servlet.getClass().getSuperclass());
-				   Servlet annotation = (Servlet) current;
-				   assertEquals("/servlet", annotation.value()[0]);
-			   }
-			}
+		Servlet annotation = servlet.getClass().getAnnotation(Servlet.class);
+		assertEquals("HttpServlet",servlet.getClass().getName());
+		assertEquals(AbstractServlet.class, servlet.getClass().getSuperclass());
+		assertEquals("/servlet", annotation.value()[0]);
 		final Map<Object,Object> map = new HashMap<Object,Object>();
 		Answer initializeMap = new Answer() {
 		    public Object answer(InvocationOnMock invocation) throws Throwable {
