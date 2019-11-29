@@ -22,6 +22,7 @@ package org.gservlet;
 import static groovy.json.JsonOutput.toJson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -63,7 +64,7 @@ public abstract class AbstractFilter implements Filter {
 		} catch (NoSuchMethodException e) {
 			logger.info("no method filter has been declared for the filter " + this.getClass().getName());
 		} catch (Exception e) {
-			throw new ServletException(e);
+			logger.log(Level.INFO, "exception during doFilter method", e);
 		}
 	}
 
