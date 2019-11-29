@@ -21,36 +21,47 @@ package org.gservlet;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.codehaus.groovy.control.BytecodeProcessor;
 import org.codehaus.groovy.control.CompilerConfiguration;
+import org.gservlet.annotation.ContextAttributeListener;
+import org.gservlet.annotation.ContextListener;
+import org.gservlet.annotation.Filter;
+import org.gservlet.annotation.RequestAttributeListener;
+import org.gservlet.annotation.RequestListener;
+import org.gservlet.annotation.Servlet;
+import org.gservlet.annotation.SessionAttributeListener;
+import org.gservlet.annotation.SessionListener;
 import groovy.util.GroovyScriptEngine;
 import groovy.util.ScriptException;
+import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.LoaderClassPath;
+import javassist.NotFoundException;
 
 public class ScriptManager {
 
 	protected final GroovyScriptEngine engine;
 	protected final Logger logger = Logger.getLogger(ScriptManager.class.getName());
 
-	public ScriptManager(File folder) throws MalformedURLException  {
+	public ScriptManager(File folder) throws MalformedURLException {
 		engine = createScriptEngine(folder);
 	}
 
 	public Object loadScript(String name) throws ScriptException {
 		try {
 			return engine.loadScriptByName(name).newInstance();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new ScriptException(e);
 		}
 	}
 
-	protected GroovyScriptEngine createScriptEngine(File folder) throws MalformedURLException  {
+	protected GroovyScriptEngine createScriptEngine(File folder) throws MalformedURLException {
 		URL[] urls = { folder.toURI().toURL(),
 				ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER) };
 		GroovyScriptEngine gse = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
@@ -69,33 +80,10 @@ public class ScriptManager {
 				try {
 					CtClass clazz = classPool.makeClass(stream);
 					clazz.detach();
-					Object[] annotations = clazz.getAnnotations();
-					for (Object annotation : annotations) {
-						String value = annotation.toString();
-						if (value.indexOf("Servlet") != -1) {
-							clazz.setSuperclass(classPool.get(AbstractServlet.class.getName()));
-							return clazz.toBytecode();
-						} else if (value.indexOf("Filter") != -1) {
-							clazz.setSuperclass(classPool.get(AbstractFilter.class.getName()));
-							return clazz.toBytecode();
-						} else if (value.indexOf("ContextListener") != -1) {
-							clazz.setSuperclass(classPool.get(AbstractContextListener.class.getName()));
-							return clazz.toBytecode();
-						} else if (value.indexOf("RequestListener") != -1) {
-							clazz.setSuperclass(classPool.get(AbstractRequestListener.class.getName()));
-							return clazz.toBytecode();
-						} else if (value.indexOf("ContextAttributeListener") != -1) {
-							clazz.setSuperclass(classPool.get(AbstractContextAttributeListener.class.getName()));
-							return clazz.toBytecode();
-						} else if (value.indexOf("RequestAttributeListener") != -1) {
-							clazz.setSuperclass(classPool.get(AbstractRequestAttributeListener.class.getName()));
-							return clazz.toBytecode();
-						} else if (value.indexOf("SessionListener") != -1) {
-							clazz.setSuperclass(classPool.get(AbstractSessionListener.class.getName()));
-							return clazz.toBytecode();
-						} else if (value.indexOf("SessionAttributeListener") != -1) {
-							clazz.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));
-							return clazz.toBytecode();
+					for (Object annotation : clazz.getAnnotations()) {
+						byte[] transformed = processClass(classPool, clazz, annotation.toString());
+						if(transformed!=null) {
+							return transformed;
 						}
 					}
 				} catch (Exception e) {
@@ -104,5 +92,35 @@ public class ScriptManager {
 				return original;
 			}
 		};
+	}
+
+	protected byte[] processClass(ClassPool classPool, CtClass clazz, String annotation)
+			throws IOException, CannotCompileException, NotFoundException {
+		if (annotation.indexOf(Servlet.class.getName()) != -1) {
+			clazz.setSuperclass(classPool.get(AbstractServlet.class.getName()));
+			return clazz.toBytecode();
+		} else if (annotation.indexOf(Filter.class.getName()) != -1) {
+			clazz.setSuperclass(classPool.get(AbstractFilter.class.getName()));
+			return clazz.toBytecode();
+		} else if (annotation.indexOf(ContextListener.class.getName()) != -1) {
+			clazz.setSuperclass(classPool.get(AbstractContextListener.class.getName()));
+			return clazz.toBytecode();
+		} else if (annotation.indexOf(RequestListener.class.getName()) != -1) {
+			clazz.setSuperclass(classPool.get(AbstractRequestListener.class.getName()));
+			return clazz.toBytecode();
+		} else if (annotation.indexOf(ContextAttributeListener.class.getName()) != -1) {
+			clazz.setSuperclass(classPool.get(AbstractContextAttributeListener.class.getName()));
+			return clazz.toBytecode();
+		} else if (annotation.indexOf(RequestAttributeListener.class.getName()) != -1) {
+			clazz.setSuperclass(classPool.get(AbstractRequestAttributeListener.class.getName()));
+			return clazz.toBytecode();
+		} else if (annotation.indexOf(SessionListener.class.getName()) != -1) {
+			clazz.setSuperclass(classPool.get(AbstractSessionListener.class.getName()));
+			return clazz.toBytecode();
+		} else if (annotation.indexOf(SessionAttributeListener.class.getName()) != -1) {
+			clazz.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));
+			return clazz.toBytecode();
+		}
+		return null;
 	}
 }
