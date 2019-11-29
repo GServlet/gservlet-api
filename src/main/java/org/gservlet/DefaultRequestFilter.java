@@ -56,17 +56,15 @@ public class DefaultRequestFilter implements Filter {
 					Servlet annotation = target.getClass().getAnnotation(Servlet.class);
 					String path = annotation.value()[0];
 					if (httpServletRequest.getRequestURI().endsWith(path)) {
-						forward((AbstractServlet) target, httpServletRequest, httpServletResponse);
+						AbstractServlet servlet = (AbstractServlet) target;
+						String method = httpServletRequest.getMethod();
+						servlet.route(httpServletRequest, httpServletResponse, method.toLowerCase());
 					}
 				}
 			}
 
 		}
 		chain.doFilter(request, response);
-	}
-
-	protected void forward(AbstractServlet servlet, HttpServletRequest request, HttpServletResponse response) {
-		servlet.route(request, response, request.getMethod().toLowerCase());
 	}
 
 	@Override
