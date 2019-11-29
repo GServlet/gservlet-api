@@ -72,6 +72,7 @@ public class HttpFilterTest {
 		AbstractServlet servlet = (AbstractServlet) scriptManager.loadScript("HttpServlet.groovy");
 		assertNotNull(servlet);
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(servlet);
+		handler.setTarget(servlet);
 		handler.setRegistered(false);
 		handlers.put("servlet", handler);
 		when(request.getRequestURI()).thenReturn("/servlet");

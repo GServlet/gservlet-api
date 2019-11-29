@@ -20,11 +20,11 @@ public class ServletContextAttributeListenerTest {
 		assertNotNull(listener);
 		ServletContextAttributeEvent event = new ServletContextAttributeEvent(mock(ServletContext.class), "myAttribute", "myValue");
 		listener.attributeAdded(event);
-		assertEquals("attributeAdded", listener.getEvent().getName());
+		assertEquals("attributeAdded", listener.getName());
 		listener.attributeRemoved(event);
-		assertEquals("attributeRemoved", listener.getEvent().getName());
+		assertEquals("attributeRemoved", listener.getName());
 		listener.attributeReplaced(event);
-		assertEquals("attributeReplaced", listener.getEvent().getName());
+		assertEquals("attributeReplaced", listener.getName());
 		assertEquals("myValue", listener.getValue());
 		assertEquals(ContextWrapper.class, listener.getContext().getClass());
 	}
