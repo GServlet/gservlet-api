@@ -23,7 +23,13 @@ public class RequestContext {
 	}
 
 	public HttpServletRequest getRequest() {
-		return request;
+		HttpServletRequest wrapper = (HttpServletRequest) request.getAttribute(Constants.REQUEST_WRAPPER);
+		if (wrapper == null) {
+			wrapper = new RequestWrapper(request);
+			request.setAttribute(Constants.REQUEST_WRAPPER, wrapper);
+		}
+		return wrapper;
+
 	}
 
 	public HttpServletResponse getResponse() {
@@ -35,11 +41,24 @@ public class RequestContext {
 	}
 	
 	public ServletContext getServletContext() {
-		return request.getServletContext();
+		ServletContext context = request.getServletContext();
+		ServletContext wrapper = (ServletContext) context.getAttribute(Constants.CONTEXT_WRAPPER);
+		if (wrapper == null) {
+			wrapper = new ContextWrapper(context);
+			context.setAttribute(Constants.CONTEXT_WRAPPER, wrapper);
+		}
+		return wrapper;
 	}
 	
 	public HttpSession getSession() {
-		return request.getSession(true);
+		HttpSession session = request.getSession(true);
+		HttpSession wrapper = (HttpSession) session.getAttribute(Constants.SESSION_WRAPPER);
+		if (wrapper == null) {
+			wrapper = new SessionWrapper(session);
+			session.setAttribute(Constants.SESSION_WRAPPER, wrapper);
+		}
+		return wrapper;
+
 	}
 
 }

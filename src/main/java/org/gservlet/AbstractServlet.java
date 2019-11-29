@@ -90,34 +90,30 @@ public abstract class AbstractServlet extends HttpServlet {
 			logger.log(Level.INFO, "exception during invoke method", e);
 		}
 	}
-
-	public RequestContext getRequestContext() {
-		return requestContext.get();
-	}
 	
 	public HttpServletRequest getRequest() {
-		return new RequestWrapper(getRequestContext().getRequest());
+		return requestContext.get().getRequest();
 	}
 
 	public HttpSession getSession() {
-		return new SessionWrapper(getRequestContext().getSession());
+		return requestContext.get().getSession();
 	}
 
 	public ServletContext getContext() {
-		return new ContextWrapper(getRequestContext().getServletContext());
+		return requestContext.get().getServletContext();
 	}
 
 	public HttpServletResponse getResponse() {
-		return getRequestContext().getResponse();
+		return requestContext.get().getResponse();
 	}
 
 	public Sql getConnection() {
-		return (Sql) getRequestContext().getRequest().getAttribute(Constants.CONNECTION);
+		return (Sql) requestContext.get().getRequest().getAttribute(Constants.CONNECTION);
 	}
 
 	public void forward(String location) {
 		try {
-			HttpServletRequest request = getRequestContext().getRequest(); 
+			HttpServletRequest request = requestContext.get().getRequest(); 
 			request.getRequestDispatcher(location).forward(request, getResponse());
 		} catch (ServletException | IOException e) {
 			logger.log(Level.INFO, "exception during forward method", e);

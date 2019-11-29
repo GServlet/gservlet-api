@@ -13,6 +13,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -51,6 +52,7 @@ public class HttpFilterTest {
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		ServletContext context = mock(ServletContext.class);
 		when(request.getServletContext()).thenReturn(context);
+		when(request.getSession(true)).thenReturn(mock(HttpSession.class));
 		final Map<String, DynamicInvocationHandler> handlers = new HashMap<>();
 		when(context.getAttribute(Constants.HANDLERS)).thenReturn(handlers);
 		doAnswer(initializeMap).when(request).setAttribute(anyString(),any());

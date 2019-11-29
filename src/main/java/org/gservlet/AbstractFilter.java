@@ -77,29 +77,25 @@ public abstract class AbstractFilter implements Filter {
 	public void destroy() {
 		// no implementation provided
 	}
-	
-	public RequestContext getRequestContext() {
-		return requestContext.get();
-	}
 
 	public HttpServletRequest getRequest() {
-		return new RequestWrapper(getRequestContext().getRequest());
+		return requestContext.get().getRequest();
 	}
 
 	public HttpSession getSession() {
-		return new SessionWrapper(getRequestContext().getSession());
+		return requestContext.get().getSession();
 	}
 
 	public ServletContext getContext() {
-		return new ContextWrapper(getRequestContext().getServletContext());
+		return requestContext.get().getServletContext();
 	}
 
 	public HttpServletResponse getResponse() {
-		return getRequestContext().getResponse();
+		return requestContext.get().getResponse();
 	}
 	
 	public FilterChain getFilterChain() {
-		return getRequestContext().getFilterChain();
+		return requestContext.get().getFilterChain();
 	}
 
 	public FilterConfig getConfig() {
@@ -107,7 +103,7 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public Sql getConnection() {
-		return (Sql) getRequestContext().getRequest().getAttribute(Constants.CONNECTION);
+		return (Sql) requestContext.get().getRequest().getAttribute(Constants.CONNECTION);
 	}
 
 	public PrintWriter getOut() throws IOException {
