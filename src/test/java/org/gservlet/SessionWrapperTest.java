@@ -6,7 +6,7 @@ import java.lang.reflect.Type;
 import javax.servlet.http.HttpSession;
 import org.junit.Test;
 
-public class ServletWrapperTest {
+public class SessionWrapperTest {
 
 	@Test
 	public void test() throws Exception {
