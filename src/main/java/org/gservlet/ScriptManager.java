@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import org.codehaus.groovy.control.BytecodeProcessor;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import groovy.util.GroovyScriptEngine;
+import groovy.util.ScriptException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.LoaderClassPath;
@@ -41,8 +42,12 @@ public class ScriptManager {
 		engine = createScriptEngine(folder);
 	}
 
-	public Object loadScript(String name) throws Exception {
-		return engine.loadScriptByName(name).newInstance();
+	public Object loadScript(String name) throws ScriptException {
+		try {
+			return engine.loadScriptByName(name).newInstance();
+		}catch(Exception e) {
+			throw new ScriptException(e);
+		}
 	}
 
 	protected GroovyScriptEngine createScriptEngine(File folder) throws MalformedURLException  {
