@@ -43,7 +43,7 @@ public class FileWatcherTest {
 		watcher.removeListener(listener);
 		assertEquals(0, watcher.getListeners().size());
 	}
-	
+
 	public void wait(int time) throws InterruptedException {
 		Thread.sleep(time);
 	}

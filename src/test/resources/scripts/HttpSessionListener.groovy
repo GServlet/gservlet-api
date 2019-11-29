@@ -4,11 +4,11 @@ import org.gservlet.annotation.SessionListener
 class HttpSessionListener {
 	
 	void sessionCreated() {
-		session.setAttribute("state","sessionCreated");
+		session.setAttribute("state","sessionCreated")
 	}
 	
 	void sessionDestroyed() {
-		session.setAttribute("state","sessionDestroyed");
+		session.setAttribute("state","sessionDestroyed")
 	}
 	
 }
