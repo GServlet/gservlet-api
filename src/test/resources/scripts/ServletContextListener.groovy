@@ -4,11 +4,11 @@ import org.gservlet.annotation.ContextListener
 class ServletContextListener {
 	
 	void contextInitialized() {
-		context.setAttribute("state","contextInitialized");
+		context.setAttribute("state","contextInitialized")
 	}
 	
 	void contextDestroyed() {
-		context.setAttribute("state","contextDestroyed");
+		context.setAttribute("state","contextDestroyed")
 	}
 	
 }

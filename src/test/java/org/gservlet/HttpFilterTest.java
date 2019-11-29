@@ -14,9 +14,11 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -50,6 +52,7 @@ public class HttpFilterTest {
 		    }
 		};
 		HttpServletRequest request = mock(HttpServletRequest.class);
+		when(request.getAttribute(Constants.CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
 		ServletContext context = mock(ServletContext.class);
 		when(request.getServletContext()).thenReturn(context);
 		when(request.getSession(true)).thenReturn(mock(HttpSession.class));
@@ -60,12 +63,15 @@ public class HttpFilterTest {
 		assertEquals("filtering", map.get("state"));
 		filter.init(mock(FilterConfig.class));
 		assertEquals("init", map.get("state"));
+		assertNotNull(filter.getConfig());
 		filter.destroy();
 		assertEquals("destroy", map.get("state"));
 		assertEquals(RequestWrapper.class, filter.getRequest().getClass());
 		assertEquals(SessionWrapper.class, filter.getSession().getClass());
 		assertEquals(ContextWrapper.class, filter.getContext().getClass());
 		assertNotNull(filter.getFilterChain());
+		assertNotNull(filter.getConnection());
+		filter.next();
 		DefaultRequestFilter defaultRequestFilter = new DefaultRequestFilter();
 		assertFalse(defaultRequestFilter.getClass().isAnnotationPresent(WebListener.class));
 		defaultRequestFilter.init(null);

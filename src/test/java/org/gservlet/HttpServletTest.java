@@ -7,15 +7,16 @@ import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 import org.gservlet.annotation.Servlet;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -51,6 +52,7 @@ public class HttpServletTest {
 		};
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getSession(true)).thenReturn(mock(HttpSession.class));
+		when(request.getAttribute(Constants.CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
 		when(request.getServletContext()).thenReturn(mock(ServletContext.class));
 		doAnswer(initializeMap).when(request).setAttribute(anyString(),any());
 		HttpServletResponse response = mock(HttpServletResponse.class);
@@ -71,6 +73,7 @@ public class HttpServletTest {
 		assertEquals(RequestWrapper.class, servlet.getRequest().getClass());
 		assertEquals(SessionWrapper.class, servlet.getSession().getClass());
 		assertEquals(ContextWrapper.class, servlet.getContext().getClass());
+		assertNotNull(servlet.getConnection());
 	}
 	
 	@Test
