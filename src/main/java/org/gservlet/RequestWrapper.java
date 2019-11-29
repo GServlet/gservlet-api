@@ -35,7 +35,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	public Object propertyMissing(String property) throws IOException {
-		if (property.equals("body") && getContentType().equalsIgnoreCase("application/json")) {
+		if (property != null && property.equals("body") && getContentType().equalsIgnoreCase("application/json")) {
 			return new JsonSlurper().parse(getInputStream());
 		}
 		Object value = getAttribute(property);
