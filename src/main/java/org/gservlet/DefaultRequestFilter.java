@@ -66,22 +66,7 @@ public class DefaultRequestFilter implements Filter {
 	}
 
 	protected void forward(AbstractServlet servlet, HttpServletRequest request, HttpServletResponse response) {
-		String method = request.getMethod();
-		if (method.equalsIgnoreCase("get")) {
-			servlet.doGet(request, response);
-		} else if (method.equalsIgnoreCase("post")) {
-			servlet.doPost(request, response);
-		} else if (method.equalsIgnoreCase("put")) {
-			servlet.doPut(request, response);
-		} else if (method.equalsIgnoreCase("delete")) {
-			servlet.doDelete(request, response);
-		} else if (method.equalsIgnoreCase("head")) {
-			servlet.doHead(request, response);
-		} else if (method.equalsIgnoreCase("trace")) {
-			servlet.doTrace(request, response);
-		} else if (method.equalsIgnoreCase("options")) {
-			servlet.doOptions(request, response);
-		}
+		servlet.route(request, response, request.getMethod().toLowerCase());
 	}
 
 	@Override
