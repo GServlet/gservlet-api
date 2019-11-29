@@ -7,7 +7,6 @@ import static org.mockito.ArgumentMatchers.isA;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.FilterRegistration;
