@@ -31,16 +31,16 @@ import javax.servlet.annotation.WebInitParam;
 
 public @interface Filter {
 
-    String description() default "";
-    String displayName() default "";
+	String filterName() default "";
+	String[] value() default {};
+    String[] urlPatterns() default {};
     WebInitParam[] initParams() default {};
-    String filterName() default "";
+    DispatcherType[] dispatcherTypes() default {DispatcherType.REQUEST};
+    String[] servletNames() default {};
+	boolean asyncSupported() default false;
     String smallIcon() default "";
     String largeIcon() default "";
-    String[] servletNames() default {};
-    String[] value() default {};
-    String[] urlPatterns() default {};
-    DispatcherType[] dispatcherTypes() default {DispatcherType.REQUEST};
-    boolean asyncSupported() default false;
-
+    String description() default "";
+    String displayName() default "";
+    
 }

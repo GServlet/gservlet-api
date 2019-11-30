@@ -22,6 +22,8 @@ package org.gservlet;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -37,6 +39,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 import org.gservlet.annotation.ContextAttributeListener;
@@ -129,6 +132,9 @@ public class Initializer {
 			if (annotation.urlPatterns().length > 0) {
 				registration.addMapping(annotation.urlPatterns());
 			}
+			for(WebInitParam param : annotation.initParams()) {
+				registration.setInitParameter(param.name(), param.value());
+			}
 		} else {
 			String message = "The servlet with the name " + name
 					+ " has already been registered. Please use a different name or package";
@@ -145,13 +151,18 @@ public class Initializer {
 					new Class[] { javax.servlet.Filter.class }, handler);
 			handlers.put(name, handler);
 			registration = context.addFilter(name, (javax.servlet.Filter) filter);
+			Collection<DispatcherType> dispatcherTypes = Arrays.asList(annotation.dispatcherTypes());
+			System.out.println(annotation.dispatcherTypes()[0].toString());
 			if (annotation.value().length > 0) {
-				registration.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true,
+				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true,
 						annotation.value());
 			}
 			if (annotation.urlPatterns().length > 0) {
-				registration.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true,
+				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true,
 						annotation.urlPatterns());
+			}
+			for(WebInitParam param : annotation.initParams()) {
+				registration.setInitParameter(param.name(), param.value());
 			}
 		} else {
 			String message = "The filter with the name " + name

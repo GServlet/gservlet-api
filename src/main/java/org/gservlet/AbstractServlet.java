@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +41,8 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
 	protected final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
-
+	
+	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		route(request, response, "get");
@@ -89,6 +91,10 @@ public abstract class AbstractServlet extends HttpServlet {
 		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during invoke method", e);
 		}
+	}
+	
+	public ServletConfig getConfig() {
+		return getServletConfig();
 	}
 	
 	public HttpServletRequest getRequest() {
