@@ -64,7 +64,7 @@ the online [documentation](https://gservlet.org/documentation) and the [JavaDocs
 
 * Java 7+
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
-* Java EE 8 compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
+* Java EE 6+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 
 ## Getting Started
 
