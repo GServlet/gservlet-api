@@ -11,16 +11,16 @@
 [![License](http://img.shields.io/:license-apache-blue.png)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## Table of contents
-* [Description](#description)
-* [Features](#features)
-* [Requirements](#requirements)
-* [Getting Started](#getting-started)
-* [Building from source](#building-from-source)
-* [Versioning](#versioning)
-* [Status](#status)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
+1. [Description](#description)
+1. [Features](#features)
+1. [Requirements](#requirements)
+1. [Getting Started](#getting-started)
+1. [Building from source](#building-from-source)
+1. [Versioning](#versioning)
+1. [Status](#status)
+1. [Contributing](#contributing)
+1. [License](#license)
+1. [Contact](#contact)
 
 ## Description
 
