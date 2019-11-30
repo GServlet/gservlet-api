@@ -39,7 +39,7 @@ import groovy.xml.MarkupBuilder;
 
 public abstract class AbstractFilter implements Filter {
 
-	protected FilterConfig config;
+	protected transient FilterConfig config;
 	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
 	protected final Logger logger = Logger.getLogger(AbstractFilter.class.getName());
 	
@@ -77,6 +77,10 @@ public abstract class AbstractFilter implements Filter {
 	public void destroy() {
 		// no implementation provided
 	}
+	
+	public FilterConfig getConfig() {
+		return config;
+	}
 
 	public HttpServletRequest getRequest() {
 		return requestContext.get().getRequest();
@@ -96,10 +100,6 @@ public abstract class AbstractFilter implements Filter {
 	
 	public FilterChain getFilterChain() {
 		return requestContext.get().getFilterChain();
-	}
-
-	public FilterConfig getConfig() {
-		return config;
 	}
 
 	public Sql getConnection() {
