@@ -25,6 +25,13 @@ import javax.servlet.annotation.WebInitParam;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Retention;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Servlet {

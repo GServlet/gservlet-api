@@ -30,6 +30,13 @@ import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public class DatabaseManager {
 
 	/**

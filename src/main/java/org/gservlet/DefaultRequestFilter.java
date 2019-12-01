@@ -32,6 +32,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.gservlet.annotation.Servlet;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public class DefaultRequestFilter implements Filter {
 
 	@Override

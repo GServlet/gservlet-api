@@ -26,9 +26,15 @@ import java.lang.annotation.Target;
 import javax.servlet.DispatcherType;
 import javax.servlet.annotation.WebInitParam;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-
 public @interface Filter {
 
 	String filterName() default "";

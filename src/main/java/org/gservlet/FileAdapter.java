@@ -19,6 +19,13 @@
 
 package org.gservlet;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public class FileAdapter implements FileListener {
 
 	@Override

@@ -24,6 +24,13 @@ import java.util.Enumeration;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 @SuppressWarnings("serial")
 public class SessionWrapper implements HttpSession, Serializable {
 

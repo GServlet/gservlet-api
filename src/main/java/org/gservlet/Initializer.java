@@ -51,6 +51,13 @@ import org.gservlet.annotation.Servlet;
 import org.gservlet.annotation.SessionAttributeListener;
 import org.gservlet.annotation.SessionListener;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public class Initializer {
 
 	protected final ServletContext context;

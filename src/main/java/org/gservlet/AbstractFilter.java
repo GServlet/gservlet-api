@@ -37,6 +37,13 @@ import javax.servlet.http.HttpSession;
 import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public abstract class AbstractFilter implements Filter {
 
 	protected transient FilterConfig config;

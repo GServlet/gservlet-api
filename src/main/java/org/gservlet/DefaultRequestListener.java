@@ -27,6 +27,13 @@ import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 import groovy.sql.Sql;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 @WebListener
 public class DefaultRequestListener implements ServletRequestListener {
 

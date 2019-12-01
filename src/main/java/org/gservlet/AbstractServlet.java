@@ -36,6 +36,13 @@ import groovy.json.JsonSlurper;
 import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 @SuppressWarnings("serial")
 public abstract class AbstractServlet extends HttpServlet {
 

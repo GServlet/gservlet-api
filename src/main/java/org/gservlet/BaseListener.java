@@ -22,6 +22,13 @@ package org.gservlet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public abstract class BaseListener {
 
 	protected final ThreadLocal<Object> eventHolder = new ThreadLocal<>();
