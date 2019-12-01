@@ -44,6 +44,13 @@ import javassist.CtClass;
 import javassist.LoaderClassPath;
 import javassist.NotFoundException;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public class ScriptManager {
 
 	protected final GroovyScriptEngine engine;

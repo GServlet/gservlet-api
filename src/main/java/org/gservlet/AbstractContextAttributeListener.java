@@ -23,6 +23,13 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeEvent;
 import javax.servlet.ServletContextAttributeListener;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public abstract class AbstractContextAttributeListener extends BaseListener implements ServletContextAttributeListener {
 
 	@Override

@@ -22,6 +22,13 @@ package org.gservlet;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public class DynamicInvocationHandler implements InvocationHandler {
 
 	protected Object target;

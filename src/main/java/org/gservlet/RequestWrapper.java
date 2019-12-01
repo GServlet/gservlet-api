@@ -24,6 +24,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import groovy.json.JsonSlurper;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public class RequestWrapper extends HttpServletRequestWrapper {
 
 	public RequestWrapper(HttpServletRequest request) {

@@ -23,6 +23,13 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public abstract class AbstractSessionAttributeListener extends BaseListener implements HttpSessionAttributeListener {
 
 	@Override

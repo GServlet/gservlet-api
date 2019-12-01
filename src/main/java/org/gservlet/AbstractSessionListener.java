@@ -23,6 +23,13 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public abstract class AbstractSessionListener extends BaseListener implements HttpSessionListener {
 
 	@Override

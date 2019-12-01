@@ -19,6 +19,13 @@
 
 package org.gservlet;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public interface FileListener {
 
 	public void onCreated(String fileName);

@@ -8,6 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import groovy.xml.MarkupBuilder;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public class RequestContext {
 
 	private HttpServletRequest request;

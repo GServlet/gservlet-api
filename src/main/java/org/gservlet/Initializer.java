@@ -51,6 +51,13 @@ import org.gservlet.annotation.Servlet;
 import org.gservlet.annotation.SessionAttributeListener;
 import org.gservlet.annotation.SessionListener;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public class Initializer {
 
 	protected final ServletContext context;
@@ -152,7 +159,6 @@ public class Initializer {
 			handlers.put(name, handler);
 			registration = context.addFilter(name, (javax.servlet.Filter) filter);
 			Collection<DispatcherType> dispatcherTypes = Arrays.asList(annotation.dispatcherTypes());
-			System.out.println(annotation.dispatcherTypes()[0].toString());
 			if (annotation.value().length > 0) {
 				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true,
 						annotation.value());

@@ -19,6 +19,13 @@
 
 package org.gservlet;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public final class Constants {
 
 	public static final String SCRIPTS_FOLDER = "scripts";

@@ -34,6 +34,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+* 
+* 
+* 
+* @author Mamadou Lamine Ba
+* 
+*/
 public class FileWatcher implements Runnable {
 
 	protected final List<FileListener> listeners;
