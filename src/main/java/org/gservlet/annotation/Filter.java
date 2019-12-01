@@ -28,7 +28,7 @@ import javax.servlet.annotation.WebInitParam;
 
 /**
 * 
-* Annotation used to declare a servlet filter.
+* Annotation used to declare a {@link javax.servlet.Filter}. 
 *
 * This annotation is processed at deployment time,
 * and the corresponding filter applied to the specified URL patterns,
