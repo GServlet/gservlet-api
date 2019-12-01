@@ -6,7 +6,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
 
@@ -19,9 +18,9 @@ import groovy.xml.MarkupBuilder;
 */
 public class RequestContext {
 
-	private HttpServletRequest request;
-	private HttpServletResponse response;
-	private FilterChain filterChain;
+	protected HttpServletRequest request;
+	protected HttpServletResponse response;
+	protected FilterChain filterChain;
 
 	public RequestContext(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
@@ -54,7 +53,7 @@ public class RequestContext {
 	}
 
 	public MarkupBuilder getHtml() throws IOException {
-		MarkupBuilder builder = new MarkupBuilder(getResponse().getWriter());
+		MarkupBuilder builder = new MarkupBuilder(response.getWriter());
 		getResponse().setHeader("Content-Type", "text/html");
 		getResponse().getWriter().println("<!DOCTYPE html>");
 		return builder;
