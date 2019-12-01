@@ -90,7 +90,7 @@ public abstract class AbstractServlet extends HttpServlet {
 		invoke(methodName);
 	}
 
-	private void invoke(String method) {
+	protected void invoke(String method) {
 		try {
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
@@ -121,7 +121,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	public Sql getConnection() {
-		return (Sql) requestContext.get().getRequest().getAttribute(Constants.CONNECTION);
+		return requestContext.get().getConnection();
 	}
 
 	public void forward(String location) {

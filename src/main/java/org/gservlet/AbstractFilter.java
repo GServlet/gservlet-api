@@ -88,6 +88,10 @@ public abstract class AbstractFilter implements Filter {
 	public FilterConfig getConfig() {
 		return config;
 	}
+	
+	public String getInitParameter(String name) {
+		return config.getInitParameter(name);
+	}
 
 	public HttpServletRequest getRequest() {
 		return requestContext.get().getRequest();
@@ -110,7 +114,7 @@ public abstract class AbstractFilter implements Filter {
 	}
 
 	public Sql getConnection() {
-		return (Sql) requestContext.get().getRequest().getAttribute(Constants.CONNECTION);
+		return requestContext.get().getConnection();
 	}
 
 	public PrintWriter getOut() throws IOException {

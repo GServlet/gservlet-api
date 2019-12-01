@@ -6,6 +6,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
 
 /**
@@ -56,6 +58,10 @@ public class RequestContext {
 		getResponse().setHeader("Content-Type", "text/html");
 		getResponse().getWriter().println("<!DOCTYPE html>");
 		return builder;
+	}
+	
+	public Sql getConnection() {
+		return (Sql) request.getAttribute(Constants.CONNECTION);
 	}
 
 }
