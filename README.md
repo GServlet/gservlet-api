@@ -166,11 +166,15 @@ For more information about how to create the other listeners, please read the [d
 
 The documentation generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). By default only the HTML output is enabled.
 
-    > mvn clean generate-resources
+    > mvn clean install -Pdocumentation
 
 The built documentation can then be found in the following location:
   
     > ./target/generated-docs
+    
+In the other hand, the javadocs can be found in the folder:
+
+    > ./target/site/apidocs    
 
 ## Versioning
 
