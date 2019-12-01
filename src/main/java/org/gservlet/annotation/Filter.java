@@ -34,7 +34,7 @@ import javax.servlet.annotation.WebInitParam;
 * and the corresponding filter applied to the specified URL patterns,
 * servlets, and dispatcher types.
 * 
-* @see javax.servlet.Filter
+* @see org.gservlet.AbstractFilter
 * 
 * @author Mamadou Lamine Ba
 * 

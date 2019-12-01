@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 import java.lang.annotation.RetentionPolicy;
 
 /**
-* This annotation is used to declare a {@link javax.servlet.ServletContextListener} 
+* This annotation is used to declare a {@link org.gservlet.AbstractContextListener} 
 * 
 * @author Mamadou Lamine Ba
 * 

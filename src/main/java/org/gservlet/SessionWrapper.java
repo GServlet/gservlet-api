@@ -81,7 +81,7 @@ public class SessionWrapper implements HttpSession, Serializable {
 	 *             replacement. It will be removed in a future version of the Java
 	 *             Servlet API.
 	 *
-	 * @return the {@link HttpSessionContext} for this session.
+	 * @return the @see javax.servlet.http.HttpSessionContext for this session.
 	 */
 	@Deprecated
 	public javax.servlet.http.HttpSessionContext getSessionContext() {

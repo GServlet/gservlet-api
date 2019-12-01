@@ -55,7 +55,7 @@ public class DatabaseManager {
 	 * Configures the data source and stores it as attribute in the context with the
 	 * datasource key
 	 *
-	 * @throws Exception throws an exception if the data source can't be configured
+	 * @throws IOException throws an exception if the data source can't be configured
 	 */
 
 	protected void init() throws IOException {
@@ -100,7 +100,7 @@ public class DatabaseManager {
 	 * </p>
 	 * 
 	 * @param configuration the configuration file
-	 * @throws Exception throws an Exception if the configuration file is invalid
+	 * @throws IOException throws an Exception if the configuration file is invalid
 	 * @return the properties of the configuration file
 	 */
 	public Properties loadConfiguration(File configuration) throws IOException {

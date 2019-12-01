@@ -33,7 +33,7 @@ import java.lang.annotation.Retention;
 * and the corresponding servlet made available at the specified URL
 * patterns.
 * 
-* @see javax.servlet.Servlet
+* @see org.gservlet.AbstractServlet
 * 
 * @author Mamadou Lamine Ba
 * 

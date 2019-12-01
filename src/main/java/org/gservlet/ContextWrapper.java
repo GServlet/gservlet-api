@@ -257,8 +257,8 @@ public class ContextWrapper implements ServletContext {
      * with servlet's normal operation
      */
 	@Deprecated
-	public Servlet getServlet(String arg0) throws ServletException {
-		return context.getServlet(arg0);
+	public Servlet getServlet(String name) throws ServletException {
+		return context.getServlet(name);
 	}
 
 	@Override
@@ -334,8 +334,8 @@ public class ContextWrapper implements ServletContext {
      * @param msg a <code>String</code> that describes the exception
      */
 	@Deprecated
-	public void log(Exception arg0, String arg1) {
-		context.log(arg0, arg1);
+	public void log(Exception exception, String msg) {
+		context.log(exception, msg);
 	}
 
 	@Override
