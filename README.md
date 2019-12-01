@@ -172,7 +172,7 @@ The built documentation can then be found in the following location:
   
     > ./target/generated-docs
     
-In the other hand, the javadocs can be found in the folder:
+On the other hand, the javadocs can be found in the folder:
 
     > ./target/site/apidocs    
 
