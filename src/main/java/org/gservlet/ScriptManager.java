@@ -70,7 +70,7 @@ public class ScriptManager {
 
 	protected GroovyScriptEngine createScriptEngine(File folder) throws MalformedURLException {
 		URL[] urls = { folder.toURI().toURL(),
-				ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER) };
+		ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER) };
 		GroovyScriptEngine gse = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
 		ClassPool classPool = ClassPool.getDefault();
 		classPool.insertClassPath(new LoaderClassPath(gse.getParentClassLoader()));
