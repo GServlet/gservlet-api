@@ -85,9 +85,9 @@ public abstract class AbstractServlet extends HttpServlet {
 		route(request, response, "options");
 	}
 
-	public void route(HttpServletRequest request, HttpServletResponse response, String methodName) {
+	public void route(HttpServletRequest request, HttpServletResponse response, String method) {
 		requestContext.set(new RequestContext(request, response));
-		invoke(methodName);
+		invoke(method);
 	}
 
 	protected void invoke(String method) {
@@ -98,6 +98,32 @@ public abstract class AbstractServlet extends HttpServlet {
 		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during invoke method", e);
 		}
+	}
+		
+	public void forward(String location) {
+		try {
+			HttpServletRequest request = requestContext.get().getRequest(); 
+			request.getRequestDispatcher(location).forward(request, getResponse());
+		} catch (ServletException | IOException e) {
+			logger.log(Level.INFO, "exception during forward method", e);
+		}
+	}
+
+	public void redirect(String location) throws IOException {
+		getResponse().sendRedirect(location);
+	}
+
+	public void json(Object object) throws IOException {
+		getResponse().setHeader("Content-Type", "application/json");
+		getResponse().getWriter().write(toJson(object));
+	}
+
+	public String stringify(Object object) {
+		return toJson(object);
+	}
+
+	public Object parse(InputStream inputStream) {
+		return new JsonSlurper().parse(inputStream);
 	}
 	
 	public ServletConfig getConfig() {
@@ -124,38 +150,12 @@ public abstract class AbstractServlet extends HttpServlet {
 		return requestContext.get().getConnection();
 	}
 
-	public void forward(String location) {
-		try {
-			HttpServletRequest request = requestContext.get().getRequest(); 
-			request.getRequestDispatcher(location).forward(request, getResponse());
-		} catch (ServletException | IOException e) {
-			logger.log(Level.INFO, "exception during forward method", e);
-		}
-	}
-
-	public void redirect(String location) throws IOException {
-		getResponse().sendRedirect(location);
-	}
-
 	public PrintWriter getOut() throws IOException {
 		return getResponse().getWriter();
 	}
-
-	public void json(Object object) throws IOException {
-		getResponse().setHeader("Content-Type", "application/json");
-		getResponse().getWriter().write(toJson(object));
-	}
-
-	public String stringify(Object object) {
-		return toJson(object);
-	}
-
+	
 	public MarkupBuilder getHtml() throws IOException {
 		return requestContext.get().getHtml();
-	}
-
-	public Object parse(InputStream inputStream) {
-		return new JsonSlurper().parse(inputStream);
 	}
 
 }

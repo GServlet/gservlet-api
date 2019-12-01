@@ -89,6 +89,15 @@ public abstract class AbstractFilter implements Filter {
 		return config;
 	}
 	
+	public void json(Object object) throws IOException {
+		getResponse().setHeader("Content-Type", "application/json");
+		getResponse().getWriter().write(toJson(object));
+	}
+
+	public String stringify(Object object) {
+		return toJson(object);
+	}
+	
 	public String getInitParameter(String name) {
 		return config.getInitParameter(name);
 	}
@@ -121,15 +130,6 @@ public abstract class AbstractFilter implements Filter {
 		return getResponse().getWriter();
 	}
 
-	public void json(Object object) throws IOException {
-		getResponse().setHeader("Content-Type", "application/json");
-		getResponse().getWriter().write(toJson(object));
-	}
-
-	public String stringify(Object object) {
-		return toJson(object);
-	}
-	
 	public MarkupBuilder getHtml() throws IOException {
 		return requestContext.get().getHtml();
 	}
