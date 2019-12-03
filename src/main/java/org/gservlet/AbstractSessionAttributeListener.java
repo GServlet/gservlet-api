@@ -32,33 +32,82 @@ import javax.servlet.http.HttpSessionBindingEvent;
 */
 public abstract class AbstractSessionAttributeListener extends AbstractListener implements HttpSessionAttributeListener {
 
+	/**
+	* 
+	* Receives notification that an attribute has been added to the HttpSession.
+	* 
+	* @param event the HttpSessionBindingEvent containing the HttpSession to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent event) {
 		route(event, "attributeAdded");
 	}
 
+	/**
+	* 
+	* Receives notification that an attribute has been removed to the HttpSession.
+	* 
+	* @param event the HttpSessionBindingEvent containing the HttpSession to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeRemoved(HttpSessionBindingEvent event) {
 		route(event, "attributeRemoved");
 	}
 
+	/**
+	* 
+	* Receives notification that an attribute has been replaced to the HttpSession.
+	* 
+	* @param event the HttpSessionBindingEvent containing the HttpSession to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeReplaced(HttpSessionBindingEvent event) {
 		route(event, "attributeReplaced");
 	}
 
+	/**
+	* 
+	* The HttpSessionBindingEvent object.
+	* 
+	* @return the HttpSessionBindingEvent object
+	* 
+	*/
 	public HttpSessionBindingEvent getEvent() {
 		return (HttpSessionBindingEvent) eventHolder.get();
 	}
 
-	public String getName() {
-		return getEvent().getName();
-	}
-
+	/**
+	* 
+	* The HttpSession object.
+	* 
+	* @return the HttpSession object
+	* 
+	*/
 	public HttpSession getSession() {
 		return new SessionWrapper(getEvent().getSession());
 	}
 
+	/**
+	* 
+	* The attribute name.
+	* 
+	* @return the attribute name
+	* 
+	*/
+	public String getName() {
+		return getEvent().getName();
+	}
+	
+	/**
+	* 
+	* The attribute value.
+	* 
+	* @return the attribute value
+	* 
+	*/
 	public Object getValue() {
 		return getEvent().getValue();
 	}

@@ -33,38 +33,93 @@ import javax.servlet.http.HttpServletRequest;
 */
 public abstract class AbstractRequestAttributeListener extends AbstractListener implements ServletRequestAttributeListener {
 
+	/**
+	* 
+	* Receives notification that an attribute has been added to the ServletRequest.
+	* 
+	* @param event the ServletRequestAttributeEvent containing the ServletRequest to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeAdded(ServletRequestAttributeEvent event) {
 		route(event, "attributeAdded");
 	}
 
+	/**
+	* 
+	* Receives notification that an attribute has been removed to the ServletRequest.
+	* 
+	* @param event the ServletRequestAttributeEvent containing the ServletRequest to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeRemoved(ServletRequestAttributeEvent event) {
 		route(event, "attributeRemoved");
 	}
 
+	/**
+	* 
+	* Receives notification that an attribute has been replaced to the ServletRequest.
+	* 
+	* @param event the ServletRequestAttributeEvent containing the ServletRequest to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeReplaced(ServletRequestAttributeEvent event) {
 		route(event, "attributeReplaced");
 	}
 
-
+	/**
+	* 
+	* The ServletRequestAttributeEvent object.
+	* 
+	* @return the ServletRequestAttributeEvent object
+	* 
+	*/
 	public ServletRequestAttributeEvent getEvent() {
 		return (ServletRequestAttributeEvent) eventHolder.get();
 	}
 
-	public String getName() {
-		return getEvent().getName();
-	}
-
+	/**
+	* 
+	* The ServletContext object.
+	* 
+	* @return the ServletContext object
+	* 
+	*/
 	public ServletContext getContext() {
 		return new ContextWrapper(getEvent().getServletContext());
 	}
 
+	/**
+	* 
+	* The HttpServletRequest object.
+	* 
+	* @return the HttpServletRequest object
+	* 
+	*/
 	public HttpServletRequest getRequest() {
 		return new RequestWrapper((HttpServletRequest) getEvent().getServletRequest());
 	}
+	
+	/**
+	* 
+	* The attribute name.
+	* 
+	* @return the attribute name
+	* 
+	*/
+	public String getName() {
+		return getEvent().getName();
+	}
 
+	/**
+	* 
+	* The attribute value.
+	* 
+	* @return the attribute value
+	* 
+	*/
 	public Object getValue() {
 		return getEvent().getValue();
 	}

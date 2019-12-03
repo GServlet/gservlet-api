@@ -32,33 +32,83 @@ import javax.servlet.ServletContextAttributeListener;
 */
 public abstract class AbstractContextAttributeListener extends AbstractListener implements ServletContextAttributeListener {
 
+	/**
+	* 
+	* Receives notification that an attribute has been added to the ServletContext.
+	* 
+	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeAdded(ServletContextAttributeEvent event) {
 		route(event, "attributeAdded");
 	}
 
+	/**
+	* 
+	* Receives notification that an attribute has been removed to the ServletContext.
+	* 
+	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeRemoved(ServletContextAttributeEvent event) {
 		route(event, "attributeRemoved");
 	}
 
+	/**
+	* 
+	* Receives notification that an attribute has been replaced to the ServletContext.
+	* 
+	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeReplaced(ServletContextAttributeEvent event) {
 		route(event, "attributeReplaced");
 	}
 
+	/**
+	* 
+	* The ServletContextAttributeEvent object.
+	* 
+	* @return the ServletContextAttributeEvent object
+	* 
+	*/
 	public ServletContextAttributeEvent getEvent() {
 		return (ServletContextAttributeEvent) eventHolder.get();
 	}
 
+	/**
+	* 
+	* The ServletContext object.
+	* 
+	* @return the ServletContext object
+	* 
+	*/
+	public ServletContext getContext() {
+		return new ContextWrapper(getEvent().getServletContext());
+	}
+	
+	/**
+	* 
+	* The attribute name.
+	* 
+	* @return the attribute name
+	* 
+	*/
 	public String getName() {
 		return getEvent().getName();
 	}
 
-	public ServletContext getContext() {
-		return new ContextWrapper(getEvent().getServletContext());
-	}
 
+	/**
+	* 
+	* The attribute value.
+	* 
+	* @return the attribute value
+	* 
+	*/
 	public Object getValue() {
 		return getEvent().getValue();
 	}

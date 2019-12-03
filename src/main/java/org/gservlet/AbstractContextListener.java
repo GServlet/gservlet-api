@@ -32,20 +32,48 @@ import javax.servlet.ServletContextListener;
 */
 public abstract class AbstractContextListener extends AbstractListener implements ServletContextListener {
 
+	/**
+	* 
+	* Receives notification that the web application initialization process is starting.
+	* 
+	* @param event the ServletContextEvent containing the ServletContext that is being initialized
+	* 
+	*/
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		route(event, "contextInitialized");
 	}
 
+	/**
+	* 
+	* Receives notification that the ServletContext is about to be shut down.
+	* 
+	* @param event the ServletContextEvent containing the ServletContext that is being initialized
+	* 
+	*/
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
 		route(event, "contextDestroyed");
 	}
 
+	/**
+	* 
+	* The ServletContext object.
+	* 
+	* @return the ServletContext object
+	* 
+	*/
 	public ServletContext getContext() {
 		return new ContextWrapper(getEvent().getServletContext());
 	}
 	
+	/**
+	* 
+	* The ServletContextEvent object.
+	* 
+	* @return the ServletContextEvent object
+	* 
+	*/
 	public ServletContextEvent getEvent() {
 		return (ServletContextEvent) eventHolder.get();
 	}
