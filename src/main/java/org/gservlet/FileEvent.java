@@ -23,5 +23,16 @@ public class FileEvent extends EventObject {
 	public FileEvent(String fileName) {
 		super(fileName);
 	}
+	
+	/**
+	* 
+	* The file name.
+	* 
+	* @return the file name 
+	*  
+	*/
+	public String getFileName() {
+		return getSource().toString();
+	}
 
 }

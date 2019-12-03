@@ -211,7 +211,7 @@ public class Initializer {
 			new FileWatcher(folder).addListener(new FileAdapter() {
 				@Override
 				public void onCreated(FileEvent event) {
-					String script = (String) event.getSource();
+					String script = event.getFileName();
 					logger.info("reloading script " + script);
 					reload(script);
 				}
