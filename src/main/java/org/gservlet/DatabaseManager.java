@@ -32,7 +32,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 /**
 * 
-* 
+* The DatabaseManager handles the creation and the configuration of the data source. 
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -44,25 +44,38 @@ public class DatabaseManager {
 	 */
 	protected final ServletContext context;
 
+	/**
+	 * The logger object
+	 */
 	protected final Logger logger = Logger.getLogger(DatabaseManager.class.getName());
 
+	/**
+	* 
+	* Constructs a DatabaseManager for the given ServletContext
+	* 
+	* @param context the servlet context 
+	* @throws IOException the IOException 
+	*/
 	public DatabaseManager(ServletContext context) throws IOException {
 		this.context = context;
 		init();
 	}
 
 	/**
-	 * Configures the data source and stores it as attribute in the context with the
-	 * datasource key
+	 * Initializes the configuration of the data source and watches the configuration file for changes
 	 *
 	 * @throws IOException throws an exception if the data source can't be configured
 	 */
-
 	protected void init() throws IOException {
 		setupDataSource();
 		watch(new File(context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER));
 	}
 
+	/**
+	 * Configures the data source and stores it as an attribute in the context
+	 *
+	 * @throws IOException throws an exception if the data source can't be configured
+	 */
 	protected void setupDataSource() throws IOException {
 		File configuration = new File(
 				context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER + 
@@ -75,6 +88,11 @@ public class DatabaseManager {
 		}
 	}
 
+	/**
+	 * Watches the configuration folder for file changes
+	 *
+	 * @param folder the configuration folder
+	 */
 	protected void watch(File folder) {
 		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
 		if (reload) {
@@ -96,26 +114,24 @@ public class DatabaseManager {
 	}
 
 	/**
-	 * <p>
 	 * Loads the configuration file properties
-	 * </p>
 	 * 
-	 * @param configuration the configuration file
+	 * @param file the configuration file
 	 * @throws IOException throws an Exception if the configuration file is invalid
 	 * @return the properties of the configuration file
 	 */
-	public Properties loadConfiguration(File configuration) throws IOException {
+	public Properties loadConfiguration(File file) throws IOException {
 		Properties properties = new Properties();
-		FileReader reader = new FileReader(configuration);
+		FileReader reader = new FileReader(file);
 		properties.load(reader);
 		reader.close();
 		return properties;
 	}
 
 	/**
+	 * Checks if the configuration file is valid. 
 	 * <p>
-	 * Checks if the configuration file is valid. The required properties are : <br>
-	 * <br>
+	 * The required properties are : <br>
 	 * db.driver : the jdbc driver class <br>
 	 * db.url : the database url <br>
 	 * db.user : the database user <br>
@@ -123,11 +139,10 @@ public class DatabaseManager {
 	 * db.minPoolSize : the database min pool size <br>
 	 * db.maxPoolSize : the database max pool size <br>
 	 * db.batchSize : the database batch size
-	 * 
 	 * </p>
 	 * 
 	 * @param properties the configuration file properties
-	 * @return true if the required configuration file properties are not missing
+	 * @return true if the required configuration file properties are present
 	 */
 	public boolean isConfigurationValid(Properties properties) {
 		return properties.containsKey("db.driver") && properties.containsKey("db.url")
@@ -136,13 +151,10 @@ public class DatabaseManager {
 	}
 
 	/**
-	 * <p>
-	 * Creates the pooled data source from the configuration file properties
-	 * </p>
+	 * Creates the data source from the configuration file properties
 	 * 
 	 * @param properties the configuration file properties
-	 * @return the pooled data source from which the database connections are
-	 *         created
+	 * @return the data source from which the database connections are created
 	 * 
 	 */
 	public DataSource createDataSource(Properties properties) {
@@ -156,6 +168,11 @@ public class DatabaseManager {
 		return dataSource;
 	}
 
+	/**
+	 * Closes the data source
+	 * 
+	 * 
+	 */
 	public void destroy() {
 		try {
 			BasicDataSource dataSource = (BasicDataSource) context.getAttribute(Constants.DATASOURCE);

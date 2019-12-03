@@ -18,9 +18,10 @@
  */
 
 /**
- * This package contains a number of classes and interfaces to make the use of the Groovy language possible in order to create servlets, filters, listeners.
+ * Contains a number of classes and interfaces to create servlets, filters, listeners with the Groovy language.
  * 
  * @see javax.servlet
+ * @author Mamadou Lamine Ba
  * 
  */
 package org.gservlet;
