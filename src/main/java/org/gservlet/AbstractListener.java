@@ -19,17 +19,18 @@
 
 package org.gservlet;
 
+import java.util.EventListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
 * 
-* 
+* Abstract base class inherited by all the listeners classes.
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractListener {
+public abstract class AbstractListener implements EventListener{
 
 	protected final ThreadLocal<Object> eventHolder = new ThreadLocal<>();
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());

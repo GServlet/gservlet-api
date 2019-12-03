@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSessionListener;
 
 /**
 * 
-* 
+* Abstract class for receiving notification events about HttpSession lifecycle changes.
 * 
 * @author Mamadou Lamine Ba
 * 

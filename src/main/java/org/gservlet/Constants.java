@@ -21,7 +21,7 @@ package org.gservlet;
 
 /**
 * 
-* 
+* Final class that defines the constants used to control the behavior of the application.
 * 
 * @author Mamadou Lamine Ba
 * 

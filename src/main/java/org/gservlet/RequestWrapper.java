@@ -26,7 +26,7 @@ import groovy.json.JsonSlurper;
 
 /**
 * 
-* 
+* A wrapper around the HttpServletRequest class.
 * 
 * @author Mamadou Lamine Ba
 * 

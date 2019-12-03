@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
 * 
-* 
+* Abstract class for receiving notification events about ServletRequest attribute changes.
 * 
 * @author Mamadou Lamine Ba
 * 

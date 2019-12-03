@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * 
- * 
+ * A wrapper around the HttpSession class.
  * 
  * @author Mamadou Lamine Ba
  * 

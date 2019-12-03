@@ -40,7 +40,7 @@ import javax.servlet.descriptor.JspConfigDescriptor;
 
 /**
 * 
-* 
+* A wrapper around the ServletContext class.
 * 
 * @author Mamadou Lamine Ba
 * 
