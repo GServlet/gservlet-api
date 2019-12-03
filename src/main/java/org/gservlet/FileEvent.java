@@ -34,7 +34,7 @@ public class FileEvent extends EventObject {
 
 	/**
 	* 
-	* Construct a FileEvent for the given file name.
+	* Constructs a FileEvent for the given file name.
 	* 
 	* @param fileName the file name 
 	*  

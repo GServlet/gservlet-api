@@ -52,7 +52,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Construct a RequestContext for the given request and response.
+	* Constructs a RequestContext for the given request and response.
 	* 
 	* @param request the request object
 	* @param response the response object 
@@ -65,7 +65,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Construct a RequestContext for the given request, response and filter chain.
+	* Constructs a RequestContext for the given request, response and filter chain.
 	* 
 	* @param request the request object
 	* @param response the response object 

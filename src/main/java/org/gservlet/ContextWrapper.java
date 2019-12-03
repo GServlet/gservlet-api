@@ -47,8 +47,18 @@ import javax.servlet.descriptor.JspConfigDescriptor;
 */
 public class ContextWrapper implements ServletContext {
 
+	/**
+	 * The servlet context object.
+	 */
 	protected final ServletContext context;
 
+	/**
+	* 
+	* Constructs a ContextWrapper for the given ServletContext.
+	* 
+	* @param context the servlet context 
+	*  
+	*/
 	public ContextWrapper(ServletContext context) {
 		this.context = context;
 	}
@@ -1615,13 +1625,28 @@ public class ContextWrapper implements ServletContext {
 		context.setSessionTrackingModes(sessionTrackingModes);
 	}
 
-	public void propertyMissing(String property, Object value) {
-		setAttribute(property, value);
+	/**
+	* 
+	* Sets an attribute.
+	* 
+	* @param name the attribute name
+	* @param value the attribute value
+	* 
+	*/
+	public void propertyMissing(String name, Object value) {
+		setAttribute(name, value);
 	}
 
-	public Object propertyMissing(String property) {
-		Object value = getAttribute(property);
-		return value != null ? value : getInitParameter(property);
+	/**
+	* 
+	* Gets an attribute or a parameter value.
+	* 
+	* @param name the attribute or parameter name
+	* @return the attribute or parameter value
+	*/
+	public Object propertyMissing(String name) {
+		Object value = getAttribute(name);
+		return value != null ? value : getInitParameter(name);
 	}
 
 }

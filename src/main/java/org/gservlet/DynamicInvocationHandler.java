@@ -43,7 +43,7 @@ public class DynamicInvocationHandler implements InvocationHandler {
 	
 	/**
 	* 
-	* Construct a DynamicInvocationHandler for the given target object.
+	* Constructs a DynamicInvocationHandler for the given target object.
 	* 
 	* @param target the target object
 	*  
