@@ -20,23 +20,48 @@
 package org.gservlet;
 
 /**
-* 
-* Final class that defines the constants used to control the behavior of the application.
-* 
-* @author Mamadou Lamine Ba
-* 
-*/
+ * 
+ * Final class that defines the constants used to control the behavior of the
+ * application.
+ * 
+ * @author Mamadou Lamine Ba
+ * 
+ */
 public final class Constants {
 
+	/**
+	 * The scripts folder constant.
+	 */
 	public static final String SCRIPTS_FOLDER = "scripts";
+	/**
+	 * The data source constant.
+	 */
 	public static final String DATASOURCE = "gservlet.dataSource";
+	/**
+	 * The database connection constant.
+	 */
 	public static final String CONNECTION = "gservlet.connection";
+	/**
+	 * The reload constant.
+	 */
 	public static final String RELOAD = "GSERVLET_RELOAD";
+	/**
+	 * The configuration folder constant.
+	 */
 	public static final String CONFIG_FOLDER = "conf";
+	/**
+	 * The database configuration file constant.
+	 */
 	public static final String DB_CONFIG_FILE = "db.properties";
+	/**
+	 * The handlers constant.
+	 */
 	public static final String HANDLERS = "gservlet.handlers";
+	/**
+	 * The default request filter constant.
+	 */
 	public static final String REQUEST_FILTER = "gservlet.requestFilter";
-	
+
 	private Constants() {
 	}
 
