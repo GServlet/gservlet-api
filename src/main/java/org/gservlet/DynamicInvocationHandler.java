@@ -32,7 +32,7 @@ import java.lang.reflect.Method;
 public class DynamicInvocationHandler implements InvocationHandler {
 
 	/**
-	 * The target object.
+	 * The target object
 	 */
 	protected Object target;
 	/**
@@ -43,7 +43,7 @@ public class DynamicInvocationHandler implements InvocationHandler {
 	
 	/**
 	* 
-	* Constructs a DynamicInvocationHandler for the given target object.
+	* Constructs a DynamicInvocationHandler for the given target object
 	* 
 	* @param target the target object
 	*  
@@ -53,6 +53,16 @@ public class DynamicInvocationHandler implements InvocationHandler {
 	    this.target = target;	
 	}
 	
+	
+	/**
+	* 
+	* Processes a method invocation on a proxy instance and returns the result
+	* 
+	* @param proxy the proxy object
+	* @param method the method
+	* @param args the arguments
+	* @return the result
+	*/
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		return method.invoke(target, args);
@@ -60,7 +70,7 @@ public class DynamicInvocationHandler implements InvocationHandler {
 
 	/**
 	* 
-	* Returns the target object.
+	* Returns the target object
 	* 
 	* @return the target object
 	* 
@@ -72,7 +82,7 @@ public class DynamicInvocationHandler implements InvocationHandler {
 
 	/**
 	* 
-	* Sets the target object.
+	* Sets the target object
 	* 
 	* @param target the target object
 	* 
@@ -83,7 +93,7 @@ public class DynamicInvocationHandler implements InvocationHandler {
 
 	/**
 	* 
-	* Returns the registration flag.
+	* Returns the registration flag
 	* 
 	* @return the registration flag
 	* 
@@ -94,7 +104,7 @@ public class DynamicInvocationHandler implements InvocationHandler {
 
 	/**
 	* 
-	* Sets the registration flag.
+	* Sets the registration flag
 	* 
 	* @param registered the registration flag
 	* 

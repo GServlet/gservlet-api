@@ -54,18 +54,18 @@ import javassist.NotFoundException;
 public class ScriptManager {
 
 	/**
-	 * The groovy script engine object.
+	 * The groovy script engine object
 	 */
 	protected final GroovyScriptEngine engine;
 	/**
-	 * The logger object.
+	 * The logger object
 	 */
 	protected final Logger logger = Logger.getLogger(ScriptManager.class.getName());
 
 	
 	/**
 	* 
-	* Constructs a ScriptManager for the given folder.
+	* Constructs a ScriptManager for the given folder
 	* 
 	* @param folder the folder object 
 	* @throws MalformedURLException the MalformedURLException
@@ -77,7 +77,7 @@ public class ScriptManager {
 
 	/**
 	* 
-	* Loads a script for the given name.
+	* Loads a script by its name
 	* 
 	* @param name the script name 
 	* @return the instantiated object
@@ -94,7 +94,7 @@ public class ScriptManager {
 
 	/**
 	* 
-	* Constructs a GroovyScriptEngine for the given folder.
+	* Constructs a GroovyScriptEngine for the given folder
 	* 
 	* @param folder the folder object
 	* @return the groovy script engine 
@@ -115,7 +115,7 @@ public class ScriptManager {
 
 	/**
 	* 
-	* Construct a bytecodeProcessor for the given classPool.
+	* Construct a bytecodeProcessor for the given classPool
 	* 
 	* @param classPool the classPool object
 	* @return the bytecodeProcessor 
@@ -141,7 +141,7 @@ public class ScriptManager {
 
 	/**
 	* 
-	* Changes the bytecode of the given class based on the value of the annotation.
+	* Changes the bytecode of the given class based on the value of the annotation
 	* 
 	* @param classPool the classPool object
 	* @param ctClass the class

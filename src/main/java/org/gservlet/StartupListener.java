@@ -37,22 +37,22 @@ import javax.servlet.annotation.WebListener;
 public class StartupListener implements ServletContextListener {
 
 	/**
-	 * The initializer object.
+	 * The initializer object
 	 */
 	protected Initializer initializer;
 	/**
-	 * The database manager object.
+	 * The database manager object
 	 */
 	protected DatabaseManager databaseManager;
 	/**
-	 * The logger object.
+	 * The logger object
 	 */
 	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	
 	/**
 	* 
-	* Receives notification that the web application initialization process is starting.
+	* Receives notification that the web application initialization process is starting
 	* 
 	* @param event the ServletContextEvent containing the ServletContext that is being initialized
 	* 
@@ -71,7 +71,7 @@ public class StartupListener implements ServletContextListener {
 
 	/**
 	* 
-	* Receives notification that the ServletContext is about to be shut down.
+	* Receives notification that the ServletContext is about to be shut down
 	* 
 	* @param event the ServletContextEvent containing the ServletContext that is being initialized
 	* 
@@ -84,7 +84,7 @@ public class StartupListener implements ServletContextListener {
 
 	/**
 	* 
-	* Returns the Initializer object.
+	* Returns the Initializer object
 	* 
 	* @return the Initializer object
 	* 
@@ -95,7 +95,7 @@ public class StartupListener implements ServletContextListener {
 
 	/**
 	* 
-	* Returns the DatabaseManager object.
+	* Returns the DatabaseManager object
 	* 
 	* @return the DatabaseManager object
 	* 

@@ -30,35 +30,35 @@ package org.gservlet;
 public final class Constants {
 
 	/**
-	 * The scripts folder constant.
+	 * The scripts folder constant
 	 */
 	public static final String SCRIPTS_FOLDER = "scripts";
 	/**
-	 * The data source constant.
+	 * The data source constant
 	 */
 	public static final String DATASOURCE = "gservlet.dataSource";
 	/**
-	 * The database connection constant.
+	 * The database connection constant
 	 */
 	public static final String CONNECTION = "gservlet.connection";
 	/**
-	 * The reload constant.
+	 * The reload constant
 	 */
 	public static final String RELOAD = "GSERVLET_RELOAD";
 	/**
-	 * The configuration folder constant.
+	 * The configuration folder constant
 	 */
 	public static final String CONFIG_FOLDER = "conf";
 	/**
-	 * The database configuration file constant.
+	 * The database configuration file constant
 	 */
 	public static final String DB_CONFIG_FILE = "db.properties";
 	/**
-	 * The handlers constant.
+	 * The handlers constant
 	 */
 	public static final String HANDLERS = "gservlet.handlers";
 	/**
-	 * The default request filter constant.
+	 * The default request filter constant
 	 */
 	public static final String REQUEST_FILTER = "gservlet.requestFilter";
 

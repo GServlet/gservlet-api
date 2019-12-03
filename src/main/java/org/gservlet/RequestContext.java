@@ -38,11 +38,11 @@ import groovy.xml.MarkupBuilder;
 public class RequestContext {
 
 	/**
-	 * The request object.
+	 * The request object
 	 */
 	protected HttpServletRequest request;
 	/**
-	 * The response object.
+	 * The response object
 	 */
 	protected HttpServletResponse response;
 	/**
@@ -52,7 +52,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Constructs a RequestContext for the given request and response.
+	* Constructs a RequestContext for the given request and response
 	* 
 	* @param request the request object
 	* @param response the response object 
@@ -65,7 +65,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Constructs a RequestContext for the given request, response and filter chain.
+	* Constructs a RequestContext for the given request, response and filter chain
 	* 
 	* @param request the request object
 	* @param response the response object 
@@ -79,7 +79,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Returns the HttpServletRequest object.
+	* Returns the HttpServletRequest object
 	* 
 	* @return the HttpServletRequest object
 	* 
@@ -90,7 +90,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Returns the HttpServletResponse object.
+	* Returns the HttpServletResponse object
 	* 
 	* @return the HttpServletResponse object
 	* 
@@ -101,7 +101,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Returns the FilterChain object.
+	* Returns the FilterChain object
 	* 
 	* @return the FilterChain object
 	* 
@@ -112,7 +112,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Returns the ServletContext object.
+	* Returns the ServletContext object
 	* 
 	* @return the ServletContext object
 	* 
@@ -123,7 +123,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Returns the HttpSession object.
+	* Returns the HttpSession object
 	* 
 	* @return the HttpSessiobn object
 	* 
@@ -134,7 +134,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Returns the MarkupBuilder object.
+	* Returns the MarkupBuilder object
 	* 
 	* @return the MarkupBuilder object
 	* @throws IOException the IOException
@@ -148,7 +148,7 @@ public class RequestContext {
 	
 	/**
 	* 
-	* Returns the Sql object.
+	* Returns the Sql object
 	* 
 	* @return the Sql object
 	* 

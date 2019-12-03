@@ -35,7 +35,7 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been added to the ServletRequest.
+	* Receives notification that an attribute has been added to the ServletRequest
 	* 
 	* @param event the ServletRequestAttributeEvent containing the ServletRequest to which the attribute was added, along with the attribute name and value
 	* 
@@ -47,7 +47,7 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been removed to the ServletRequest.
+	* Receives notification that an attribute has been removed to the ServletRequest
 	* 
 	* @param event the ServletRequestAttributeEvent containing the ServletRequest to which the attribute was added, along with the attribute name and value
 	* 
@@ -59,7 +59,7 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been replaced to the ServletRequest.
+	* Receives notification that an attribute has been replaced to the ServletRequest
 	* 
 	* @param event the ServletRequestAttributeEvent containing the ServletRequest to which the attribute was added, along with the attribute name and value
 	* 
@@ -71,7 +71,7 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Returns the ServletRequestAttributeEvent object.
+	* Returns the ServletRequestAttributeEvent object
 	* 
 	* @return the ServletRequestAttributeEvent object
 	* 
@@ -82,7 +82,7 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Returns the ServletContext object.
+	* Returns the ServletContext object
 	* 
 	* @return the ServletContext object
 	* 
@@ -93,7 +93,7 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Returns the HttpServletRequest object.
+	* Returns the HttpServletRequest object
 	* 
 	* @return the HttpServletRequest object
 	* 
@@ -104,7 +104,7 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 	
 	/**
 	* 
-	* Returns the attribute name.
+	* Returns the attribute name
 	* 
 	* @return the attribute name
 	* 
@@ -115,7 +115,7 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Returns the attribute value.
+	* Returns the attribute value
 	* 
 	* @return the attribute value
 	* 

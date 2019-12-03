@@ -34,7 +34,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been added to the ServletContext.
+	* Receives notification that an attribute has been added to the ServletContext
 	* 
 	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
 	* 
@@ -46,7 +46,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been removed to the ServletContext.
+	* Receives notification that an attribute has been removed to the ServletContext
 	* 
 	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
 	* 
@@ -58,7 +58,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been replaced to the ServletContext.
+	* Receives notification that an attribute has been replaced to the ServletContext
 	* 
 	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
 	* 
@@ -70,7 +70,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Returns the ServletContextAttributeEvent object.
+	* Returns the ServletContextAttributeEvent object
 	* 
 	* @return the ServletContextAttributeEvent object
 	* 
@@ -81,7 +81,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Returns the ServletContext object.
+	* Returns the ServletContext object
 	* 
 	* @return the ServletContext object
 	* 
@@ -92,7 +92,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 	
 	/**
 	* 
-	* Returns the attribute name.
+	* Returns the attribute name
 	* 
 	* @return the attribute name
 	* 
@@ -104,7 +104,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Returns the attribute value.
+	* Returns the attribute value
 	* 
 	* @return the attribute value
 	* 

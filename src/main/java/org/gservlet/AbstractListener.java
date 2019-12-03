@@ -33,17 +33,17 @@ import java.util.logging.Logger;
 public abstract class AbstractListener implements EventListener{
 
 	/**
-	 * The event holder object.
+	 * The event holder object
 	 */
 	protected final ThreadLocal<Object> eventHolder = new ThreadLocal<>();
 	/**
-	 * The logger object.
+	 * The logger object
 	 */
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
 	/**
 	* 
-	* Invokes the corresponding method defined on the subclasses.
+	* Invokes the corresponding method defined on the subclasses
 	* 
 	* @param method the method
 	* @param event the event object

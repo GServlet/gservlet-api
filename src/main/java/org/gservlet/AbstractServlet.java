@@ -47,17 +47,17 @@ import groovy.xml.MarkupBuilder;
 public abstract class AbstractServlet extends HttpServlet {
 
 	/**
-	 * The request context object.
+	 * The request context object
 	 */
 	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
 	/**
-	 * The logger object.
+	 * The logger object
 	 */
 	protected final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
 	
 	/**
 	* 
-	* Invokes the get method defined on the subclasses.
+	* Invokes the get method defined on the subclasses
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
@@ -70,7 +70,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Invokes the post method defined on the subclasses.
+	* Invokes the post method defined on the subclasses
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
@@ -83,7 +83,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Invokes the put method defined on the subclasses.
+	* Invokes the put method defined on the subclasses
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
@@ -96,7 +96,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Invokes the delete method defined on the subclasses.
+	* Invokes the delete method defined on the subclasses
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
@@ -109,7 +109,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Invokes the head method defined on the subclasses.
+	* Invokes the head method defined on the subclasses
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
@@ -122,7 +122,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Invokes the trace method defined on the subclasses.
+	* Invokes the trace method defined on the subclasses
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
@@ -135,7 +135,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Invokes the options method defined on the subclasses.
+	* Invokes the options method defined on the subclasses
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
@@ -148,7 +148,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Invokes the corresponding method defined on the subclasses.
+	* Invokes the corresponding method defined on the subclasses
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
@@ -167,7 +167,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	
 	/**
 	* 
-	* Forward the request to another location.
+	* Forwards the request to another location
 	* 
 	* @param location the location
 	* 
@@ -183,7 +183,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Redirect the request to another location.
+	* Redirect the request to another location
 	* 
 	* @param location the location
 	* @throws IOException the IOException
@@ -195,7 +195,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Sends the response as JSON.
+	* Sends the response as JSON
 	* 
 	* @param response the response object
 	* @throws IOException the IOException
@@ -208,7 +208,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Converts the object to JSON.
+	* Converts the object to JSON
 	* 
 	* @param object the object
 	* @return  the JSON output
@@ -220,7 +220,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Parses the input stream to JSON.
+	* Parses the input stream to JSON
 	* 
 	* @param inputStream the input stream
 	* @return  the JSON output
@@ -232,7 +232,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	
 	/**
 	* 
-	* Returns the ServletConfig object.
+	* Returns the ServletConfig object
 	* 
 	* @return the ServletConfig object
 	* 
@@ -243,7 +243,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	
 	/**
 	* 
-	* Returns the HttpServletRequest object.
+	* Returns the HttpServletRequest object
 	* 
 	* @return the HttpServletRequest object
 	* 
@@ -254,7 +254,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Returns the HttpSession object.
+	* Returns the HttpSession object
 	* 
 	* @return the HttpSession object
 	* 
@@ -265,7 +265,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Returns the ServletContext object.
+	* Returns the ServletContext object
 	* 
 	* @return the ServletContext object
 	* 
@@ -276,7 +276,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Returns the HttpServletResponse object.
+	* Returns the HttpServletResponse object
 	* 
 	* @return the HttpServletResponse object
 	* 
@@ -287,7 +287,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Returns the Sql object.
+	* Returns the Sql object
 	* 
 	* @return the Sql object
 	* 
@@ -298,7 +298,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Returns the PrintWriter object.
+	* Returns the PrintWriter object
 	* 
 	* @return the PrintWriter object
 	* @throws IOException the IOException
@@ -310,7 +310,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Returns the MarkupBuilder object.
+	* Returns the MarkupBuilder object
 	* 
 	* @return the MarkupBuilder object
 	* @throws IOException the IOException

@@ -32,7 +32,7 @@ public interface FileListener extends EventListener {
 
 	/**
 	* 
-	* Receives notification that a file has been created.
+	* Receives notification that a file has been created
 	* 
 	* @param event the FileEvent containing the name of the file that was created 
 	* 
@@ -41,7 +41,7 @@ public interface FileListener extends EventListener {
 	
 	/**
 	* 
-	* Receives notification that a file has been deleted.
+	* Receives notification that a file has been deleted
 	* 
 	* @param event the FileEvent containing the name of the file that was deleted
 	* 

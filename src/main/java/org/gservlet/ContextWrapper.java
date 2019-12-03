@@ -40,7 +40,7 @@ import javax.servlet.descriptor.JspConfigDescriptor;
 
 /**
 * 
-* A wrapper around the ServletContext class.
+* A wrapper class around the ServletContext class.
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -48,13 +48,13 @@ import javax.servlet.descriptor.JspConfigDescriptor;
 public class ContextWrapper implements ServletContext {
 
 	/**
-	 * The servlet context object.
+	 * The servlet context object
 	 */
 	protected final ServletContext context;
 
 	/**
 	* 
-	* Constructs a ContextWrapper for the given ServletContext.
+	* Constructs a ContextWrapper for the given ServletContext
 	* 
 	* @param context the servlet context 
 	*  
@@ -1627,7 +1627,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
 	* 
-	* Sets an attribute.
+	* Sets an attribute
 	* 
 	* @param name the attribute name
 	* @param value the attribute value
@@ -1639,7 +1639,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
 	* 
-	* Gets an attribute or a parameter value.
+	* Gets an attribute or a parameter value
 	* 
 	* @param name the attribute or parameter name
 	* @return the attribute or parameter value

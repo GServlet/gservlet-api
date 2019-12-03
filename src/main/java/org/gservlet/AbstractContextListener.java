@@ -34,7 +34,7 @@ public abstract class AbstractContextListener extends AbstractListener implement
 
 	/**
 	* 
-	* Receives notification that the web application initialization process is starting.
+	* Receives notification that the web application initialization process is starting
 	* 
 	* @param event the ServletContextEvent containing the ServletContext that is being initialized
 	* 
@@ -46,7 +46,7 @@ public abstract class AbstractContextListener extends AbstractListener implement
 
 	/**
 	* 
-	* Receives notification that the ServletContext is about to be shut down.
+	* Receives notification that the ServletContext is about to be shut down
 	* 
 	* @param event the ServletContextEvent containing the ServletContext that is being initialized
 	* 
@@ -69,7 +69,7 @@ public abstract class AbstractContextListener extends AbstractListener implement
 	
 	/**
 	* 
-	* Returns the ServletContextEvent object.
+	* Returns the ServletContextEvent object
 	* 
 	* @return the ServletContextEvent object
 	* 
