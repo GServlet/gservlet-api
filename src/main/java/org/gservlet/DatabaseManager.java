@@ -80,7 +80,8 @@ public class DatabaseManager {
 		if (reload) {
 			new FileWatcher(folder).addListener(new FileAdapter() {
 				@Override
-				public void onCreated(String fileName) {
+				public void onCreated(FileEvent event) {
+					String fileName = (String) event.getSource();
 					if (fileName.equals(Constants.DB_CONFIG_FILE)) {
 						logger.info("reloading configuration file " + fileName);
 						try {

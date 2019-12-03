@@ -35,17 +35,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
-* 
-* 
-* 
-* @author Mamadou Lamine Ba
-* 
-*/
+ * 
+ * 
+ * 
+ * @author Mamadou Lamine Ba
+ * 
+ */
 public class FileWatcher implements Runnable {
 
 	protected final List<FileListener> listeners;
 	protected final Logger logger = Logger.getLogger(FileWatcher.class.getName());
-	protected final File folder; 
+	protected final File folder;
 
 	public FileWatcher(File folder) {
 		listeners = new ArrayList<>();
@@ -97,13 +97,14 @@ public class FileWatcher implements Runnable {
 	}
 
 	private void notifyListeners(WatchEvent.Kind<?> kind, String file) {
+		FileEvent event = new FileEvent(file);
 		if (kind == ENTRY_CREATE) {
 			for (FileListener listener : listeners) {
-				listener.onCreated(file);
+				listener.onCreated(event);
 			}
 		} else if (kind == ENTRY_DELETE) {
 			for (FileListener listener : listeners) {
-				listener.onDeleted(file);
+				listener.onDeleted(event);
 			}
 		}
 	}

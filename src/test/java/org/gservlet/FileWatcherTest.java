@@ -18,13 +18,13 @@ public class FileWatcherTest {
 		FileWatcher watcher = new FileWatcher(folder);
 		FileListener listener = new FileAdapter() {
 			@Override
-			public void onCreated(String name) {
-				map.put("file.created", name);
+			public void onCreated(FileEvent event) {
+				map.put("file.created", event.getSource().toString());
 			}
 
 			@Override
-			public void onDeleted(String name) {
-				map.put("file.deleted", name);
+			public void onDeleted(FileEvent event) {
+				map.put("file.deleted", event.getSource().toString());
 			}
 
 		};

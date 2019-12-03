@@ -34,17 +34,18 @@ public interface FileListener extends EventListener {
 	* 
 	* Receives notification that a file has been created.
 	* 
-	* @param fileName the name of the file
+	* @param event the FileEvent containing the name of the file that was created 
 	* 
 	*/
-	public void onCreated(String fileName);
+	public void onCreated(FileEvent event);
+	
 	/**
 	* 
 	* Receives notification that a file has been deleted.
 	* 
-	* @param fileName the name of the file
+	* @param event the FileEvent containing the name of the file that was deleted
 	* 
 	*/
-	public void onDeleted(String fileName);
+	public void onDeleted(FileEvent event);
 	
 }
