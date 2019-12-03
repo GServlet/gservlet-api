@@ -45,12 +45,12 @@ import javassist.LoaderClassPath;
 import javassist.NotFoundException;
 
 /**
-* 
-* 
-* 
-* @author Mamadou Lamine Ba
-* 
-*/
+ * 
+ * 
+ * 
+ * @author Mamadou Lamine Ba
+ * 
+ */
 public class ScriptManager {
 
 	protected final GroovyScriptEngine engine;
@@ -70,7 +70,7 @@ public class ScriptManager {
 
 	protected GroovyScriptEngine createScriptEngine(File folder) throws MalformedURLException {
 		URL[] urls = { folder.toURI().toURL(),
-				ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER) };
+		ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER) };
 		GroovyScriptEngine gse = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
 		ClassPool classPool = ClassPool.getDefault();
 		classPool.insertClassPath(new LoaderClassPath(gse.getParentClassLoader()));
@@ -85,14 +85,12 @@ public class ScriptManager {
 			public byte[] processBytecode(String name, byte[] original) {
 				ByteArrayInputStream stream = new ByteArrayInputStream(original);
 				try {
-					CtClass clazz = classPool.makeClass(stream);
-					clazz.detach();
-					for (Object annotation : clazz.getAnnotations()) {
-						byte[] transformed = processClass(classPool, clazz, annotation.toString());
-						if(transformed!=null) {
-							return transformed;
-						}
+					CtClass ctClass = classPool.makeClass(stream);
+					ctClass.detach();
+					for (Object annotation : ctClass.getAnnotations()) {
+						processClass(classPool, ctClass, annotation.toString());
 					}
+					return ctClass.toBytecode();
 				} catch (Exception e) {
 					logger.log(Level.INFO, "exception during processBytecode method", e);
 				}
@@ -101,33 +99,25 @@ public class ScriptManager {
 		};
 	}
 
-	protected byte[] processClass(ClassPool classPool, CtClass clazz, String annotation)
+	protected void processClass(ClassPool classPool, CtClass ctClass, String annotation)
 			throws IOException, CannotCompileException, NotFoundException {
 		if (annotation.indexOf(Servlet.class.getName()) != -1) {
-			clazz.setSuperclass(classPool.get(AbstractServlet.class.getName()));
-			return clazz.toBytecode();
+			ctClass.setSuperclass(classPool.get(AbstractServlet.class.getName()));
 		} else if (annotation.indexOf(Filter.class.getName()) != -1) {
-			clazz.setSuperclass(classPool.get(AbstractFilter.class.getName()));
-			return clazz.toBytecode();
+			ctClass.setSuperclass(classPool.get(AbstractFilter.class.getName()));
 		} else if (annotation.indexOf(ContextListener.class.getName()) != -1) {
-			clazz.setSuperclass(classPool.get(AbstractContextListener.class.getName()));
-			return clazz.toBytecode();
+			ctClass.setSuperclass(classPool.get(AbstractContextListener.class.getName()));
 		} else if (annotation.indexOf(RequestListener.class.getName()) != -1) {
-			clazz.setSuperclass(classPool.get(AbstractRequestListener.class.getName()));
-			return clazz.toBytecode();
+			ctClass.setSuperclass(classPool.get(AbstractRequestListener.class.getName()));
 		} else if (annotation.indexOf(ContextAttributeListener.class.getName()) != -1) {
-			clazz.setSuperclass(classPool.get(AbstractContextAttributeListener.class.getName()));
-			return clazz.toBytecode();
+			ctClass.setSuperclass(classPool.get(AbstractContextAttributeListener.class.getName()));
 		} else if (annotation.indexOf(RequestAttributeListener.class.getName()) != -1) {
-			clazz.setSuperclass(classPool.get(AbstractRequestAttributeListener.class.getName()));
-			return clazz.toBytecode();
+			ctClass.setSuperclass(classPool.get(AbstractRequestAttributeListener.class.getName()));
 		} else if (annotation.indexOf(SessionListener.class.getName()) != -1) {
-			clazz.setSuperclass(classPool.get(AbstractSessionListener.class.getName()));
-			return clazz.toBytecode();
+			ctClass.setSuperclass(classPool.get(AbstractSessionListener.class.getName()));
 		} else if (annotation.indexOf(SessionAttributeListener.class.getName()) != -1) {
-			clazz.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));
-			return clazz.toBytecode();
+			ctClass.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));
 		}
-		return null;
 	}
+	
 }
