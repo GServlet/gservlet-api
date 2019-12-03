@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSession;
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractRequestListener extends BaseListener implements ServletRequestListener {
+public abstract class AbstractRequestListener extends AbstractListener implements ServletRequestListener {
 
 	@Override
 	public void requestInitialized(ServletRequestEvent event) {

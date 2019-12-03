@@ -30,7 +30,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractSessionAttributeListener extends BaseListener implements HttpSessionAttributeListener {
+public abstract class AbstractSessionAttributeListener extends AbstractListener implements HttpSessionAttributeListener {
 
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent event) {

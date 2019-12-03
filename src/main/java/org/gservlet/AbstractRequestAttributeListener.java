@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractRequestAttributeListener extends BaseListener implements ServletRequestAttributeListener {
+public abstract class AbstractRequestAttributeListener extends AbstractListener implements ServletRequestAttributeListener {
 
 	@Override
 	public void attributeAdded(ServletRequestAttributeEvent event) {

@@ -30,7 +30,7 @@ import javax.servlet.ServletContextAttributeListener;
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractContextAttributeListener extends BaseListener implements ServletContextAttributeListener {
+public abstract class AbstractContextAttributeListener extends AbstractListener implements ServletContextAttributeListener {
 
 	@Override
 	public void attributeAdded(ServletContextAttributeEvent event) {

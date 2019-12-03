@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class BaseListener {
+public abstract class AbstractListener {
 
 	protected final ThreadLocal<Object> eventHolder = new ThreadLocal<>();
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());

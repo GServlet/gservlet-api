@@ -30,7 +30,7 @@ import javax.servlet.http.HttpSessionListener;
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractSessionListener extends BaseListener implements HttpSessionListener {
+public abstract class AbstractSessionListener extends AbstractListener implements HttpSessionListener {
 
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {

@@ -30,7 +30,7 @@ import javax.servlet.ServletContextListener;
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractContextListener extends BaseListener implements ServletContextListener {
+public abstract class AbstractContextListener extends AbstractListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
