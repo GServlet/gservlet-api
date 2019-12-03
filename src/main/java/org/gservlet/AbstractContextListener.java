@@ -41,7 +41,7 @@ public abstract class AbstractContextListener extends AbstractListener implement
 	*/
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		route(event, "contextInitialized");
+		invoke("contextInitialized", event);
 	}
 
 	/**
@@ -53,12 +53,12 @@ public abstract class AbstractContextListener extends AbstractListener implement
 	*/
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
-		route(event, "contextDestroyed");
+		invoke("contextDestroyed", event);
 	}
 
 	/**
 	* 
-	* The ServletContext object.
+	* Returns the ServletContext object.
 	* 
 	* @return the ServletContext object
 	* 
@@ -69,7 +69,7 @@ public abstract class AbstractContextListener extends AbstractListener implement
 	
 	/**
 	* 
-	* The ServletContextEvent object.
+	* Returns the ServletContextEvent object.
 	* 
 	* @return the ServletContextEvent object
 	* 

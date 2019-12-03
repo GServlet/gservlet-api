@@ -148,26 +148,15 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* Invokes the method defined on the subclasses.
+	* Invokes the corresponding method defined on the subclasses.
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
 	* @param method the method
 	*/
 	public void route(HttpServletRequest request, HttpServletResponse response, String method) {
-		requestContext.set(new RequestContext(request, response));
-		invoke(method);
-	}
-
-	/**
-	* 
-	* Invokes the provided method defined on the subclasses.
-	* 
-	* @param method the method
-	* 
-	*/
-	protected void invoke(String method) {
 		try {
+			requestContext.set(new RequestContext(request, response));
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
 			logger.info("no method " + method + " has been declared for the servlet " + this.getClass().getName());
@@ -243,7 +232,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	
 	/**
 	* 
-	* The ServletConfig object.
+	* Returns the ServletConfig object.
 	* 
 	* @return the ServletConfig object
 	* 
@@ -254,7 +243,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	
 	/**
 	* 
-	* The HttpServletRequest object.
+	* Returns the HttpServletRequest object.
 	* 
 	* @return the HttpServletRequest object
 	* 
@@ -265,7 +254,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* The HttpSession object.
+	* Returns the HttpSession object.
 	* 
 	* @return the HttpSession object
 	* 
@@ -276,7 +265,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* The ServletContext object.
+	* Returns the ServletContext object.
 	* 
 	* @return the ServletContext object
 	* 
@@ -287,7 +276,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* The HttpServletResponse object.
+	* Returns the HttpServletResponse object.
 	* 
 	* @return the HttpServletResponse object
 	* 
@@ -298,7 +287,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* The Sql object.
+	* Returns the Sql object.
 	* 
 	* @return the Sql object
 	* 
@@ -309,7 +298,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* The PrintWriter object.
+	* Returns the PrintWriter object.
 	* 
 	* @return the PrintWriter object
 	* @throws IOException the IOException
@@ -321,7 +310,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	* 
-	* The MarkupBuilder object.
+	* Returns the MarkupBuilder object.
 	* 
 	* @return the MarkupBuilder object
 	* @throws IOException the IOException

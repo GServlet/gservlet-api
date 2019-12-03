@@ -24,15 +24,30 @@ import java.lang.reflect.Method;
 
 /**
 * 
-* 
+* An InvocationHandler implementation class that must be associated with a proxy instance.
 * 
 * @author Mamadou Lamine Ba
 * 
 */
 public class DynamicInvocationHandler implements InvocationHandler {
 
+	/**
+	 * The target object.
+	 */
 	protected Object target;
+	/**
+	 * The registration flag. By default, the value is set to true.
+	 */
 	protected boolean registered = true;
+	
+	
+	/**
+	* 
+	* Construct a DynamicInvocationHandler for the given target object.
+	* 
+	* @param target the target object
+	*  
+	*/
 	
 	public DynamicInvocationHandler(Object target) {
 	    this.target = target;	
@@ -43,18 +58,47 @@ public class DynamicInvocationHandler implements InvocationHandler {
 		return method.invoke(target, args);
 	}
 
+	/**
+	* 
+	* Returns the target object.
+	* 
+	* @return the target object
+	* 
+	*/
+	
 	public Object getTarget() {
 		return target;
 	}
 
+	/**
+	* 
+	* Sets the target object.
+	* 
+	* @param target the target object
+	* 
+	*/
 	public void setTarget(Object target) {
 		this.target = target;
 	}
 
+	/**
+	* 
+	* Returns the registration flag.
+	* 
+	* @return the registration flag
+	* 
+	*/
 	public boolean isRegistered() {
 		return registered;
 	}
 
+	/**
+	* 
+	* Sets the registration flag.
+	* 
+	* @param registered the registration flag
+	* 
+	*/
 	public void setRegistered(boolean registered) {
 		this.registered = registered;
 	}

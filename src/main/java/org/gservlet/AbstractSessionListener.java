@@ -41,7 +41,7 @@ public abstract class AbstractSessionListener extends AbstractListener implement
 	*/
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {
-		route(event, "sessionCreated");
+		invoke("sessionCreated", event);
 	}
 
 	/**
@@ -53,12 +53,12 @@ public abstract class AbstractSessionListener extends AbstractListener implement
 	*/
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
-		route(event, "sessionDestroyed");
+		invoke("sessionDestroyed", event);
 	}
 
 	/**
 	* 
-	* The HttpSession object.
+	* Returns the HttpSession object.
 	* 
 	* @return the HttpSession object
 	* 
@@ -69,7 +69,7 @@ public abstract class AbstractSessionListener extends AbstractListener implement
 
 	/**
 	* 
-	* The HttpSessionEvent object.
+	* Returns the HttpSessionEvent object.
 	* 
 	* @return the HttpSessionEvent object
 	* 

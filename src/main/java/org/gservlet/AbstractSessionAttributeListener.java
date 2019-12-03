@@ -41,7 +41,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 	*/
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent event) {
-		route(event, "attributeAdded");
+		invoke("attributeAdded", event);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 	*/
 	@Override
 	public void attributeRemoved(HttpSessionBindingEvent event) {
-		route(event, "attributeRemoved");
+		invoke("attributeRemoved", event);
 	}
 
 	/**
@@ -65,12 +65,12 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 	*/
 	@Override
 	public void attributeReplaced(HttpSessionBindingEvent event) {
-		route(event, "attributeReplaced");
+		invoke("attributeReplaced", event);
 	}
 
 	/**
 	* 
-	* The HttpSessionBindingEvent object.
+	* Returns the HttpSessionBindingEvent object.
 	* 
 	* @return the HttpSessionBindingEvent object
 	* 
@@ -81,7 +81,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* The HttpSession object.
+	* Returns the HttpSession object.
 	* 
 	* @return the HttpSession object
 	* 
@@ -92,7 +92,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* The attribute name.
+	* Returns the attribute name.
 	* 
 	* @return the attribute name
 	* 
@@ -103,7 +103,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 	
 	/**
 	* 
-	* The attribute value.
+	* Returns the attribute value.
 	* 
 	* @return the attribute value
 	* 

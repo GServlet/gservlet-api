@@ -41,13 +41,17 @@ public abstract class AbstractListener implements EventListener{
 	 */
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
-	protected void route(Object event, String method) {
-		eventHolder.set(event);
-		invoke(method);
-	}
-	
-	protected void invoke(String method) {
+	/**
+	* 
+	* Invokes the corresponding method defined on the subclasses.
+	* 
+	* @param method the method
+	* @param event the event object
+	* 
+	*/
+	protected void invoke(String method, Object event) {
 		try {
+			eventHolder.set(event);
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
 			// the exception is ignored if the method does not exist

@@ -176,7 +176,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* The FilterConfig object.
+	* Returns the FilterConfig object.
 	* 
 	* @return the FilterConfig object
 	* 
@@ -187,7 +187,7 @@ public abstract class AbstractFilter implements Filter {
 	
 	/**
 	* 
-	* The FilterChain object.
+	* Returns the FilterChain object.
 	* 
 	* @return the FilterChain object
 	* 
@@ -198,7 +198,7 @@ public abstract class AbstractFilter implements Filter {
 	
 	/**
 	* 
-	* The HttpServletRequest object.
+	* Returns the HttpServletRequest object.
 	* 
 	* @return the HttpServletRequest object
 	* 
@@ -209,7 +209,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* The HttpSession object.
+	* Returns the HttpSession object.
 	* 
 	* @return the HttpSession object
 	* 
@@ -220,7 +220,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* The ServletContext object.
+	* Returns the ServletContext object.
 	* 
 	* @return the ServletContext object
 	* 
@@ -231,7 +231,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* The HttpServletResponse object.
+	* Returns the HttpServletResponse object.
 	* 
 	* @return the HttpServletResponse object
 	* 
@@ -242,7 +242,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* The Sql object.
+	* Returns the Sql object.
 	* 
 	* @return the Sql object
 	* 
@@ -253,7 +253,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* The PrintWriter object.
+	* Returns the PrintWriter object.
 	* 
 	* @return the PrintWriter object
 	* @throws IOException the IOException
@@ -265,7 +265,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* The MarkupBuilder object.
+	* Returns the MarkupBuilder object.
 	* 
 	* @return the MarkupBuilder object
 	* @throws IOException the IOException

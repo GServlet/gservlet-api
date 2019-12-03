@@ -41,7 +41,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 	*/
 	@Override
 	public void attributeAdded(ServletContextAttributeEvent event) {
-		route(event, "attributeAdded");
+		invoke("attributeAdded", event);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 	*/
 	@Override
 	public void attributeRemoved(ServletContextAttributeEvent event) {
-		route(event, "attributeRemoved");
+		invoke("attributeRemoved", event);
 	}
 
 	/**
@@ -65,12 +65,12 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 	*/
 	@Override
 	public void attributeReplaced(ServletContextAttributeEvent event) {
-		route(event, "attributeReplaced");
+		invoke("attributeReplaced", event);
 	}
 
 	/**
 	* 
-	* The ServletContextAttributeEvent object.
+	* Returns the ServletContextAttributeEvent object.
 	* 
 	* @return the ServletContextAttributeEvent object
 	* 
@@ -81,7 +81,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* The ServletContext object.
+	* Returns the ServletContext object.
 	* 
 	* @return the ServletContext object
 	* 
@@ -92,7 +92,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 	
 	/**
 	* 
-	* The attribute name.
+	* Returns the attribute name.
 	* 
 	* @return the attribute name
 	* 
@@ -104,7 +104,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* The attribute value.
+	* Returns the attribute value.
 	* 
 	* @return the attribute value
 	* 

@@ -43,7 +43,7 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 	*/
 	@Override
 	public void requestInitialized(ServletRequestEvent event) {
-		route(event, "requestInitialized");
+		invoke("requestInitialized", event);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 	*/
 	@Override
 	public void requestDestroyed(ServletRequestEvent event) {
-		route(event, "requestDestroyed");
+		invoke("requestDestroyed", event);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 
 	/**
 	* 
-	* The ServletContext object.
+	* Returns the ServletContext object.
 	* 
 	* @return the ServletContext object
 	* 
@@ -93,7 +93,7 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 
 	/**
 	* 
-	* The ServletRequestEvent object.
+	* Returns the ServletRequestEvent object.
 	* 
 	* @return the ServletRequestEvent object
 	* 
