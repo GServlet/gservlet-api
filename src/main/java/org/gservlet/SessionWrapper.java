@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * 
- * 
+ * A wrapper around the HttpSession class.
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -34,8 +34,19 @@ import javax.servlet.http.HttpSession;
 @SuppressWarnings("serial")
 public class SessionWrapper implements HttpSession, Serializable {
 
+	/**
+	 * The session object.
+	 */
 	protected final transient HttpSession session;
 
+	
+	/**
+	* 
+	* Constructs a SessionWrapper for the given HttpSession.
+	* 
+	* @param session the session object 
+	*  
+	*/
 	public SessionWrapper(HttpSession session) {
 		this.session = session;
 	}
@@ -324,12 +335,27 @@ public class SessionWrapper implements HttpSession, Serializable {
 		session.setMaxInactiveInterval(interval);
 	}
 
-	public void propertyMissing(String property, Object value) {
-		setAttribute(property, value);
+	/**
+	* 
+	* Sets an attribute.
+	* 
+	* @param name the attribute name
+	* @param value the attribute value
+	* 
+	*/
+	public void propertyMissing(String name, Object value) {
+		setAttribute(name, value);
 	}
 
-	public Object propertyMissing(String property) {
-		return getAttribute(property);
+	/**
+	* 
+	* Gets an attribute value.
+	* 
+	* @param name the attribute name
+	* @return the attribute value
+	*/
+	public Object propertyMissing(String name) {
+		return getAttribute(name);
 	}
 
 }

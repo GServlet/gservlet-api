@@ -25,40 +25,90 @@ import javax.servlet.ServletContextAttributeListener;
 
 /**
 * 
-* 
+* Abstract class for receiving notification events about ServletContext attribute changes.
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractContextAttributeListener extends BaseListener implements ServletContextAttributeListener {
+public abstract class AbstractContextAttributeListener extends AbstractListener implements ServletContextAttributeListener {
 
+	/**
+	* 
+	* Receives notification that an attribute has been added to the ServletContext.
+	* 
+	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeAdded(ServletContextAttributeEvent event) {
-		route(event, "attributeAdded");
+		invoke("attributeAdded", event);
 	}
 
+	/**
+	* 
+	* Receives notification that an attribute has been removed to the ServletContext.
+	* 
+	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeRemoved(ServletContextAttributeEvent event) {
-		route(event, "attributeRemoved");
+		invoke("attributeRemoved", event);
 	}
 
+	/**
+	* 
+	* Receives notification that an attribute has been replaced to the ServletContext.
+	* 
+	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeReplaced(ServletContextAttributeEvent event) {
-		route(event, "attributeReplaced");
+		invoke("attributeReplaced", event);
 	}
 
+	/**
+	* 
+	* Returns the ServletContextAttributeEvent object.
+	* 
+	* @return the ServletContextAttributeEvent object
+	* 
+	*/
 	public ServletContextAttributeEvent getEvent() {
 		return (ServletContextAttributeEvent) eventHolder.get();
 	}
 
+	/**
+	* 
+	* Returns the ServletContext object.
+	* 
+	* @return the ServletContext object
+	* 
+	*/
+	public ServletContext getContext() {
+		return new ContextWrapper(getEvent().getServletContext());
+	}
+	
+	/**
+	* 
+	* Returns the attribute name.
+	* 
+	* @return the attribute name
+	* 
+	*/
 	public String getName() {
 		return getEvent().getName();
 	}
 
-	public ServletContext getContext() {
-		return new ContextWrapper(getEvent().getServletContext());
-	}
 
+	/**
+	* 
+	* Returns the attribute value.
+	* 
+	* @return the attribute value
+	* 
+	*/
 	public Object getValue() {
 		return getEvent().getValue();
 	}

@@ -25,40 +25,89 @@ import javax.servlet.http.HttpSessionBindingEvent;
 
 /**
 * 
-* 
+* Abstract class for receiving notification events about HttpSession attribute changes.
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractSessionAttributeListener extends BaseListener implements HttpSessionAttributeListener {
+public abstract class AbstractSessionAttributeListener extends AbstractListener implements HttpSessionAttributeListener {
 
+	/**
+	* 
+	* Receives notification that an attribute has been added to the HttpSession.
+	* 
+	* @param event the HttpSessionBindingEvent containing the HttpSession to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent event) {
-		route(event, "attributeAdded");
+		invoke("attributeAdded", event);
 	}
 
+	/**
+	* 
+	* Receives notification that an attribute has been removed to the HttpSession.
+	* 
+	* @param event the HttpSessionBindingEvent containing the HttpSession to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeRemoved(HttpSessionBindingEvent event) {
-		route(event, "attributeRemoved");
+		invoke("attributeRemoved", event);
 	}
 
+	/**
+	* 
+	* Receives notification that an attribute has been replaced to the HttpSession.
+	* 
+	* @param event the HttpSessionBindingEvent containing the HttpSession to which the attribute was added, along with the attribute name and value
+	* 
+	*/
 	@Override
 	public void attributeReplaced(HttpSessionBindingEvent event) {
-		route(event, "attributeReplaced");
+		invoke("attributeReplaced", event);
 	}
 
+	/**
+	* 
+	* Returns the HttpSessionBindingEvent object.
+	* 
+	* @return the HttpSessionBindingEvent object
+	* 
+	*/
 	public HttpSessionBindingEvent getEvent() {
 		return (HttpSessionBindingEvent) eventHolder.get();
 	}
 
-	public String getName() {
-		return getEvent().getName();
-	}
-
+	/**
+	* 
+	* Returns the HttpSession object.
+	* 
+	* @return the HttpSession object
+	* 
+	*/
 	public HttpSession getSession() {
 		return new SessionWrapper(getEvent().getSession());
 	}
 
+	/**
+	* 
+	* Returns the attribute name.
+	* 
+	* @return the attribute name
+	* 
+	*/
+	public String getName() {
+		return getEvent().getName();
+	}
+	
+	/**
+	* 
+	* Returns the attribute value.
+	* 
+	* @return the attribute value
+	* 
+	*/
 	public Object getValue() {
 		return getEvent().getValue();
 	}

@@ -26,27 +26,50 @@ import groovy.json.JsonSlurper;
 
 /**
 * 
-* 
+* A wrapper around the HttpServletRequest class.
 * 
 * @author Mamadou Lamine Ba
 * 
 */
 public class RequestWrapper extends HttpServletRequestWrapper {
 
+	/**
+	* 
+	* Constructs a RequestWrapper for the given HttpServletRequest.
+	* 
+	* @param request the request object 
+	*  
+	*/
 	public RequestWrapper(HttpServletRequest request) {
 		super(request);
 	}
 
-	public void propertyMissing(String property, Object value) {
-		setAttribute(property, value);
+	/**
+	* 
+	* Sets an attribute.
+	* 
+	* @param name the attribute name
+	* @param value the attribute value
+	* 
+	*/
+	public void propertyMissing(String name, Object value) {
+		setAttribute(name, value);
 	}
 
-	public Object propertyMissing(String property) throws IOException {
-		if (property != null && property.equals("body") && getContentType().equalsIgnoreCase("application/json")) {
+	/**
+	* 
+	* Gets an attribute or a parameter value.
+	* 
+	* @param name the attribute or parameter name
+	* @return the attribute or parameter value
+	* @throws IOException the IOException
+	*/
+	public Object propertyMissing(String name) throws IOException {
+		if (name != null && name.equals("body") && getContentType().equalsIgnoreCase("application/json")) {
 			return new JsonSlurper().parse(getInputStream());
 		}
-		Object value = getAttribute(property);
-		return value != null ? value : getParameter(property);
+		Object value = getAttribute(name);
+		return value != null ? value : getParameter(name);
 	}
 
 }

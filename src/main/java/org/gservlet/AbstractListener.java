@@ -19,28 +19,39 @@
 
 package org.gservlet;
 
+import java.util.EventListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
 * 
-* 
+* Abstract base class inherited by all the listeners classes.
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class BaseListener {
+public abstract class AbstractListener implements EventListener{
 
+	/**
+	 * The event holder object.
+	 */
 	protected final ThreadLocal<Object> eventHolder = new ThreadLocal<>();
+	/**
+	 * The logger object.
+	 */
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
-	protected void route(Object event, String method) {
-		eventHolder.set(event);
-		invoke(method);
-	}
-	
-	protected void invoke(String method) {
+	/**
+	* 
+	* Invokes the corresponding method defined on the subclasses.
+	* 
+	* @param method the method
+	* @param event the event object
+	* 
+	*/
+	protected void invoke(String method, Object event) {
 		try {
+			eventHolder.set(event);
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
 			// the exception is ignored if the method does not exist

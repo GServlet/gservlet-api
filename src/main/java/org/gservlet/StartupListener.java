@@ -28,7 +28,7 @@ import javax.servlet.annotation.WebListener;
 
 /**
 * 
-* 
+* Bootstraps the application and the registration of the servlets, filters, listeners into the web container.
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -36,10 +36,27 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class StartupListener implements ServletContextListener {
 
-	protected final Logger logger = Logger.getLogger(getClass().getName());
+	/**
+	 * The initializer object.
+	 */
 	protected Initializer initializer;
+	/**
+	 * The database manager object.
+	 */
 	protected DatabaseManager databaseManager;
+	/**
+	 * The logger object.
+	 */
+	protected final Logger logger = Logger.getLogger(getClass().getName());
 
+	
+	/**
+	* 
+	* Receives notification that the web application initialization process is starting.
+	* 
+	* @param event the ServletContextEvent containing the ServletContext that is being initialized
+	* 
+	*/
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		ServletContext context = event.getServletContext();
@@ -52,19 +69,39 @@ public class StartupListener implements ServletContextListener {
 		logger.info("application started on context " + context.getContextPath());
 	}
 
+	/**
+	* 
+	* Receives notification that the ServletContext is about to be shut down.
+	* 
+	* @param event the ServletContextEvent containing the ServletContext that is being initialized
+	* 
+	*/
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
 		initializer.destroy();
 		databaseManager.destroy();
 	}
 
+	/**
+	* 
+	* Returns the Initializer object.
+	* 
+	* @return the Initializer object
+	* 
+	*/
 	public Initializer getInitializer() {
 		return initializer;
 	}
 
+	/**
+	* 
+	* Returns the DatabaseManager object.
+	* 
+	* @return the DatabaseManager object
+	* 
+	*/
 	public DatabaseManager getDatabaseManager() {
 		return databaseManager;
 	}
 
-	
 }

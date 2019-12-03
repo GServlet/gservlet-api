@@ -19,16 +19,33 @@
 
 package org.gservlet;
 
+import java.util.EventListener;
+
 /**
 * 
-* 
+* Interface for receiving notification events about files changes.
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-public interface FileListener {
+public interface FileListener extends EventListener {
 
-	public void onCreated(String fileName);
-	public void onDeleted(String fileName);
+	/**
+	* 
+	* Receives notification that a file has been created.
+	* 
+	* @param event the FileEvent containing the name of the file that was created 
+	* 
+	*/
+	public void onCreated(FileEvent event);
+	
+	/**
+	* 
+	* Receives notification that a file has been deleted.
+	* 
+	* @param event the FileEvent containing the name of the file that was deleted
+	* 
+	*/
+	public void onDeleted(FileEvent event);
 	
 }

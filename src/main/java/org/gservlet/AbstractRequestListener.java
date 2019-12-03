@@ -27,35 +27,77 @@ import javax.servlet.http.HttpSession;
 
 /**
 * 
-* 
+* Abstract class for receiving notification events about requests coming into and going out of scope of a web application.
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractRequestListener extends BaseListener implements ServletRequestListener {
+public abstract class AbstractRequestListener extends AbstractListener implements ServletRequestListener {
 
+	/**
+	* 
+	* Receives notification that a ServletRequest is about to come into scope of the web application.
+	* 
+	* @param event the ServletRequestEvent containing the ServletRequest and the ServletContext representing the web application
+	* 
+	*/
 	@Override
 	public void requestInitialized(ServletRequestEvent event) {
-		route(event, "requestInitialized");
+		invoke("requestInitialized", event);
 	}
 
+	/**
+	* 
+	* Receives notification that a ServletRequest is about to go out of scope of the web application.
+	* 
+	* @param event the ServletRequestEvent containing the ServletRequest and the ServletContext representing the web application
+	* 
+	*/
 	@Override
 	public void requestDestroyed(ServletRequestEvent event) {
-		route(event, "requestDestroyed");
+		invoke("requestDestroyed", event);
 	}
 
+	/**
+	* 
+	* The HttpServletRequest object.
+	* 
+	* @return the HttpServletRequest object
+	* 
+	*/
 	public HttpServletRequest getRequest() {
 		return new RequestWrapper((HttpServletRequest) getEvent().getServletRequest());
 	}
 
+	/**
+	* 
+	* The HttpSession object.
+	* 
+	* @return the HttpSession object
+	* 
+	*/
 	public HttpSession getSession() {
 		return new SessionWrapper(((HttpServletRequest) getEvent().getServletRequest()).getSession(true));
 	}
 
+	/**
+	* 
+	* Returns the ServletContext object.
+	* 
+	* @return the ServletContext object
+	* 
+	*/
 	public ServletContext getContext() {
 		return new ContextWrapper(getEvent().getServletContext());
 	}
 
+	/**
+	* 
+	* Returns the ServletRequestEvent object.
+	* 
+	* @return the ServletRequestEvent object
+	* 
+	*/
 	public ServletRequestEvent getEvent() {
 		return (ServletRequestEvent) eventHolder.get();
 	}

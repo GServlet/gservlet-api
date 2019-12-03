@@ -210,7 +210,8 @@ public class Initializer {
 		if (reload) {
 			new FileWatcher(folder).addListener(new FileAdapter() {
 				@Override
-				public void onCreated(String script) {
+				public void onCreated(FileEvent event) {
+					String script = event.getFileName();
 					logger.info("reloading script " + script);
 					reload(script);
 				}

@@ -25,27 +25,55 @@ import javax.servlet.http.HttpSessionListener;
 
 /**
 * 
-* 
+* Abstract class for receiving notification events about HttpSession lifecycle changes.
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractSessionListener extends BaseListener implements HttpSessionListener {
+public abstract class AbstractSessionListener extends AbstractListener implements HttpSessionListener {
 
+	/**
+	* 
+	* Receives notification that a session has been created.
+	* 
+	* @param event the HttpSessionEvent containing the session
+	* 
+	*/
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {
-		route(event, "sessionCreated");
+		invoke("sessionCreated", event);
 	}
 
+	/**
+	* 
+	* Receives notification that a session is about to be invalidated.
+	* 
+	* @param event the HttpSessionEvent containing the session
+	* 
+	*/
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
-		route(event, "sessionDestroyed");
+		invoke("sessionDestroyed", event);
 	}
 
+	/**
+	* 
+	* Returns the HttpSession object.
+	* 
+	* @return the HttpSession object
+	* 
+	*/
 	public HttpSession getSession() {
 		return new SessionWrapper(getEvent().getSession());
 	}
 
+	/**
+	* 
+	* Returns the HttpSessionEvent object.
+	* 
+	* @return the HttpSessionEvent object
+	* 
+	*/
 	public HttpSessionEvent getEvent() {
 		return (HttpSessionEvent) eventHolder.get();
 	}
