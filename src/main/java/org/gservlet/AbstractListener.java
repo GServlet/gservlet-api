@@ -32,7 +32,13 @@ import java.util.logging.Logger;
 */
 public abstract class AbstractListener implements EventListener{
 
+	/**
+	 * The event holder object.
+	 */
 	protected final ThreadLocal<Object> eventHolder = new ThreadLocal<>();
+	/**
+	 * The logger object.
+	 */
 	protected final Logger logger = Logger.getLogger(this.getClass().getName());
 
 	protected void route(Object event, String method) {

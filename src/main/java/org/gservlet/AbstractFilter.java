@@ -21,6 +21,7 @@ package org.gservlet;
 
 import static groovy.json.JsonOutput.toJson;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +35,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import groovy.json.JsonSlurper;
 import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
 
@@ -46,10 +49,26 @@ import groovy.xml.MarkupBuilder;
 */
 public abstract class AbstractFilter implements Filter {
 
+	/**
+	 * The filter config object.
+	 */
 	protected transient FilterConfig config;
+	/**
+	 * The request context object.
+	 */
 	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
+	/**
+	 * The logger object.
+	 */
 	protected final Logger logger = Logger.getLogger(AbstractFilter.class.getName());
 	
+	/**
+	* 
+	* Called by the web container to indicate to a filter that it is being placed into service.
+	* @param config the filter config
+	* @throws ServletException the ServletException
+	* 
+	*/
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		try {
@@ -62,6 +81,16 @@ public abstract class AbstractFilter implements Filter {
 		}
 	}
 
+	/**
+	* 
+	* Invokes the filter method defined on the subclasses.
+	* @param request the request
+	* @param response the response
+	* @param chain the filter chain
+	* @throws IOException the IOException 
+	* @throws ServletException the ServletException
+	* 
+	*/
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -75,63 +104,175 @@ public abstract class AbstractFilter implements Filter {
 		}
 	}
 
+	/**
+	* 
+	* Invokes the FilterChain doFilter method.
+	* @throws IOException the IOException
+	* @throws ServletException the ServletException
+	* 
+	*/
 	public void next() throws IOException, ServletException {
 		FilterChain chain = requestContext.get().getFilterChain();
 		chain.doFilter(requestContext.get().getRequest(), getResponse());
 	}
 
+	/**
+	* 
+	* Called by the web container to indicate to a filter that it is being taken out of service.
+	* 
+	*/
 	@Override
 	public void destroy() {
 		// no implementation provided
 	}
 	
-	public FilterConfig getConfig() {
-		return config;
-	}
-	
-	public void json(Object object) throws IOException {
+	/**
+	* 
+	* Sends the response as JSON.
+	* 
+	* @param response the response object
+	* @throws IOException the IOException
+	*/
+	public void json(Object response) throws IOException {
 		getResponse().setHeader("Content-Type", "application/json");
-		getResponse().getWriter().write(toJson(object));
+		getResponse().getWriter().write(toJson(response));
 	}
 
+	/**
+	* 
+	* Converts the object to JSON.
+	* 
+	* @param object the object
+	* @return  the JSON output
+	* 
+	*/
 	public String stringify(Object object) {
 		return toJson(object);
 	}
+
+	/**
+	* 
+	* Parses the input stream to JSON.
+	* 
+	* @param inputStream the input stream
+	* @return  the JSON output
+	* 
+	*/
+	public Object parse(InputStream inputStream) {
+		return new JsonSlurper().parse(inputStream);
+	}
 	
+	/**
+	* 
+	* Returns a String containing the value of the named initialization parameter, or null if the parameter does not exist.
+	* 
+	* @param name a String specifying the name of the initialization parameter
+	* @return a String containing the value of the initialization parameter
+	* 
+	*/
 	public String getInitParameter(String name) {
 		return config.getInitParameter(name);
 	}
 
+	/**
+	* 
+	* The FilterConfig object.
+	* 
+	* @return the FilterConfig object
+	* 
+	*/
+	public FilterConfig getConfig() {
+		return config;
+	}
+	
+	/**
+	* 
+	* The FilterChain object.
+	* 
+	* @return the FilterChain object
+	* 
+	*/
+	public FilterChain getFilterChain() {
+		return requestContext.get().getFilterChain();
+	}
+	
+	/**
+	* 
+	* The HttpServletRequest object.
+	* 
+	* @return the HttpServletRequest object
+	* 
+	*/
 	public HttpServletRequest getRequest() {
 		return requestContext.get().getRequest();
 	}
 
+	/**
+	* 
+	* The HttpSession object.
+	* 
+	* @return the HttpSession object
+	* 
+	*/
 	public HttpSession getSession() {
 		return requestContext.get().getSession();
 	}
 
+	/**
+	* 
+	* The ServletContext object.
+	* 
+	* @return the ServletContext object
+	* 
+	*/
 	public ServletContext getContext() {
 		return requestContext.get().getServletContext();
 	}
 
+	/**
+	* 
+	* The HttpServletResponse object.
+	* 
+	* @return the HttpServletResponse object
+	* 
+	*/
 	public HttpServletResponse getResponse() {
 		return requestContext.get().getResponse();
 	}
-	
-	public FilterChain getFilterChain() {
-		return requestContext.get().getFilterChain();
-	}
 
+	/**
+	* 
+	* The Sql object.
+	* 
+	* @return the Sql object
+	* 
+	*/
 	public Sql getConnection() {
 		return requestContext.get().getConnection();
 	}
 
+	/**
+	* 
+	* The PrintWriter object.
+	* 
+	* @return the PrintWriter object
+	* @throws IOException the IOException
+	* 
+	*/
 	public PrintWriter getOut() throws IOException {
 		return getResponse().getWriter();
 	}
 
+	/**
+	* 
+	* The MarkupBuilder object.
+	* 
+	* @return the MarkupBuilder object
+	* @throws IOException the IOException
+	* 
+	*/
 	public MarkupBuilder getHtml() throws IOException {
 		return requestContext.get().getHtml();
 	}
-
+	
 }
