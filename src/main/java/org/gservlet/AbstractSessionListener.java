@@ -34,7 +34,7 @@ public abstract class AbstractSessionListener extends AbstractListener implement
 
 	/**
 	* 
-	* Receives notification that a session has been created.
+	* Receives notification that a session has been created
 	* 
 	* @param event the HttpSessionEvent containing the session
 	* 
@@ -46,7 +46,7 @@ public abstract class AbstractSessionListener extends AbstractListener implement
 
 	/**
 	* 
-	* Receives notification that a session is about to be invalidated.
+	* Receives notification that a session is about to be invalidated
 	* 
 	* @param event the HttpSessionEvent containing the session
 	* 
@@ -58,7 +58,7 @@ public abstract class AbstractSessionListener extends AbstractListener implement
 
 	/**
 	* 
-	* Returns the HttpSession object.
+	* Returns the HttpSession object
 	* 
 	* @return the HttpSession object
 	* 
@@ -69,7 +69,7 @@ public abstract class AbstractSessionListener extends AbstractListener implement
 
 	/**
 	* 
-	* Returns the HttpSessionEvent object.
+	* Returns the HttpSessionEvent object
 	* 
 	* @return the HttpSessionEvent object
 	* 

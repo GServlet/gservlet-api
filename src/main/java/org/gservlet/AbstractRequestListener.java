@@ -36,7 +36,7 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 
 	/**
 	* 
-	* Receives notification that a ServletRequest is about to come into scope of the web application.
+	* Receives notification that a ServletRequest is about to come into scope of the web application
 	* 
 	* @param event the ServletRequestEvent containing the ServletRequest and the ServletContext representing the web application
 	* 
@@ -48,7 +48,7 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 
 	/**
 	* 
-	* Receives notification that a ServletRequest is about to go out of scope of the web application.
+	* Receives notification that a ServletRequest is about to go out of scope of the web application
 	* 
 	* @param event the ServletRequestEvent containing the ServletRequest and the ServletContext representing the web application
 	* 
@@ -60,7 +60,7 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 
 	/**
 	* 
-	* The HttpServletRequest object.
+	* The HttpServletRequest object
 	* 
 	* @return the HttpServletRequest object
 	* 
@@ -71,7 +71,7 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 
 	/**
 	* 
-	* The HttpSession object.
+	* The HttpSession object
 	* 
 	* @return the HttpSession object
 	* 
@@ -82,7 +82,7 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 
 	/**
 	* 
-	* Returns the ServletContext object.
+	* Returns the ServletContext object
 	* 
 	* @return the ServletContext object
 	* 
@@ -93,7 +93,7 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 
 	/**
 	* 
-	* Returns the ServletRequestEvent object.
+	* Returns the ServletRequestEvent object
 	* 
 	* @return the ServletRequestEvent object
 	* 

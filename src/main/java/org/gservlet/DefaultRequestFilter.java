@@ -34,18 +34,35 @@ import org.gservlet.annotation.Servlet;
 
 /**
 * 
-* 
+* The DefaultRequestFilter handles the request forwarding to a newly created servlet.
 * 
 * @author Mamadou Lamine Ba
 * 
 */
 public class DefaultRequestFilter implements Filter {
 
+	/**
+	* 
+	* Called by the web container to indicate that it is being placed into service
+	* @param config the filter config
+	* @throws ServletException the ServletException
+	* 
+	*/
 	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
+	public void init(FilterConfig config) throws ServletException {
 		// implementation not required
 	}
 
+	/**
+	* 
+	* Called by the web container each time a request/response pair is passed through the chain due to a client request for a resource at the end of the chain
+	* @param request the request
+	* @param response the response
+	* @param chain the filter chain
+	* @throws IOException the IOException 
+	* @throws ServletException the ServletException
+	* 
+	*/
 	@Override
 	@SuppressWarnings("unchecked")
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -74,6 +91,11 @@ public class DefaultRequestFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
+	/**
+	* 
+	* Called by the web container to indicate that it is being taken out of service
+	* 
+	*/
 	@Override
 	public void destroy() {
 		// implementation not required

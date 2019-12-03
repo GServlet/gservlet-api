@@ -50,21 +50,21 @@ import groovy.xml.MarkupBuilder;
 public abstract class AbstractFilter implements Filter {
 
 	/**
-	 * The filter config object.
+	 * The filter config object
 	 */
 	protected transient FilterConfig config;
 	/**
-	 * The request context object.
+	 * The request context object
 	 */
 	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
 	/**
-	 * The logger object.
+	 * The logger object
 	 */
 	protected final Logger logger = Logger.getLogger(AbstractFilter.class.getName());
 	
 	/**
 	* 
-	* Called by the web container to indicate to a filter that it is being placed into service.
+	* Called by the web container to indicate to a filter that it is being placed into service
 	* @param config the filter config
 	* @throws ServletException the ServletException
 	* 
@@ -83,7 +83,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Invokes the filter method defined on the subclasses.
+	* Invokes the filter method defined on the subclasses
 	* @param request the request
 	* @param response the response
 	* @param chain the filter chain
@@ -106,7 +106,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Invokes the FilterChain doFilter method.
+	* Invokes the FilterChain doFilter method
 	* @throws IOException the IOException
 	* @throws ServletException the ServletException
 	* 
@@ -118,7 +118,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Called by the web container to indicate to a filter that it is being taken out of service.
+	* Called by the web container to indicate to a filter that it is being taken out of service
 	* 
 	*/
 	@Override
@@ -128,7 +128,7 @@ public abstract class AbstractFilter implements Filter {
 	
 	/**
 	* 
-	* Sends the response as JSON.
+	* Sends the response as JSON
 	* 
 	* @param response the response object
 	* @throws IOException the IOException
@@ -140,7 +140,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Converts the object to JSON.
+	* Converts the object to JSON
 	* 
 	* @param object the object
 	* @return  the JSON output
@@ -152,7 +152,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Parses the input stream to JSON.
+	* Parses the input stream to JSON
 	* 
 	* @param inputStream the input stream
 	* @return  the JSON output
@@ -164,7 +164,7 @@ public abstract class AbstractFilter implements Filter {
 	
 	/**
 	* 
-	* Returns a String containing the value of the named initialization parameter, or null if the parameter does not exist.
+	* Returns a String containing the value of the named initialization parameter, or null if the parameter does not exist
 	* 
 	* @param name a String specifying the name of the initialization parameter
 	* @return a String containing the value of the initialization parameter
@@ -176,7 +176,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Returns the FilterConfig object.
+	* Returns the FilterConfig object
 	* 
 	* @return the FilterConfig object
 	* 
@@ -187,7 +187,7 @@ public abstract class AbstractFilter implements Filter {
 	
 	/**
 	* 
-	* Returns the FilterChain object.
+	* Returns the FilterChain object
 	* 
 	* @return the FilterChain object
 	* 
@@ -198,7 +198,7 @@ public abstract class AbstractFilter implements Filter {
 	
 	/**
 	* 
-	* Returns the HttpServletRequest object.
+	* Returns the HttpServletRequest object
 	* 
 	* @return the HttpServletRequest object
 	* 
@@ -209,7 +209,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Returns the HttpSession object.
+	* Returns the HttpSession object
 	* 
 	* @return the HttpSession object
 	* 
@@ -220,7 +220,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Returns the ServletContext object.
+	* Returns the ServletContext object
 	* 
 	* @return the ServletContext object
 	* 
@@ -231,7 +231,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Returns the HttpServletResponse object.
+	* Returns the HttpServletResponse object
 	* 
 	* @return the HttpServletResponse object
 	* 
@@ -242,7 +242,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Returns the Sql object.
+	* Returns the Sql object
 	* 
 	* @return the Sql object
 	* 
@@ -253,7 +253,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Returns the PrintWriter object.
+	* Returns the PrintWriter object
 	* 
 	* @return the PrintWriter object
 	* @throws IOException the IOException
@@ -265,7 +265,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	* 
-	* Returns the MarkupBuilder object.
+	* Returns the MarkupBuilder object
 	* 
 	* @return the MarkupBuilder object
 	* @throws IOException the IOException

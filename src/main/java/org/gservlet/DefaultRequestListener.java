@@ -29,7 +29,7 @@ import groovy.sql.Sql;
 
 /**
 * 
-* 
+* The DefaultRequestListener handles the creation and the closing of a database connection.   
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -37,6 +37,13 @@ import groovy.sql.Sql;
 @WebListener
 public class DefaultRequestListener implements ServletRequestListener {
 
+	/**
+	* 
+	* Receives notification that a ServletRequest is about to come into scope of the web application
+	* 
+	* @param event the ServletRequestEvent containing the ServletRequest and the ServletContext representing the web application
+	* 
+	*/
 	@Override
 	public void requestInitialized(ServletRequestEvent event) {
 		ServletRequest request = event.getServletRequest();
@@ -44,6 +51,13 @@ public class DefaultRequestListener implements ServletRequestListener {
 		request.setAttribute(Constants.CONNECTION, new Sql((DataSource) context.getAttribute(Constants.DATASOURCE)));
 	}
 
+	/**
+	* 
+	* Receives notification that a ServletRequest is about to go out of scope of the web application
+	* 
+	* @param event the ServletRequestEvent containing the ServletRequest and the ServletContext representing the web application
+	* 
+	*/
 	@Override
 	public void requestDestroyed(ServletRequestEvent event) {
 		ServletRequest request = event.getServletRequest();

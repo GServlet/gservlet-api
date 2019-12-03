@@ -26,7 +26,7 @@ import groovy.json.JsonSlurper;
 
 /**
 * 
-* A wrapper around the HttpServletRequest class.
+* A wrapper class around the HttpServletRequest class.
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -35,7 +35,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
 	/**
 	* 
-	* Constructs a RequestWrapper for the given HttpServletRequest.
+	* Constructs a RequestWrapper for the given HttpServletRequest
 	* 
 	* @param request the request object 
 	*  
@@ -46,7 +46,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
 	/**
 	* 
-	* Sets an attribute.
+	* Sets an attribute
 	* 
 	* @param name the attribute name
 	* @param value the attribute value
@@ -58,7 +58,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
 	/**
 	* 
-	* Gets an attribute or a parameter value.
+	* Gets an attribute or a parameter value
 	* 
 	* @param name the attribute or parameter name
 	* @return the attribute or parameter value

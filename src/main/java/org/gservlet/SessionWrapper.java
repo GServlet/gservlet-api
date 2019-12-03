@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * 
- * A wrapper around the HttpSession class.
+ * A wrapper class around the HttpSession class.
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -35,14 +35,14 @@ import javax.servlet.http.HttpSession;
 public class SessionWrapper implements HttpSession, Serializable {
 
 	/**
-	 * The session object.
+	 * The session object
 	 */
 	protected final transient HttpSession session;
 
 	
 	/**
 	* 
-	* Constructs a SessionWrapper for the given HttpSession.
+	* Constructs a SessionWrapper for the given HttpSession
 	* 
 	* @param session the session object 
 	*  
@@ -59,8 +59,8 @@ public class SessionWrapper implements HttpSession, Serializable {
 	 *
 	 * @return the object with the specified name
 	 *
-	 * @exception IllegalStateException if this method is called on an invalidated
-	 *                                  session
+	 * @exception IllegalStateException if this method is called on an invalidated session
+	 * 
 	 */
 	@Override
 	public Object getAttribute(String name) {
@@ -74,8 +74,8 @@ public class SessionWrapper implements HttpSession, Serializable {
 	 * @return an <code>Enumeration</code> of <code>String</code> objects specifying
 	 *         the names of all the objects bound to this session
 	 *
-	 * @exception IllegalStateException if this method is called on an invalidated
-	 *                                  session
+	 * @exception IllegalStateException if this method is called on an invalidated session
+	 * 
 	 */
 	@Override
 	public Enumeration<String> getAttributeNames() {
@@ -90,8 +90,7 @@ public class SessionWrapper implements HttpSession, Serializable {
 	 * @return a <code>long</code> specifying when this session was created,
 	 *         expressed in milliseconds since 1/1/1970 GMT
 	 *
-	 * @exception IllegalStateException if this method is called on an invalidated
-	 *                                  session
+	 * @exception IllegalStateException if this method is called on an invalidated session
 	 */
 
 	@Override
@@ -125,8 +124,8 @@ public class SessionWrapper implements HttpSession, Serializable {
 	 *         request associated with this session, expressed in milliseconds since
 	 *         1/1/1970 GMT
 	 *
-	 * @exception IllegalStateException if this method is called on an invalidated
-	 *                                  session
+	 * @exception IllegalStateException if this method is called on an invalidated session
+	 * 
 	 */
 	@Override
 	public long getLastAccessedTime() {
@@ -337,7 +336,7 @@ public class SessionWrapper implements HttpSession, Serializable {
 
 	/**
 	* 
-	* Sets an attribute.
+	* Sets an attribute
 	* 
 	* @param name the attribute name
 	* @param value the attribute value
@@ -349,7 +348,7 @@ public class SessionWrapper implements HttpSession, Serializable {
 
 	/**
 	* 
-	* Gets an attribute value.
+	* Gets an attribute value
 	* 
 	* @param name the attribute name
 	* @return the attribute value

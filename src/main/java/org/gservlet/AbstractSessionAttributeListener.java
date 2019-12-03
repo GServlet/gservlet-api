@@ -34,7 +34,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been added to the HttpSession.
+	* Receives notification that an attribute has been added to the HttpSession
 	* 
 	* @param event the HttpSessionBindingEvent containing the HttpSession to which the attribute was added, along with the attribute name and value
 	* 
@@ -46,7 +46,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been removed to the HttpSession.
+	* Receives notification that an attribute has been removed to the HttpSession
 	* 
 	* @param event the HttpSessionBindingEvent containing the HttpSession to which the attribute was added, along with the attribute name and value
 	* 
@@ -58,7 +58,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been replaced to the HttpSession.
+	* Receives notification that an attribute has been replaced to the HttpSession
 	* 
 	* @param event the HttpSessionBindingEvent containing the HttpSession to which the attribute was added, along with the attribute name and value
 	* 
@@ -70,7 +70,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Returns the HttpSessionBindingEvent object.
+	* Returns the HttpSessionBindingEvent object
 	* 
 	* @return the HttpSessionBindingEvent object
 	* 
@@ -81,7 +81,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Returns the HttpSession object.
+	* Returns the HttpSession object
 	* 
 	* @return the HttpSession object
 	* 
@@ -92,7 +92,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Returns the attribute name.
+	* Returns the attribute name
 	* 
 	* @return the attribute name
 	* 
@@ -103,7 +103,7 @@ public abstract class AbstractSessionAttributeListener extends AbstractListener 
 	
 	/**
 	* 
-	* Returns the attribute value.
+	* Returns the attribute value
 	* 
 	* @return the attribute value
 	* 
