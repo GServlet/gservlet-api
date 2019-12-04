@@ -55,7 +55,7 @@ import groovy.util.ScriptException;
 
 /**
 * 
-*  The Initializer class initializes the application for the given scripts folder and 
+*  The Initializer class initializes the application and 
 *  manages the registration and the reloading of a servlet, filter or listener.
 * 
 * @author Mamadou Lamine Ba
