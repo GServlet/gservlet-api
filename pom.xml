@@ -35,7 +35,6 @@
 		<javassist.version>3.12.1.GA</javassist.version>
 		<servlet.version>3.0.1</servlet.version>
 		<commons.dbcp.version>2.2.0</commons.dbcp.version>
-		<asciidoctor.version>1.5.6</asciidoctor.version>
 		<junit.version>4.11</junit.version>
 		<mockito.version>2.28.2</mockito.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,7 +45,11 @@
 		<jacoco.version>0.8.5</jacoco.version>
 		<source.version>2.2.1</source.version>
 		<surefire.version>2.22.2</surefire.version>
+		<resources.version>2.6</resources.version>
+		<asciidoctor.version>1.5.6</asciidoctor.version>
+		<docs.directory>../gservlet-site/static/docs/${project.version}</docs.directory>
 		<javadoc.version>2.9.1</javadoc.version>
+		<javadocs.directory>../gservlet-site/static/javadocs/${project.version}</javadocs.directory>
 		<gpg.version>1.5</gpg.version>
 		<nexus.version>1.6.7</nexus.version>
 	</properties>
@@ -249,6 +252,44 @@
 								<goals>
 									<goal>javadoc</goal>
 								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>${resources.version}</version>
+						<executions>
+							<execution>
+								<id>copy-javadocs</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${javadocs.directory}</outputDirectory>
+									<resources>
+										<resource>
+											<directory>target/site/apidocs</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-docs</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${docs.directory}</outputDirectory>
+									<resources>
+										<resource>
+											<directory>target/generated-docs</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
