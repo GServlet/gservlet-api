@@ -73,7 +73,7 @@ public class StartupListener implements ServletContextListener {
 	* 
 	* Receives notification that the ServletContext is about to be shut down
 	* 
-	* @param event the ServletContextEvent containing the ServletContext that is being initialized
+	* @param event the ServletContextEvent containing the ServletContext that is being destroyed
 	* 
 	*/
 	@Override

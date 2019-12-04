@@ -77,13 +77,13 @@ public class DatabaseManager {
 	 * @throws IOException throws an exception if the data source can't be configured
 	 */
 	protected void setupDataSource() throws IOException {
-		File configuration = new File(
+		File file = new File(
 				context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER + 
 				File.separator + Constants.DB_CONFIG_FILE);
-		if (configuration.exists()) {
-			Properties properties = loadConfiguration(configuration);
-			if (isConfigurationValid(properties)) {
-				context.setAttribute(Constants.DATASOURCE, createDataSource(properties));
+		if (file.exists()) {
+			Properties configuration = loadConfiguration(file);
+			if (isConfigurationValid(configuration)) {
+				context.setAttribute(Constants.DATASOURCE, createDataSource(configuration));
 			}
 		}
 	}
@@ -141,30 +141,30 @@ public class DatabaseManager {
 	 * db.batchSize : the database batch size
 	 * </p>
 	 * 
-	 * @param properties the configuration file properties
+	 * @param configuration the configuration properties
 	 * @return true if the required configuration file properties are present
 	 */
-	public boolean isConfigurationValid(Properties properties) {
-		return properties.containsKey("db.driver") && properties.containsKey("db.url")
-				&& properties.containsKey("db.user") && properties.containsKey("db.password")
-				&& properties.containsKey("db.minPoolSize") && properties.containsKey("db.maxPoolSize");
+	public boolean isConfigurationValid(Properties configuration) {
+		return configuration.containsKey("db.driver") && configuration.containsKey("db.url")
+				&& configuration.containsKey("db.user") && configuration.containsKey("db.password")
+				&& configuration.containsKey("db.minPoolSize") && configuration.containsKey("db.maxPoolSize");
 	}
 
 	/**
-	 * Creates the data source from the configuration file properties
+	 * Creates the data source from the configuration properties
 	 * 
-	 * @param properties the configuration file properties
+	 * @param configuration the configuration properties
 	 * @return the data source from which the database connections are created
 	 * 
 	 */
-	public DataSource createDataSource(Properties properties) {
+	public DataSource createDataSource(Properties configuration) {
 		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName(properties.getProperty("db.driver").trim());
-		dataSource.setUrl(properties.getProperty("db.url").trim());
-		dataSource.setUsername(properties.getProperty("db.user").trim());
-		dataSource.setPassword(properties.getProperty("db.password"));
-		dataSource.setInitialSize(Integer.parseInt(properties.getProperty("db.minPoolSize").trim()));
-		dataSource.setMaxTotal(Integer.parseInt(properties.getProperty("db.maxPoolSize").trim()));
+		dataSource.setDriverClassName(configuration.getProperty("db.driver").trim());
+		dataSource.setUrl(configuration.getProperty("db.url").trim());
+		dataSource.setUsername(configuration.getProperty("db.user").trim());
+		dataSource.setPassword(configuration.getProperty("db.password"));
+		dataSource.setInitialSize(Integer.parseInt(configuration.getProperty("db.minPoolSize").trim()));
+		dataSource.setMaxTotal(Integer.parseInt(configuration.getProperty("db.maxPoolSize").trim()));
 		return dataSource;
 	}
 
