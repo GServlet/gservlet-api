@@ -54,13 +54,13 @@ import org.gservlet.annotation.SessionListener;
 import groovy.util.ScriptException;
 
 /**
-* 
-*  The Initializer class initializes the application and 
-*  manages the registration and the reloading of a servlet, filter or listener.
-* 
-* @author Mamadou Lamine Ba
-* 
-*/
+ * 
+ * The Initializer class initializes the application and manages the
+ * registration and the reloading of a servlet, filter or listener.
+ * 
+ * @author Mamadou Lamine Ba
+ * 
+ */
 public class Initializer {
 
 	/**
@@ -81,13 +81,13 @@ public class Initializer {
 	protected final Logger logger = Logger.getLogger(Initializer.class.getName());
 
 	/**
-	* 
-	* Constructs a Initializer for the given servlet context
-	* 
-	* @param context the servlet context
-	* @throws ServletException the ServletException 
-	*  
-	*/
+	 * 
+	 * Constructs a Initializer for the given servlet context
+	 * 
+	 * @param context the servlet context
+	 * @throws ServletException the ServletException
+	 * 
+	 */
 	public Initializer(ServletContext context) throws ServletException {
 		try {
 			this.context = context;
@@ -102,14 +102,14 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Initializes the application for the given scripts folder
-	* 
-	* @param folder the scripts folder
-	* @throws ServletException the ServletException
-	* @throws ScriptException the ScriptException 
-	*  
-	*/
+	 * 
+	 * Initializes the application for the given scripts folder
+	 * 
+	 * @param folder the scripts folder
+	 * @throws ServletException the ServletException
+	 * @throws ScriptException  the ScriptException
+	 * 
+	 */
 	protected void init(File folder) throws ServletException, ScriptException {
 		loadScripts(folder);
 		context.addFilter(Constants.REQUEST_FILTER, new DefaultRequestFilter())
@@ -117,14 +117,14 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Loads the scripts for the given scripts folder
-	* 
-	* @param folder the scripts folder
-	* @throws ServletException the ServletException
-	* @throws ScriptException the ScriptException 
-	*  
-	*/
+	 * 
+	 * Loads the scripts for the given scripts folder
+	 * 
+	 * @param folder the scripts folder
+	 * @throws ServletException the ServletException
+	 * @throws ScriptException  the ScriptException
+	 * 
+	 */
 	public void loadScripts(File folder) throws ServletException, ScriptException {
 		if (folder.exists()) {
 			File[] files = folder.listFiles();
@@ -143,13 +143,13 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Registers a servlet, filter or listener into the web container
-	* 
-	* @param object the object
-	* @throws ServletException the ServletException 
-	*  
-	*/
+	 * 
+	 * Registers a servlet, filter or listener into the web container
+	 * 
+	 * @param object the object
+	 * @throws ServletException the ServletException
+	 * 
+	 */
 	protected void register(Object object) throws ServletException {
 		Annotation[] annotations = object.getClass().getAnnotations();
 		for (Annotation annotation : annotations) {
@@ -166,15 +166,15 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Registers a servlet into the web container
-	* 
-	* @param context the servlet context
-	* @param annotation the servlet annotation
-	* @param object the object
-	* @throws ServletException the ServletException 
-	*  
-	*/
+	 * 
+	 * Registers a servlet into the web container
+	 * 
+	 * @param context    the servlet context
+	 * @param annotation the servlet annotation
+	 * @param object     the object
+	 * @throws ServletException the ServletException
+	 * 
+	 */
 	protected void addServlet(ServletContext context, Servlet annotation, Object object) throws ServletException {
 		String name = annotation.name().trim().equals("") ? object.getClass().getName() : annotation.name();
 		ServletRegistration registration = context.getServletRegistration(name);
@@ -190,7 +190,7 @@ public class Initializer {
 			if (annotation.urlPatterns().length > 0) {
 				registration.addMapping(annotation.urlPatterns());
 			}
-			for(WebInitParam param : annotation.initParams()) {
+			for (WebInitParam param : annotation.initParams()) {
 				registration.setInitParameter(param.name(), param.value());
 			}
 		} else {
@@ -201,15 +201,15 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Registers a filter into the web container
-	* 
-	* @param context the servlet context
-	* @param annotation the filter annotation
-	* @param object the object
-	* @throws ServletException the ServletException 
-	*  
-	*/
+	 * 
+	 * Registers a filter into the web container
+	 * 
+	 * @param context    the servlet context
+	 * @param annotation the filter annotation
+	 * @param object     the object
+	 * @throws ServletException the ServletException
+	 * 
+	 */
 	protected void addFilter(ServletContext context, Filter annotation, Object object) throws ServletException {
 		String name = object.getClass().getName();
 		FilterRegistration registration = context.getFilterRegistration(name);
@@ -221,14 +221,12 @@ public class Initializer {
 			registration = context.addFilter(name, (javax.servlet.Filter) filter);
 			Collection<DispatcherType> dispatcherTypes = Arrays.asList(annotation.dispatcherTypes());
 			if (annotation.value().length > 0) {
-				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true,
-						annotation.value());
+				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.value());
 			}
 			if (annotation.urlPatterns().length > 0) {
-				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true,
-						annotation.urlPatterns());
+				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.urlPatterns());
 			}
-			for(WebInitParam param : annotation.initParams()) {
+			for (WebInitParam param : annotation.initParams()) {
 				registration.setInitParameter(param.name(), param.value());
 			}
 		} else {
@@ -239,13 +237,13 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Registers a listener into the web container
-	* 
-	* @param context the servlet context
-	* @param object the object
-	*  
-	*/
+	 * 
+	 * Registers a listener into the web container
+	 * 
+	 * @param context the servlet context
+	 * @param object  the object
+	 * 
+	 */
 	protected void addListener(ServletContext context, Object object) {
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
 		EventListener listener = null;
@@ -275,12 +273,12 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Watches the scripts folder for file changes
-	* 
-	* @param folder the scripts folder
-	*  
-	*/
+	 * 
+	 * Watches the scripts folder for file changes
+	 * 
+	 * @param folder the scripts folder
+	 * 
+	 */
 	protected void watch(File folder) {
 		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
 		if (reload) {
@@ -297,27 +295,24 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Reloads a script
-	* 
-	* @param script the changed script 
-	*  
-	*/
+	 * 
+	 * Reloads a script
+	 * 
+	 * @param script the changed script
+	 * 
+	 */
 	protected void reload(String script) {
 		try {
 			Object object = scriptManager.loadScript(script);
 			Annotation[] annotations = object.getClass().getAnnotations();
 			for (Annotation annotation : annotations) {
 				if (annotation instanceof Servlet) {
-					reloadServlet((Servlet) annotation, object);
+					reload((Servlet) annotation, object);
 				} else if (annotation instanceof Filter || annotation instanceof RequestListener
 						|| annotation instanceof ContextAttributeListener
 						|| annotation instanceof RequestAttributeListener || annotation instanceof SessionListener
 						|| annotation instanceof SessionAttributeListener) {
-					DynamicInvocationHandler handler = handlers.get(object.getClass().getName());
-					if (handler != null) {
-						handler.setTarget(object);
-					}
+					reload(object);
 				}
 			}
 		} catch (Exception e) {
@@ -326,14 +321,14 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Reloads a servlet into the web container
-	* 
-	* @param servlet the servlet annotation
-	* @param object the object
-	*  
-	*/
-	protected void reloadServlet(Servlet servlet, Object object) {
+	 * 
+	 * Reloads a servlet into the web container
+	 * 
+	 * @param servlet the servlet annotation
+	 * @param object  the object
+	 * 
+	 */
+	protected void reload(Servlet servlet, Object object) {
 		String name = servlet.name().trim().equals("") ? object.getClass().getName() : servlet.name();
 		DynamicInvocationHandler handler = handlers.get(name);
 		if (handler != null) {
@@ -346,11 +341,25 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Calls the destroy method of the ServletContextListener objects when the 
-	* ServletContext is about to be shut down
-	*  
-	*/
+	 * 
+	 * Reloads a filter or a listener into the web container
+	 * 
+	 * @param object the object
+	 * 
+	 */
+	protected void reload(Object object) {
+		DynamicInvocationHandler handler = handlers.get(object.getClass().getName());
+		if (handler != null) {
+			handler.setTarget(object);
+		}
+	}
+
+	/**
+	 * 
+	 * Calls the destroy method of the ServletContextListener objects when the
+	 * ServletContext is about to be shut down
+	 * 
+	 */
 	public void destroy() {
 		for (DynamicInvocationHandler handler : handlers.values()) {
 			Object target = handler.getTarget();
@@ -363,10 +372,11 @@ public class Initializer {
 	}
 
 	/**
-	* 
-	* Returns the map of invocation handlers
-	* @return the map of invocation handlers 
-	*/
+	 * 
+	 * Returns the map of invocation handlers
+	 * 
+	 * @return the map of invocation handlers
+	 */
 	public Map<String, DynamicInvocationHandler> getHandlers() {
 		return handlers;
 	}
