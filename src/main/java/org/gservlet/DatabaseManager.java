@@ -28,16 +28,16 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
-import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 /**
-* 
-* The DatabaseManager handles the creation and the configuration of the data source. 
-* 
-* @author Mamadou Lamine Ba
-* 
-*/
+ * 
+ * The DatabaseManager handles the creation and the configuration of the data
+ * source.
+ * 
+ * @author Mamadou Lamine Ba
+ * 
+ */
 public class DatabaseManager {
 
 	/**
@@ -51,21 +51,23 @@ public class DatabaseManager {
 	protected final Logger logger = Logger.getLogger(DatabaseManager.class.getName());
 
 	/**
-	* 
-	* Constructs a DatabaseManager for the given ServletContext
-	* 
-	* @param context the servlet context 
-	* @throws IOException the IOException 
-	*/
+	 * 
+	 * Constructs a DatabaseManager for the given ServletContext
+	 * 
+	 * @param context the servlet context
+	 * @throws IOException the IOException
+	 */
 	public DatabaseManager(ServletContext context) throws IOException {
 		this.context = context;
 		init();
 	}
 
 	/**
-	 * Initializes the configuration of the data source and watches the configuration file for changes
+	 * Initializes the configuration of the data source and watches the
+	 * configuration file for changes
 	 *
-	 * @throws IOException throws an exception if the data source can't be configured
+	 * @throws IOException throws an exception if the data source can't be
+	 *                     configured
 	 */
 	protected void init() throws IOException {
 		setupDataSource();
@@ -73,18 +75,24 @@ public class DatabaseManager {
 	}
 
 	/**
-	 * Configures the data source and stores it as an attribute in the context
+	 * Creates the data source and stores it as an attribute in the context
 	 *
-	 * @throws IOException throws an exception if the data source can't be configured
+	 * @throws IOException throws an IOException if the data source can't be created
+	 * 
 	 */
 	protected void setupDataSource() throws IOException {
-		File file = new File(
-				context.getRealPath("/") + File.separator + CONFIG_FOLDER + 
-				File.separator + DB_CONFIG_FILE);
+		File file = new File(context.getRealPath("/") + "/" + CONFIG_FOLDER + "/" + DB_CONFIG_FILE);
 		if (file.exists()) {
 			Properties configuration = loadConfiguration(file);
 			if (isConfigurationValid(configuration)) {
-				context.setAttribute(DATASOURCE, createDataSource(configuration));
+				BasicDataSource dataSource = new BasicDataSource();
+				dataSource.setDriverClassName(configuration.getProperty("db.driver").trim());
+				dataSource.setUrl(configuration.getProperty("db.url").trim());
+				dataSource.setUsername(configuration.getProperty("db.user").trim());
+				dataSource.setPassword(configuration.getProperty("db.password"));
+				dataSource.setInitialSize(Integer.parseInt(configuration.getProperty("db.minPoolSize").trim()));
+				dataSource.setMaxTotal(Integer.parseInt(configuration.getProperty("db.maxPoolSize").trim()));
+				context.setAttribute(DATASOURCE, dataSource);
 			}
 		}
 	}
@@ -122,15 +130,15 @@ public class DatabaseManager {
 	 * @return the properties of the configuration file
 	 */
 	public Properties loadConfiguration(File file) throws IOException {
-		Properties properties = new Properties();
+		Properties configuration = new Properties();
 		FileReader reader = new FileReader(file);
-		properties.load(reader);
+		configuration.load(reader);
 		reader.close();
-		return properties;
+		return configuration;
 	}
 
 	/**
-	 * Checks if the configuration file is valid. 
+	 * Checks if the configuration is valid.
 	 * <p>
 	 * The required properties are : <br>
 	 * db.driver : the jdbc driver class <br>
@@ -138,35 +146,17 @@ public class DatabaseManager {
 	 * db.user : the database user <br>
 	 * db.password : the database user password <br>
 	 * db.minPoolSize : the database min pool size <br>
-	 * db.maxPoolSize : the database max pool size <br>
-	 * db.batchSize : the database batch size
+	 * db.maxPoolSize : the database max pool size
 	 * </p>
 	 * 
-	 * @param configuration the configuration properties
-	 * @return true if the required configuration file properties are present
+	 * @param configuration the configuration
+	 * @return true if the required properties are present
+	 * 
 	 */
 	public boolean isConfigurationValid(Properties configuration) {
 		return configuration.containsKey("db.driver") && configuration.containsKey("db.url")
 				&& configuration.containsKey("db.user") && configuration.containsKey("db.password")
 				&& configuration.containsKey("db.minPoolSize") && configuration.containsKey("db.maxPoolSize");
-	}
-
-	/**
-	 * Creates the data source from the configuration properties
-	 * 
-	 * @param configuration the configuration properties
-	 * @return the data source from which the database connections are created
-	 * 
-	 */
-	public DataSource createDataSource(Properties configuration) {
-		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName(configuration.getProperty("db.driver").trim());
-		dataSource.setUrl(configuration.getProperty("db.url").trim());
-		dataSource.setUsername(configuration.getProperty("db.user").trim());
-		dataSource.setPassword(configuration.getProperty("db.password"));
-		dataSource.setInitialSize(Integer.parseInt(configuration.getProperty("db.minPoolSize").trim()));
-		dataSource.setMaxTotal(Integer.parseInt(configuration.getProperty("db.maxPoolSize").trim()));
-		return dataSource;
 	}
 
 	/**
