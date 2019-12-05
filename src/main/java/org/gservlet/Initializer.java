@@ -71,7 +71,7 @@ public class Initializer {
 	/**
 	 * The map of invocation handlers
 	 */
-	protected final Map<String, DynamicInvocationHandler> handlers;
+	protected final Map<String, DynamicInvocationHandler> handlers = new HashMap<>();
 	/**
 	 * The script manager
 	 */
@@ -92,7 +92,6 @@ public class Initializer {
 	public Initializer(ServletContext context) throws ServletException {
 		try {
 			this.context = context;
-			handlers = new HashMap<>();
 			context.setAttribute(HANDLERS, handlers);
 			File folder = new File(context.getRealPath("/") + File.separator + SCRIPTS_FOLDER);
 			scriptManager = new ScriptManager(folder);
@@ -114,7 +113,7 @@ public class Initializer {
 	protected void init(File folder) throws ServletException, ScriptException {
 		loadScripts(folder);
 		context.addFilter(REQUEST_FILTER, new DefaultRequestFilter())
-				.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true, "/*");
+				.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
 	}
 
 	/**
