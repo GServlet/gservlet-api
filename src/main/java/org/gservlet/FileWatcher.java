@@ -87,12 +87,12 @@ public class FileWatcher implements Runnable {
 	@Override
 	public void run() {
 		try {
-			WatchService watcher = FileSystems.getDefault().newWatchService();
+			WatchService watchService = FileSystems.getDefault().newWatchService();
 			Path path = Paths.get(folder.getAbsolutePath());
-			path.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
+			path.register(watchService, ENTRY_CREATE, ENTRY_DELETE);
 			boolean poll = true;
 			while (poll) {
-				poll = pollEvents(watcher);
+				poll = pollEvents(watchService);
 			}
 		} catch (IOException e) {
 			logger.log(Level.INFO, "exception during watch", e);
@@ -104,6 +104,7 @@ public class FileWatcher implements Runnable {
 	 * Polls for file events
 	 * 
 	 * @param watchService the watch service
+	 * @return the reset flag
 	 * 
 	 */
 	protected boolean pollEvents(WatchService watchService) {
