@@ -22,7 +22,6 @@ package org.gservlet;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -94,7 +93,7 @@ public class FileWatcher implements Runnable {
 			while (poll) {
 				poll = pollEvents(watchService);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during watch", e);
 		}
 	}
@@ -105,21 +104,16 @@ public class FileWatcher implements Runnable {
 	 * 
 	 * @param watchService the watch service
 	 * @return the reset flag
+	 * @throws InterruptedException
 	 * 
 	 */
-	protected boolean pollEvents(WatchService watchService) {
-		try {
-			WatchKey key = watchService.take();
-			Path path = (Path) key.watchable();
-			for (WatchEvent<?> event : key.pollEvents()) {
-				notifyListeners(event.kind(), path.resolve((Path) event.context()));
-			}
-			return key.reset();
-		} catch (InterruptedException e) {
-			logger.log(Level.INFO, "exception during watch", e);
-			Thread.currentThread().interrupt();
+	protected boolean pollEvents(WatchService watchService) throws InterruptedException {
+		WatchKey key = watchService.take();
+		Path path = (Path) key.watchable();
+		for (WatchEvent<?> event : key.pollEvents()) {
+			notifyListeners(event.kind(), path.resolve((Path) event.context()));
 		}
-		return false;
+		return key.reset();
 	}
 
 	/**
