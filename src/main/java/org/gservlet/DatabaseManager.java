@@ -19,6 +19,7 @@
 
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -68,7 +69,7 @@ public class DatabaseManager {
 	 */
 	protected void init() throws IOException {
 		setupDataSource();
-		watch(new File(context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER));
+		watch(new File(context.getRealPath("/") + File.separator + CONFIG_FOLDER));
 	}
 
 	/**
@@ -78,12 +79,12 @@ public class DatabaseManager {
 	 */
 	protected void setupDataSource() throws IOException {
 		File file = new File(
-				context.getRealPath("/") + File.separator + Constants.CONFIG_FOLDER + 
-				File.separator + Constants.DB_CONFIG_FILE);
+				context.getRealPath("/") + File.separator + CONFIG_FOLDER + 
+				File.separator + DB_CONFIG_FILE);
 		if (file.exists()) {
 			Properties configuration = loadConfiguration(file);
 			if (isConfigurationValid(configuration)) {
-				context.setAttribute(Constants.DATASOURCE, createDataSource(configuration));
+				context.setAttribute(DATASOURCE, createDataSource(configuration));
 			}
 		}
 	}
@@ -94,13 +95,13 @@ public class DatabaseManager {
 	 * @param folder the configuration folder
 	 */
 	protected void watch(File folder) {
-		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
+		boolean reload = Boolean.parseBoolean(System.getenv(RELOAD));
 		if (reload) {
 			new FileWatcher(folder).addListener(new FileAdapter() {
 				@Override
 				public void onCreated(FileEvent event) {
 					File file = event.getFile();
-					if (file.getName().equals(Constants.DB_CONFIG_FILE)) {
+					if (file.getName().equals(DB_CONFIG_FILE)) {
 						logger.info("reloading configuration file " + file.getName());
 						try {
 							setupDataSource();
@@ -175,7 +176,7 @@ public class DatabaseManager {
 	 */
 	public void destroy() {
 		try {
-			BasicDataSource dataSource = (BasicDataSource) context.getAttribute(Constants.DATASOURCE);
+			BasicDataSource dataSource = (BasicDataSource) context.getAttribute(DATASOURCE);
 			if (dataSource != null) {
 				dataSource.close();
 			}

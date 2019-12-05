@@ -36,7 +36,8 @@ import java.util.logging.Logger;
 
 /**
  * 
- * The FileWatcher class checks a folder for file changes and notifies its listeners accordingly.
+ * The FileWatcher class checks a folder for file changes and notifies its
+ * listeners accordingly.
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -46,7 +47,7 @@ public class FileWatcher implements Runnable {
 	/**
 	 * The list of listeners
 	 */
-	protected final List<FileListener> listeners;
+	protected List<FileListener> listeners = new ArrayList<>();
 	/**
 	 * The folder to be watched
 	 */
@@ -57,23 +58,21 @@ public class FileWatcher implements Runnable {
 	protected final Logger logger = Logger.getLogger(FileWatcher.class.getName());
 
 	/**
-	* 
-	* Constructs a FileWatcher for the given folder
-	* 
-	* @param folder the folder object 
-	*  
-	*/
+	 * 
+	 * Constructs a FileWatcher for the given folder
+	 * 
+	 * @param folder the folder object
+	 * 
+	 */
 	public FileWatcher(File folder) {
-		listeners = new ArrayList<>();
 		this.folder = folder;
 	}
 
 	/**
-	* 
-	* Starts the watch process
-	* 
-	*  
-	*/
+	 * 
+	 * Starts the watch process
+	 * 
+	 */
 	public void watch() {
 		if (folder.exists()) {
 			new Thread(this).start();
@@ -81,11 +80,10 @@ public class FileWatcher implements Runnable {
 	}
 
 	/**
-	* 
-	* Used to create a thread for the watch process
-	* 
-	*  
-	*/
+	 * 
+	 * Used to create a thread for the watch process
+	 * 
+	 */
 	@Override
 	public void run() {
 		try {
@@ -102,17 +100,18 @@ public class FileWatcher implements Runnable {
 	}
 
 	/**
-	* 
-	* Polls for file events
-	* @param watchService the watch service
-	*  
-	*/
-	private boolean pollEvents(WatchService watchService) {
+	 * 
+	 * Polls for file events
+	 * 
+	 * @param watchService the watch service
+	 * 
+	 */
+	protected boolean pollEvents(WatchService watchService) {
 		try {
 			WatchKey key = watchService.take();
 			Path path = (Path) key.watchable();
 			for (WatchEvent<?> event : key.pollEvents()) {
-				notifyListeners(event.kind(),  path.resolve((Path) event.context()));
+				notifyListeners(event.kind(), path.resolve((Path) event.context()));
 			}
 			return key.reset();
 		} catch (InterruptedException e) {
@@ -123,61 +122,79 @@ public class FileWatcher implements Runnable {
 	}
 
 	/**
-	* 
-	* Registers new listener
-	* 
-	* @param listener the file listener object
-	* @return the file watcher instance
-	* 
-	*/
+	 * 
+	 * Registers a new listener
+	 * 
+	 * @param listener the file listener
+	 * @return the file watcher
+	 * 
+	 */
 	public FileWatcher addListener(FileListener listener) {
 		listeners.add(listener);
 		return this;
 	}
 
 	/**
-	* 
-	* Unregisters a listener
-	* 
-	* @param listener the file listener object
-	* @return the file watcher instance
-	* 
-	*/
+	 * 
+	 * Unregisters a listener
+	 * 
+	 * @param listener the file listener
+	 * @return the file watcher
+	 * 
+	 */
 	public FileWatcher removeListener(FileListener listener) {
 		listeners.remove(listener);
 		return this;
 	}
 
 	/**
-	* 
-	* Notifies the listeners of a file event
-	* 
-	* @param kind the watch event kind
-	* @param path the file path
-	* 
-	*/
-	private void notifyListeners(WatchEvent.Kind<?> kind, Path path) {
-		FileEvent event = new FileEvent(path.toFile());
-		if (kind == ENTRY_CREATE) {
-			for (FileListener listener : listeners) {
-				listener.onCreated(event);
+	 * 
+	 * Notifies the listeners of a file event
+	 * 
+	 * @param kind the watch event kind
+	 * @param path the file path
+	 * 
+	 */
+	protected void notifyListeners(WatchEvent.Kind<?> kind, Path path) {
+		File file = path.toFile();
+		if (!file.isDirectory()) {
+			FileEvent event = new FileEvent(file);
+			if (kind == ENTRY_CREATE) {
+				for (FileListener listener : listeners) {
+					listener.onCreated(event);
+				}
+			} else if (kind == ENTRY_DELETE) {
+				for (FileListener listener : listeners) {
+					listener.onDeleted(event);
+				}
 			}
-		} else if (kind == ENTRY_DELETE) {
-			for (FileListener listener : listeners) {
-				listener.onDeleted(event);
-			}
+		} else {
+			new FileWatcher(file).setListeners(listeners).watch();
 		}
 	}
 
 	/**
-	* 
-	* Returns a list of listeners
-	* 
-	* @return a list of listeners
-	* 
-	*/
+	 * 
+	 * Returns a list of listeners
+	 * 
+	 * @return a list of listeners
+	 * 
+	 */
 	public List<FileListener> getListeners() {
 		return listeners;
+	}
+
+	/**
+	 * 
+	 * Sets a list of listeners
+	 * 
+	 * @param listeners a list of listeners
+	 * @return the file watcher
+	 * 
+	 */
+	public FileWatcher setListeners(List<FileListener> listeners) {
+		this.listeners = listeners;
+		return this;
 	}
 
 }

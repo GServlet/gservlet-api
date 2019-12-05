@@ -24,7 +24,7 @@ public class FileWatcherTest {
 
 			@Override
 			public void onDeleted(FileEvent event) {
-				map.put("file.deleted", event.getFile().getName());
+				map.put("file.deleted", event.getFile().getName());		
 			}
 
 		};

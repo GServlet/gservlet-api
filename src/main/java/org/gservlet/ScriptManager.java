@@ -19,6 +19,7 @@
 
 package org.gservlet;
 
+import static org.gservlet.Constants.SCRIPTS_FOLDER;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -86,7 +87,7 @@ public class ScriptManager {
 	public Object loadScript(File file) throws ScriptException {
 		try {
 			String path = file.getAbsolutePath();
-			int index = path.indexOf(Constants.SCRIPTS_FOLDER) + Constants.SCRIPTS_FOLDER.length() + 1;
+			int index = path.indexOf(SCRIPTS_FOLDER) + SCRIPTS_FOLDER.length() + 1;
 			return engine.loadScriptByName(path.substring(index)).newInstance();
 		} catch (Exception e) {
 			throw new ScriptException(e);
@@ -104,13 +105,13 @@ public class ScriptManager {
 	 */
 	protected GroovyScriptEngine createScriptEngine(File folder) throws MalformedURLException {
 		URL[] urls = { folder.toURI().toURL() };
-		GroovyScriptEngine gse = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
+		GroovyScriptEngine scriptEngine = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
 		ClassPool classPool = ClassPool.getDefault();
-		classPool.insertClassPath(new LoaderClassPath(gse.getParentClassLoader()));
+		classPool.insertClassPath(new LoaderClassPath(scriptEngine.getParentClassLoader()));
 		CompilerConfiguration configuration = new CompilerConfiguration();
 		configuration.setBytecodePostprocessor(createBytecodeProcessor(classPool));
-		gse.setConfig(configuration);
-		return gse;
+		scriptEngine.setConfig(configuration);
+		return scriptEngine;
 	}
 
 	/**

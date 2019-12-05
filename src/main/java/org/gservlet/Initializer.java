@@ -19,6 +19,7 @@
 
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Proxy;
@@ -92,8 +93,8 @@ public class Initializer {
 		try {
 			this.context = context;
 			handlers = new HashMap<>();
-			context.setAttribute(Constants.HANDLERS, handlers);
-			File folder = new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER);
+			context.setAttribute(HANDLERS, handlers);
+			File folder = new File(context.getRealPath("/") + File.separator + SCRIPTS_FOLDER);
 			scriptManager = new ScriptManager(folder);
 			init(folder);
 		} catch (Exception e) {
@@ -112,7 +113,7 @@ public class Initializer {
 	 */
 	protected void init(File folder) throws ServletException, ScriptException {
 		loadScripts(folder);
-		context.addFilter(Constants.REQUEST_FILTER, new DefaultRequestFilter())
+		context.addFilter(REQUEST_FILTER, new DefaultRequestFilter())
 				.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true, "/*");
 	}
 
@@ -280,7 +281,7 @@ public class Initializer {
 	 * 
 	 */
 	protected void watch(File folder) {
-		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
+		boolean reload = Boolean.parseBoolean(System.getenv(RELOAD));
 		if (reload) {
 			new FileWatcher(folder).addListener(new FileAdapter() {
 				@Override
