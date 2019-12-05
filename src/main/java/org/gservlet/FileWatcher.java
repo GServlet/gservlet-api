@@ -110,8 +110,9 @@ public class FileWatcher implements Runnable {
 	private boolean pollEvents(WatchService watchService) {
 		try {
 			WatchKey key = watchService.take();
+			Path path = (Path) key.watchable();
 			for (WatchEvent<?> event : key.pollEvents()) {
-				notifyListeners(event.kind(), event.context().toString());
+				notifyListeners(event.kind(),  path.resolve((Path) event.context()));
 			}
 			return key.reset();
 		} catch (InterruptedException e) {
@@ -151,12 +152,12 @@ public class FileWatcher implements Runnable {
 	* 
 	* Notifies the listeners of a file event
 	* 
-	* @param kind the kind of event
-	* @param the name of the file
+	* @param kind the watch event kind
+	* @param path the file path
 	* 
 	*/
-	private void notifyListeners(WatchEvent.Kind<?> kind, String file) {
-		FileEvent event = new FileEvent(file);
+	private void notifyListeners(WatchEvent.Kind<?> kind, Path path) {
+		FileEvent event = new FileEvent(path.toFile());
 		if (kind == ENTRY_CREATE) {
 			for (FileListener listener : listeners) {
 				listener.onCreated(event);

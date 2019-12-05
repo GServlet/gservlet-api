@@ -23,7 +23,8 @@ public class ServletContextListenerTest {
 		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		AbstractContextListener listener = (AbstractContextListener) scriptManager.loadScript("ServletContextListener.groovy");
+		File script = new File(folder + "/" + "ServletContextListener.groovy");
+		AbstractContextListener listener = (AbstractContextListener) scriptManager.loadScript(script);
 		assertTrue(listener.getClass().isAnnotationPresent(ContextListener.class));
 		assertNotNull(listener);
 		final Map<Object,Object> map = new HashMap<Object,Object>();

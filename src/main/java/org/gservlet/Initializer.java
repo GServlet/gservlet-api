@@ -131,7 +131,7 @@ public class Initializer {
 			if (files != null) {
 				for (File file : files) {
 					if (file.isFile()) {
-						Object object = scriptManager.loadScript(file.getName());
+						Object object = scriptManager.loadScript(file);
 						register(object);
 					} else {
 						loadScripts(file);
@@ -285,8 +285,8 @@ public class Initializer {
 			new FileWatcher(folder).addListener(new FileAdapter() {
 				@Override
 				public void onCreated(FileEvent event) {
-					String script = event.getFileName();
-					logger.info("reloading script " + script);
+					File script = event.getFile();
+					logger.info("reloading script " + script.getName());
 					reload(script);
 				}
 
@@ -296,12 +296,12 @@ public class Initializer {
 
 	/**
 	 * 
-	 * Reloads a script
+	 * Reloads a script file
 	 * 
-	 * @param script the changed script
+	 * @param script the script file
 	 * 
 	 */
-	protected void reload(String script) {
+	protected void reload(File script) {
 		try {
 			Object object = scriptManager.loadScript(script);
 			Annotation[] annotations = object.getClass().getAnnotations();

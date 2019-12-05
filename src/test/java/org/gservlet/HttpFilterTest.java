@@ -31,20 +31,21 @@ public class HttpFilterTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void testFilter() throws Exception {
-		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		AbstractFilter filter = (AbstractFilter) scriptManager.loadScript("HttpFilter.groovy");
+		File script = new File(folder + "/" + "HttpFilter.groovy");
+		AbstractFilter filter = (AbstractFilter) scriptManager.loadScript(script);
 		assertNotNull(filter);
 		Filter annotation = filter.getClass().getAnnotation(Filter.class);
-		assertEquals("HttpFilter",filter.getClass().getName());
+		assertEquals("HttpFilter", filter.getClass().getName());
 		assertEquals("/*", annotation.value()[0]);
-		final Map<Object,Object> map = new HashMap<Object,Object>();
+		final Map<Object, Object> map = new HashMap<Object, Object>();
 		Answer initializeMap = new Answer() {
-		    public Object answer(InvocationOnMock invocation) throws Throwable {
-		      map.put(invocation.getArguments()[0],invocation.getArguments()[1]);
-		      return null;
-		    }
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				map.put(invocation.getArguments()[0], invocation.getArguments()[1]);
+				return null;
+			}
 		};
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getAttribute(Constants.CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
@@ -53,7 +54,7 @@ public class HttpFilterTest {
 		when(request.getSession(true)).thenReturn(mock(HttpSession.class));
 		final Map<String, DynamicInvocationHandler> handlers = new HashMap<>();
 		when(context.getAttribute(Constants.HANDLERS)).thenReturn(handlers);
-		doAnswer(initializeMap).when(request).setAttribute(anyString(),any());
+		doAnswer(initializeMap).when(request).setAttribute(anyString(), any());
 		filter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 		assertEquals("filtering", map.get("state"));
 		filter.init(mock(FilterConfig.class));
@@ -70,28 +71,30 @@ public class HttpFilterTest {
 		DefaultRequestFilter defaultRequestFilter = new DefaultRequestFilter();
 		assertFalse(defaultRequestFilter.getClass().isAnnotationPresent(WebListener.class));
 		defaultRequestFilter.init(null);
-		AbstractServlet servlet = (AbstractServlet) scriptManager.loadScript("HttpServlet.groovy");
+		script = new File(folder + "/" + "HttpServlet.groovy");
+		AbstractServlet servlet = (AbstractServlet) scriptManager.loadScript(script);
 		assertNotNull(servlet);
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(servlet);
 		handler.setTarget(servlet);
 		handler.setRegistered(false);
 		handlers.put("servlet", handler);
 		when(request.getRequestURI()).thenReturn("/servlet");
-		String[] methods = {"get","post","put","delete","options","head","trace"};
-		for(String method : methods) {
+		String[] methods = { "get", "post", "put", "delete", "options", "head", "trace" };
+		for (String method : methods) {
 			when(request.getMethod()).thenReturn(method);
 			defaultRequestFilter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 			assertEquals(method, map.get("state"));
 		}
 		defaultRequestFilter.destroy();
 	}
-	
+
 	@Test
 	public void testOutput() throws Exception {
-		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		AbstractFilter filter = (AbstractFilter) scriptManager.loadScript("HttpFilter.groovy");
+		File script = new File(folder + "/" + "HttpFilter.groovy");
+		AbstractFilter filter = (AbstractFilter) scriptManager.loadScript(script);
 		assertNotNull(filter);
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
@@ -104,7 +107,7 @@ public class HttpFilterTest {
 		assertEquals("<!DOCTYPE html>", out.toString().trim());
 		out = new StringWriter();
 		when(response.getWriter()).thenReturn(new PrintWriter(out));
-		Map<String,String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 		map.put("key", "value");
 		filter.json(map);
 		assertEquals("{\"key\":\"value\"}", out.toString());

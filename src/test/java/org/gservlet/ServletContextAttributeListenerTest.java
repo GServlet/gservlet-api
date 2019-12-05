@@ -12,10 +12,11 @@ public class ServletContextAttributeListenerTest {
 
 	@Test
 	public void testEvents() throws Exception {
-		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		AbstractContextAttributeListener listener = (AbstractContextAttributeListener) scriptManager.loadScript("ServletContextAttributeListener.groovy");
+		File script = new File(folder + "/" + "ServletContextAttributeListener.groovy");
+		AbstractContextAttributeListener listener = (AbstractContextAttributeListener) scriptManager.loadScript(script);
 		assertTrue(listener.getClass().isAnnotationPresent(ContextAttributeListener.class));
 		assertNotNull(listener);
 		ServletContextAttributeEvent event = new ServletContextAttributeEvent(mock(ServletContext.class), "myAttribute", "myValue");

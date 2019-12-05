@@ -99,9 +99,9 @@ public class DatabaseManager {
 			new FileWatcher(folder).addListener(new FileAdapter() {
 				@Override
 				public void onCreated(FileEvent event) {
-					String fileName = event.getFileName();
-					if (fileName.equals(Constants.DB_CONFIG_FILE)) {
-						logger.info("reloading configuration file " + fileName);
+					File file = event.getFile();
+					if (file.getName().equals(Constants.DB_CONFIG_FILE)) {
+						logger.info("reloading configuration file " + file.getName());
 						try {
 							setupDataSource();
 						} catch (IOException e) {

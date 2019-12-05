@@ -20,21 +20,22 @@ public class HttpSessionListenerTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void testEvents() throws Exception {
-		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		AbstractSessionListener listener = (AbstractSessionListener) scriptManager.loadScript("HttpSessionListener.groovy");
+		File script = new File(folder + "/" + "HttpSessionListener.groovy");
+		AbstractSessionListener listener = (AbstractSessionListener) scriptManager.loadScript(script);
 		assertTrue(listener.getClass().isAnnotationPresent(SessionListener.class));
 		assertNotNull(listener);
-		final Map<Object,Object> map = new HashMap<Object,Object>();
+		final Map<Object, Object> map = new HashMap<Object, Object>();
 		Answer initializeMap = new Answer() {
-		    public Object answer(InvocationOnMock invocation) throws Throwable {
-		      map.put(invocation.getArguments()[0],invocation.getArguments()[1]);
-		      return null;
-		    }
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				map.put(invocation.getArguments()[0], invocation.getArguments()[1]);
+				return null;
+			}
 		};
 		HttpSession context = mock(HttpSession.class);
-		doAnswer(initializeMap).when(context).setAttribute(anyString(),any());
+		doAnswer(initializeMap).when(context).setAttribute(anyString(), any());
 		HttpSessionEvent event = new HttpSessionEvent(context);
 		listener.sessionCreated(event);
 		assertEquals("sessionCreated", map.get("state"));

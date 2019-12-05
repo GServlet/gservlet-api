@@ -12,13 +12,14 @@ public class HttpSessionAttributeListenerTest {
 
 	@Test
 	public void testEvents() throws Exception {
-		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		AbstractSessionAttributeListener listener = (AbstractSessionAttributeListener) scriptManager.loadScript("HttpSessionAttributeListener.groovy");
+		File script = new File(folder + "/" + "HttpSessionAttributeListener.groovy");
+		AbstractSessionAttributeListener listener = (AbstractSessionAttributeListener) scriptManager.loadScript(script);
 		assertTrue(listener.getClass().isAnnotationPresent(SessionAttributeListener.class));
 		assertNotNull(listener);
-		HttpSessionBindingEvent event = new HttpSessionBindingEvent(mock(HttpSession.class), "myAttribute","myValue");
+		HttpSessionBindingEvent event = new HttpSessionBindingEvent(mock(HttpSession.class), "myAttribute", "myValue");
 		listener.attributeAdded(event);
 		assertEquals("attributeAdded", listener.getName());
 		listener.attributeRemoved(event);

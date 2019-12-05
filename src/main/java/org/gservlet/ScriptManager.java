@@ -62,48 +62,48 @@ public class ScriptManager {
 	 */
 	protected final Logger logger = Logger.getLogger(ScriptManager.class.getName());
 
-	
 	/**
-	* 
-	* Constructs a ScriptManager for the given folder
-	* 
-	* @param folder the folder object 
-	* @throws MalformedURLException the MalformedURLException
-	*  
-	*/
+	 * 
+	 * Constructs a ScriptManager for the given folder
+	 * 
+	 * @param folder the folder object
+	 * @throws MalformedURLException the MalformedURLException
+	 * 
+	 */
 	public ScriptManager(File folder) throws MalformedURLException {
 		engine = createScriptEngine(folder);
 	}
 
 	/**
-	* 
-	* Loads a script by its name
-	* 
-	* @param name the script name 
-	* @return the instantiated object
-	* @throws ScriptException the ScriptException
-	*  
-	*/
-	public Object loadScript(String name) throws ScriptException {
+	 * 
+	 * Loads a script file
+	 * 
+	 * @param file the script file
+	 * @return the instantiated object
+	 * @throws ScriptException the ScriptException
+	 * 
+	 */
+	public Object loadScript(File file) throws ScriptException {
 		try {
-			return engine.loadScriptByName(name).newInstance();
+			String path = file.getAbsolutePath();
+			int index = path.indexOf(Constants.SCRIPTS_FOLDER) + Constants.SCRIPTS_FOLDER.length() + 1;
+			return engine.loadScriptByName(path.substring(index)).newInstance();
 		} catch (Exception e) {
 			throw new ScriptException(e);
 		}
 	}
 
 	/**
-	* 
-	* Constructs a GroovyScriptEngine for the given folder
-	* 
-	* @param folder the folder object
-	* @return the groovy script engine 
-	* @throws MalformedURLException the MalformedURLException
-	*  
-	*/
+	 * 
+	 * Constructs a GroovyScriptEngine for the given folder
+	 * 
+	 * @param folder the folder object
+	 * @return the groovy script engine
+	 * @throws MalformedURLException the MalformedURLException
+	 * 
+	 */
 	protected GroovyScriptEngine createScriptEngine(File folder) throws MalformedURLException {
-		URL[] urls = { folder.toURI().toURL(),
-		ScriptManager.class.getClassLoader().getResource(Constants.SCRIPTS_FOLDER) };
+		URL[] urls = { folder.toURI().toURL() };
 		GroovyScriptEngine gse = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
 		ClassPool classPool = ClassPool.getDefault();
 		classPool.insertClassPath(new LoaderClassPath(gse.getParentClassLoader()));
@@ -114,12 +114,12 @@ public class ScriptManager {
 	}
 
 	/**
-	* 
-	* Construct a bytecodeProcessor for the given classPool
-	* 
-	* @param classPool the classPool object
-	* @return the bytecodeProcessor 
-	*/
+	 * 
+	 * Construct a bytecodeProcessor for the given classPool
+	 * 
+	 * @param classPool the classPool object
+	 * @return the bytecodeProcessor
+	 */
 	protected BytecodeProcessor createBytecodeProcessor(final ClassPool classPool) {
 		return new BytecodeProcessor() {
 			public byte[] processBytecode(String name, byte[] original) {
@@ -140,16 +140,16 @@ public class ScriptManager {
 	}
 
 	/**
-	* 
-	* Changes the bytecode of the given class based on the value of the annotation
-	* 
-	* @param classPool the classPool object
-	* @param ctClass the class
-	* @param annotation the annotation
-	* @throws IOException the IOException
-	* @throws CannotCompileException the CannotCompileException
-	* @throws NotFoundException the NotFoundException
-	*/
+	 * 
+	 * Changes the bytecode of the given class based on the value of the annotation
+	 * 
+	 * @param classPool  the classPool object
+	 * @param ctClass    the class
+	 * @param annotation the annotation
+	 * @throws IOException            the IOException
+	 * @throws CannotCompileException the CannotCompileException
+	 * @throws NotFoundException      the NotFoundException
+	 */
 	protected void processClass(ClassPool classPool, CtClass ctClass, String annotation)
 			throws IOException, CannotCompileException, NotFoundException {
 		if (annotation.indexOf(Servlet.class.getName()) != -1) {
@@ -170,5 +170,5 @@ public class ScriptManager {
 			ctClass.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));
 		}
 	}
-	
+
 }
