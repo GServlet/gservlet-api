@@ -1,5 +1,6 @@
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import java.io.File;
 import javax.servlet.ServletContext;
@@ -13,7 +14,7 @@ public class ServletRequestAttributeListenerTest {
 
 	@Test
 	public void testEvents() throws Exception {
-		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "ServletRequestAttributeListener.groovy");

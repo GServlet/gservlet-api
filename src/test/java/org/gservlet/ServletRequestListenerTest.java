@@ -1,5 +1,6 @@
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import java.io.File;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class ServletRequestListenerTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void testEvents() throws Exception {
-		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "ServletRequestListener.groovy");
@@ -57,7 +58,7 @@ public class ServletRequestListenerTest {
 		assertTrue(listener.getClass().isAnnotationPresent(WebListener.class));
 		ServletContext context = mock(ServletContext.class);
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		when(request.getAttribute(Constants.CONNECTION)).thenReturn(new Sql(new BasicDataSource()));
+		when(request.getAttribute(CONNECTION)).thenReturn(new Sql(new BasicDataSource()));
 		ServletRequestEvent event = new ServletRequestEvent(context, request);
 		listener.requestInitialized(event);
 		listener.requestDestroyed(event);

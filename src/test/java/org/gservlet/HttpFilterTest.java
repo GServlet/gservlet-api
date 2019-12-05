@@ -1,5 +1,6 @@
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import java.io.File;
 import java.io.PrintWriter;
@@ -31,7 +32,7 @@ public class HttpFilterTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void testFilter() throws Exception {
-		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpFilter.groovy");
@@ -48,12 +49,12 @@ public class HttpFilterTest {
 			}
 		};
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		when(request.getAttribute(Constants.CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
+		when(request.getAttribute(CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
 		ServletContext context = mock(ServletContext.class);
 		when(request.getServletContext()).thenReturn(context);
 		when(request.getSession(true)).thenReturn(mock(HttpSession.class));
 		final Map<String, DynamicInvocationHandler> handlers = new HashMap<>();
-		when(context.getAttribute(Constants.HANDLERS)).thenReturn(handlers);
+		when(context.getAttribute(HANDLERS)).thenReturn(handlers);
 		doAnswer(initializeMap).when(request).setAttribute(anyString(), any());
 		filter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 		assertEquals("filtering", map.get("state"));
@@ -90,7 +91,7 @@ public class HttpFilterTest {
 
 	@Test
 	public void testOutput() throws Exception {
-		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpFilter.groovy");

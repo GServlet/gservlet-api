@@ -1,5 +1,6 @@
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -18,7 +19,7 @@ public class InitializerTest {
 
 	@Test
 	public void init() throws Exception {
-		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ServletContext context = mock(ServletContext.class);
 		when(context.getRealPath("/")).thenReturn(folder.getAbsolutePath());

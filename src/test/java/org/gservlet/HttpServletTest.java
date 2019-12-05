@@ -1,5 +1,6 @@
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import java.io.File;
 import java.io.PrintWriter;
@@ -28,7 +29,7 @@ public class HttpServletTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void testMethods() throws Exception {
-		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpServlet.groovy");
@@ -47,7 +48,7 @@ public class HttpServletTest {
 		};
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getSession(true)).thenReturn(mock(HttpSession.class));
-		when(request.getAttribute(Constants.CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
+		when(request.getAttribute(CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
 		when(request.getServletContext()).thenReturn(mock(ServletContext.class));
 		doAnswer(initializeMap).when(request).setAttribute(anyString(), any());
 		HttpServletResponse response = mock(HttpServletResponse.class);
@@ -73,7 +74,7 @@ public class HttpServletTest {
 
 	@Test
 	public void testOutput() throws Exception {
-		File folder = new File("src/test/resources/" + Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpServlet.groovy");
