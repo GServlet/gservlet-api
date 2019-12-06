@@ -9,7 +9,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=security_rating)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
 [![Coverage Status](https://coveralls.io/repos/github/GServlet/gservlet-api/badge.png?branch=master)](https://coveralls.io/github/GServlet/gservlet-api?branch=master)
 [![License](http://img.shields.io/:license-apache-blue.png)](http://www.apache.org/licenses/LICENSE-2.0.html)
-<a href="https://twitter.com/gservlet?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @gservlet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+![follow on Twitter](https://img.shields.io/twitter/follow/gservlet?style=social)
 
 ## Table of contents
 1. [Description](#description)
