@@ -51,7 +51,7 @@ public abstract class AbstractFilter implements Filter {
 	/**
 	 * The filter config object
 	 */
-	protected transient FilterConfig config;
+	protected FilterConfig config;
 	/**
 	 * The request context object
 	 */
