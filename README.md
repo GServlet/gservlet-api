@@ -187,7 +187,7 @@ The current version of GServlet is 1.0.0
 
 ## Contributing
 
-New contributors are always welcome. We collected some helpful hints on how to get started on our website at [Contribute to GServlet](https://gservlet.org/contribute)
+New contributors are always welcome. We collected some helpful hints on how to get started on our [Contribute](https://gservlet.org/contribute) page.
 
 ## License
 
