@@ -1,5 +1,6 @@
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -18,12 +19,14 @@ public class InitializerTest {
 
 	@Test
 	public void init() throws Exception {
-		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ServletContext context = mock(ServletContext.class);
 		when(context.getRealPath("/")).thenReturn(folder.getAbsolutePath());
-		when(context.addFilter(isA(String.class),isA(Filter.class))).thenReturn(mock(FilterRegistration.Dynamic.class));
-		when(context.addServlet(isA(String.class),isA(Servlet.class))).thenReturn(mock(ServletRegistration.Dynamic.class));
+		when(context.addFilter(isA(String.class), isA(Filter.class)))
+				.thenReturn(mock(FilterRegistration.Dynamic.class));
+		when(context.addServlet(isA(String.class), isA(Servlet.class)))
+				.thenReturn(mock(ServletRegistration.Dynamic.class));
 		Initializer initializer = new Initializer(context);
 		initializer.loadScripts(folder);
 		assertEquals(8, initializer.getHandlers().size());
@@ -32,7 +35,7 @@ public class InitializerTest {
 			assertTrue(handler.isRegistered());
 		}
 		wait(2000);
-		File file = new File("src/test/resources/scripts/script.groovy");
+		File file = new File(folder + "/script.groovy");
 		PrintWriter printWriter = new PrintWriter(new FileWriter(file));
 		printWriter.println("import org.gservlet.annotation.Servlet");
 		printWriter.println("@Servlet(\"/servlet\")");
@@ -42,7 +45,7 @@ public class InitializerTest {
 		assertEquals(9, initializer.getHandlers().size());
 		file.delete();
 	}
-	
+
 	public void wait(int time) throws InterruptedException {
 		Thread.sleep(time);
 	}

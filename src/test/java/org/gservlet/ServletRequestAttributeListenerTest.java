@@ -1,5 +1,6 @@
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import java.io.File;
 import javax.servlet.ServletContext;
@@ -13,13 +14,15 @@ public class ServletRequestAttributeListenerTest {
 
 	@Test
 	public void testEvents() throws Exception {
-		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		AbstractRequestAttributeListener listener = (AbstractRequestAttributeListener) scriptManager.loadScript("ServletRequestAttributeListener.groovy");
+		File script = new File(folder + "/" + "ServletRequestAttributeListener.groovy");
+		AbstractRequestAttributeListener listener = (AbstractRequestAttributeListener) scriptManager.loadScript(script);
 		assertTrue(listener.getClass().isAnnotationPresent(RequestAttributeListener.class));
 		assertNotNull(listener);
-		ServletRequestAttributeEvent event = new ServletRequestAttributeEvent(mock(ServletContext.class), mock(HttpServletRequest.class), "myAttribute", "myValue");
+		ServletRequestAttributeEvent event = new ServletRequestAttributeEvent(mock(ServletContext.class),
+				mock(HttpServletRequest.class), "myAttribute", "myValue");
 		listener.attributeAdded(event);
 		assertEquals("attributeAdded", listener.getName());
 		listener.attributeRemoved(event);

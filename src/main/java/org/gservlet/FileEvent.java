@@ -19,6 +19,7 @@
 
 package org.gservlet;
 
+import java.io.File;
 import java.util.EventObject;
 
 /**
@@ -34,24 +35,24 @@ public class FileEvent extends EventObject {
 
 	/**
 	* 
-	* Constructs a FileEvent for the given file name
+	* Constructs a FileEvent for the given file
 	* 
-	* @param fileName the file name 
+	* @param file the file
 	*  
 	*/
-	public FileEvent(String fileName) {
-		super(fileName);
+	public FileEvent(File file) {
+		super(file);
 	}
 	
 	/**
 	* 
-	* Returns the file name
+	* Returns the file
 	* 
-	* @return the file name 
+	* @return the file 
 	*  
 	*/
-	public String getFileName() {
-		return getSource().toString();
+	public File getFile() {
+		return (File) getSource();
 	}
 
 }

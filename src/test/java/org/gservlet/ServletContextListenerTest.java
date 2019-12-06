@@ -1,5 +1,6 @@
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import java.io.File;
 import java.util.HashMap;
@@ -20,21 +21,22 @@ public class ServletContextListenerTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void testEvents() throws Exception {
-		File folder = new File("src/test/resources/"+Constants.SCRIPTS_FOLDER);
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		AbstractContextListener listener = (AbstractContextListener) scriptManager.loadScript("ServletContextListener.groovy");
+		File script = new File(folder + "/" + "ServletContextListener.groovy");
+		AbstractContextListener listener = (AbstractContextListener) scriptManager.loadScript(script);
 		assertTrue(listener.getClass().isAnnotationPresent(ContextListener.class));
 		assertNotNull(listener);
-		final Map<Object,Object> map = new HashMap<Object,Object>();
+		final Map<Object, Object> map = new HashMap<Object, Object>();
 		Answer initializeMap = new Answer() {
-		    public Object answer(InvocationOnMock invocation) throws Throwable {
-		      map.put(invocation.getArguments()[0],invocation.getArguments()[1]);
-		      return null;
-		    }
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				map.put(invocation.getArguments()[0], invocation.getArguments()[1]);
+				return null;
+			}
 		};
 		ServletContext context = mock(ServletContext.class);
-		doAnswer(initializeMap).when(context).setAttribute(anyString(),any());
+		doAnswer(initializeMap).when(context).setAttribute(anyString(), any());
 		ServletContextEvent event = new ServletContextEvent(context);
 		listener.contextInitialized(event);
 		assertEquals("contextInitialized", map.get("state"));

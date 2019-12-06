@@ -22,7 +22,6 @@ package org.gservlet;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,7 +35,8 @@ import java.util.logging.Logger;
 
 /**
  * 
- * The FileWatcher class checks a folder for file changes and notifies its listeners accordingly.
+ * The FileWatcher class checks a folder for file changes and notifies its
+ * listeners accordingly.
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -46,7 +46,7 @@ public class FileWatcher implements Runnable {
 	/**
 	 * The list of listeners
 	 */
-	protected final List<FileListener> listeners;
+	protected List<FileListener> listeners = new ArrayList<>();
 	/**
 	 * The folder to be watched
 	 */
@@ -57,23 +57,21 @@ public class FileWatcher implements Runnable {
 	protected final Logger logger = Logger.getLogger(FileWatcher.class.getName());
 
 	/**
-	* 
-	* Constructs a FileWatcher for the given folder
-	* 
-	* @param folder the folder object 
-	*  
-	*/
+	 * 
+	 * Constructs a FileWatcher for the given folder
+	 * 
+	 * @param folder the folder object
+	 * 
+	 */
 	public FileWatcher(File folder) {
-		listeners = new ArrayList<>();
 		this.folder = folder;
 	}
 
 	/**
-	* 
-	* Starts the watch process
-	* 
-	*  
-	*/
+	 * 
+	 * Starts the watch process
+	 * 
+	 */
 	public void watch() {
 		if (folder.exists()) {
 			new Thread(this).start();
@@ -81,102 +79,117 @@ public class FileWatcher implements Runnable {
 	}
 
 	/**
-	* 
-	* Used to create a thread for the watch process
-	* 
-	*  
-	*/
+	 * 
+	 * Used to create a thread for the watch process
+	 * 
+	 */
 	@Override
 	public void run() {
 		try {
-			WatchService watcher = FileSystems.getDefault().newWatchService();
+			WatchService watchService = FileSystems.getDefault().newWatchService();
 			Path path = Paths.get(folder.getAbsolutePath());
-			path.register(watcher, ENTRY_CREATE, ENTRY_DELETE);
+			path.register(watchService, ENTRY_CREATE, ENTRY_DELETE);
 			boolean poll = true;
 			while (poll) {
-				poll = pollEvents(watcher);
+				poll = pollEvents(watchService);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during watch", e);
 		}
 	}
 
 	/**
-	* 
-	* Polls for file events
-	* @param watchService the watch service
-	*  
-	*/
-	private boolean pollEvents(WatchService watchService) {
-		try {
-			WatchKey key = watchService.take();
-			for (WatchEvent<?> event : key.pollEvents()) {
-				notifyListeners(event.kind(), event.context().toString());
-			}
-			return key.reset();
-		} catch (InterruptedException e) {
-			logger.log(Level.INFO, "exception during watch", e);
-			Thread.currentThread().interrupt();
+	 * 
+	 * Polls for file events
+	 * 
+	 * @param watchService the watch service
+	 * @return the reset flag
+	 * @throws InterruptedException
+	 * 
+	 */
+	protected boolean pollEvents(WatchService watchService) throws InterruptedException {
+		WatchKey key = watchService.take();
+		Path path = (Path) key.watchable();
+		for (WatchEvent<?> event : key.pollEvents()) {
+			notifyListeners(event.kind(), path.resolve((Path) event.context()));
 		}
-		return false;
+		return key.reset();
 	}
 
 	/**
-	* 
-	* Registers new listener
-	* 
-	* @param listener the file listener object
-	* @return the file watcher instance
-	* 
-	*/
+	 * 
+	 * Registers a new listener
+	 * 
+	 * @param listener the file listener
+	 * @return the file watcher
+	 * 
+	 */
 	public FileWatcher addListener(FileListener listener) {
 		listeners.add(listener);
 		return this;
 	}
 
 	/**
-	* 
-	* Unregisters a listener
-	* 
-	* @param listener the file listener object
-	* @return the file watcher instance
-	* 
-	*/
+	 * 
+	 * Unregisters a listener
+	 * 
+	 * @param listener the file listener
+	 * @return the file watcher
+	 * 
+	 */
 	public FileWatcher removeListener(FileListener listener) {
 		listeners.remove(listener);
 		return this;
 	}
 
 	/**
-	* 
-	* Notifies the listeners of a file event
-	* 
-	* @param kind the kind of event
-	* @param the name of the file
-	* 
-	*/
-	private void notifyListeners(WatchEvent.Kind<?> kind, String file) {
-		FileEvent event = new FileEvent(file);
-		if (kind == ENTRY_CREATE) {
-			for (FileListener listener : listeners) {
-				listener.onCreated(event);
+	 * 
+	 * Notifies the listeners of a file event
+	 * 
+	 * @param kind the watch event kind
+	 * @param path the file path
+	 * 
+	 */
+	protected void notifyListeners(WatchEvent.Kind<?> kind, Path path) {
+		File file = path.toFile();
+		if (!file.isDirectory()) {
+			FileEvent event = new FileEvent(file);
+			if (kind == ENTRY_CREATE) {
+				for (FileListener listener : listeners) {
+					listener.onCreated(event);
+				}
+			} else if (kind == ENTRY_DELETE) {
+				for (FileListener listener : listeners) {
+					listener.onDeleted(event);
+				}
 			}
-		} else if (kind == ENTRY_DELETE) {
-			for (FileListener listener : listeners) {
-				listener.onDeleted(event);
-			}
+		} else {
+			new FileWatcher(file).setListeners(listeners).watch();
 		}
 	}
 
 	/**
-	* 
-	* Returns a list of listeners
-	* 
-	* @return a list of listeners
-	* 
-	*/
+	 * 
+	 * Returns a list of listeners
+	 * 
+	 * @return a list of listeners
+	 * 
+	 */
 	public List<FileListener> getListeners() {
 		return listeners;
+	}
+
+	/**
+	 * 
+	 * Sets a list of listeners
+	 * 
+	 * @param listeners a list of listeners
+	 * @return the file watcher
+	 * 
+	 */
+	public FileWatcher setListeners(List<FileListener> listeners) {
+		this.listeners = listeners;
+		return this;
 	}
 
 }

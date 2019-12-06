@@ -19,6 +19,7 @@
 
 package org.gservlet;
 
+import static org.gservlet.Constants.*;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Proxy;
@@ -70,7 +71,7 @@ public class Initializer {
 	/**
 	 * The map of invocation handlers
 	 */
-	protected final Map<String, DynamicInvocationHandler> handlers;
+	protected final Map<String, DynamicInvocationHandler> handlers = new HashMap<>();
 	/**
 	 * The script manager
 	 */
@@ -91,9 +92,8 @@ public class Initializer {
 	public Initializer(ServletContext context) throws ServletException {
 		try {
 			this.context = context;
-			handlers = new HashMap<>();
-			context.setAttribute(Constants.HANDLERS, handlers);
-			File folder = new File(context.getRealPath("/") + File.separator + Constants.SCRIPTS_FOLDER);
+			context.setAttribute(HANDLERS, handlers);
+			File folder = new File(context.getRealPath("/") + File.separator + SCRIPTS_FOLDER);
 			scriptManager = new ScriptManager(folder);
 			init(folder);
 		} catch (Exception e) {
@@ -112,8 +112,8 @@ public class Initializer {
 	 */
 	protected void init(File folder) throws ServletException, ScriptException {
 		loadScripts(folder);
-		context.addFilter(Constants.REQUEST_FILTER, new DefaultRequestFilter())
-				.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true, "/*");
+		context.addFilter(REQUEST_FILTER, new DefaultRequestFilter())
+				.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class Initializer {
 			if (files != null) {
 				for (File file : files) {
 					if (file.isFile()) {
-						Object object = scriptManager.loadScript(file.getName());
+						Object object = scriptManager.loadScript(file);
 						register(object);
 					} else {
 						loadScripts(file);
@@ -280,13 +280,13 @@ public class Initializer {
 	 * 
 	 */
 	protected void watch(File folder) {
-		boolean reload = Boolean.parseBoolean(System.getenv(Constants.RELOAD));
+		boolean reload = Boolean.parseBoolean(System.getenv(RELOAD));
 		if (reload) {
 			new FileWatcher(folder).addListener(new FileAdapter() {
 				@Override
 				public void onCreated(FileEvent event) {
-					String script = event.getFileName();
-					logger.info("reloading script " + script);
+					File script = event.getFile();
+					logger.info("reloading script " + script.getName());
 					reload(script);
 				}
 
@@ -296,12 +296,12 @@ public class Initializer {
 
 	/**
 	 * 
-	 * Reloads a script
+	 * Reloads a script file
 	 * 
-	 * @param script the changed script
+	 * @param script the script file
 	 * 
 	 */
-	protected void reload(String script) {
+	protected void reload(File script) {
 		try {
 			Object object = scriptManager.loadScript(script);
 			Annotation[] annotations = object.getClass().getAnnotations();

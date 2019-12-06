@@ -32,7 +32,7 @@ public abstract class FileAdapter implements FileListener {
 	* 
 	* Receives notification that a file has been created
 	* 
-	* @param event the FileEvent containing the name of the file that was created 
+	* @param event the FileEvent containing the file that was created 
 	* 
 	*/
 	@Override
@@ -44,7 +44,7 @@ public abstract class FileAdapter implements FileListener {
 	* 
 	* Receives notification that a file has been deleted
 	* 
-	* @param event the FileEvent containing the name of the file that was deleted
+	* @param event the FileEvent containing the file that was deleted
 	* 
 	*/
 	@Override

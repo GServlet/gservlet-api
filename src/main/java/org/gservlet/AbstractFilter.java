@@ -35,7 +35,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import groovy.json.JsonSlurper;
 import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
@@ -52,7 +51,7 @@ public abstract class AbstractFilter implements Filter {
 	/**
 	 * The filter config object
 	 */
-	protected transient FilterConfig config;
+	protected FilterConfig config;
 	/**
 	 * The request context object
 	 */
