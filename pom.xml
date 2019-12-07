@@ -16,6 +16,10 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/GServlet/gservlet-api/issues</url>
+	</issueManagement>
 	<developers>
 		<developer>
 			<name>Mamadou Lamine Ba</name>

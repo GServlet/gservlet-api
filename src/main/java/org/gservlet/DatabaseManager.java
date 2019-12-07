@@ -103,23 +103,20 @@ public class DatabaseManager {
 	 * @param folder the configuration folder
 	 */
 	protected void watch(File folder) {
-		boolean reload = Boolean.parseBoolean(System.getenv(RELOAD));
-		if (reload) {
-			new FileWatcher(folder).addListener(new FileAdapter() {
-				@Override
-				public void onCreated(FileEvent event) {
-					File file = event.getFile();
-					if (file.getName().equals(DB_CONFIG_FILE)) {
-						logger.info("reloading configuration file " + file.getName());
-						try {
-							setupDataSource();
-						} catch (IOException e) {
-							logger.log(Level.INFO, "exception during reload", e);
-						}
+		new FileWatcher(folder).addListener(new FileAdapter() {
+			@Override
+			public void onCreated(FileEvent event) {
+				File file = event.getFile();
+				if (file.getName().equals(DB_CONFIG_FILE)) {
+					logger.info("reloading configuration file " + file.getName());
+					try {
+						setupDataSource();
+					} catch (IOException e) {
+						logger.log(Level.INFO, "exception during reload", e);
 					}
 				}
-			}).watch();
-		}
+			}
+		}).watch();
 	}
 
 	/**
