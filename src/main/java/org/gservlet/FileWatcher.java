@@ -21,6 +21,7 @@ package org.gservlet;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static org.gservlet.Constants.RELOAD;
 import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -73,7 +74,8 @@ public class FileWatcher implements Runnable {
 	 * 
 	 */
 	public void watch() {
-		if (folder.exists()) {
+		boolean reload = Boolean.parseBoolean(System.getenv(RELOAD));
+		if (folder.exists() && reload) {
 			new Thread(this).start();
 		}
 	}
@@ -151,19 +153,18 @@ public class FileWatcher implements Runnable {
 	 */
 	protected void notifyListeners(WatchEvent.Kind<?> kind, Path path) {
 		File file = path.toFile();
-		if (!file.isDirectory()) {
-			FileEvent event = new FileEvent(file);
-			if (kind == ENTRY_CREATE) {
-				for (FileListener listener : listeners) {
-					listener.onCreated(event);
-				}
-			} else if (kind == ENTRY_DELETE) {
-				for (FileListener listener : listeners) {
-					listener.onDeleted(event);
-				}
+		FileEvent event = new FileEvent(file);
+		if (kind == ENTRY_CREATE) {
+			for (FileListener listener : listeners) {
+				listener.onCreated(event);
 			}
-		} else {
-			new FileWatcher(file).setListeners(listeners).watch();
+			if (file.isDirectory()) {
+				new FileWatcher(file).setListeners(listeners).watch();
+			}
+		} else if (kind == ENTRY_DELETE) {
+			for (FileListener listener : listeners) {
+				listener.onDeleted(event);
+			}
 		}
 	}
 

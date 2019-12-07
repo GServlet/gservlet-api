@@ -280,18 +280,17 @@ public class Initializer {
 	 * 
 	 */
 	protected void watch(File folder) {
-		boolean reload = Boolean.parseBoolean(System.getenv(RELOAD));
-		if (reload) {
-			new FileWatcher(folder).addListener(new FileAdapter() {
-				@Override
-				public void onCreated(FileEvent event) {
-					File script = event.getFile();
-					logger.info("reloading script " + script.getName());
-					reload(script);
+		new FileWatcher(folder).addListener(new FileAdapter() {
+			@Override
+			public void onCreated(FileEvent event) {
+				File file = event.getFile();
+				if (file.isFile()) {
+					logger.info("reloading script " + file.getName());
+					reload(file);
 				}
+			}
 
-			}).watch();
-		}
+		}).watch();
 	}
 
 	/**
