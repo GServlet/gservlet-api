@@ -51,7 +51,6 @@ import org.gservlet.annotation.RequestListener;
 import org.gservlet.annotation.Servlet;
 import org.gservlet.annotation.SessionAttributeListener;
 import org.gservlet.annotation.SessionListener;
-
 import groovy.util.ScriptException;
 
 /**
