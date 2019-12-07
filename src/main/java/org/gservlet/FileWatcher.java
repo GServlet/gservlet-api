@@ -119,6 +119,31 @@ public class FileWatcher implements Runnable {
 
 	/**
 	 * 
+	 * Notifies the listeners of a file event
+	 * 
+	 * @param kind the watch event kind
+	 * @param path the file path
+	 * 
+	 */
+	protected void notifyListeners(WatchEvent.Kind<?> kind, Path path) {
+		File file = path.toFile();
+		FileEvent event = new FileEvent(file);
+		if (kind == ENTRY_CREATE) {
+			for (FileListener listener : listeners) {
+				listener.onCreated(event);
+			}
+			if (file.isDirectory()) {
+				new FileWatcher(file).setListeners(listeners).watch();
+			}
+		} else if (kind == ENTRY_DELETE) {
+			for (FileListener listener : listeners) {
+				listener.onDeleted(event);
+			}
+		}
+	}
+
+	/**
+	 * 
 	 * Registers a new listener
 	 * 
 	 * @param listener the file listener
@@ -141,31 +166,6 @@ public class FileWatcher implements Runnable {
 	public FileWatcher removeListener(FileListener listener) {
 		listeners.remove(listener);
 		return this;
-	}
-
-	/**
-	 * 
-	 * Notifies the listeners of a file event
-	 * 
-	 * @param kind the watch event kind
-	 * @param path the file path
-	 * 
-	 */
-	protected void notifyListeners(WatchEvent.Kind<?> kind, Path path) {
-		File file = path.toFile();
-		FileEvent event = new FileEvent(file);
-		if (kind == ENTRY_CREATE) {
-			for (FileListener listener : listeners) {
-				listener.onCreated(event);
-			}
-			if (file.isDirectory()) {
-				new FileWatcher(file).setListeners(listeners).watch();
-			}
-		} else if (kind == ENTRY_DELETE) {
-			for (FileListener listener : listeners) {
-				listener.onDeleted(event);
-			}
-		}
 	}
 
 	/**
