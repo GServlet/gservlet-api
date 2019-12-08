@@ -23,6 +23,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static org.gservlet.Constants.RELOAD;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -94,8 +95,9 @@ public class FileWatcher implements Runnable {
 			while (poll) {
 				poll = pollEvents(watchService);
 			}
-		} catch (Exception e) {
+		} catch (IOException | InterruptedException e) {
 			logger.log(Level.INFO, "exception during watch", e);
+			Thread.currentThread().interrupt();
 		}
 	}
 
