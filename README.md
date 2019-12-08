@@ -55,7 +55,7 @@ the online [documentation](https://gservlet.org/documentation) and the [JavaDocs
 
 ## Features
 
-* Servlet 3.0 Support
+* Servlet 3+ Support
 * Groovy Scripting
 * Live Development
 * Hot Reloading
