@@ -284,8 +284,8 @@ public class Initializer {
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
 				if (file.isFile()) {
-					logger.info("reloading script " + file.getName());
-					reload(file);
+					logger.info("processing script " + file.getName());
+					process(file);
 				}
 			}
 
@@ -294,12 +294,12 @@ public class Initializer {
 
 	/**
 	 * 
-	 * Reloads a script file
+	 * Processes a script file
 	 * 
 	 * @param script the script file
 	 * 
 	 */
-	protected void reload(File script) {
+	protected void process(File script) {
 		try {
 			Object object = scriptManager.loadScript(script);
 			Annotation[] annotations = object.getClass().getAnnotations();
