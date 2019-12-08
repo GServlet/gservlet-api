@@ -65,7 +65,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
      * Adds the filter with the given name and class name to this servlet
-     * context.
+     * context
      *
      * <p>The registered filter may be further configured via the returned
      * {@link javax.servlet.FilterRegistration} object.
@@ -113,7 +113,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
      * Registers the given filter instance with this ServletContext
-     * under the given <tt>filterName</tt>.
+     * under the given <tt>filterName</tt>
      *
      * <p>The registered filter may be further configured via the returned
      * {@link javax.servlet.FilterRegistration} object.
@@ -154,7 +154,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
      * Adds the filter with the given name and class type to this servlet
-     * context.
+     * context
      *
      * <p>The registered filter may be further configured via the returned
      * {@link javax.servlet.FilterRegistration} object.
@@ -198,7 +198,7 @@ public class ContextWrapper implements ServletContext {
 	}
 
 	/**
-     * Adds the listener with the given class name to this ServletContext.
+     * Adds the listener with the given class name to this ServletContext
      *
      * <p>The class with the given name will be loaded using the
      * classloader associated with the application represented by this
@@ -258,7 +258,7 @@ public class ContextWrapper implements ServletContext {
 	}
 
 	/**
-     * Adds the given listener to this ServletContext.
+     * Adds the given listener to this ServletContext
      *
      * <p>The given listener must be an instance of one or more of the
      * following interfaces:
@@ -308,7 +308,7 @@ public class ContextWrapper implements ServletContext {
 	}
 
 	/**
-     * Adds a listener of the given class type to this ServletContext.
+     * Adds a listener of the given class type to this ServletContext
      *
      * <p>The given <tt>listenerClass</tt> must implement one or more of the
      * following interfaces:
@@ -364,7 +364,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
      * Adds the servlet with the given name and class name to this servlet
-     * context.
+     * context
      *
      * <p>The registered servlet may be further configured via the returned
      * {@link ServletRegistration} object.
@@ -459,7 +459,7 @@ public class ContextWrapper implements ServletContext {
 
 	 /**
      * Adds the servlet with the given name and class type to this servlet
-     * context.
+     * context
      *
      * <p>The registered servlet may be further configured via the returned
      * {@link ServletRegistration} object.
@@ -1564,7 +1564,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
      * Sets the context initialization parameter with the given name and
-     * value on this ServletContext.
+     * value on this ServletContext
      *
      * @param name the name of the context initialization parameter to set
      * @param value the value of the context initialization parameter to set
