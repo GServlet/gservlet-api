@@ -40,17 +40,16 @@ public class HttpServletTest {
 		assertEquals(AbstractServlet.class, servlet.getClass().getSuperclass());
 		assertEquals("/servlet", annotation.value()[0]);
 		final Map<Object, Object> map = new HashMap<Object, Object>();
-		Answer initializeMap = new Answer() {
-			public Object answer(InvocationOnMock invocation) throws Throwable {
-				map.put(invocation.getArguments()[0], invocation.getArguments()[1]);
-				return null;
-			}
-		};
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getSession(true)).thenReturn(mock(HttpSession.class));
 		when(request.getAttribute(CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
 		when(request.getServletContext()).thenReturn(mock(ServletContext.class));
-		doAnswer(initializeMap).when(request).setAttribute(anyString(), any());
+		doAnswer(new Answer() {
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				map.put(invocation.getArguments()[0], invocation.getArguments()[1]);
+				return null;
+			}
+		}).when(request).setAttribute(anyString(), any());
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		servlet.doGet(request, response);
 		assertEquals("get", map.get("state"));
