@@ -29,14 +29,13 @@ public class ServletContextListenerTest {
 		assertTrue(listener.getClass().isAnnotationPresent(ContextListener.class));
 		assertNotNull(listener);
 		final Map<Object, Object> map = new HashMap<Object, Object>();
-		Answer initializeMap = new Answer() {
+		ServletContext context = mock(ServletContext.class);
+		doAnswer(new Answer() {
 			public Object answer(InvocationOnMock invocation) throws Throwable {
 				map.put(invocation.getArguments()[0], invocation.getArguments()[1]);
 				return null;
 			}
-		};
-		ServletContext context = mock(ServletContext.class);
-		doAnswer(initializeMap).when(context).setAttribute(anyString(), any());
+		}).when(context).setAttribute(anyString(), any());
 		ServletContextEvent event = new ServletContextEvent(context);
 		listener.contextInitialized(event);
 		assertEquals("contextInitialized", map.get("state"));

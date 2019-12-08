@@ -81,7 +81,7 @@ public class DatabaseManager {
 	 * 
 	 */
 	protected void setupDataSource() throws IOException {
-		File file = new File(context.getRealPath("/") + "/" + CONFIG_FOLDER + "/" + DB_CONFIG_FILE);
+		File file = new File(context.getRealPath("/") + File.separator + CONFIG_FOLDER + File.separator + DB_CONFIG_FILE);
 		if (file.exists()) {
 			Properties configuration = loadConfiguration(file);
 			if (isConfigurationValid(configuration)) {
