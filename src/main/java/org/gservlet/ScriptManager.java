@@ -84,11 +84,12 @@ public class ScriptManager {
 	 * @throws ScriptException the ScriptException
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	public Object loadScript(File file) throws ScriptException {
 		try {
 			String path = file.getAbsolutePath();
 			int index = path.indexOf(SCRIPTS_FOLDER) + SCRIPTS_FOLDER.length() + 1;
-			return engine.loadScriptByName(path.substring(index)).newInstance();
+			return engine.loadScriptByName(path.substring(index)).getConstructor().newInstance();
 		} catch (Exception e) {
 			throw new ScriptException(e);
 		}
