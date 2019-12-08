@@ -112,9 +112,33 @@ public class FileWatcher implements Runnable {
 		WatchKey key = watchService.take();
 		Path path = (Path) key.watchable();
 		for (WatchEvent<?> event : key.pollEvents()) {
-			notifyListeners(event.kind(), path.resolve((Path) event.context()));
+			notifyListeners(event.kind(), path.resolve((Path) event.context()).toFile());
 		}
 		return key.reset();
+	}
+
+	/**
+	 * 
+	 * Notifies the listeners of a file event
+	 * 
+	 * @param kind the watch event kind
+	 * @param path the file path
+	 * 
+	 */
+	protected void notifyListeners(WatchEvent.Kind<?> kind, File file) {
+		FileEvent event = new FileEvent(file);
+		if (kind == ENTRY_CREATE) {
+			for (FileListener listener : listeners) {
+				listener.onCreated(event);
+			}
+			if (file.isDirectory()) {
+				new FileWatcher(file).setListeners(listeners).watch();
+			}
+		} else if (kind == ENTRY_DELETE) {
+			for (FileListener listener : listeners) {
+				listener.onDeleted(event);
+			}
+		}
 	}
 
 	/**
@@ -141,31 +165,6 @@ public class FileWatcher implements Runnable {
 	public FileWatcher removeListener(FileListener listener) {
 		listeners.remove(listener);
 		return this;
-	}
-
-	/**
-	 * 
-	 * Notifies the listeners of a file event
-	 * 
-	 * @param kind the watch event kind
-	 * @param path the file path
-	 * 
-	 */
-	protected void notifyListeners(WatchEvent.Kind<?> kind, Path path) {
-		File file = path.toFile();
-		FileEvent event = new FileEvent(file);
-		if (kind == ENTRY_CREATE) {
-			for (FileListener listener : listeners) {
-				listener.onCreated(event);
-			}
-			if (file.isDirectory()) {
-				new FileWatcher(file).setListeners(listeners).watch();
-			}
-		} else if (kind == ENTRY_DELETE) {
-			for (FileListener listener : listeners) {
-				listener.onDeleted(event);
-			}
-		}
 	}
 
 	/**
