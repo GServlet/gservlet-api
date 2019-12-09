@@ -20,12 +20,10 @@ public class FileWatcherTest {
 			public void onCreated(FileEvent event) {
 				map.put("file.created", event.getFile().getName());
 			}
-
 			@Override
 			public void onDeleted(FileEvent event) {
 				map.put("file.deleted", event.getFile().getName());		
 			}
-
 		};
 		watcher.addListener(listener).watch();
 		assertEquals(1, watcher.getListeners().size());
