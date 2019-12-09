@@ -19,8 +19,7 @@
 
 package org.gservlet;
 
-import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.*;
 import static org.gservlet.Constants.RELOAD;
 import java.io.File;
 import java.io.IOException;

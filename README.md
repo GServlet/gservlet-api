@@ -92,6 +92,17 @@ If you are just getting started with GServlet, you may want to begin by creating
 
 ### Your First Groovy Servlet
 
+Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. These steps are as follows:
+
+1. Create a dynamic web project
+2. Create the scripts folder inside your web content directory
+3. Write the servlet source code
+4. Run your Java web server
+5. Call your servlet from a web browser
+
+
+You can find below some examples that you can try out.
+
 ##### CustomerServlet.groovy
 
 ```java
@@ -111,8 +122,6 @@ class CustomerServlet {
 	
 }
 ```
-
-### Your First Groovy Filter
 
 ##### CorsFilter.groovy 
 
@@ -135,8 +144,6 @@ class CorsFilter {
 }
 ```
 
-### Your First Groovy RequestListener
-
 ##### ServletRequestListener.groovy 
 
 ```java
@@ -156,7 +163,7 @@ class ServletRequestListener {
 }
 ```
 
-For more information about how to create the other listeners, please read the [documentation](https://gservlet.org/documentation).
+For a deep insight, please read the complete [documentation](https://gservlet.org/documentation).
 
 ## Building from source
 
