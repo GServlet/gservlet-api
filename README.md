@@ -95,10 +95,10 @@ If you are just getting started with GServlet, you may want to begin by creating
 Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. These steps are as follows:
 
 1. Create a dynamic web project
-* Create the scripts folder inside your web content directory
-* Write the servlet source code
-* Run your Java web server
-* Call your servlet from a web browser
+2. Create the scripts folder inside your web content directory
+3. Write the servlet source code
+4. Run your Java web server
+5. Call your servlet from a web browser
 
 
 You can find below some examples that you can try out.
