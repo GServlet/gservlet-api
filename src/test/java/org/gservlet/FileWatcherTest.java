@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
@@ -32,9 +31,9 @@ public class FileWatcherTest {
 		assertEquals(1, watcher.getListeners().size());
 		wait(2000);
 		File file = new File(folder + "/test.txt");
-		PrintWriter printWriter = new PrintWriter(new FileWriter(file));
-		printWriter.print("Some String");
-		printWriter.close();
+		try(FileWriter writer = new FileWriter(file)) {
+			writer.write("Some String");
+		}
 		wait(2000);
 		file.delete();
 		wait(2000);
