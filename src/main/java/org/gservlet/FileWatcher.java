@@ -106,7 +106,7 @@ public class FileWatcher implements Runnable {
 	 * 
 	 * @param watchService the watch service
 	 * @return the reset flag
-	 * @throws InterruptedException
+	 * @throws InterruptedException the InterruptedException 
 	 * 
 	 */
 	protected boolean pollEvents(WatchService watchService) throws InterruptedException {
@@ -123,7 +123,7 @@ public class FileWatcher implements Runnable {
 	 * Notifies the listeners of a file event
 	 * 
 	 * @param kind the watch event kind
-	 * @param path the file path
+	 * @param file the file upon which the event occurred upon
 	 * 
 	 */
 	protected void notifyListeners(WatchEvent.Kind<?> kind, File file) {
