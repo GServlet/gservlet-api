@@ -51,9 +51,10 @@
 		<surefire.version>2.22.2</surefire.version>
 		<resources.version>2.6</resources.version>
 		<asciidoctor.version>1.5.6</asciidoctor.version>
-		<docs.directory>../gservlet-site/static/docs/${project.version}</docs.directory>
+		<release.version>1.0.0</release.version>
+		<docs.directory>../gservlet-site/static/docs/${release.version}</docs.directory>
 		<javadoc.version>2.9.1</javadoc.version>
-		<javadocs.directory>../gservlet-site/static/javadocs/${project.version}</javadocs.directory>
+		<javadocs.directory>../gservlet-site/static/javadocs/${release.version}</javadocs.directory>
 		<gpg.version>1.5</gpg.version>
 		<nexus.version>1.6.7</nexus.version>
 	</properties>
@@ -230,7 +231,7 @@
 									<backend>html</backend>
 									<doctype>book</doctype>
 									<attributes>
-										<revnumber>${project.version}</revnumber>
+										<revnumber>${release.version}</revnumber>
 										<revdate>${maven.build.timestamp}</revdate>
 										<stylesheet>css/theme.css</stylesheet>
 									</attributes>
