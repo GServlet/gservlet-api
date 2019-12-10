@@ -21,7 +21,6 @@
 1. [Status](#status)
 1. [Contributing](#contributing)
 1. [License](#license)
-1. [Contact](#contact)
 
 ## Description
 
@@ -55,7 +54,7 @@ the online [documentation](https://gservlet.org/documentation) and the [JavaDocs
 
 ## Features
 
-* Servlet 3+ Support
+* Servlet 3.0 Support
 * Groovy Scripting
 * Live Development
 * Hot Reloading
@@ -200,5 +199,3 @@ New contributors are always welcome. We collected some helpful hints on how to g
 ## License
 
 GServlet is an Open Source software released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html).
-
-## Contact

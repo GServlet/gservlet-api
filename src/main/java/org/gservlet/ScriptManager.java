@@ -35,7 +35,9 @@ import org.gservlet.annotation.Filter;
 import org.gservlet.annotation.RequestAttributeListener;
 import org.gservlet.annotation.RequestListener;
 import org.gservlet.annotation.Servlet;
+import org.gservlet.annotation.SessionActivationListener;
 import org.gservlet.annotation.SessionAttributeListener;
+import org.gservlet.annotation.SessionBindingListener;
 import org.gservlet.annotation.SessionListener;
 import groovy.util.GroovyScriptEngine;
 import groovy.util.ScriptException;
@@ -170,6 +172,10 @@ public class ScriptManager {
 			ctClass.setSuperclass(classPool.get(AbstractSessionListener.class.getName()));
 		} else if (annotation.indexOf(SessionAttributeListener.class.getName()) != -1) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));
+		} else if (annotation.indexOf(SessionBindingListener.class.getName()) != -1) {
+			ctClass.setSuperclass(classPool.get(AbstractSessionBindingListener.class.getName()));
+		} else if (annotation.indexOf(SessionActivationListener.class.getName()) != -1) {
+			ctClass.setSuperclass(classPool.get(AbstractSessionActivationListener.class.getName()));
 		}
 	}
 
