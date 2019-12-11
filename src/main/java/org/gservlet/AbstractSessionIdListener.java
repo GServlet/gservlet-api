@@ -34,6 +34,11 @@ import javax.servlet.http.HttpSessionIdListener;
 public abstract class AbstractSessionIdListener extends AbstractListener implements HttpSessionIdListener {
 
 	/**
+	 * The session Id constant
+	 */
+	
+	protected static final String sessionId = "oldSessionId";
+	/**
 	 * 
 	 * Notifies the object that session id has been changed in a session
 	 * 
@@ -43,9 +48,9 @@ public abstract class AbstractSessionIdListener extends AbstractListener impleme
 	 */
 	@Override
 	public void sessionIdChanged(HttpSessionEvent event, String oldSessionId) {
-		event.getSession().setAttribute("oldSessionId", oldSessionId);
+		event.getSession().setAttribute(sessionId, oldSessionId);
 		invoke("sessionIdChanged", event);
-		event.getSession().removeAttribute("oldSessionId");
+		event.getSession().removeAttribute(sessionId);
 	}
 
 	/**
@@ -78,7 +83,7 @@ public abstract class AbstractSessionIdListener extends AbstractListener impleme
 	 * 
 	 */
 	public String getOldSessionId() {
-		return (String) getEvent().getSession().getAttribute("oldSessionId");
+		return (String) getEvent().getSession().getAttribute(sessionId);
 	}
 
 }
