@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSessionBindingListener;
 
 /**
 * 
-* Abstract class for receiving notification events when an object is bound to or unbound from a session..
+* Abstract class for receiving notification events when an object is bound to or unbound from a session.
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -69,9 +69,9 @@ public abstract class AbstractSessionBindingListener extends AbstractListener im
 
 	/**
 	* 
-	* Returns the HttpSessionEvent object
+	* Returns the HttpSessionBindingEvent object
 	* 
-	* @return the HttpSessionEvent object
+	* @return the HttpSessionBindingEvent object
 	* 
 	*/
 	public HttpSessionBindingEvent getEvent() {

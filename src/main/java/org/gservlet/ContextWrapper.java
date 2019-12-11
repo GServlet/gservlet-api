@@ -1624,6 +1624,33 @@ public class ContextWrapper implements ServletContext {
 	public void setSessionTrackingModes(Set<SessionTrackingMode> sessionTrackingModes) {
 		context.setSessionTrackingModes(sessionTrackingModes);
 	}
+	
+	/**
+     * Returns the configuration name of the logical host on which the
+     * ServletContext is deployed.
+     *
+     * Servlet containers may support multiple logical hosts. This method must
+     * return the same name for all the servlet contexts deployed on a logical
+     * host, and the name returned by this method must be distinct, stable per
+     * logical host, and suitable for use in associating server configuration
+     * information with the logical host. The returned value is NOT expected
+     * or required to be equivalent to a network address or hostname of the
+     * logical host.
+     *
+     * @return a <code>String</code> containing the configuration name of the
+     * logical host on which the servlet context is deployed.
+     *
+     * @throws UnsupportedOperationException if this ServletContext was
+     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
+     * with {@link javax.servlet.annotation.WebListener}
+     *
+     * @since Servlet 3.1
+     */
+    public String getVirtualServerName() {
+    	return context.getVirtualServerName();
+    }
 
 	/**
 	* 

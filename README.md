@@ -54,7 +54,7 @@ the online [documentation](https://gservlet.org/documentation) and the [JavaDocs
 
 ## Features
 
-* Servlet 3.0 Support
+* Servlet 3.1+ Support
 * Groovy Scripting
 * Live Development
 * Hot Reloading
@@ -65,7 +65,7 @@ the online [documentation](https://gservlet.org/documentation) and the [JavaDocs
 
 * Java 7+
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
-* Java EE 6+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
+* Java EE 7+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 
 ## Getting Started
 

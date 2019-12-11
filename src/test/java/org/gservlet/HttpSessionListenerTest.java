@@ -29,18 +29,19 @@ public class HttpSessionListenerTest {
 		assertTrue(listener.getClass().isAnnotationPresent(SessionListener.class));
 		assertNotNull(listener);
 		final Map<Object, Object> map = new HashMap<Object, Object>();
-		HttpSession context = mock(HttpSession.class);
+		HttpSession session = mock(HttpSession.class);
 		doAnswer(new Answer() {
 			public Object answer(InvocationOnMock invocation) throws Throwable {
 				map.put(invocation.getArguments()[0], invocation.getArguments()[1]);
 				return null;
 			}
-		}).when(context).setAttribute(anyString(), any());
-		HttpSessionEvent event = new HttpSessionEvent(context);
+		}).when(session).setAttribute(anyString(), any());
+		HttpSessionEvent event = new HttpSessionEvent(session);
 		listener.sessionCreated(event);
 		assertEquals("sessionCreated", map.get("state"));
 		listener.sessionDestroyed(event);
 		assertEquals("sessionDestroyed", map.get("state"));
+		assertEquals(SessionWrapper.class, listener.getSession().getClass());
 	}
 
 }
