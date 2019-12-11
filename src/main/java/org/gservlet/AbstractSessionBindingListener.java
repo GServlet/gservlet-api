@@ -69,9 +69,9 @@ public abstract class AbstractSessionBindingListener extends AbstractListener im
 
 	/**
 	* 
-	* Returns the HttpSessionEvent object
+	* Returns the HttpSessionBindingEvent object
 	* 
-	* @return the HttpSessionEvent object
+	* @return the HttpSessionBindingEvent object
 	* 
 	*/
 	public HttpSessionBindingEvent getEvent() {
