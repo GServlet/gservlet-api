@@ -41,7 +41,10 @@ import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.annotation.WebInitParam;
+import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionBindingListener;
+import javax.servlet.http.HttpSessionIdListener;
 import javax.servlet.http.HttpSessionListener;
 import org.gservlet.annotation.ContextAttributeListener;
 import org.gservlet.annotation.ContextListener;
@@ -49,7 +52,10 @@ import org.gservlet.annotation.Filter;
 import org.gservlet.annotation.RequestAttributeListener;
 import org.gservlet.annotation.RequestListener;
 import org.gservlet.annotation.Servlet;
+import org.gservlet.annotation.SessionActivationListener;
 import org.gservlet.annotation.SessionAttributeListener;
+import org.gservlet.annotation.SessionBindingListener;
+import org.gservlet.annotation.SessionIdListener;
 import org.gservlet.annotation.SessionListener;
 import groovy.util.ScriptException;
 
@@ -124,7 +130,7 @@ public class Initializer {
 	 * @throws ScriptException  the ScriptException
 	 * 
 	 */
-	public void loadScripts(File folder) throws ServletException, ScriptException {
+	protected void loadScripts(File folder) throws ServletException, ScriptException {
 		if (folder.exists()) {
 			File[] files = folder.listFiles();
 			if (files != null) {
@@ -158,7 +164,9 @@ public class Initializer {
 				addFilter(context, (Filter) annotation, object);
 			} else if (annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
 					|| annotation instanceof RequestListener || annotation instanceof RequestAttributeListener
-					|| annotation instanceof SessionListener || annotation instanceof SessionAttributeListener) {
+					|| annotation instanceof SessionListener || annotation instanceof SessionAttributeListener
+					|| annotation instanceof SessionActivationListener || annotation instanceof SessionBindingListener
+					|| annotation instanceof SessionIdListener) {
 				addListener(context, object);
 			}
 		}
@@ -261,6 +269,15 @@ public class Initializer {
 		} else if (object instanceof HttpSessionAttributeListener) {
 			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
 					new Class[] { HttpSessionAttributeListener.class }, handler);
+		} else if (object instanceof HttpSessionActivationListener) {
+			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
+					new Class[] { HttpSessionActivationListener.class }, handler);
+		} else if (object instanceof HttpSessionBindingListener) {
+			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
+					new Class[] { HttpSessionBindingListener.class }, handler);
+		} else if (object instanceof HttpSessionIdListener) {
+			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
+					new Class[] { HttpSessionIdListener.class }, handler);
 		}
 		if (listener != null) {
 			context.addListener(listener);
