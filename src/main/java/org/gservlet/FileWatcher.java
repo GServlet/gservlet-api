@@ -76,7 +76,9 @@ public class FileWatcher implements Runnable {
 	public void watch() {
 		boolean reload = Boolean.parseBoolean(System.getenv(RELOAD));
 		if (folder.exists() && reload) {
-			new Thread(this).start();
+			Thread thread = new Thread(this);
+			thread.setDaemon(true);
+			thread.start();
 		}
 	}
 
