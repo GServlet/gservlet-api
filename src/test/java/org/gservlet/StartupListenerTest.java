@@ -28,7 +28,7 @@ public class StartupListenerTest {
 		ServletContextEvent event = new ServletContextEvent(context);
 		listener.contextInitialized(event);
 		assertNotNull(listener.getInitializer());
-		assertEquals(8, listener.getInitializer().getHandlers().size());
+		assertEquals(11, listener.getInitializer().getHandlers().size());
 		assertNotNull(listener.getDatabaseManager());
 		listener.contextDestroyed(event);
 		assertEquals(0, listener.getInitializer().getHandlers().size());
