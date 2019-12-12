@@ -19,7 +19,6 @@
 
 package org.gservlet;
 
-import static org.gservlet.Constants.SCRIPTS_FOLDER;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -58,6 +57,11 @@ import javassist.NotFoundException;
 public class ScriptManager {
 
 	/**
+	 * The scripts folder
+	 */
+	protected final File folder;
+
+	/**
 	 * The groovy script engine object
 	 */
 	protected final GroovyScriptEngine engine;
@@ -75,7 +79,8 @@ public class ScriptManager {
 	 * 
 	 */
 	public ScriptManager(File folder) throws MalformedURLException {
-		engine = createScriptEngine(folder);
+		this.folder = folder;
+		engine = createScriptEngine();
 	}
 
 	/**
@@ -90,9 +95,8 @@ public class ScriptManager {
 	@SuppressWarnings("unchecked")
 	public Object loadScript(File file) throws ScriptException {
 		try {
-			String path = file.getAbsolutePath();
-			int index = path.indexOf(SCRIPTS_FOLDER) + SCRIPTS_FOLDER.length() + 1;
-			return engine.loadScriptByName(path.substring(index)).getConstructor().newInstance();
+			String name = file.getAbsolutePath().substring(folder.getAbsolutePath().length() + 1);
+			return engine.loadScriptByName(name).getConstructor().newInstance();
 		} catch (Exception e) {
 			throw new ScriptException(e);
 		}
@@ -102,12 +106,11 @@ public class ScriptManager {
 	 * 
 	 * Constructs a GroovyScriptEngine for the given folder
 	 * 
-	 * @param folder the folder object
 	 * @return the groovy script engine
 	 * @throws MalformedURLException the MalformedURLException
 	 * 
 	 */
-	protected GroovyScriptEngine createScriptEngine(File folder) throws MalformedURLException {
+	protected GroovyScriptEngine createScriptEngine() throws MalformedURLException {
 		URL[] urls = { folder.toURI().toURL() };
 		GroovyScriptEngine scriptEngine = new GroovyScriptEngine(urls, this.getClass().getClassLoader());
 		ClassPool classPool = ClassPool.getDefault();
