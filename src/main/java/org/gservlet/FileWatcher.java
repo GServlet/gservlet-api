@@ -51,6 +51,11 @@ public class FileWatcher implements Runnable {
 	 * The folder to be watched
 	 */
 	protected final File folder;
+
+	/**
+	 * The list of watch services
+	 */
+	protected static final List<WatchService> watchServices = new ArrayList<>();
 	
 	/**
 	 * 
@@ -87,6 +92,7 @@ public class FileWatcher implements Runnable {
 		try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
 			Path path = Paths.get(folder.getAbsolutePath());
 			path.register(watchService, ENTRY_CREATE, ENTRY_DELETE);
+			watchServices.add(watchService);
 			boolean poll = true;
 			while (poll) {
 				poll = pollEvents(watchService);
@@ -166,9 +172,9 @@ public class FileWatcher implements Runnable {
 
 	/**
 	 * 
-	 * Returns a list of listeners
+	 * Returns the list of listeners
 	 * 
-	 * @return a list of listeners
+	 * @return the list of listeners
 	 * 
 	 */
 	public List<FileListener> getListeners() {
@@ -188,4 +194,15 @@ public class FileWatcher implements Runnable {
 		return this;
 	}
 
+	/**
+	 * 
+	 * Returns the list of watch services
+	 * 
+	 * @return the list of watch services
+	 * 
+	 */
+	public static List<WatchService> getWatchServices() {
+		return watchServices;
+	}
+	
 }
