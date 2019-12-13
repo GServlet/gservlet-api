@@ -31,6 +31,7 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -196,13 +197,13 @@ public class FileWatcher implements Runnable {
 
 	/**
 	 * 
-	 * Returns the list of watch services
+	 * Returns an unmodifiable list of the watch services
 	 * 
-	 * @return the list of watch services
+	 * @return an unmodifiable list of the watch services
 	 * 
 	 */
 	public static List<WatchService> getWatchServices() {
-		return watchServices;
+		return Collections.unmodifiableList(watchServices);
 	}
 	
 }
