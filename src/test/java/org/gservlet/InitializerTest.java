@@ -42,6 +42,8 @@ public class InitializerTest {
 		wait(2000);
 		assertEquals(12, initializer.getHandlers().size());
 		file.delete();
+		initializer.destroy();
+		assertEquals(0, initializer.getHandlers().size());
 	}
 
 	public void wait(int time) throws InterruptedException {

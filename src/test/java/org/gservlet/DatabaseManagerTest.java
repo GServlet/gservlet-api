@@ -18,6 +18,7 @@ public class DatabaseManagerTest {
 		File configuration = new File(folder + "/" + DB_CONFIG_FILE);
 		Properties properties = databaseManager.loadConfiguration(configuration);
 		assertTrue(databaseManager.isConfigurationValid(properties));
+		databaseManager.destroy();
 	}
 
 }
