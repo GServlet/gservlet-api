@@ -89,6 +89,7 @@ public class StartupListener implements ServletContextListener {
 			try {
 				watchService.close();
 			} catch (IOException e) {
+				// the exception is ignored
 			}
 		}
 	}
