@@ -26,8 +26,8 @@ public class HttpSessionActivationListenerTest {
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpSessionActivationListener.groovy");
 		AbstractSessionActivationListener listener = (AbstractSessionActivationListener) scriptManager.loadScript(script);
-		assertTrue(listener.getClass().isAnnotationPresent(SessionActivationListener.class));
 		assertNotNull(listener);
+		assertTrue(listener.getClass().isAnnotationPresent(SessionActivationListener.class));
 		final Map<Object, Object> map = new HashMap<Object, Object>();
 		HttpSession session = mock(HttpSession.class);
 		doAnswer(new Answer() {
@@ -42,6 +42,7 @@ public class HttpSessionActivationListenerTest {
 		listener.sessionWillPassivate(event);
 		assertEquals("sessionWillPassivate", map.get("state"));
 		assertEquals(SessionWrapper.class, listener.getSession().getClass());
+		assertNotNull(listener.getLogger());
 	}
 
 }

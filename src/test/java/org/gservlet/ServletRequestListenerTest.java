@@ -31,8 +31,8 @@ public class ServletRequestListenerTest {
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "ServletRequestListener.groovy");
 		AbstractRequestListener listener = (AbstractRequestListener) scriptManager.loadScript(script);
-		assertTrue(listener.getClass().isAnnotationPresent(RequestListener.class));
 		assertNotNull(listener);
+		assertTrue(listener.getClass().isAnnotationPresent(RequestListener.class));
 		final Map<Object, Object> map = new HashMap<Object, Object>();
 		ServletContext context = mock(ServletContext.class);
 		doAnswer(new Answer() {
@@ -49,6 +49,7 @@ public class ServletRequestListenerTest {
 		assertEquals(RequestWrapper.class, listener.getRequest().getClass());
 		assertEquals(SessionWrapper.class, listener.getSession().getClass());
 		assertEquals(ContextWrapper.class, listener.getContext().getClass());
+		assertNotNull(listener.getLogger());
 	}
 
 	@Test

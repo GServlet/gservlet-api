@@ -18,8 +18,8 @@ public class ServletContextAttributeListenerTest {
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "ServletContextAttributeListener.groovy");
 		AbstractContextAttributeListener listener = (AbstractContextAttributeListener) scriptManager.loadScript(script);
-		assertTrue(listener.getClass().isAnnotationPresent(ContextAttributeListener.class));
 		assertNotNull(listener);
+		assertTrue(listener.getClass().isAnnotationPresent(ContextAttributeListener.class));
 		ServletContextAttributeEvent event = new ServletContextAttributeEvent(mock(ServletContext.class), "myAttribute", "myValue");
 		listener.attributeAdded(event);
 		assertEquals("attributeAdded", listener.getName());
@@ -29,6 +29,7 @@ public class ServletContextAttributeListenerTest {
 		assertEquals("attributeReplaced", listener.getName());
 		assertEquals("myValue", listener.getValue());
 		assertEquals(ContextWrapper.class, listener.getContext().getClass());
+		assertNotNull(listener.getLogger());
 	}
 
 }

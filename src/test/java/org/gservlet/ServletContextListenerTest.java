@@ -26,8 +26,8 @@ public class ServletContextListenerTest {
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "ServletContextListener.groovy");
 		AbstractContextListener listener = (AbstractContextListener) scriptManager.loadScript(script);
-		assertTrue(listener.getClass().isAnnotationPresent(ContextListener.class));
 		assertNotNull(listener);
+		assertTrue(listener.getClass().isAnnotationPresent(ContextListener.class));
 		final Map<Object, Object> map = new HashMap<Object, Object>();
 		ServletContext context = mock(ServletContext.class);
 		doAnswer(new Answer() {
@@ -41,6 +41,7 @@ public class ServletContextListenerTest {
 		assertEquals("contextInitialized", map.get("state"));
 		listener.contextDestroyed(event);
 		assertEquals("contextDestroyed", map.get("state"));
+		assertNotNull(listener.getLogger());
 	}
 
 }

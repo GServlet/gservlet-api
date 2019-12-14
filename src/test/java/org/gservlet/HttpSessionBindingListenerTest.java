@@ -18,8 +18,8 @@ public class HttpSessionBindingListenerTest {
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpSessionBindingListener.groovy");
 		AbstractSessionBindingListener listener = (AbstractSessionBindingListener) scriptManager.loadScript(script);
-		assertTrue(listener.getClass().isAnnotationPresent(SessionBindingListener.class));
 		assertNotNull(listener);
+		assertTrue(listener.getClass().isAnnotationPresent(SessionBindingListener.class));
 		HttpSessionBindingEvent event = new HttpSessionBindingEvent(mock(HttpSession.class), "myAttribute", "myValue");
 		listener.valueBound(event);
 		assertEquals("valueBound", listener.getName());
@@ -27,6 +27,7 @@ public class HttpSessionBindingListenerTest {
 		assertEquals("valueUnbound", listener.getName());
 		assertEquals("myValue", listener.getValue());
 		assertEquals(SessionWrapper.class, listener.getSession().getClass());
+		assertNotNull(listener.getLogger());
 	}
 
 }
