@@ -23,13 +23,21 @@ public class StartupListenerTest {
 		assertEquals(true, listener.getClass().isAnnotationPresent(WebListener.class));
 		ServletContext context = mock(ServletContext.class);
 		when(context.getRealPath("/")).thenReturn(folder.getAbsolutePath());
-		when(context.addFilter(isA(String.class),isA(Filter.class))).thenReturn(mock(FilterRegistration.Dynamic.class));
-		when(context.addServlet(isA(String.class),isA(Servlet.class))).thenReturn(mock(ServletRegistration.Dynamic.class));
+		when(context.addFilter(isA(String.class), isA(Filter.class)))
+				.thenReturn(mock(FilterRegistration.Dynamic.class));
+		when(context.addServlet(isA(String.class), isA(Servlet.class)))
+				.thenReturn(mock(ServletRegistration.Dynamic.class));
 		ServletContextEvent event = new ServletContextEvent(context);
 		listener.contextInitialized(event);
 		assertNotNull(listener.getInitializer());
 		assertEquals(11, listener.getInitializer().getHandlers().size());
 		assertNotNull(listener.getDatabaseManager());
+		try {
+			listener.contextDestroyed(event);
+		} catch (Exception e) {
+
+		}
+		assertEquals(0, listener.getInitializer().getHandlers().size());
 	}
 
 }
