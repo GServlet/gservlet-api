@@ -1,0 +1,30 @@
+// this is a DSLD file
+// DSL Descriptor for the GServlet API
+
+import org.gservlet.annotation.Servlet
+
+contribute(currentType(annos: annotatedBy(Servlet))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractServlet', doc : 'the logger'
+	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractServlet', doc : 'the http request'
+	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractServlet', doc : 'the http response'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractServlet', doc : 'the http session'
+	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractServlet', doc : 'the servlet context'
+	property name : 'connection', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractServlet', doc : 'the sql connection'
+	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractServlet', doc : 'the response writer'
+	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractServlet', doc : 'the markup builder'
+}
+
+contribute(currentType(annos: annotatedBy(Servlet))) {
+	delegatesTo type : org.gservlet.AbstractServlet, except : [
+		'route',
+		'doGet',
+		'doPost',
+		'doHead',
+		'doPut',
+		'doTrace',
+		'doOptions',
+		'doDelete'
+	]
+}
+
+

@@ -61,10 +61,11 @@ public abstract class AbstractServlet extends HttpServlet {
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
+	* @throws ServletException the ServletException
 	* 
 	*/
 	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response) {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		route(request, response, "get");
 	}
 
@@ -74,10 +75,11 @@ public abstract class AbstractServlet extends HttpServlet {
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
+	* @throws ServletException the ServletException
 	* 
 	*/
 	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		route(request, response, "post");
 	}
 
@@ -87,10 +89,11 @@ public abstract class AbstractServlet extends HttpServlet {
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
+	* @throws ServletException the ServletException
 	* 
 	*/
 	@Override
-	public void doPut(HttpServletRequest request, HttpServletResponse response) {
+	public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		route(request, response, "put");
 	}
 
@@ -100,10 +103,11 @@ public abstract class AbstractServlet extends HttpServlet {
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
+	* @throws ServletException the ServletException
 	* 
 	*/
 	@Override
-	public void doDelete(HttpServletRequest request, HttpServletResponse response) {
+	public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		route(request, response, "delete");
 	}
 
@@ -113,10 +117,11 @@ public abstract class AbstractServlet extends HttpServlet {
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
+	* @throws ServletException the ServletException 
 	* 
 	*/
 	@Override
-	public void doHead(HttpServletRequest request, HttpServletResponse response) {
+	public void doHead(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		route(request, response, "head");
 	}
 
@@ -126,10 +131,11 @@ public abstract class AbstractServlet extends HttpServlet {
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
+	* @throws ServletException the ServletException
 	* 
 	*/
 	@Override
-	public void doTrace(HttpServletRequest request, HttpServletResponse response) {
+	public void doTrace(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		route(request, response, "trace");
 	}
 
@@ -139,10 +145,11 @@ public abstract class AbstractServlet extends HttpServlet {
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
+	* @throws ServletException the ServletException
 	* 
 	*/
 	@Override
-	public void doOptions(HttpServletRequest request, HttpServletResponse response) {
+	public void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		route(request, response, "options");
 	}
 
@@ -153,15 +160,16 @@ public abstract class AbstractServlet extends HttpServlet {
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
 	* @param method the method
+	* @throws ServletException the ServletException  
 	*/
-	public void route(HttpServletRequest request, HttpServletResponse response, String method) {
+	public void route(HttpServletRequest request, HttpServletResponse response, String method) throws ServletException {
 		try {
 			requestContext.set(new RequestContext(request, response));
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
 			logger.info("no method " + method + " has been declared for the servlet " + this.getClass().getName());
 		} catch (Exception e) {
-			logger.log(Level.INFO, "exception during invoke method", e);
+			throw new ServletException(e);
 		}
 	}
 	

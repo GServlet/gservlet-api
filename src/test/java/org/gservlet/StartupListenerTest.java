@@ -30,8 +30,6 @@ public class StartupListenerTest {
 		assertNotNull(listener.getInitializer());
 		assertEquals(11, listener.getInitializer().getHandlers().size());
 		assertNotNull(listener.getDatabaseManager());
-		listener.contextDestroyed(event);
-		assertEquals(0, listener.getInitializer().getHandlers().size());
 	}
 
 }

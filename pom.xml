@@ -109,6 +109,12 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<resources>
+		  <resource>
+		   <directory>src/main/java/dsld</directory>
+		   <targetPath>dsld</targetPath>
+		  </resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>

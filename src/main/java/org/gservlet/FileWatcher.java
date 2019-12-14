@@ -23,6 +23,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
 import static org.gservlet.Constants.RELOAD;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.ClosedWatchServiceException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,13 +31,12 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * 
- * The FileWatcher class checks a folder for file changes and notifies its
+ * The FileWatcher class checks a folder for file changes and notifies the
  * listeners accordingly.
  * 
  * @author Mamadou Lamine Ba
@@ -52,11 +52,12 @@ public class FileWatcher implements Runnable {
 	 * The folder to be watched
 	 */
 	protected final File folder;
-	/**
-	 * The logger object
-	 */
-	protected final Logger logger = Logger.getLogger(FileWatcher.class.getName());
 
+	/**
+	 * The list of watch services
+	 */
+	protected static final List<WatchService> watchServices = new ArrayList<>();
+	
 	/**
 	 * 
 	 * Constructs a FileWatcher for the given folder
@@ -92,12 +93,12 @@ public class FileWatcher implements Runnable {
 		try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
 			Path path = Paths.get(folder.getAbsolutePath());
 			path.register(watchService, ENTRY_CREATE, ENTRY_DELETE);
+			watchServices.add(watchService);
 			boolean poll = true;
 			while (poll) {
 				poll = pollEvents(watchService);
 			}
-		} catch (IOException | InterruptedException e) {
-			logger.log(Level.INFO, "exception during watch", e);
+		} catch (IOException | InterruptedException | ClosedWatchServiceException e) {
 			Thread.currentThread().interrupt();
 		}
 	}
@@ -172,9 +173,9 @@ public class FileWatcher implements Runnable {
 
 	/**
 	 * 
-	 * Returns a list of listeners
+	 * Returns the list of listeners
 	 * 
-	 * @return a list of listeners
+	 * @return the list of listeners
 	 * 
 	 */
 	public List<FileListener> getListeners() {
@@ -194,4 +195,15 @@ public class FileWatcher implements Runnable {
 		return this;
 	}
 
+	/**
+	 * 
+	 * Returns an unmodifiable list of the watch services
+	 * 
+	 * @return an unmodifiable list of the watch services
+	 * 
+	 */
+	public static List<WatchService> getWatchServices() {
+		return Collections.unmodifiableList(watchServices);
+	}
+	
 }
