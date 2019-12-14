@@ -2,6 +2,8 @@ package org.gservlet;
 
 import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -35,6 +37,7 @@ public class HttpServletTest {
 		File script = new File(folder + "/" + "HttpServlet.groovy");
 		AbstractServlet servlet = (AbstractServlet) scriptManager.loadScript(script);
 		assertNotNull(servlet);
+		assertTrue(servlet.getClass().isAnnotationPresent(Servlet.class));
 		Servlet annotation = servlet.getClass().getAnnotation(Servlet.class);
 		assertEquals("HttpServlet", servlet.getClass().getName());
 		assertEquals(AbstractServlet.class, servlet.getClass().getSuperclass());
@@ -71,6 +74,7 @@ public class HttpServletTest {
 		assertNotNull(servlet.getConnection());
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void testOutput() throws Exception {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
@@ -79,6 +83,7 @@ public class HttpServletTest {
 		File script = new File(folder + "/" + "HttpServlet.groovy");
 		AbstractServlet servlet = (AbstractServlet) scriptManager.loadScript(script);
 		assertNotNull(servlet);
+		assertTrue(servlet.getClass().isAnnotationPresent(Servlet.class));
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		StringWriter out = new StringWriter();
@@ -95,6 +100,10 @@ public class HttpServletTest {
 		servlet.json(map);
 		assertEquals("{\"key\":\"value\"}", out.toString());
 		assertEquals("{\"key\":\"value\"}", servlet.stringify(map));
+		Map object = (Map) servlet.parse(new ByteArrayInputStream(out.toString().getBytes()));
+		assertNotNull(object);
+		assertEquals("value", object.get("key"));
+		assertNotNull(servlet.getLogger());
 	}
 
 }

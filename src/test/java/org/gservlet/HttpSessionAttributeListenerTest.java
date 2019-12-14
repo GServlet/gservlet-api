@@ -18,8 +18,8 @@ public class HttpSessionAttributeListenerTest {
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpSessionAttributeListener.groovy");
 		AbstractSessionAttributeListener listener = (AbstractSessionAttributeListener) scriptManager.loadScript(script);
-		assertTrue(listener.getClass().isAnnotationPresent(SessionAttributeListener.class));
 		assertNotNull(listener);
+		assertTrue(listener.getClass().isAnnotationPresent(SessionAttributeListener.class));
 		HttpSessionBindingEvent event = new HttpSessionBindingEvent(mock(HttpSession.class), "myAttribute", "myValue");
 		listener.attributeAdded(event);
 		assertEquals("attributeAdded", listener.getName());
@@ -29,6 +29,7 @@ public class HttpSessionAttributeListenerTest {
 		assertEquals("attributeReplaced", listener.getName());
 		assertEquals("myValue", listener.getValue());
 		assertEquals(SessionWrapper.class, listener.getSession().getClass());
+		assertNotNull(listener.getLogger());
 	}
 
 }

@@ -26,8 +26,8 @@ public class HttpSessionIdListenerTest {
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpSessionIdListener.groovy");
 		AbstractSessionIdListener listener = (AbstractSessionIdListener) scriptManager.loadScript(script);
-		assertTrue(listener.getClass().isAnnotationPresent(SessionIdListener.class));
 		assertNotNull(listener);
+		assertTrue(listener.getClass().isAnnotationPresent(SessionIdListener.class));
 		final Map<Object, Object> map = new HashMap<Object, Object>();
 		HttpSession session = mock(HttpSession.class);
 		doAnswer(new Answer() {
@@ -46,6 +46,7 @@ public class HttpSessionIdListenerTest {
 		assertEquals("sessionIdChanged", map.get("state"));
 		assertEquals("34346FGG7677", listener.getOldSessionId());
 		assertEquals(SessionWrapper.class, listener.getSession().getClass());
+		assertNotNull(listener.getLogger());
 	}
 
 }

@@ -2,6 +2,8 @@ package org.gservlet;
 
 import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -38,6 +40,7 @@ public class HttpFilterTest {
 		File script = new File(folder + "/" + "HttpFilter.groovy");
 		AbstractFilter filter = (AbstractFilter) scriptManager.loadScript(script);
 		assertNotNull(filter);
+		assertTrue(filter.getClass().isAnnotationPresent(Filter.class));
 		Filter annotation = filter.getClass().getAnnotation(Filter.class);
 		assertEquals("HttpFilter", filter.getClass().getName());
 		assertEquals("/*", annotation.value()[0]);
@@ -89,6 +92,7 @@ public class HttpFilterTest {
 		defaultRequestFilter.destroy();
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void testOutput() throws Exception {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
@@ -97,6 +101,7 @@ public class HttpFilterTest {
 		File script = new File(folder + "/" + "HttpFilter.groovy");
 		AbstractFilter filter = (AbstractFilter) scriptManager.loadScript(script);
 		assertNotNull(filter);
+		assertTrue(filter.getClass().isAnnotationPresent(Filter.class));
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		StringWriter out = new StringWriter();
@@ -113,6 +118,10 @@ public class HttpFilterTest {
 		filter.json(map);
 		assertEquals("{\"key\":\"value\"}", out.toString());
 		assertEquals("{\"key\":\"value\"}", filter.stringify(map));
+		Map object = (Map) filter.parse(new ByteArrayInputStream(out.toString().getBytes()));
+		assertNotNull(object);
+		assertEquals("value", object.get("key"));
+		assertNotNull(filter.getLogger());
 	}
 
 }

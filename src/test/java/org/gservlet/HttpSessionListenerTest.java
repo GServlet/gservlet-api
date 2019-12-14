@@ -26,8 +26,8 @@ public class HttpSessionListenerTest {
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpSessionListener.groovy");
 		AbstractSessionListener listener = (AbstractSessionListener) scriptManager.loadScript(script);
-		assertTrue(listener.getClass().isAnnotationPresent(SessionListener.class));
 		assertNotNull(listener);
+		assertTrue(listener.getClass().isAnnotationPresent(SessionListener.class));
 		final Map<Object, Object> map = new HashMap<Object, Object>();
 		HttpSession session = mock(HttpSession.class);
 		doAnswer(new Answer() {
@@ -42,6 +42,7 @@ public class HttpSessionListenerTest {
 		listener.sessionDestroyed(event);
 		assertEquals("sessionDestroyed", map.get("state"));
 		assertEquals(SessionWrapper.class, listener.getSession().getClass());
+		assertNotNull(listener.getLogger());
 	}
 
 }
