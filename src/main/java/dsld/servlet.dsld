@@ -19,8 +19,7 @@
 
 // DSL Descriptor for the GServlet API
 
-import org.gservlet.annotation.Servlet
-import org.gservlet.annotation.Filter
+import org.gservlet.annotation.*
 
 
 //@org.gservlet.AbstractServlet
@@ -64,4 +63,56 @@ contribute(currentType(annos: annotatedBy(Filter))) {
 
 contribute(currentType(annos: annotatedBy(Filter))) {
 	delegatesTo type : org.gservlet.AbstractFilter, except : ['init', 'doFilter']
+}
+
+//@org.gservlet.AbstractContextListener
+
+contribute(currentType(annos: annotatedBy(ContextListener))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the logger'
+	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractContextListener', doc : 'the servlet context'
+	property name : 'event', type : javax.servlet.ServletContextEvent, provider : 'org.gservlet.AbstractContextListener', doc : 'the servlet context event'
+}
+
+contribute(currentType(annos: annotatedBy(ContextListener))) {
+	delegatesTo type : org.gservlet.AbstractContextListener, except : ['contextInitialized', 'contextDestroyed']
+}
+
+contribute(currentType(annos: annotatedBy(ContextListener))) {
+	delegatesTo type : org.gservlet.AbstractListener
+}
+
+
+//@org.gservlet.AbstractRequestListener
+
+contribute(currentType(annos: annotatedBy(RequestListener))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the logger'
+	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractRequestListener', doc : 'the http request'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractRequestListener', doc : 'the http session'
+	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractRequestListener', doc : 'the servlet context'
+	property name : 'event', type : javax.servlet.ServletRequestEvent, provider : 'org.gservlet.AbstractRequestListener', doc : 'the request event'
+}
+
+contribute(currentType(annos: annotatedBy(RequestListener))) {
+	delegatesTo type : org.gservlet.AbstractRequestListener, except : ['requestInitialized', 'requestDestroyed']
+}
+
+contribute(currentType(annos: annotatedBy(RequestListener))) {
+	delegatesTo type : org.gservlet.AbstractListener, except : ['invoke']
+}
+
+
+//@org.gservlet.AbstractSessionListener
+
+contribute(currentType(annos: annotatedBy(SessionListener))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the logger'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionListener', doc : 'the http session'
+	property name : 'event', type : javax.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionListener', doc : 'the session event'
+}
+
+contribute(currentType(annos: annotatedBy(SessionListener))) {
+	delegatesTo type : org.gservlet.AbstractSessionListener, except : ['sessionCreated', 'sessionDestroyed']
+}
+
+contribute(currentType(annos: annotatedBy(SessionListener))) {
+	delegatesTo type : org.gservlet.AbstractListener, except : ['invoke']
 }
