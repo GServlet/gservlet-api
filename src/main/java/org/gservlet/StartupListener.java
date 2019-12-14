@@ -30,7 +30,7 @@ import javax.servlet.annotation.WebListener;
 
 /**
  * 
- * Bootstraps the application and the registration of the servlets, filters,
+ * Bootstraps the application and the starts the registration of the servlets, filters,
  * listeners into the web container.
  * 
  * @author Mamadou Lamine Ba
@@ -89,7 +89,6 @@ public class StartupListener implements ServletContextListener {
 			try {
 				watchService.close();
 			} catch (IOException e) {
-				// the exception is ignored
 			}
 		}
 	}
