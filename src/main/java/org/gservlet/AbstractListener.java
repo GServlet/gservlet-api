@@ -60,4 +60,15 @@ public abstract class AbstractListener implements EventListener{
 		}
 	}
 
+	/**
+	* 
+	* Returns the Logger object
+	* 
+	* @return the Logger object
+	* 
+	*/
+	public Logger getLogger() {
+		return logger;
+	}
+	
 }

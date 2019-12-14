@@ -328,4 +328,15 @@ public abstract class AbstractServlet extends HttpServlet {
 		return requestContext.get().getHtml();
 	}
 	
+	/**
+	* 
+	* Returns the Logger object
+	* 
+	* @return the Logger object
+	* 
+	*/
+	public Logger getLogger() {
+		return logger;
+	}
+	
 }

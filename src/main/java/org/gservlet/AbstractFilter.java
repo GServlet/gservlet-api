@@ -273,4 +273,15 @@ public abstract class AbstractFilter implements Filter {
 		return requestContext.get().getHtml();
 	}
 	
+	/**
+	* 
+	* Returns the Logger object
+	* 
+	* @return the Logger object
+	* 
+	*/
+	public Logger getLogger() {
+		return logger;
+	}
+	
 }
