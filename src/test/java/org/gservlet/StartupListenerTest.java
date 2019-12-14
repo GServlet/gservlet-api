@@ -17,7 +17,7 @@ import org.junit.Test;
 public class StartupListenerTest {
 
 	@Test
-	public void test() {
+	public void test() throws InterruptedException {
 		File folder = new File("src/test/resources/");
 		StartupListener listener = new StartupListener();
 		assertEquals(true, listener.getClass().isAnnotationPresent(WebListener.class));
