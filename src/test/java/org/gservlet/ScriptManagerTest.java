@@ -4,10 +4,11 @@ import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import java.io.File;
 import org.junit.Test;
+import groovy.util.ScriptException;
 
 public class ScriptManagerTest {
 
-	@Test
+	@Test(expected = ScriptException.class)
 	public void loadScripts() throws Exception {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
@@ -19,6 +20,8 @@ public class ScriptManagerTest {
 				assertNotNull(object);
 			}
 		}
+		File file = new File("test.groovy");
+		scriptManager.loadScript(file);
 	}
 
 }
