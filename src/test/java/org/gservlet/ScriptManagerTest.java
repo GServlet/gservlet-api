@@ -20,8 +20,7 @@ public class ScriptManagerTest {
 				assertNotNull(object);
 			}
 		}
-		File file = new File("test.groovy");
-		scriptManager.loadScript(file);
+		scriptManager.loadScript(new File("test.groovy"));
 	}
 
 }
