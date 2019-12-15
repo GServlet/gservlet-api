@@ -20,11 +20,13 @@ public class FileWatcherTest {
 		FileListener listener = new FileAdapter() {
 			@Override
 			public void onCreated(FileEvent event) {
+				super.onCreated(event);
 				map.put("file.created", event.getFile().getName());
 			}
 
 			@Override
 			public void onDeleted(FileEvent event) {
+				super.onDeleted(event);
 				map.put("file.deleted", event.getFile().getName());
 			}
 		};
