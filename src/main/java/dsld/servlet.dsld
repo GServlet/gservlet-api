@@ -37,7 +37,7 @@ contribute(currentType(annos: annotatedBy(Servlet))) {
 
 contribute(currentType(annos: annotatedBy(Servlet))) {
 	delegatesTo type : org.gservlet.AbstractServlet, except : [
-		'route',
+		'service',
 		'doGet',
 		'doPost',
 		'doHead',
