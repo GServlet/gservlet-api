@@ -24,7 +24,7 @@ public class HttpSessionActivationListenerTest {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		File script = new File(folder + "/" + "HttpSessionActivationListener.groovy");
+		File script = new File(folder + "/listeners/" + "HttpSessionActivationListener.groovy");
 		AbstractSessionActivationListener listener = (AbstractSessionActivationListener) scriptManager.loadScript(script);
 		assertNotNull(listener);
 		assertTrue(listener.getClass().isAnnotationPresent(SessionActivationListener.class));

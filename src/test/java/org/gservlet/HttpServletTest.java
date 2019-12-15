@@ -2,7 +2,6 @@ package org.gservlet;
 
 import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.PrintWriter;
@@ -42,6 +41,8 @@ public class HttpServletTest {
 		assertEquals("HttpServlet", servlet.getClass().getName());
 		assertEquals(AbstractServlet.class, servlet.getClass().getSuperclass());
 		assertEquals("/servlet", annotation.value()[0]);
+		assertEquals(1, annotation.urlPatterns().length);
+		assertEquals(2, annotation.initParams().length);
 		final Map<Object, Object> map = new HashMap<Object, Object>();
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getSession(true)).thenReturn(mock(HttpSession.class));

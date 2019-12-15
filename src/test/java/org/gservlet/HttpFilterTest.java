@@ -42,6 +42,8 @@ public class HttpFilterTest {
 		assertNotNull(filter);
 		assertTrue(filter.getClass().isAnnotationPresent(Filter.class));
 		Filter annotation = filter.getClass().getAnnotation(Filter.class);
+		assertEquals(1, annotation.urlPatterns().length);
+		assertEquals(2, annotation.initParams().length);
 		assertEquals("HttpFilter", filter.getClass().getName());
 		assertEquals("/*", annotation.value()[0]);
 		final Map<Object, Object> map = new HashMap<Object, Object>();

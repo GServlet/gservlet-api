@@ -42,6 +42,14 @@ public class InitializerTest {
 		wait(2000);
 		assertEquals(12, initializer.getHandlers().size());
 		file.delete();
+		printWriter = new PrintWriter(new FileWriter(file));
+		printWriter.println("import org.gservlet.annotation.Filter");
+		printWriter.println("@Filter(\"/*\")");
+		printWriter.println("class MyFilter {}");
+		printWriter.close();
+		wait(2000);
+		assertEquals(12, initializer.getHandlers().size());
+		file.delete();
 		initializer.destroy();
 		assertEquals(0, initializer.getHandlers().size());
 	}
