@@ -49,8 +49,7 @@ html.html { // html is implicitly bound to new MarkupBuilder(out)
 session.counter = session.counter + 1
 ```
 
-More information can be found on the project [homepage](https://gservlet.org) where you can find 
-the online [documentation](https://gservlet.org/documentation) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for this current release can be browsed as well.
+More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for a particular release can be browsed as well.
 
 ## Features
 
@@ -100,7 +99,7 @@ Once your Java web server is installed and configured, you can put it to work. F
 5. Call your servlet from a web browser
 
 
-You can find below some examples that you can try out.
+You can find below some examples that you can try out and for Live Development, set the *GSERVLET_RELOAD* environment variable to true in your IDE.
 
 ##### CustomerServlet.groovy
 
