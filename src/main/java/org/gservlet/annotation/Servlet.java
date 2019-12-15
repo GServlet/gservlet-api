@@ -21,7 +21,6 @@ package org.gservlet.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
-import javax.servlet.annotation.WebInitParam;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Retention;
 
@@ -75,7 +74,7 @@ public @interface Servlet {
      *
      * @return the init parameters of the servlet
      */
-    WebInitParam [] initParams() default {};
+    InitParam [] initParams() default {};
     
     /**
      * Declares whether the servlet supports asynchronous operation mode.

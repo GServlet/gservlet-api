@@ -1,10 +1,10 @@
 import org.gservlet.annotation.Filter
-import javax.servlet.annotation.WebInitParam
+import org.gservlet.annotation.InitParam
 
 @Filter(value="/*", urlPatterns = ['/test/*'],
 initParams = [
-	@WebInitParam(name = "location", value = "D:/Uploads"),
-	@WebInitParam(name = "maxUploadSize", value = "9900000")
+	@InitParam(name = "location", value = "D:/Uploads"),
+	@InitParam(name = "maxUploadSize", value = "9900000")
 ])
 class HttpFilter {
 	

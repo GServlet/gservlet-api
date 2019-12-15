@@ -1,10 +1,10 @@
 import org.gservlet.annotation.Servlet
-import javax.servlet.annotation.WebInitParam;
+import org.gservlet.annotation.InitParam
 
 @Servlet(value="/servlet", urlPatterns = ['/test/servlet'],
 initParams = [
-	@WebInitParam(name = "location", value = "D:/Uploads"),
-	@WebInitParam(name = "maxUploadSize", value = "9900000")
+	@InitParam(name = "location", value = "D:/Uploads"),
+	@InitParam(name = "maxUploadSize", value = "9900000")
 ])
 class HttpServlet {
 	
