@@ -82,7 +82,7 @@ public class DefaultRequestFilter implements Filter {
 					if (httpServletRequest.getRequestURI().endsWith(path)) {
 						AbstractServlet servlet = (AbstractServlet) target;
 						String method = httpServletRequest.getMethod();
-						servlet.route(httpServletRequest, httpServletResponse, method.toLowerCase());
+						servlet.service(httpServletRequest, httpServletResponse, method.toLowerCase());
 					}
 				}
 			}
