@@ -74,7 +74,10 @@ contribute(currentType(annos: annotatedBy(ContextListener))) {
 }
 
 contribute(currentType(annos: annotatedBy(ContextListener))) {
-	delegatesTo type : org.gservlet.AbstractContextListener, except : ['contextInitialized', 'contextDestroyed']
+	delegatesTo type : org.gservlet.AbstractContextListener, except : [
+		'contextInitialized',
+		'contextDestroyed'
+	]
 }
 
 contribute(currentType(annos: annotatedBy(ContextListener))) {
@@ -93,7 +96,10 @@ contribute(currentType(annos: annotatedBy(RequestListener))) {
 }
 
 contribute(currentType(annos: annotatedBy(RequestListener))) {
-	delegatesTo type : org.gservlet.AbstractRequestListener, except : ['requestInitialized', 'requestDestroyed']
+	delegatesTo type : org.gservlet.AbstractRequestListener, except : [
+		'requestInitialized',
+		'requestDestroyed'
+	]
 }
 
 contribute(currentType(annos: annotatedBy(RequestListener))) {
@@ -110,9 +116,145 @@ contribute(currentType(annos: annotatedBy(SessionListener))) {
 }
 
 contribute(currentType(annos: annotatedBy(SessionListener))) {
-	delegatesTo type : org.gservlet.AbstractSessionListener, except : ['sessionCreated', 'sessionDestroyed']
+	delegatesTo type : org.gservlet.AbstractSessionListener, except : [
+		'sessionCreated',
+		'sessionDestroyed'
+	]
 }
 
 contribute(currentType(annos: annotatedBy(SessionListener))) {
+	delegatesTo type : org.gservlet.AbstractListener, except : ['invoke']
+}
+
+
+//@org.gservlet.AbstractContextAttributeListener
+
+contribute(currentType(annos: annotatedBy(ContextAttributeListener))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the logger'
+	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the servlet context'
+	property name : 'event', type : javax.servlet.ServletContextAttributeEvent, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the attrribute event'
+	property name : 'name', type : javax.lang.String, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the attribute name'
+	property name : 'value', type : javax.lang.Object, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the attribute value'
+}
+
+contribute(currentType(annos: annotatedBy(ContextAttributeListener))) {
+	delegatesTo type : org.gservlet.AbstractContextAttributeListener, except : [
+		'attributeAdded',
+		'attributeRemoved',
+		'attributeReplaced'
+	]
+}
+
+contribute(currentType(annos: annotatedBy(ContextAttributeListener))) {
+	delegatesTo type : org.gservlet.AbstractListener, except : ['invoke']
+}
+
+
+//@org.gservlet.AbstractRequestAttributeListener
+
+contribute(currentType(annos: annotatedBy(RequestAttributeListener))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the logger'
+	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the http request'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the http session'
+	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the servlet context'
+	property name : 'event', type : javax.servlet.ServletRequestAttributeEvent, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the attribute event'
+	property name : 'name', type : javax.lang.String, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the attribute name'
+	property name : 'value', type : javax.lang.Object, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the attribute value'
+}
+
+contribute(currentType(annos: annotatedBy(RequestAttributeListener))) {
+	delegatesTo type : org.gservlet.AbstractRequestAttributeListener, except : [
+		'attributeAdded',
+		'attributeRemoved',
+		'attributeReplaced'
+	]
+}
+
+contribute(currentType(annos: annotatedBy(RequestAttributeListener))) {
+	delegatesTo type : org.gservlet.AbstractListener, except : ['invoke']
+}
+
+
+//@org.gservlet.AbstractSessionAttributeListener
+
+contribute(currentType(annos: annotatedBy(SessionAttributeListener))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the logger'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the http session'
+	property name : 'event', type : javax.servlet.http.HttpSessionBindingEvent, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the attribute event'
+	property name : 'name', type : javax.lang.String, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the attribute name'
+	property name : 'value', type : javax.lang.Object, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the attribute value'
+}
+
+contribute(currentType(annos: annotatedBy(SessionAttributeListener))) {
+	delegatesTo type : org.gservlet.AbstractSessionAttributeListener, except : [
+		'attributeAdded',
+		'attributeRemoved',
+		'attributeReplaced'
+	]
+}
+
+contribute(currentType(annos: annotatedBy(SessionAttributeListener))) {
+	delegatesTo type : org.gservlet.AbstractListener, except : ['invoke']
+}
+
+
+//@org.gservlet.AbstractSessionActivationListener
+
+contribute(currentType(annos: annotatedBy(SessionActivationListener))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'the logger'
+	property name : 'event', type : javax.servlet.http.HttpSessionBindingEvent, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'the binding event'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'the http session'
+}
+
+contribute(currentType(annos: annotatedBy(SessionActivationListener))) {
+	delegatesTo type : org.gservlet.AbstractSessionActivationListener, except : [
+		'sessionDidActivate',
+		'sessionWillPassivate'
+	]
+}
+
+contribute(currentType(annos: annotatedBy(SessionActivationListener))) {
+	delegatesTo type : org.gservlet.AbstractListener, except : ['invoke']
+}
+
+
+//@org.gservlet.AbstractSessionBindingListener
+
+contribute(currentType(annos: annotatedBy(SessionBindingListener))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the logger'
+	property name : 'event', type : javax.servlet.http.HttpSessionBindingEvent, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the binding event'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the http session'
+	property name : 'name', type : javax.lang.String, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the attribute name'
+	property name : 'value', type : javax.lang.Object, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the attribute value'
+}
+
+contribute(currentType(annos: annotatedBy(SessionBindingListener))) {
+	delegatesTo type : org.gservlet.AbstractSessionBindingListener, except : [
+		'valueBound',
+		'valueUnbound'
+	]
+}
+
+contribute(currentType(annos: annotatedBy(SessionBindingListener))) {
+	delegatesTo type : org.gservlet.AbstractListener, except : ['invoke']
+}
+
+
+//@org.gservlet.AbstractSessionIdListener
+
+contribute(currentType(annos: annotatedBy(SessionIdListener))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'the logger'
+	property name : 'event', type : javax.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'the session event'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'the http session'
+	property name : 'oldSessionId', type : javax.lang.String, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'the old session id'
+}
+
+contribute(currentType(annos: annotatedBy(SessionIdListener))) {
+	delegatesTo type : org.gservlet.AbstractSessionIdListener, except : [
+		'sessionIdChanged'
+	]
+}
+
+contribute(currentType(annos: annotatedBy(SessionIdListener))) {
 	delegatesTo type : org.gservlet.AbstractListener, except : ['invoke']
 }

@@ -24,7 +24,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.servlet.DispatcherType;
-import javax.servlet.annotation.WebInitParam;
 
 /**
 * 
@@ -70,7 +69,7 @@ public @interface Filter {
      *
      * @return the init parameters of the filter
      */
-    WebInitParam[] initParams() default {};
+    InitParam[] initParams() default {};
     
     /**
      * The dispatcher types to which the filter applies

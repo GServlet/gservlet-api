@@ -40,7 +40,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingListener;
@@ -49,6 +48,7 @@ import javax.servlet.http.HttpSessionListener;
 import org.gservlet.annotation.ContextAttributeListener;
 import org.gservlet.annotation.ContextListener;
 import org.gservlet.annotation.Filter;
+import org.gservlet.annotation.InitParam;
 import org.gservlet.annotation.RequestAttributeListener;
 import org.gservlet.annotation.RequestListener;
 import org.gservlet.annotation.Servlet;
@@ -197,7 +197,7 @@ public class Initializer {
 			if (annotation.urlPatterns().length > 0) {
 				registration.addMapping(annotation.urlPatterns());
 			}
-			for (WebInitParam param : annotation.initParams()) {
+			for (InitParam param : annotation.initParams()) {
 				registration.setInitParameter(param.name(), param.value());
 			}
 		} else {
@@ -233,7 +233,7 @@ public class Initializer {
 			if (annotation.urlPatterns().length > 0) {
 				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.urlPatterns());
 			}
-			for (WebInitParam param : annotation.initParams()) {
+			for (InitParam param : annotation.initParams()) {
 				registration.setInitParameter(param.name(), param.value());
 			}
 		} else {

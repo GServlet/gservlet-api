@@ -23,6 +23,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequestAttributeEvent;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
 * 
@@ -101,6 +102,18 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 	public HttpServletRequest getRequest() {
 		return new RequestWrapper((HttpServletRequest) getEvent().getServletRequest());
 	}
+	
+	/**
+	* 
+	* Returns the HttpSession object
+	* 
+	* @return the HttpSession object
+	* 
+	*/
+	public HttpSession getSession() {
+		return new SessionWrapper(((HttpServletRequest) getEvent().getServletRequest()).getSession());
+	}
+
 	
 	/**
 	* 

@@ -32,6 +32,7 @@ public class ServletRequestAttributeListenerTest {
 		assertEquals("myValue", listener.getValue());
 		assertEquals(RequestWrapper.class, listener.getRequest().getClass());
 		assertEquals(ContextWrapper.class, listener.getContext().getClass());
+		assertEquals(SessionWrapper.class, listener.getSession().getClass());
 		assertNotNull(listener.getLogger());
 	}
 
