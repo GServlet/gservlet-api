@@ -21,7 +21,6 @@ package org.gservlet;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -154,12 +153,11 @@ public class ScriptManager {
 	 * @param classPool  the classPool object
 	 * @param ctClass    the class
 	 * @param annotation the annotation
-	 * @throws IOException            the IOException
 	 * @throws CannotCompileException the CannotCompileException
 	 * @throws NotFoundException      the NotFoundException
 	 */
 	protected void processClass(ClassPool classPool, CtClass ctClass, String annotation)
-			throws IOException, CannotCompileException, NotFoundException {
+			throws CannotCompileException, NotFoundException {
 		if (annotation.indexOf(Servlet.class.getName()) != -1) {
 			ctClass.setSuperclass(classPool.get(AbstractServlet.class.getName()));
 		} else if (annotation.indexOf(Filter.class.getName()) != -1) {
