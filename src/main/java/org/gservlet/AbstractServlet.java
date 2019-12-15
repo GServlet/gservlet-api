@@ -66,7 +66,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	*/
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		route(request, response, "get");
+		service(request, response, "get");
 	}
 
 	/**
@@ -80,7 +80,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	*/
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		route(request, response, "post");
+		service(request, response, "post");
 	}
 
 	/**
@@ -94,7 +94,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	*/
 	@Override
 	public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		route(request, response, "put");
+		service(request, response, "put");
 	}
 
 	/**
@@ -108,7 +108,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	*/
 	@Override
 	public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		route(request, response, "delete");
+		service(request, response, "delete");
 	}
 
 	/**
@@ -122,7 +122,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	*/
 	@Override
 	public void doHead(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		route(request, response, "head");
+		service(request, response, "head");
 	}
 
 	/**
@@ -136,7 +136,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	*/
 	@Override
 	public void doTrace(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		route(request, response, "trace");
+		service(request, response, "trace");
 	}
 
 	/**
@@ -150,19 +150,19 @@ public abstract class AbstractServlet extends HttpServlet {
 	*/
 	@Override
 	public void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		route(request, response, "options");
+		service(request, response, "options");
 	}
 
 	/**
 	* 
-	* Invokes the corresponding method defined on the subclasses
+	* Allows a servlet to respond to a request
 	* 
 	* @param request the HttpServletRequest object
 	* @param response the HttpServletResponse object
-	* @param method the method
+	* @param method the http method
 	* @throws ServletException the ServletException  
 	*/
-	public void route(HttpServletRequest request, HttpServletResponse response, String method) throws ServletException {
+	public void service(HttpServletRequest request, HttpServletResponse response, String method) throws ServletException {
 		try {
 			requestContext.set(new RequestContext(request, response));
 			getClass().getDeclaredMethod(method).invoke(this);
