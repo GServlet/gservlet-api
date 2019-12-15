@@ -5,11 +5,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-
+import javax.servlet.ReadListener;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -47,6 +51,31 @@ public class RequestWrapperTest {
 		wrapper.propertyMissing("myAttribute", "myValue");
 		assertEquals("myValue", map.get("myAttribute"));
 		assertEquals("myValue", wrapper.propertyMissing("myAttribute"));
+		String json = "{\"key\":\"value\"}";
+		final ByteArrayInputStream in = new ByteArrayInputStream(json.getBytes());
+		when(request.getContentType()).thenReturn("application/json");
+		when(request.getInputStream()).thenReturn(new ServletInputStream() {
+			@Override
+			public int read() throws IOException {
+				return in.read();
+			}
+			
+			@Override
+			public void setReadListener(ReadListener readListener) {
+			}
+			
+			@Override
+			public boolean isReady() {
+				return true;
+			}
+			
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
+		});
+		Map result = (Map) wrapper.propertyMissing("body");
+		assertEquals("value", result.get("key"));
 	}
 
 }

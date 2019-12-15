@@ -72,6 +72,7 @@ public class HttpServletTest {
 		assertEquals(RequestWrapper.class, servlet.getRequest().getClass());
 		assertEquals(SessionWrapper.class, servlet.getSession().getClass());
 		assertEquals(ContextWrapper.class, servlet.getContext().getClass());
+		assertNull(servlet.getConfig());
 		assertNotNull(servlet.getConnection());
 	}
 

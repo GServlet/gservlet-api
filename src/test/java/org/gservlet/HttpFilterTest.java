@@ -47,12 +47,6 @@ public class HttpFilterTest {
 		assertEquals("HttpFilter", filter.getClass().getName());
 		assertEquals("/*", annotation.value()[0]);
 		final Map<Object, Object> map = new HashMap<Object, Object>();
-		Answer initializeMap = new Answer() {
-			public Object answer(InvocationOnMock invocation) throws Throwable {
-				map.put(invocation.getArguments()[0], invocation.getArguments()[1]);
-				return null;
-			}
-		};
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getAttribute(CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
 		ServletContext context = mock(ServletContext.class);
@@ -60,12 +54,20 @@ public class HttpFilterTest {
 		when(request.getSession(true)).thenReturn(mock(HttpSession.class));
 		final Map<String, DynamicInvocationHandler> handlers = new HashMap<>();
 		when(context.getAttribute(HANDLERS)).thenReturn(handlers);
-		doAnswer(initializeMap).when(request).setAttribute(anyString(), any());
+		doAnswer(new Answer() {
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				map.put(invocation.getArguments()[0], invocation.getArguments()[1]);
+				return null;
+			}
+		}).when(request).setAttribute(anyString(), any());
 		filter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
 		assertEquals("filtering", map.get("state"));
-		filter.init(mock(FilterConfig.class));
+		FilterConfig config = mock(FilterConfig.class);
+		when(config.getInitParameter(anyString())).thenReturn("myValue");
+		filter.init(config);
 		assertEquals("init", map.get("state"));
 		assertNotNull(filter.getConfig());
+		assertEquals("myValue", filter.getInitParameter("myParameter"));
 		filter.destroy();
 		assertEquals("destroy", map.get("state"));
 		assertEquals(RequestWrapper.class, filter.getRequest().getClass());
