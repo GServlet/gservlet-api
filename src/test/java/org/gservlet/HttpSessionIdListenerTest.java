@@ -24,7 +24,7 @@ public class HttpSessionIdListenerTest {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		File script = new File(folder + "/" + "HttpSessionIdListener.groovy");
+		File script = new File(folder + "/listeners/" + "HttpSessionIdListener.groovy");
 		AbstractSessionIdListener listener = (AbstractSessionIdListener) scriptManager.loadScript(script);
 		assertNotNull(listener);
 		assertTrue(listener.getClass().isAnnotationPresent(SessionIdListener.class));

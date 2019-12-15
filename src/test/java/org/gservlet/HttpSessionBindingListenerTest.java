@@ -16,7 +16,7 @@ public class HttpSessionBindingListenerTest {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		File script = new File(folder + "/" + "HttpSessionBindingListener.groovy");
+		File script = new File(folder + "/listeners/" + "HttpSessionBindingListener.groovy");
 		AbstractSessionBindingListener listener = (AbstractSessionBindingListener) scriptManager.loadScript(script);
 		assertNotNull(listener);
 		assertTrue(listener.getClass().isAnnotationPresent(SessionBindingListener.class));

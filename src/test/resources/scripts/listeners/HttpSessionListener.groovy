@@ -1,3 +1,5 @@
+package listeners
+
 import org.gservlet.annotation.SessionListener
 
 @SessionListener

@@ -29,7 +29,7 @@ public class ServletRequestListenerTest {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		File script = new File(folder + "/" + "ServletRequestListener.groovy");
+		File script = new File(folder + "/listeners/" + "ServletRequestListener.groovy");
 		AbstractRequestListener listener = (AbstractRequestListener) scriptManager.loadScript(script);
 		assertNotNull(listener);
 		assertTrue(listener.getClass().isAnnotationPresent(RequestListener.class));

@@ -16,7 +16,7 @@ public class ServletContextAttributeListenerTest {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		File script = new File(folder + "/" + "ServletContextAttributeListener.groovy");
+		File script = new File(folder + "/listeners/" + "ServletContextAttributeListener.groovy");
 		AbstractContextAttributeListener listener = (AbstractContextAttributeListener) scriptManager.loadScript(script);
 		assertNotNull(listener);
 		assertTrue(listener.getClass().isAnnotationPresent(ContextAttributeListener.class));

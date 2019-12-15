@@ -16,7 +16,7 @@ public class HttpSessionAttributeListenerTest {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
-		File script = new File(folder + "/" + "HttpSessionAttributeListener.groovy");
+		File script = new File(folder + "/listeners/" + "HttpSessionAttributeListener.groovy");
 		AbstractSessionAttributeListener listener = (AbstractSessionAttributeListener) scriptManager.loadScript(script);
 		assertNotNull(listener);
 		assertTrue(listener.getClass().isAnnotationPresent(SessionAttributeListener.class));
