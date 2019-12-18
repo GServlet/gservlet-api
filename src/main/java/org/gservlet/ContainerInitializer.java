@@ -61,13 +61,13 @@ import groovy.util.ScriptException;
 
 /**
  * 
- * The Initializer class initializes the application and manages the
- * registration and the reloading of a servlet, filter or listener.
+ * The ContainerInitializer manages the registration and the reloading of a servlet, 
+ * filter or listener into the web container.
  * 
  * @author Mamadou Lamine Ba
  * 
  */
-public class Initializer {
+public class ContainerInitializer {
 
 	/**
 	 * The servlet context
@@ -84,7 +84,7 @@ public class Initializer {
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(Initializer.class.getName());
+	protected final Logger logger = Logger.getLogger(ContainerInitializer.class.getName());
 
 	/**
 	 * 
@@ -94,7 +94,7 @@ public class Initializer {
 	 * @throws ServletException the ServletException
 	 * 
 	 */
-	public Initializer(ServletContext context) throws ServletException {
+	public ContainerInitializer(ServletContext context) throws ServletException {
 		try {
 			this.context = context;
 			context.setAttribute(HANDLERS, handlers);
@@ -372,7 +372,7 @@ public class Initializer {
 	/**
 	 * 
 	 * Calls the destroy method of the ServletContextListener objects when the
-	 * ServletContext is about to be shut down
+	 * ServletContext is about to be shutdown
 	 * 
 	 */
 	public void destroy() {

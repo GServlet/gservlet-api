@@ -42,7 +42,7 @@ public class StartupListener implements ServletContextListener {
 	/**
 	 * The initializer object
 	 */
-	protected Initializer initializer;
+	protected ContainerInitializer initializer;
 	/**
 	 * The database manager object
 	 */
@@ -65,7 +65,7 @@ public class StartupListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent event) {
 		ServletContext context = event.getServletContext();
 		try {
-			initializer = new Initializer(context);
+			initializer = new ContainerInitializer(context);
 			databaseManager = new DatabaseManager(context);
 		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during contextInitialized method", e);
@@ -96,12 +96,12 @@ public class StartupListener implements ServletContextListener {
 
 	/**
 	 * 
-	 * Returns the Initializer object
+	 * Returns the ContainerInitializer object
 	 * 
-	 * @return the Initializer object
+	 * @return the ContainerInitializer object
 	 * 
 	 */
-	public Initializer getInitializer() {
+	public ContainerInitializer getInitializer() {
 		return initializer;
 	}
 
