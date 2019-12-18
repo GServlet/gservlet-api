@@ -61,8 +61,8 @@ import groovy.util.ScriptException;
 
 /**
  * 
- * The ContainerInitializer class initializes the application and manages the
- * registration and the reloading of a servlet, filter or listener.
+ * The ContainerInitializer manages the registration and the reloading of a servlet, 
+ * filter or listener into the web container.
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -372,7 +372,7 @@ public class ContainerInitializer {
 	/**
 	 * 
 	 * Calls the destroy method of the ServletContextListener objects when the
-	 * ServletContext is about to be shut down
+	 * ServletContext is about to be shutdown
 	 * 
 	 */
 	public void destroy() {
