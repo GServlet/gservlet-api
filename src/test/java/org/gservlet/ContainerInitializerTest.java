@@ -14,7 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 import org.junit.Test;
 
-public class InitializerTest {
+public class ContainerInitializerTest {
 
 	@Test
 	public void init() throws Exception {
@@ -26,7 +26,7 @@ public class InitializerTest {
 				.thenReturn(mock(FilterRegistration.Dynamic.class));
 		when(context.addServlet(isA(String.class), isA(Servlet.class)))
 				.thenReturn(mock(ServletRegistration.Dynamic.class));
-		Initializer initializer = new Initializer(context);
+		ContainerInitializer initializer = new ContainerInitializer(context);
 		assertEquals(11, initializer.getHandlers().size());
 		for (DynamicInvocationHandler handler : initializer.getHandlers().values()) {
 			assertNotNull(handler.getTarget());
