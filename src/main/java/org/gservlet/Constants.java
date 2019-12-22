@@ -62,6 +62,9 @@ public final class Constants {
 	 */
 	public static final String REQUEST_FILTER = "gservlet.requestFilter";
 
+	/**
+	 * The private constructor
+	 */
 	private Constants() {
 	}
 
