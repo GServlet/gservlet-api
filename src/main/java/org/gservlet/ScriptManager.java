@@ -125,7 +125,7 @@ public class ScriptManager {
 	 * Creates a bytecodeProcessor for the given classPool
 	 * 
 	 * @param classPool the classPool object
-	 * @return the bytecodeProcessor
+	 * @return the bytecodeProcessor object
 	 */
 	protected BytecodeProcessor createBytecodeProcessor(final ClassPool classPool) {
 		return new BytecodeProcessor() {
