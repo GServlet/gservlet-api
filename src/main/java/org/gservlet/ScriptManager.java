@@ -84,9 +84,9 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Loads a script file
+	 * Loads and instantiates an object from a groovy script file
 	 * 
-	 * @param file the script file
+	 * @param file the groovy script file
 	 * @return the instantiated object
 	 * @throws ScriptException the ScriptException
 	 * 
@@ -103,7 +103,7 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Constructs a GroovyScriptEngine for the given folder
+	 * Creates a GroovyScriptEngine for the given folder
 	 * 
 	 * @return the groovy script engine
 	 * @throws MalformedURLException the MalformedURLException
@@ -122,7 +122,7 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Construct a bytecodeProcessor for the given classPool
+	 * Creates a bytecodeProcessor for the given classPool
 	 * 
 	 * @param classPool the classPool object
 	 * @return the bytecodeProcessor
