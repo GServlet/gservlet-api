@@ -92,7 +92,7 @@ public class ScriptManager {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public Object loadScript(File file) throws ScriptException {
+	public Object loadObject(File file) throws ScriptException {
 		try {
 			String name = file.getAbsolutePath().substring(folder.getAbsolutePath().length() + 1);
 			return engine.loadScriptByName(name).getConstructor().newInstance();

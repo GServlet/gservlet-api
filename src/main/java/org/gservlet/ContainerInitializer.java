@@ -123,7 +123,7 @@ public class ContainerInitializer {
 
 	/**
 	 * 
-	 * Loads the scripts for the given scripts folder
+	 * Loads and registers the servlets, filters or listeners for the given scripts folder
 	 * 
 	 * @param folder the scripts folder
 	 * @throws ServletException the ServletException
@@ -136,8 +136,7 @@ public class ContainerInitializer {
 			if (files != null) {
 				for (File file : files) {
 					if (file.isFile()) {
-						Object object = scriptManager.loadScript(file);
-						register(object);
+						register(scriptManager.loadObject(file));
 					} else {
 						loadScripts(file);
 					}
@@ -318,7 +317,7 @@ public class ContainerInitializer {
 	 */
 	protected void process(File script) {
 		try {
-			Object object = scriptManager.loadScript(script);
+			Object object = scriptManager.loadObject(script);
 			Annotation[] annotations = object.getClass().getAnnotations();
 			for (Annotation annotation : annotations) {
 				if (annotation instanceof Servlet) {
