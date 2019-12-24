@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSessionEvent;
 
 /**
 * 
-* Abstract class for receiving notification events about HttpSession sessions being activated and passivated.
+* Abstract class for receiving notification events about sessions being activated and passivated.
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -34,7 +34,8 @@ public abstract class AbstractSessionActivationListener extends AbstractListener
 
 	/**
 	* 
-	* Receives notification that the session has just been activated
+	* Receives notification that the session has just been activated. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the HttpSessionEvent containing the session
 	* 
@@ -46,7 +47,8 @@ public abstract class AbstractSessionActivationListener extends AbstractListener
 
 	/**
 	* 
-	* Receives notification that the session is about to be passivated
+	* Receives notification that the session is about to be passivated. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the HttpSessionEvent containing the session
 	* 

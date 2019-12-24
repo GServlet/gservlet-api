@@ -38,7 +38,7 @@ import groovy.xml.MarkupBuilder;
 
 /**
 * 
-* Abstract class to create an HTTP servlet suitable for a Web site.
+* Abstract class to create a servlet that can respond to HTTP requests
 * 
 * @author Mamadou Lamine Ba
 * 

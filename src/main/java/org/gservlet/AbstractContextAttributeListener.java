@@ -34,7 +34,8 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been added to the ServletContext
+	* Receives notification that an attribute has been added to the ServletContext. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
 	* 
@@ -46,7 +47,8 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been removed to the ServletContext
+	* Receives notification that an attribute has been removed to the ServletContext. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
 	* 
@@ -58,7 +60,8 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been replaced to the ServletContext
+	* Receives notification that an attribute has been replaced to the ServletContext. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the ServletContextAttributeEvent containing the ServletContext to which the attribute was added, along with the attribute name and value
 	* 

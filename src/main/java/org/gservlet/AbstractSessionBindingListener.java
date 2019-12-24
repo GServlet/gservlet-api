@@ -34,7 +34,8 @@ public abstract class AbstractSessionBindingListener extends AbstractListener im
 
 	/**
 	* 
-	* Notifies the object that it is being bound to a session and identifies the session
+	* Notifies the object that it is being bound to a session and identifies the session. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the HttpSessionBindingEvent containing the session
 	* 
@@ -46,7 +47,8 @@ public abstract class AbstractSessionBindingListener extends AbstractListener im
 
 	/**
 	* 
-	* Notifies the object that it is being unbound from a session and identifies the session
+	* Notifies the object that it is being unbound from a session and identifies the session. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the HttpSessionBindingEvent containing the session
 	* 

@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSessionListener;
 
 /**
 * 
-* Abstract class for receiving notification events about HttpSession lifecycle changes.
+* Abstract class for receiving notification events about sessions lifecycle changes.
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -34,7 +34,8 @@ public abstract class AbstractSessionListener extends AbstractListener implement
 
 	/**
 	* 
-	* Receives notification that a session has been created
+	* Receives notification that a session has been created. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the HttpSessionEvent containing the session
 	* 
@@ -46,7 +47,8 @@ public abstract class AbstractSessionListener extends AbstractListener implement
 
 	/**
 	* 
-	* Receives notification that a session is about to be invalidated
+	* Receives notification that a session is about to be invalidated. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the HttpSessionEvent containing the session
 	* 

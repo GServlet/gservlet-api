@@ -36,7 +36,8 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been added to the ServletRequest
+	* Receives notification that an attribute has been added to the ServletRequest. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the ServletRequestAttributeEvent containing the ServletRequest to which the attribute was added, along with the attribute name and value
 	* 
@@ -48,7 +49,8 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been removed to the ServletRequest
+	* Receives notification that an attribute has been removed to the ServletRequest. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the ServletRequestAttributeEvent containing the ServletRequest to which the attribute was added, along with the attribute name and value
 	* 
@@ -60,7 +62,8 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 
 	/**
 	* 
-	* Receives notification that an attribute has been replaced to the ServletRequest
+	* Receives notification that an attribute has been replaced to the ServletRequest. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the ServletRequestAttributeEvent containing the ServletRequest to which the attribute was added, along with the attribute name and value
 	* 
