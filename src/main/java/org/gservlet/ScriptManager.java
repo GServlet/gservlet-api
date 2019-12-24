@@ -91,11 +91,27 @@ public class ScriptManager {
 	 * @throws ScriptException the ScriptException
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
 	public Object loadObject(File file) throws ScriptException {
 		try {
+			return loadClass(file).getConstructor().newInstance();
+		} catch (Exception e) {
+			throw new ScriptException(e);
+		}
+	}
+	
+	/**
+	 * 
+	 * Loads a class from a groovy script file
+	 * 
+	 * @param file the groovy script file
+	 * @return the loaded class
+	 * @throws ScriptException the ScriptException
+	 * 
+	 */
+	public Class<?> loadClass(File file) throws ScriptException {
+		try {
 			String name = file.getAbsolutePath().substring(folder.getAbsolutePath().length() + 1);
-			return engine.loadScriptByName(name).getConstructor().newInstance();
+			return engine.loadScriptByName(name);
 		} catch (Exception e) {
 			throw new ScriptException(e);
 		}
