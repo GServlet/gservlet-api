@@ -85,7 +85,7 @@ public class FileWatcher implements Runnable {
 
 	/**
 	 * 
-	 * Used to create a thread for the watch process
+	 * Used by a daemon thread to start the watch process
 	 * 
 	 */
 	@Override

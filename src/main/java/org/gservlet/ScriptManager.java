@@ -56,7 +56,7 @@ import javassist.NotFoundException;
 public class ScriptManager {
 
 	/**
-	 * The scripts folder
+	 * The scripts folder object
 	 */
 	protected final File folder;
 
@@ -73,7 +73,7 @@ public class ScriptManager {
 	 * 
 	 * Constructs a ScriptManager for the given folder
 	 * 
-	 * @param folder the folder object
+	 * @param folder the scripts folder object
 	 * @throws MalformedURLException the MalformedURLException
 	 * 
 	 */
