@@ -61,8 +61,8 @@ import groovy.util.ScriptException;
 
 /**
  * 
- * The ContainerInitializer manages the registration and the reloading of a servlet, 
- * filter or listener into the web container.
+ * The ContainerInitializer class manages the registration and the reloading of
+ * a servlet, filter or listener into the web container.
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -70,15 +70,15 @@ import groovy.util.ScriptException;
 public class ContainerInitializer {
 
 	/**
-	 * The servlet context
+	 * The servlet context object
 	 */
 	protected final ServletContext context;
 	/**
-	 * The map of invocation handlers
+	 * The map of dynamic invocation handlers
 	 */
 	protected final Map<String, DynamicInvocationHandler> handlers = new HashMap<>();
 	/**
-	 * The script manager
+	 * The script manager object
 	 */
 	protected final ScriptManager scriptManager;
 	/**
@@ -88,7 +88,7 @@ public class ContainerInitializer {
 
 	/**
 	 * 
-	 * Constructs a Initializer for the given servlet context
+	 * Constructs a ContainerInitializer for the given servlet context
 	 * 
 	 * @param context the servlet context
 	 * @throws ServletException the ServletException
@@ -123,7 +123,8 @@ public class ContainerInitializer {
 
 	/**
 	 * 
-	 * Loads the scripts for the given scripts folder
+	 * Loads and registers the servlets, filters or listeners for the given scripts
+	 * folder
 	 * 
 	 * @param folder the scripts folder
 	 * @throws ServletException the ServletException
@@ -136,8 +137,7 @@ public class ContainerInitializer {
 			if (files != null) {
 				for (File file : files) {
 					if (file.isFile()) {
-						Object object = scriptManager.loadScript(file);
-						register(object);
+						register(scriptManager.loadObject(file));
 					} else {
 						loadScripts(file);
 					}
@@ -318,13 +318,11 @@ public class ContainerInitializer {
 	 */
 	protected void process(File script) {
 		try {
-			Object object = scriptManager.loadScript(script);
+			Object object = scriptManager.loadObject(script);
 			Annotation[] annotations = object.getClass().getAnnotations();
 			for (Annotation annotation : annotations) {
-				if (annotation instanceof Servlet) {
-					reload((Servlet) annotation, object);
-				} else if (annotation instanceof Filter || annotation instanceof RequestListener
-						|| annotation instanceof ContextAttributeListener
+				if (annotation instanceof Servlet || annotation instanceof Filter
+						|| annotation instanceof RequestListener || annotation instanceof ContextAttributeListener
 						|| annotation instanceof RequestAttributeListener || annotation instanceof SessionListener
 						|| annotation instanceof SessionAttributeListener) {
 					reload(object);
@@ -337,35 +335,28 @@ public class ContainerInitializer {
 
 	/**
 	 * 
-	 * Reloads a servlet into the web container
-	 * 
-	 * @param servlet the servlet annotation
-	 * @param object  the object
-	 * 
-	 */
-	protected void reload(Servlet servlet, Object object) {
-		String name = servlet.name().trim().equals("") ? object.getClass().getName() : servlet.name();
-		DynamicInvocationHandler handler = handlers.get(name);
-		if (handler != null) {
-			handler.setTarget(object);
-		} else {
-			handler = new DynamicInvocationHandler(object);
-			handler.setRegistered(false);
-			handlers.put(name, handler);
-		}
-	}
-
-	/**
-	 * 
-	 * Reloads a filter or a listener into the web container
+	 * Reloads a servlet, filter or a listener into the web container
 	 * 
 	 * @param object the object
 	 * 
 	 */
 	protected void reload(Object object) {
-		DynamicInvocationHandler handler = handlers.get(object.getClass().getName());
-		if (handler != null) {
-			handler.setTarget(object);
+		if (object.getClass().isAnnotationPresent(Servlet.class)) {
+			Servlet servlet = object.getClass().getAnnotation(Servlet.class);
+			String name = servlet.name().trim().equals("") ? object.getClass().getName() : servlet.name();
+			DynamicInvocationHandler handler = handlers.get(name);
+			if (handler != null) {
+				handler.setTarget(object);
+			} else {
+				handler = new DynamicInvocationHandler(object);
+				handler.setRegistered(false);
+				handlers.put(name, handler);
+			}
+		} else {
+			DynamicInvocationHandler handler = handlers.get(object.getClass().getName());
+			if (handler != null) {
+				handler.setTarget(object);
+			}
 		}
 	}
 
@@ -388,9 +379,9 @@ public class ContainerInitializer {
 
 	/**
 	 * 
-	 * Returns the map of invocation handlers
+	 * Returns the map of dynamic invocation handlers
 	 * 
-	 * @return the map of invocation handlers
+	 * @return the map of dynamic invocation handlers
 	 */
 	public Map<String, DynamicInvocationHandler> getHandlers() {
 		return handlers;

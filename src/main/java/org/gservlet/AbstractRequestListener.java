@@ -36,7 +36,8 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 
 	/**
 	* 
-	* Receives notification that a ServletRequest is about to come into scope of the web application
+	* Receives notification that a ServletRequest is about to come into scope of the web application. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the ServletRequestEvent containing the ServletRequest and the ServletContext representing the web application
 	* 
@@ -48,7 +49,8 @@ public abstract class AbstractRequestListener extends AbstractListener implement
 
 	/**
 	* 
-	* Receives notification that a ServletRequest is about to go out of scope of the web application
+	* Receives notification that a ServletRequest is about to go out of scope of the web application. The call
+	* will be forwarded to the same method with no arguments defined on the subclasses
 	* 
 	* @param event the ServletRequestEvent containing the ServletRequest and the ServletContext representing the web application
 	* 

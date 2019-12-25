@@ -39,7 +39,7 @@ public class DefaultRequestListener implements ServletRequestListener {
 
 	/**
 	* 
-	* Receives notification that a ServletRequest is about to come into scope of the web application
+	* Creates a new {@link groovy.sql.Sql} connection from the data source and stores it as an attribute in the request
 	* 
 	* @param event the ServletRequestEvent containing the ServletRequest and the ServletContext representing the web application
 	* 
@@ -53,7 +53,7 @@ public class DefaultRequestListener implements ServletRequestListener {
 
 	/**
 	* 
-	* Receives notification that a ServletRequest is about to go out of scope of the web application
+	* Gets the created {@link groovy.sql.Sql} connection from the request and closes it
 	* 
 	* @param event the ServletRequestEvent containing the ServletRequest and the ServletContext representing the web application
 	* 

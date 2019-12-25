@@ -125,7 +125,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	 * 
-	 * Invokes the FilterChain doFilter method
+	 * Invokes the doFilter(request, response) method of the FilterChain object
 	 * 
 	 * @throws IOException      the IOException
 	 * @throws ServletException the ServletException

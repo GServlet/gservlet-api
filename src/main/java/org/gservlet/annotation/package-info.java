@@ -18,7 +18,7 @@
  */
 
 /**
- * Contains a number of annotations that allow users to declare servlets, filters, listeners and specify the metadata for the declared component.
+ * Contains a number of annotations that allow users to declare servlets, filters, listeners and to specify the metadata for the declared component.
  * 
  * @see javax.servlet.annotation
  * @author Mamadou Lamine Ba

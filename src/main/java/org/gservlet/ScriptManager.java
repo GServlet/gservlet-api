@@ -56,7 +56,7 @@ import javassist.NotFoundException;
 public class ScriptManager {
 
 	/**
-	 * The scripts folder
+	 * The scripts folder object
 	 */
 	protected final File folder;
 
@@ -73,7 +73,7 @@ public class ScriptManager {
 	 * 
 	 * Constructs a ScriptManager for the given folder
 	 * 
-	 * @param folder the folder object
+	 * @param folder the scripts folder object
 	 * @throws MalformedURLException the MalformedURLException
 	 * 
 	 */
@@ -84,18 +84,34 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Loads a script file
+	 * Loads and instantiates an object from a groovy script file
 	 * 
-	 * @param file the script file
+	 * @param file the groovy script file
 	 * @return the instantiated object
 	 * @throws ScriptException the ScriptException
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
-	public Object loadScript(File file) throws ScriptException {
+	public Object loadObject(File file) throws ScriptException {
+		try {
+			return loadClass(file).getConstructor().newInstance();
+		} catch (Exception e) {
+			throw new ScriptException(e);
+		}
+	}
+	
+	/**
+	 * 
+	 * Loads a class from a groovy script file
+	 * 
+	 * @param file the groovy script file
+	 * @return the loaded class
+	 * @throws ScriptException the ScriptException
+	 * 
+	 */
+	public Class<?> loadClass(File file) throws ScriptException {
 		try {
 			String name = file.getAbsolutePath().substring(folder.getAbsolutePath().length() + 1);
-			return engine.loadScriptByName(name).getConstructor().newInstance();
+			return engine.loadScriptByName(name);
 		} catch (Exception e) {
 			throw new ScriptException(e);
 		}
@@ -103,7 +119,7 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Constructs a GroovyScriptEngine for the given folder
+	 * Creates a GroovyScriptEngine for the given folder
 	 * 
 	 * @return the groovy script engine
 	 * @throws MalformedURLException the MalformedURLException
@@ -122,10 +138,10 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Construct a bytecodeProcessor for the given classPool
+	 * Creates a bytecodeProcessor for the given classPool
 	 * 
 	 * @param classPool the classPool object
-	 * @return the bytecodeProcessor
+	 * @return the bytecodeProcessor object
 	 */
 	protected BytecodeProcessor createBytecodeProcessor(final ClassPool classPool) {
 		return new BytecodeProcessor() {

@@ -46,7 +46,7 @@ public class RequestContext {
 	 */
 	protected HttpServletResponse response;
 	/**
-	 * The filter chain.
+	 * The filter chain object
 	 */
 	protected FilterChain filterChain;
 

@@ -41,7 +41,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 public class DatabaseManager {
 
 	/**
-	 * The servlet context
+	 * The servlet context object
 	 */
 	protected final ServletContext context;
 

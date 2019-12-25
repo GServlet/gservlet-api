@@ -30,7 +30,7 @@ public class ServletRequestListenerTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/listeners/" + "ServletRequestListener.groovy");
-		AbstractRequestListener listener = (AbstractRequestListener) scriptManager.loadScript(script);
+		AbstractRequestListener listener = (AbstractRequestListener) scriptManager.loadObject(script);
 		assertNotNull(listener);
 		assertTrue(listener.getClass().isAnnotationPresent(RequestListener.class));
 		final Map<Object, Object> map = new HashMap<Object, Object>();

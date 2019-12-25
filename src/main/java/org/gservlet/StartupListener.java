@@ -40,7 +40,7 @@ import javax.servlet.annotation.WebListener;
 public class StartupListener implements ServletContextListener {
 
 	/**
-	 * The initializer object
+	 * The container initializer object
 	 */
 	protected ContainerInitializer initializer;
 	/**
@@ -54,8 +54,7 @@ public class StartupListener implements ServletContextListener {
 
 	/**
 	 * 
-	 * Receives notification that the web application initialization process is
-	 * starting
+	 * initializes the application and the registration process 
 	 * 
 	 * @param event the ServletContextEvent containing the ServletContext that is
 	 *              being initialized
@@ -75,7 +74,7 @@ public class StartupListener implements ServletContextListener {
 
 	/**
 	 * 
-	 * Receives notification that the ServletContext is about to be shut down
+	 * Shutdowns the application in a clean way
 	 * 
 	 * @param event the ServletContextEvent containing the ServletContext that is
 	 *              being destroyed

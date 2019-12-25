@@ -40,7 +40,8 @@ public abstract class AbstractSessionIdListener extends AbstractListener impleme
 	protected static final String OLDSESSIONID = "oldSessionId";
 	/**
 	 * 
-	 * Notifies the object that the session id has been changed in a session
+	 * Notifies the object that the session id has been changed in a session. The call
+	 * will be forwarded to the same method with no arguments defined on the subclasses
 	 * 
 	 * @param event the HttpSessionBindingEvent containing the session
 	 * @param oldSessionId the old session Id
