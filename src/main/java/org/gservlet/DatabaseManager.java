@@ -20,7 +20,6 @@
 package org.gservlet;
 
 import static org.gservlet.Constants.*;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -53,9 +52,8 @@ public class DatabaseManager {
 	 * Constructs a DatabaseManager for the given ServletContext
 	 * 
 	 * @param context the servlet context
-	 * @throws IOException the IOException
 	 */
-	public DatabaseManager(ServletContext context) throws IOException {
+	public DatabaseManager(ServletContext context) {
 		this.context = context;
 	}
 
@@ -63,10 +61,9 @@ public class DatabaseManager {
 	 * Creates the data source and stores it as an attribute in the context
 	 *
 	 * @param configuration the application configuration properties
-	 * @throws IOException throws an IOException if the data source can't be created
 	 * 
 	 */
-	public void setupDataSource(Properties configuration) throws IOException {
+	public void setupDataSource(Properties configuration) {
 		if (isConfigurationValid(configuration)) {
 			BasicDataSource dataSource = new BasicDataSource();
 			dataSource.setDriverClassName(configuration.getProperty("db.driver").trim());
