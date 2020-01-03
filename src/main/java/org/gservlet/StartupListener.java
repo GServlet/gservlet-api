@@ -19,8 +19,13 @@
 
 package org.gservlet;
 
+import static org.gservlet.Constants.APP_CONFIG_FILE;
+import static org.gservlet.Constants.CONFIG_FOLDER;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.WatchService;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -66,11 +71,53 @@ public class StartupListener implements ServletContextListener {
 		try {
 			initializer = new ContainerInitializer(context);
 			databaseManager = new DatabaseManager(context);
+			File folder = new File(context.getRealPath("/") + File.separator + CONFIG_FOLDER);
+			File file = new File(folder + File.separator + APP_CONFIG_FILE);
+			databaseManager.setupDataSource(loadConfiguration(file));
+			watch(folder);
 		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during contextInitialized method", e);
 		}
 		logger.info("application started on context " + context.getContextPath());
 	}
+	
+	/**
+	 * Loads the configuration file properties
+	 * 
+	 * @param file the configuration file
+	 * @throws IOException throws an Exception if the configuration file is invalid
+	 * @return the properties of the configuration file
+	 */
+	public Properties loadConfiguration(File file) throws IOException {
+		Properties configuration = new Properties();
+		FileReader reader = new FileReader(file);
+		configuration.load(reader);
+		reader.close();
+		return configuration;
+	}
+	
+	/**
+	 * Watches the configuration folder for file changes
+	 *
+	 * @param folder the configuration folder
+	 */
+	protected void watch(File folder) {
+		new FileWatcher(folder).addListener(new FileAdapter() {
+			@Override
+			public void onCreated(FileEvent event) {
+				File file = event.getFile();
+				if (file.getName().equals(APP_CONFIG_FILE)) {
+					logger.info("reloading configuration file " + file.getName());
+					try {
+						databaseManager.setupDataSource(loadConfiguration(file));
+					} catch (IOException e) {
+						logger.log(Level.INFO, "exception during reload", e);
+					}
+				}
+			}
+		}).watch();
+	}
+
 
 	/**
 	 * 

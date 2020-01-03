@@ -50,9 +50,9 @@ public final class Constants {
 	 */
 	public static final String CONFIG_FOLDER = "conf";
 	/**
-	 * The database configuration file constant
+	 * The application configuration file constant
 	 */
-	public static final String DB_CONFIG_FILE = "db.properties";
+	public static final String APP_CONFIG_FILE = "application.properties";
 	/**
 	 * The handlers constant
 	 */

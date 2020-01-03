@@ -20,8 +20,6 @@
 package org.gservlet;
 
 import static org.gservlet.Constants.*;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -59,79 +57,27 @@ public class DatabaseManager {
 	 */
 	public DatabaseManager(ServletContext context) throws IOException {
 		this.context = context;
-		init();
-	}
-
-	/**
-	 * Initializes the configuration of the data source and watches the
-	 * configuration file for changes
-	 *
-	 * @throws IOException throws an exception if the data source can't be
-	 *                     configured
-	 */
-	protected void init() throws IOException {
-		setupDataSource();
-		watch(new File(context.getRealPath("/") + File.separator + CONFIG_FOLDER));
 	}
 
 	/**
 	 * Creates the data source and stores it as an attribute in the context
 	 *
+	 * @param configuration the application configuration properties
 	 * @throws IOException throws an IOException if the data source can't be created
 	 * 
 	 */
-	protected void setupDataSource() throws IOException {
-		File file = new File(context.getRealPath("/") + File.separator + CONFIG_FOLDER + File.separator + DB_CONFIG_FILE);
-		if (file.exists()) {
-			Properties configuration = loadConfiguration(file);
-			if (isConfigurationValid(configuration)) {
-				BasicDataSource dataSource = new BasicDataSource();
-				dataSource.setDriverClassName(configuration.getProperty("db.driver").trim());
-				dataSource.setUrl(configuration.getProperty("db.url").trim());
-				dataSource.setUsername(configuration.getProperty("db.user").trim());
-				dataSource.setPassword(configuration.getProperty("db.password"));
-				dataSource.setInitialSize(Integer.parseInt(configuration.getProperty("db.minPoolSize").trim()));
-				dataSource.setMaxTotal(Integer.parseInt(configuration.getProperty("db.maxPoolSize").trim()));
-				context.setAttribute(DATASOURCE, dataSource);
-			}
+	public void setupDataSource(Properties configuration) throws IOException {
+		if (isConfigurationValid(configuration)) {
+			BasicDataSource dataSource = new BasicDataSource();
+			dataSource.setDriverClassName(configuration.getProperty("db.driver").trim());
+			dataSource.setUrl(configuration.getProperty("db.url").trim());
+			dataSource.setUsername(configuration.getProperty("db.user").trim());
+			dataSource.setPassword(configuration.getProperty("db.password"));
+			dataSource.setInitialSize(Integer.parseInt(configuration.getProperty("db.minPoolSize").trim()));
+			dataSource.setMaxTotal(Integer.parseInt(configuration.getProperty("db.maxPoolSize").trim()));
+			context.setAttribute(DATASOURCE, dataSource);
 		}
-	}
 
-	/**
-	 * Watches the configuration folder for file changes
-	 *
-	 * @param folder the configuration folder
-	 */
-	protected void watch(File folder) {
-		new FileWatcher(folder).addListener(new FileAdapter() {
-			@Override
-			public void onCreated(FileEvent event) {
-				File file = event.getFile();
-				if (file.getName().equals(DB_CONFIG_FILE)) {
-					logger.info("reloading configuration file " + file.getName());
-					try {
-						setupDataSource();
-					} catch (IOException e) {
-						logger.log(Level.INFO, "exception during reload", e);
-					}
-				}
-			}
-		}).watch();
-	}
-
-	/**
-	 * Loads the configuration file properties
-	 * 
-	 * @param file the configuration file
-	 * @throws IOException throws an Exception if the configuration file is invalid
-	 * @return the properties of the configuration file
-	 */
-	public Properties loadConfiguration(File file) throws IOException {
-		Properties configuration = new Properties();
-		FileReader reader = new FileReader(file);
-		configuration.load(reader);
-		reader.close();
-		return configuration;
 	}
 
 	/**
