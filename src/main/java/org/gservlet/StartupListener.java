@@ -67,18 +67,18 @@ public class StartupListener implements ServletContextListener {
 	 */
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		ServletContext context = event.getServletContext();
 		try {
+			ServletContext context = event.getServletContext();
 			initializer = new ContainerInitializer(context);
 			databaseManager = new DatabaseManager(context);
 			File folder = new File(context.getRealPath("/") + File.separator + CONFIG_FOLDER);
 			File file = new File(folder + File.separator + APP_CONFIG_FILE);
 			databaseManager.setupDataSource(loadConfiguration(file));
 			watch(folder);
+			logger.info("application started on context " + context.getContextPath());
 		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during contextInitialized method", e);
 		}
-		logger.info("application started on context " + context.getContextPath());
 	}
 	
 	/**
@@ -107,7 +107,7 @@ public class StartupListener implements ServletContextListener {
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
 				if (file.getName().equals(APP_CONFIG_FILE)) {
-					logger.info("reloading configuration file " + file.getName());
+					logger.info("processing configuration file " + file.getName());
 					try {
 						databaseManager.setupDataSource(loadConfiguration(file));
 					} catch (IOException e) {
