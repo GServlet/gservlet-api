@@ -5,8 +5,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.isA;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Proxy;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.FilterRegistration;
@@ -52,6 +54,18 @@ public class ContainerInitializerTest {
 		file.delete();
 		initializer.destroy();
 		assertEquals(0, initializer.getHandlers().size());
+	}
+	
+	@Test
+	public void testDynamicInvocationHandler() throws Exception {
+		File folder = new File("src/test/resources/scripts");
+		ScriptManager scriptManager = new ScriptManager(folder);
+		File script = new File(folder + "/" + "InvocationHandler.groovy");
+		Object object = scriptManager.loadObject(script);
+		DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
+		FileFilter proxy = (FileFilter) Proxy.newProxyInstance(this.getClass().getClassLoader(),
+				new Class[] { FileFilter.class }, handler);
+		assertTrue(proxy.accept(script));
 	}
 
 	public void wait(int time) throws InterruptedException {
