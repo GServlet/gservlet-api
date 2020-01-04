@@ -111,15 +111,12 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	 * 
-	 * A convenience method which can be overridden so that there's no need to call
-	 * <code>super.doFilter(request, response, chain)</code>
+	 * A convenience method which can be overridden so that there's no need to implement the
+	 * <code>doFilter(request, response, chain)</code> method
 	 * 
-	 * 
-	 * @throws IOException      the IOException
-	 * @throws ServletException the ServletException
 	 * 
 	 */
-	public void filter() throws IOException, ServletException {
+	public void filter() {
 		// no implementation provided
 	}
 
