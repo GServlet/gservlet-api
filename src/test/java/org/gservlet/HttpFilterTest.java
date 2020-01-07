@@ -2,7 +2,6 @@ package org.gservlet;
 
 import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.PrintWriter;
@@ -12,7 +11,6 @@ import java.util.Map;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -76,24 +74,6 @@ public class HttpFilterTest {
 		assertNotNull(filter.getFilterChain());
 		assertNotNull(filter.getConnection());
 		filter.next();
-		DefaultRequestFilter defaultRequestFilter = new DefaultRequestFilter();
-		assertFalse(defaultRequestFilter.getClass().isAnnotationPresent(WebListener.class));
-		defaultRequestFilter.init(null);
-		script = new File(folder + "/" + "HttpServlet.groovy");
-		AbstractServlet servlet = (AbstractServlet) scriptManager.loadObject(script);
-		assertNotNull(servlet);
-		DynamicInvocationHandler handler = new DynamicInvocationHandler(servlet);
-		handler.setTarget(servlet);
-		handler.setRegistered(false);
-		handlers.put("servlet", handler);
-		when(request.getRequestURI()).thenReturn("/servlet");
-		String[] methods = { "get", "post", "put", "delete", "options", "head", "trace" };
-		for (String method : methods) {
-			when(request.getMethod()).thenReturn(method);
-			defaultRequestFilter.doFilter(request, mock(HttpServletResponse.class), mock(FilterChain.class));
-			assertEquals(method, map.get("state"));
-		}
-		defaultRequestFilter.destroy();
 	}
 
 	@SuppressWarnings("rawtypes")

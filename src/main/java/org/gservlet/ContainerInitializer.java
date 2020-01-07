@@ -117,8 +117,6 @@ public class ContainerInitializer {
 	 */
 	protected void init(File folder) throws ServletException, ScriptException {
 		loadScripts(folder);
-		context.addFilter(REQUEST_FILTER, new DefaultRequestFilter())
-				.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
 	}
 
 	/**
@@ -183,7 +181,7 @@ public class ContainerInitializer {
 	 * 
 	 */
 	protected void addServlet(ServletContext context, Servlet annotation, Object object) throws ServletException {
-		String name = annotation.name().trim().equals("") ? object.getClass().getName() : annotation.name();
+		String name = object.getClass().getName();
 		ServletRegistration registration = context.getServletRegistration(name);
 		if (registration == null) {
 			DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
@@ -341,22 +339,9 @@ public class ContainerInitializer {
 	 * 
 	 */
 	protected void reload(Object object) {
-		if (object.getClass().isAnnotationPresent(Servlet.class)) {
-			Servlet servlet = object.getClass().getAnnotation(Servlet.class);
-			String name = servlet.name().trim().equals("") ? object.getClass().getName() : servlet.name();
-			DynamicInvocationHandler handler = handlers.get(name);
-			if (handler != null) {
-				handler.setTarget(object);
-			} else {
-				handler = new DynamicInvocationHandler(object);
-				handler.setRegistered(false);
-				handlers.put(name, handler);
-			}
-		} else {
-			DynamicInvocationHandler handler = handlers.get(object.getClass().getName());
-			if (handler != null) {
-				handler.setTarget(object);
-			}
+		DynamicInvocationHandler handler = handlers.get(object.getClass().getName());
+		if (handler != null) {
+			handler.setTarget(object);
 		}
 	}
 
