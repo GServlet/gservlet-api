@@ -16,6 +16,6 @@ addons:
     token: $SONAR_TOKEN
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - mvn clean test sonar:sonar -Dmaven.test.failure.ignore=false -Dsonar.projectKey=GServlet_gservlet-api
+  - mvn clean test jacoco:prepare-agent jacoco:report sonar:sonar -Dmaven.test.failure.ignore=false -Dsonar.projectKey=GServlet_gservlet-api -Pcoverage
 after_success:
   - mvn clean test jacoco:report coveralls:report -Pcoverage
