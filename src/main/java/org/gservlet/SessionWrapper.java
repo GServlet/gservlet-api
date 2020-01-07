@@ -316,7 +316,8 @@ public class SessionWrapper implements HttpSession, Serializable {
 	 */
 	@Override
 	public void setAttribute(String name, Object value) {
-		session.setAttribute(name, (Serializable) value);
+		Serializable serializable = (Serializable) value;
+		session.setAttribute(name, serializable);
 	}
 
 	/**
