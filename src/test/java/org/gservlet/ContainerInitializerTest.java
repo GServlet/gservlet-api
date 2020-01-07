@@ -54,6 +54,7 @@ public class ContainerInitializerTest {
 		File script = new File(folder + "/" + "InvocationHandler.groovy");
 		Object object = scriptManager.loadObject(script);
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
+		handler.setTarget(object);
 		FileFilter proxy = (FileFilter) Proxy.newProxyInstance(this.getClass().getClassLoader(),
 				new Class[] { FileFilter.class }, handler);
 		assertTrue(proxy.accept(script));
