@@ -35,11 +35,6 @@ public class DynamicInvocationHandler implements InvocationHandler {
 	 * The target object
 	 */
 	protected Object target;
-	/**
-	 * The registration flag. By default, the value is set to true.
-	 */
-	protected boolean registered = true;
-	
 	
 	/**
 	* 
@@ -89,28 +84,6 @@ public class DynamicInvocationHandler implements InvocationHandler {
 	*/
 	public void setTarget(Object target) {
 		this.target = target;
-	}
-
-	/**
-	* 
-	* Returns the registration flag
-	* 
-	* @return the registration flag
-	* 
-	*/
-	public boolean isRegistered() {
-		return registered;
-	}
-
-	/**
-	* 
-	* Sets the registration flag
-	* 
-	* @param registered the registration flag
-	* 
-	*/
-	public void setRegistered(boolean registered) {
-		this.registered = registered;
 	}
 
 }

@@ -32,7 +32,6 @@ public class ContainerInitializerTest {
 		assertEquals(11, initializer.getHandlers().size());
 		for (DynamicInvocationHandler handler : initializer.getHandlers().values()) {
 			assertNotNull(handler.getTarget());
-			assertTrue(handler.isRegistered());
 		}
 		wait(2000);
 		File file = new File(folder + "/scripts/script.groovy");
@@ -42,15 +41,7 @@ public class ContainerInitializerTest {
 		printWriter.println("class MyServlet {}");
 		printWriter.close();
 		wait(2000);
-		assertEquals(12, initializer.getHandlers().size());
-		file.delete();
-		printWriter = new PrintWriter(new FileWriter(file));
-		printWriter.println("import org.gservlet.annotation.Filter");
-		printWriter.println("@Filter(\"/*\")");
-		printWriter.println("class MyFilter {}");
-		printWriter.close();
-		wait(2000);
-		assertEquals(12, initializer.getHandlers().size());
+		assertEquals(11, initializer.getHandlers().size());
 		file.delete();
 		initializer.destroy();
 		assertEquals(0, initializer.getHandlers().size());
@@ -63,6 +54,7 @@ public class ContainerInitializerTest {
 		File script = new File(folder + "/" + "InvocationHandler.groovy");
 		Object object = scriptManager.loadObject(script);
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
+		handler.setTarget(object);
 		FileFilter proxy = (FileFilter) Proxy.newProxyInstance(this.getClass().getClassLoader(),
 				new Class[] { FileFilter.class }, handler);
 		assertTrue(proxy.accept(script));
