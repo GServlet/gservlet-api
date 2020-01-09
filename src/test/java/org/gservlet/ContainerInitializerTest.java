@@ -38,7 +38,7 @@ public class ContainerInitializerTest {
 		PrintWriter printWriter = new PrintWriter(new FileWriter(file));
 		printWriter.println("import org.gservlet.annotation.Servlet");
 		printWriter.println("@Servlet(\"/servlet\")");
-		printWriter.println("class MyServlet {}");
+		printWriter.println("class HttpServlet {}");
 		printWriter.close();
 		wait(2000);
 		assertEquals(11, initializer.getHandlers().size());

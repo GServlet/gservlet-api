@@ -157,15 +157,15 @@ public class ContainerInitializer {
 		Annotation[] annotations = object.getClass().getAnnotations();
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof Servlet) {
-				addServlet(context, (Servlet) annotation, object);
+				addServlet((Servlet) annotation, object);
 			} else if (annotation instanceof Filter) {
-				addFilter(context, (Filter) annotation, object);
+				addFilter((Filter) annotation, object);
 			} else if (annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
 					|| annotation instanceof RequestListener || annotation instanceof RequestAttributeListener
 					|| annotation instanceof SessionListener || annotation instanceof SessionAttributeListener
 					|| annotation instanceof SessionActivationListener || annotation instanceof SessionBindingListener
 					|| annotation instanceof SessionIdListener) {
-				addListener(context, object);
+				addListener(object);
 			}
 		}
 	}
@@ -174,13 +174,12 @@ public class ContainerInitializer {
 	 * 
 	 * Registers a servlet into the web container
 	 * 
-	 * @param context    the servlet context
 	 * @param annotation the servlet annotation
 	 * @param object     the object
 	 * @throws ServletException the ServletException
 	 * 
 	 */
-	protected void addServlet(ServletContext context, Servlet annotation, Object object) throws ServletException {
+	protected void addServlet(Servlet annotation, Object object) throws ServletException {
 		String name = object.getClass().getName();
 		ServletRegistration registration = context.getServletRegistration(name);
 		if (registration == null) {
@@ -209,13 +208,12 @@ public class ContainerInitializer {
 	 * 
 	 * Registers a filter into the web container
 	 * 
-	 * @param context    the servlet context
 	 * @param annotation the filter annotation
 	 * @param object     the object
 	 * @throws ServletException the ServletException
 	 * 
 	 */
-	protected void addFilter(ServletContext context, Filter annotation, Object object) throws ServletException {
+	protected void addFilter(Filter annotation, Object object) throws ServletException {
 		String name = object.getClass().getName();
 		FilterRegistration registration = context.getFilterRegistration(name);
 		if (registration == null) {
@@ -245,11 +243,10 @@ public class ContainerInitializer {
 	 * 
 	 * Registers a listener into the web container
 	 * 
-	 * @param context the servlet context
-	 * @param object  the object
+	 * @param object  the listener object
 	 * 
 	 */
-	protected void addListener(ServletContext context, Object object) {
+	protected void addListener(Object object) {
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
 		EventListener listener = null;
 		if (object instanceof ServletContextAttributeListener) {
