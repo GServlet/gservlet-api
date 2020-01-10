@@ -1,5 +1,6 @@
 package org.gservlet;
 
+import static org.gservlet.Constants.SCRIPTS_FOLDER;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -13,12 +14,13 @@ import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import org.junit.Test;
 
 public class ContainerInitializerTest {
 
-	@Test
+	@Test(expected = ServletException.class)
 	public void init() throws Exception {
 		File folder = new File("src/test/resources");
 		assertEquals(true, folder.exists());
@@ -45,6 +47,12 @@ public class ContainerInitializerTest {
 		file.delete();
 		initializer.destroy();
 		assertEquals(0, initializer.getHandlers().size());
+		when(context.getServletRegistration(isA(String.class)))
+		.thenReturn(mock(ServletRegistration.Dynamic.class));
+		folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
+		ScriptManager scriptManager = new ScriptManager(folder);
+		File script = new File(folder + "/" + "HttpServlet.groovy");
+		initializer.register(scriptManager.loadObject(script));
 	}
 	
 	@Test

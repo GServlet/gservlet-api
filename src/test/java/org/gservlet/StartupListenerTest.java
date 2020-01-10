@@ -1,5 +1,6 @@
 package org.gservlet;
 
+import static org.gservlet.Constants.SCRIPTS_FOLDER;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
@@ -14,14 +15,17 @@ import javax.servlet.FilterRegistration;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.servlet.annotation.WebListener;
 import org.junit.Test;
 
+import groovy.util.ScriptException;
+
 public class StartupListenerTest {
 
-	@Test
-	public void test() throws InterruptedException, IOException {
+	@Test(expected = ServletException.class)
+	public void test() throws InterruptedException, IOException, ServletException, ScriptException {
 		File folder = new File("src/test/resources/");
 		StartupListener listener = new StartupListener();
 		assertEquals(true, listener.getClass().isAnnotationPresent(WebListener.class));
@@ -49,6 +53,12 @@ public class StartupListenerTest {
 
 		}
 		assertEquals(0, listener.getInitializer().getHandlers().size());
+		when(context.getFilterRegistration(isA(String.class)))
+		.thenReturn(mock(FilterRegistration.Dynamic.class));
+		folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
+		ScriptManager scriptManager = new ScriptManager(folder);
+		File script = new File(folder + "/" + "HttpFilter.groovy");
+		listener.getInitializer().register(scriptManager.loadObject(script));
 	}
 	
 	public void wait(int time) throws InterruptedException {

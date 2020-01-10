@@ -153,7 +153,7 @@ public class ContainerInitializer {
 	 * @throws ServletException the ServletException
 	 * 
 	 */
-	protected void register(Object object) throws ServletException {
+	public void register(Object object) throws ServletException {
 		Annotation[] annotations = object.getClass().getAnnotations();
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof Servlet) {
