@@ -235,6 +235,16 @@ During the lifetime of a typical Java EE web application, a number of events tak
 
 | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] attribute changes.
 
+| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] | Interface for receiving notification events when an object is bound to or unbound from a https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession].
+
+
+| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] | Interface for receiving notification events when an https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] is being passivated and and activated.
+
+
+| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] id changes.
+
+
+
 |=== 
 
 === ServletContextListener
@@ -422,6 +432,87 @@ public class MyHttpSessionAttributeListener implements HttpSessionAttributeListe
     @Override
     public void attributeReplaced(HttpSessionBindingEvent event) {
         System.out.println("attr : " + event.getName() + " replaced with value: " + event.getValue());
+    }
+    
+}
+----
+
+=== HttpSessionBindingListener
+
+It causes an object to be notified when it is bound to or unbound from a session. This may be as a result of a servlet programmer explicitly unbinding an attribute from a session, due to a session being invalidated, or due to a session timing out.
+
+.MyHttpSessionBindingListener.java 
+[#src-listing] 
+[source,java]  
+---- 
+import javax.servlet.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
+import javax.servlet.annotation.WebListener;
+
+@WebListener
+public class MyHttpSessionBindingListener implements HttpSessionBindingListener {
+
+    @Override
+    public void valueBound(HttpSessionBindingEvent event) {
+        System.out.println("attr : " + event.getName() + " bounded with value: " + event.getValue());
+    }
+
+    @Override
+    public void valueUnbound(HttpSessionBindingEvent event) {
+        System.out.println("attr : " + event.getName() + " unbounded with value: " + event.getValue());
+    }
+    
+}
+----
+
+
+=== HttpSessionActivationListener
+
+Objects that are bound to a session may listen to container events notifying them that sessions will be passivated and activated. A container that migrates session between VMs or persists sessions is required to notify all attributes bound to sessions implementing this interface.
+
+.MyHttpSessionActivationListener.java 
+[#src-listing] 
+[source,java]  
+---- 
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionActivationListener;
+import javax.servlet.annotation.WebListener;
+
+@WebListener
+public class MyHttpSessionActivationListener implements HttpSessionActivationListener {
+
+    @Override
+    public void sessionDidActivate(HttpSessionEvent event) {
+        System.out.println("session activated");
+    }
+
+    @Override
+    public void sessionWillPassivate(HttpSessionEvent event) {
+        System.out.println("session passivated");
+    }
+    
+}
+----
+
+
+=== HttpSessionIdListener
+
+This interface is for receiving notification events about HttpSession id changes. The order in which implementations of this interface are invoked is unspecified.
+
+.MyHttpSessionIdListener.java 
+[#src-listing] 
+[source,java]  
+---- 
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionIdListener;
+import javax.servlet.annotation.WebListener;
+
+@WebListener
+public class MyHttpSessionIdListener implements HttpSessionIdListener {
+
+    @Override
+    public void sessionIdChanged(HttpSessionEvent event, String oldSessionId) {
+        System.out.println("session id changed");
     }
     
 }
