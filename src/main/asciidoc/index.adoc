@@ -4,7 +4,7 @@ Mamadou Lamine Ba <https://github.com/laminba2003[@laminba2003]>
 :example-caption!:
 ifndef::imagesdir[:imagesdir: images]
 ifndef::sourcedir[:sourcedir: ../../main/java]
-:description: This guide describes how to use the Groovy language to enhance the Servlet API.
+:description: This guide describes how to use the GServlet API.
 :keywords: Java, Servlets, Groovy, reference, learn, how to
 :doctype: book
 :page-layout!:
@@ -16,40 +16,9 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 :source-highlighter: highlightjs
 :source-language: asciidoc
 
-This manual assumes that you are familiar with Groovy and you have already a basic knowledge of the Servlet API web development. For the newcomers, you can find enough materials online to grasp the subject. If you are a developer with a Java background and want to get up to speed on GServlet, this manual will give you what you need to get started. Learning Groovy is quite simple as it tries to be as natural as possible for Java developers. We invite you to have a look at its https://groovy-lang.org/documentation.html[documentation], which explains all the details of the language.
-
-= Getting Started
-
-== What is GServlet?
-
-The main goal is to use the Groovy language and its provided modules (JSON, SQL, etc.) to simplify Servlet API web development. This API is designed to be non-intrusive and it will not affect the current structure of your Java EE project as you can use both languages within the same codebase. We implemented a live development and a hot reloading feature into the API allowing you to push out new changes and features without having to stop your web application.
-This project was inspired by the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. Groovlets are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, request, response to access the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_], and https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[_HttpServletResponse_] objects. We have access to the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[_HttpSession_] with the session variable. If we want to output data, we can use _out_, _sout_, and _html_. This is more like a script as it does not have a class wrapper.
-
-.Groovlet 
-[#src-listing] 
-[source,java]  
----- 
-if (!session) {
-    session = request.getSession(true)
-}
-if (!session.counter) {
-    session.counter = 1
-}
-html.html { // html is implicitly bound to new MarkupBuilder(out)
-  head {
-      title('Groovy Servlet')
-  }
-  body {
-    p("Hello, ${request.remoteHost}: ${session.counter}! ${new Date()}")
-  }
-}
-session.counter = session.counter + 1
-
-----
-
 == Installation
 
-To get started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. it is named **gservlet-api** and you just need to name a dependency on it in your project.
+To get started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
 
 === From Maven
 
@@ -68,7 +37,7 @@ To get started with GServlet, you may want to begin by creating your first proje
 
 .build.gradle 
 [#src-listing] 
-[source,groovy]  
+[source,java]  
 ---- 
 repositories {
     mavenCentral()
@@ -79,137 +48,16 @@ dependencies {
 }
 ----
 
-== Your First GServlet Project
+== Creating Servlets
 
-In this section, we will guide through the steps of creating your first project with the Eclipse IDE. It is highly recommended to install through the Eclipse Marketplace, the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)] which adds full-featured IDE support including editors, wizards, content assist, debugging, refactoring and searching to make the development with Groovy more enjoyable.
-
-image::https://marketplace.eclipse.org/sites/default/files/script_0.png[alt=GDT]
-
-=== Creating a Dynamic Web Project 
-
-With Eclipse, let's create a dynamic web project that we will call demo
-
-image::create-web-project.png[alt=Web Project]
-
-Once it is done, let's convert it to a maven project with a right click to the project : Configure -> Convert to Maven Project
-
-image::convert-maven.png[alt=Maven Project]
-
-After the pom.xml is generated, we are going now to reference the GServlet API as a dependency
-
-image::project-pom.png[alt=Maven pom]
-
-We need also to create the required **scripts** folder where our Groovy scripts will be created before we can move to write our first Groovy servlet. 
-
-image::scripts-folder.png[alt=Scripts Folder]
-
-=== Your First Groovy Servlet
-
-.CustomerServlet.groovy 
-[#src-listing] 
-[source,java]  
----- 
-import org.gservlet.annotation.Servlet
-
-@Servlet("/customers")
-class CustomerServlet {
-
-    void get() {
-      def customers = []
-      customers << [FirstName : "John", lastName : "Doe"]
-      customers << [FirstName : "Kate", lastName : "Martinez"]
-      customers << [FirstName : "Allisson", lastName : "Becker"]
-      json(customers)
-    }
-    
-    void post() {
-      def customer = request.body // get the json request payload as object 
-      json(customer)
-    }
-    
-    void put() {
-      def customer = request.body // get the json request payload as object
-      json(customer)
-    }
-    
-    void delete() {
-      def param = request.param // shortcut to request.getParameter("param")
-      def attribute = request.attribute // shortcut to request.getAttribute("attribute")
-    }
-    
-}
-----
-
-=== Your First Groovy Filter
-
-.CorsFilter.groovy 
-[#src-listing] 
-[source,java]  
----- 
-import org.gservlet.annotation.Filter
-
-@Filter("/*")
-class CorsFilter {
-
-    void filter() {
-      response.addHeader("Access-Control-Allow-Origin", "*")
-      response.addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST, DELETE")
-      if (request.method == "OPTIONS") {
-        response.status = response.SC_ACCEPTED
-        return
-      }
-      next()
-    }
-    
-}
-----
-
-=== Your First Groovy Listener
-
-.ServletRequestListener.groovy 
-[#src-listing] 
-[source,java]  
----- 
-import org.gservlet.annotation.RequestListener
-
-@RequestListener
-class ServletRequestListener {
-	
-   void init() {
-     println "request initialized"
-   }
-	
-   void destroy() {
-     println "request destroyed"
-   }
-
-}
-----
-
-= Deep Dive
-
-== Groovy Servlets
-
-A servlet  is a small Java program that runs within a Web server. Servlets receive and respond to requests from Web clients, usually across HTTP. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Servlet.html[javax.servlet.Servlet] interface defines methods that all servlets must implement. This interface defines methods to initialize a servlet, to service requests, and to remove a servlet from the server. These are known as life-cycle methods and are called in the following sequence:
-
-1. The servlet is constructed, then initialized with the init method. 
-2. Any calls from clients to the service method are handled.
-3. The servlet is taken out of service, then destroyed with the destroy method.
-
-To implement this interface, you can write a generic servlet that extends https://javaee.github.io/javaee-spec/javadocs/javax/servlet/GenericServlet.html[javax.servlet.GenericServlet] or an HTTP servlet that extends https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[javax.servlet.http.HttpServlet]. This one provides an abstract class to be subclassed to create an HTTP servlet suitable for a Web site and we must override at least one method, usually one of these:
+A servlet is a small Java program that runs within a Web server. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Servlet.html[Servlet] interface defines methods that all servlets must implement. To implement this interface, you can write a generic servlet that extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/GenericServlet.html[GenericServlet] class or an HTTP servlet which extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[HttpServlet] class and which overrides at least one method, usually one of these:
 
 * _doGet_, for HTTP GET requests
 * _doPost_, for HTTP POST requests
 * _doPut_, for HTTP PUT requests
 * _doDelete_, for HTTP DELETE requests
-* _init_ and _destroy_, to manage resources that are held for the life of the servlet
-* _getServletInfo_, which the servlet uses to provide information about itself
 
-There's almost no reason to override the _service_ method since it handles standard HTTP requests by dispatching them to the handler methods for each HTTP request type (the _doXXX_ methods listed above). Likewise, there's almost no reason to override the _doOptions_ and _doTrace_ methods. 
-
-A subclass of https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[HttpServlet] must be either declared in the deployment descriptor of the web application, annotated with https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebServlet.html[WebServlet], or registered via one of the addListener methods defined on the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext]. 
-
-In this example we are going to create a servlet that extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[HttpServlet] class and that provides an implementation of the doGet() method.
+In the example below, we are going to create a Java servlet which extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[HttpServlet] class and which provides an implementation of the _doGet()_ method.
 
 
 .MyHttpServlet.java 
@@ -239,7 +87,7 @@ public class MyHttpServlet extends HttpServlet {
 }
 ----
 
-We are going now to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity.
+We are going now to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are implicit variables.
 
 
 .MyHttpServlet.groovy 
@@ -262,7 +110,7 @@ class MyHttpServlet {
 }
 ----
 
-By default the Content-Type of the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to its https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use the implicit _html_ variable which is an instance of a Groovy MarkupBuilder bound to the response writer to write a better version of this servlet. 
+By default the Content-Type of the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to its https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable to write a better version of this servlet. It is nothing less than an instance of a Groovy MarkupBuilder bound to the response writer.
 
 
 .MyHttpServlet.groovy 
@@ -301,28 +149,11 @@ The generated HTML content looks like this:
 </html>
 ----
 
-== Groovy Filters
+== Creating Filters
 
-A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both.
+A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter_ method.
 
-Filters perform filtering in the _doFilter_ method. Every Filter has access to a https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterConfig.html[FilterConfig] object from which it can obtain its initialization parameters, and a reference to the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] which it can use, for example, to load resources needed for filtering tasks. Filters are configured in the deployment descriptor of a web application.
-
-Examples that have been identified for this design are:
-
-1. Authentication Filters
-2. Logging and Auditing Filters
-3. Image conversion Filters
-4. Data compression Filters
-5. Encryption Filters
-6. Tokenizing Filters
-7. Filters that trigger resource access events
-8. XSL/T filters
-9. Mime-type chain Filter
-
-The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html[javax.servlet.Filter] interface defines methods that all filters must implement. An implementation must be either declared in the deployment descriptor of the web application, annotated with https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebFilter.html[WebFilter], or registered via one of the addListener methods defined on the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext].
-
-In this example we are going to create a filter that implements this interface. 
-
+This is how to create a Java filter that implements this interface:
 
 .MyFilter.java 
 [#src-listing] 
@@ -359,7 +190,7 @@ public class MyFilter implements Filter {
 }
 ----
 
-This is how its Groovy counterpart looks like with the GServlet API.
+This is how to write a Filter with Groovy and the GServlet API:
 
 .MyFilter.groovy 
 [#src-listing] 
@@ -386,16 +217,9 @@ class MyFilter {
 ----
 
 
-== Groovy Listeners
+== Creating Listeners
 
-During the lifetime of a typical Java EE web application, a number of events take place, such as:
-
- * the context is initialized or destroyed
- * requests are created or destroyed
- * request or session attributes are added, removed, or modified
- 
-
-The Servlet API provides a number of listener interfaces we can implement in order to react to these events.
+During the lifetime of a typical Java EE web application, a number of events take place. The Servlet API provides a number of listener interfaces that we can implement to react to these events.
 
 |=== 
 
@@ -415,10 +239,7 @@ The Servlet API provides a number of listener interfaces we can implement in ord
 
 === ServletContextListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] lifecycle changes.
-In order to receive these notification events, the implementation class must be either declared in the deployment descriptor of the web application, annotated with https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebListener.html[WebListener], or registered via one of the addListener methods defined on https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext].
-
-Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent[contextInitialized(javax.servlet.ServletContextEvent)] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-[contextDestroyed(javax.servlet.ServletContextEvent)] method in reverse order.
+This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] lifecycle changes. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent[contextInitialized] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-[contextDestroyed] method in reverse order.
 
 .MyServletContextListener.java 
 [#src-listing] 
@@ -447,12 +268,9 @@ public class MyServletContextListener implements ServletContextListener {
 
 === ServletContextAttributeListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] attribute changes.
-In order to receive these notification events, the implementation class must be either declared in the deployment descriptor of the web application, annotated with https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebListener.html[WebListener], or registered via one of the addListener methods defined on https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext].
+This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] attribute changes. The order in which implementations of this interface are invoked is unspecified.
 
-The order in which implementations of this interface are invoked is unspecified.
-
-.MyContextAttributeListener.java 
+.MyServletContextAttributeListener.java 
 [#src-listing] 
 [source,java]  
 ---- 
@@ -461,7 +279,7 @@ import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.annotation.WebListener;
 
 @WebListener
-public class MyContextAttributeListener implements ServletContextAttributeListener {
+public class MyServletContextAttributeListener implements ServletContextAttributeListener {
 
     @Override
     public void attributeAdded(ServletContextAttributeEvent event) {
@@ -484,13 +302,7 @@ public class MyContextAttributeListener implements ServletContextAttributeListen
 
 === ServletRequestListener
 
-This interface is for receiving notification events about requests coming into and going out of scope of a web application.
-
-A ServletRequest is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain.
-
-In order to receive these notification events, the implementation class must be either declared in the deployment descriptor of the web application, annotated with https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebListener.html[WebListener], or registered via one of the addListener methods defined on https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext].
-
-Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized(javax.servlet.ServletRequestEvent)] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed(javax.servlet.ServletRequestEvent)] method in reverse order.
+This interface is for receiving notification events about requests coming into and going out of scope of a web application. A ServletRequest is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
 
 .MyServletRequestListener.java 
 [#src-listing] 
@@ -520,11 +332,7 @@ public class MyServletRequestListener implements ServletRequestListener {
 === ServletRequestAttributeListener
 
 This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
-Notifications will be generated while the request is within the scope of the web application. A ServletRequest is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope when it exits the last servlet or the first filter in the chain.
-
-In order to receive these notification events, the implementation class must be either declared in the deployment descriptor of the web application, annotated with https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebListener.html[WebListener], or registered via one of the addListener methods defined on https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext].
-
-The order in which implementations of this interface are invoked is unspecified.
+Notifications will be generated while the request is within the scope of the web application. A ServletRequest is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope when it exits the last servlet or the first filter in the chain. The order in which implementations of this interface are invoked is unspecified.
 
 .MyServletRequestAttributeListener.java 
 [#src-listing] 
@@ -558,10 +366,7 @@ public class MyServletRequestAttributeListener implements ServletRequestAttribut
 
 === HttpSessionListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes.
-In order to receive these notification events, the implementation class must be either declared in the deployment descriptor of the web application, annotated with https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebListener.html[WebListener], or registered via one of the addListener methods defined on https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext].
-
-Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent[sessionCreated(javax.servlet.http.HttpSessionEvent)] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent[sessionDestroyed(javax.servlet.http.HttpSessionEvent)] method in reverse order.
+This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent[sessionCreated] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent[sessionDestroyed] method in reverse order.
 
 
 .MyHttpSessionListener.java 
@@ -590,10 +395,7 @@ public class MyHttpSessionListener implements HttpSessionListener {
 
 === HttpSessionAttributeListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] attribute changes.
-In order to receive these notification events, the implementation class must be either declared in the deployment descriptor of the web application, annotated with https://javaee.github.io/javaee-spec/javadocs/javax/servlet/annotation/WebListener.html[WebListener], or registered via one of the addListener methods defined on https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext].
-
-The order in which implementations of this interface are invoked is unspecified.
+This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] attribute changes. The order in which implementations of this interface are invoked is unspecified.
 
 
 .MyHttpSessionAttributeListener.java 
@@ -627,16 +429,9 @@ public class MyHttpSessionAttributeListener implements HttpSessionAttributeListe
 
 == Parsing and Producing JSON
 == Working With a Database
-
-= Examples
-
 == Servlets Examples
 == Filters Examples
 == Listeners Examples
-
-
-= Resources
-
 == Copyright and License
 
 Copyright @2019. Free use of this software is granted under the terms of the Apache 2.0 License.
