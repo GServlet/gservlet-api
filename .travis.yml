@@ -9,8 +9,8 @@ env:
   - GSERVLET_RELOAD=true
 cache:
   directories:
-  - $HOME/.m2/repository
-  - $HOME/.sonar/cache
+    - $HOME/.m2/repository
+    - $HOME/.sonar/cache
 addons:
   sonarcloud:
     organization: "gservlet"
