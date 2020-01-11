@@ -286,7 +286,7 @@ p.lead, .paragraph.lead>p, #preamble>.sectionbody>.paragraph:first-of-type p
 	.videoblock>.title, .dlist>.title, .olist>.title, .ulist>.title, .qlist>.title,
 	.hdlist>.title {
 	line-height: 1.45;
-	color: #7a2518;
+	color: #e65251;
 	font-weight: 400;
 	margin-top: 0;
 	margin-bottom: .25em
@@ -332,7 +332,7 @@ h1, h2, h3, #toctitle, .sidebarblock>.content>.title, h4, h5, h6 {
 	font-family: "Open Sans", "DejaVu Sans", sans-serif;
 	font-weight: 300;
 	font-style: normal;
-	color: #ba3925;
+	color: #e65251;
 	text-rendering: optimizeLegibility;
 	margin-top: 1em;
 	margin-bottom: .5em;
@@ -672,7 +672,7 @@ p a>code:hover {
 	margin-right: auto;
 	margin-top: 0;
 	margin-bottom: 0;
-	max-width: 62.5em;
+	max-width: 71em;
 	*zoom: 1;
 	position: relative;
 	padding-left: .9375em;
@@ -811,7 +811,7 @@ p a>code:hover {
 }
 
 #toctitle {
-	color: #7a2518;
+	color: #e65251;
 	font-size: 1.2em
 }
 
@@ -825,7 +825,7 @@ p a>code:hover {
 	}
 	#toc.toc2 {
 		margin-top: 0 !important;
-		background-color: #f9f9ed;
+		background-color: #fffacd;
 		position: fixed;
 		width: 15em;
 		left: 0;
@@ -912,8 +912,8 @@ p a>code:hover {
 
 #footer {
 	max-width: 100%;
-	background-color: rgba(0, 0, 0, .8);
-	padding: 1.25em;
+	background-color: #cc5251;
+	padding: 1em;
 	padding-left: 1.8em;
 }
 
@@ -970,9 +970,9 @@ p a>code:hover {
 
 #content h1>a.link, h2>a.link, h3>a.link, #toctitle>a.link,
 	.sidebarblock>.content>.title>a.link, h4>a.link, h5>a.link, h6>a.link {
-	color: #ba3925;
+	color: #fff;
     text-decoration: none;
-    background: #f9f9ed;
+    background: #e65251;
     padding: 10px;
     width: 100%;
     display: block;
@@ -981,7 +981,7 @@ p a>code:hover {
 #content h1>a.link:hover, h2>a.link:hover, h3>a.link:hover, #toctitle>a.link:hover,
 	.sidebarblock>.content>.title>a.link:hover, h4>a.link:hover, h5>a.link:hover,
 	h6>a.link:hover {
-	color: #a53221
+	color: #fff
 }
 
 .audioblock, .imageblock, .literalblock, .listingblock, .stemblock,
@@ -1087,7 +1087,7 @@ table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p {
 }
 
 .sidebarblock>.content>.title {
-	color: #7a2518;
+	color: #e65251;
 	margin-top: 0;
 	text-align: center
 }
@@ -1262,7 +1262,7 @@ table.pyhltable .linenodiv {
 	font-weight: bold;
 	line-height: .6em;
 	margin-left: -.6em;
-	color: #7a2518;
+	color: #e65251;
 	text-shadow: 0 1px 2px rgba(0, 0, 0, .1)
 }
 
