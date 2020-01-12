@@ -125,7 +125,7 @@ class MyHttpServlet {
 	void get() {
      html.html {
        body {
-         p("Welcome to servlet")
+         p("Welcome to gservlet")
        }
      } 
    }
@@ -135,8 +135,6 @@ class MyHttpServlet {
 
 The generated HTML content looks like this: 
 
-
-
 .Generated HTML 
 [#src-listing] 
 [source,html]  
@@ -144,10 +142,33 @@ The generated HTML content looks like this:
 <!DOCTYPE html>
 <html>
   <body>
-    <p>Welcome to servlet</p>
+    <p>Welcome to gservlet</p>
   </body>
 </html>
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|config | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletConfig.html[ServletConfig] object
+
+|request | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+
+|response | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+ 
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+
+|connection | The http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
+
+|out | The https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
+
+|html | The http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+|===
 
 == Creating Filters
 
@@ -216,6 +237,30 @@ class MyFilter {
 }
 ----
 
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|config | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterConfig.html[FilterConfig] object
+
+|request | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+
+|response | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+
+|chain | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterChain.html)[FilterChain] object
+ 
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+
+|connection | The http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
+
+|out | The https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
+
+|html | The http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+|===
 
 == Creating Listeners
 
@@ -276,6 +321,26 @@ public class MyServletContextListener implements ServletContextListener {
 ----
 
 
+.MyServletContextListener.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.ContextListener
+
+@ContextListener
+public class MyServletContextListener {
+	
+	public void contextInitialized() {
+		System.out.println("context started")	
+	}
+	
+	public void contextDestroyed() {
+		System.out.println("context destroyed")
+	}
+	
+}
+----
+
 === ServletContextAttributeListener
 
 This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] attribute changes. The order in which implementations of this interface are invoked is unspecified.
@@ -309,6 +374,33 @@ public class MyServletContextAttributeListener implements ServletContextAttribut
 }
 ----
 
+.MyServletContextAttributeListener.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.ContextAttributeListener
+
+@ContextAttributeListener
+public class MyServletContextAttributeListener {
+
+    @Override
+    public void attributeAdded() {
+        System.out.println("attr : " + name + " added with value: " + value)
+    }
+
+    @Override
+    public void attributeRemoved() {
+        System.out.println("attr : " + name + " removed with value: " + value)
+    }
+
+    @Override
+    public void attributeReplaced() {
+        System.out.println("attr : " + name + " replaced with value: " + value)
+    }
+    
+}
+----
+
 
 === ServletRequestListener
 
@@ -325,14 +417,32 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletRequestListener implements ServletRequestListener {
 
-    @Override
     public void requestInitialized(ServletRequestEvent event) {
         System.out.println("request initialized");
     }
 
-    @Override
     public void requestDestroyed(ServletRequestEvent event) {
         System.out.println("request destroyed");
+    }
+    
+}
+----
+
+.MyServletRequestListener.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.RequestListener
+
+@RequestListener
+public class MyServletRequestListener {
+
+    public void requestInitialized() {
+        System.out.println("request initialized")
+    }
+
+    public void requestDestroyed() {
+        System.out.println("request destroyed")
     }
     
 }
@@ -373,6 +483,30 @@ public class MyServletRequestAttributeListener implements ServletRequestAttribut
 }
 ----
 
+.MyServletRequestAttributeListener.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.RequestAttributeListener
+
+@RequestAttributeListener
+public class MyServletRequestAttributeListener {
+
+    public void attributeAdded() {
+        System.out.println("attr : " + name + " added with value: " + value)
+    }
+
+    public void attributeRemoved() {
+        System.out.println("attr : " + name + " removed with value: " + value)
+    }
+
+    public void attributeReplaced() {
+        System.out.println("attr : " + name + " replaced with value: " + value)
+    }
+    
+}
+----
+
 
 === HttpSessionListener
 
@@ -402,6 +536,28 @@ public class MyHttpSessionListener implements HttpSessionListener {
 	
 }
 ----
+
+.MyHttpSessionListener.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.SessionListener
+
+@SessionListener
+public class MyHttpSessionListener {
+	
+	public void sessionCreated() {
+		System.out.println("session created")	
+	}
+	
+	@Override
+	public void sessionDestroyed() {
+		System.out.println("session destroyed")
+	}
+	
+}
+----
+
 
 === HttpSessionAttributeListener
 
@@ -437,6 +593,31 @@ public class MyHttpSessionAttributeListener implements HttpSessionAttributeListe
 }
 ----
 
+
+.MyHttpSessionAttributeListener.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.SessionAttributeListener
+
+@SessionAttributeListener
+public class MyHttpSessionAttributeListener {
+
+    public void attributeAdded() {
+        System.out.println("attr : " + name + " added with value: " + value)
+    }
+
+    public void attributeRemoved() {
+        System.out.println("attr : " + name + " removed with value: " + value)
+    }
+
+    public void attributeReplaced() {
+        System.out.println("attr : " + name + " replaced with value: " + value)
+    }
+    
+}
+----
+
 === HttpSessionBindingListener
 
 It causes an object to be notified when it is bound to or unbound from a session. This may be as a result of a servlet programmer explicitly unbinding an attribute from a session, due to a session being invalidated, or due to a session timing out.
@@ -460,6 +641,26 @@ public class MyHttpSessionBindingListener implements HttpSessionBindingListener 
     @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
         System.out.println("attr : " + event.getName() + " unbounded with value: " + event.getValue());
+    }
+    
+}
+----
+
+.MyHttpSessionBindingListener.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.SessionBindingListener
+
+@SessionBindingListener
+public class MyHttpSessionBindingListener {
+
+    public void valueBound() {
+        System.out.println("attr : " + name + " bounded with value: " + value)
+    }
+
+    public void valueUnbound() {
+        System.out.println("attr : " + name + " unbounded with value: " + value)
     }
     
 }
@@ -494,6 +695,26 @@ public class MyHttpSessionActivationListener implements HttpSessionActivationLis
 }
 ----
 
+.MyHttpSessionActivationListener.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.SessionActivationListener
+
+@SessionActivationListener
+public class MyHttpSessionActivationListener {
+
+    public void sessionDidActivate() {
+        System.out.println("session activated")
+    }
+
+    public void sessionWillPassivate() {
+        System.out.println("session passivated")
+    }
+    
+}
+----
+
 
 === HttpSessionIdListener
 
@@ -512,7 +733,24 @@ public class MyHttpSessionIdListener implements HttpSessionIdListener {
 
     @Override
     public void sessionIdChanged(HttpSessionEvent event, String oldSessionId) {
-        System.out.println("session id changed");
+        System.out.println("session id changed : "+oldSessionId);
+    }
+    
+}
+----
+
+.MyHttpSessionIdListener.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.servlet.annotation.SessionIdListener
+
+@WebListener
+public class MyHttpSessionIdListener {
+
+    @Override
+    public void sessionIdChanged() {
+        System.out.println("session id changed : "+oldSessionId)
     }
     
 }

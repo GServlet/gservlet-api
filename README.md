@@ -182,6 +182,8 @@ On the other hand, the javadocs can be found in the folder:
 
     > ./target/site/apidocs    
 
+We use [UMLGraph](https://www.spinellis.gr/umlgraph/index.html) to generate UML class diagrams which are embedded in the javadocs, therefore you must have [Graphviz](https://www.graphviz.org/) installed in your computer. Also, don't forget to add the **GraphvizX.XX\bin** directory to your system PATH.
+
 ## Versioning
 
 We version GServlet by following [Semantic Versioning](https://semver.org), which is a general template that everyone uses and understands.

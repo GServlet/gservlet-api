@@ -211,7 +211,7 @@ public abstract class AbstractFilter implements Filter {
 	 * @return the FilterChain object
 	 * 
 	 */
-	public FilterChain getFilterChain() {
+	public FilterChain getChain() {
 		return requestContext.get().getFilterChain();
 	}
 

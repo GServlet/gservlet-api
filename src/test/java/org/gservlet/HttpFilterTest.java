@@ -71,7 +71,7 @@ public class HttpFilterTest {
 		assertEquals(RequestWrapper.class, filter.getRequest().getClass());
 		assertEquals(SessionWrapper.class, filter.getSession().getClass());
 		assertEquals(ContextWrapper.class, filter.getContext().getClass());
-		assertNotNull(filter.getFilterChain());
+		assertNotNull(filter.getChain());
 		assertNotNull(filter.getConnection());
 		filter.next();
 	}
