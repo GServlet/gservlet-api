@@ -57,7 +57,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 * Groovy Scripting
 * Hot Reloading
 * JSON and XML Support
-* RDMS Support
+* JDBC Support
 
 ## Requirements
 
@@ -182,7 +182,7 @@ On the other hand, the javadocs can be found in the folder:
 
     > ./target/site/apidocs    
 
-We use [UMLGraph](https://www.spinellis.gr/umlgraph/index.html) to generate UML class diagrams which are embedded in the javadocs, therefore you must have [Graphviz](https://www.graphviz.org/) installed in your computer. Also, don't forget to add the **GraphvizX.XX\bin** directory to your system PATH.
+We use [UMLGraph](https://www.spinellis.gr/umlgraph/index.html) to generate UML class diagrams which are embedded in the javadocs, therefore you must have [Graphviz](https://www.graphviz.org/) installed in your computer and the **GraphvizX.XX\bin** directory added to your system PATH.
 
 ## Versioning
 
