@@ -1,4 +1,4 @@
-= GServlet User Manual
+= GServlet Reference Guide
 Mamadou Lamine Ba <https://github.com/laminba2003[@laminba2003]>
 :revnumber: {project-version}
 :example-caption!:
@@ -193,21 +193,19 @@ import java.io.IOException;
 public class MyFilter implements Filter {
  
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        // invoked when an instance of this filter is created  
+    public void init(FilterConfig filterConfig) throws ServletException {  
     }
  
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {  
-        // invoked for a matching request
         chain.doFilter(request, response);
     }
  
     @Override
     public void destroy() {
-        // invoked when an instance of this filter is destroyed
     }
+    
 }
 ----
 
@@ -222,18 +220,16 @@ import org.gservlet.annotation.Filter;
 @Filter("/*")
 class MyFilter {
  
-    void init() {
-        // invoked when an instance of this filter is created  
+    void init() {  
     }
  
     void filter() {
-        // invoked for a matching request
         next()
     }
  
     void destroy() {
-        // invoked when an instance of this filter is destroyed
     }
+    
 }
 ----
 
@@ -331,15 +327,26 @@ import org.gservlet.annotation.ContextListener
 public class MyServletContextListener {
 	
 	public void contextInitialized() {
-		System.out.println("context started")	
+		println "context started"	
 	}
 	
 	public void contextDestroyed() {
-		System.out.println("context destroyed")
+		println "context destroyed"
 	}
 	
 }
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
+|===
 
 === ServletContextAttributeListener
 
@@ -358,17 +365,17 @@ public class MyServletContextAttributeListener implements ServletContextAttribut
 
     @Override
     public void attributeAdded(ServletContextAttributeEvent event) {
-        System.out.println("attr : " + event.getName() + " added with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
     @Override
     public void attributeRemoved(ServletContextAttributeEvent event) {
-        System.out.println("attr : " + event.getName() + " removed with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
     @Override
     public void attributeReplaced(ServletContextAttributeEvent event) {
-        System.out.println("attr : " + event.getName() + " replaced with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
     
 }
@@ -385,26 +392,41 @@ public class MyServletContextAttributeListener {
 
     @Override
     public void attributeAdded() {
-        System.out.println("attr : " + name + " added with value: " + value)
+        println "attr $name added with value $value"
     }
 
     @Override
     public void attributeRemoved() {
-        System.out.println("attr : " + name + " removed with value: " + value)
+        println "attr $name removed with value $value"
     }
 
     @Override
     public void attributeReplaced() {
-        System.out.println("attr : " + name + " replaced with value: " + value)
+        println "attr $name replaced with value $value"
     }
     
 }
 ----
 
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
+
+|name | The attribute name
+
+|value | The attribute value
+|===
+
 
 === ServletRequestListener
 
-This interface is for receiving notification events about requests coming into and going out of scope of a web application. A ServletRequest is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
+This interface is for receiving notification events about requests coming into and going out of scope of a web application. A request is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
 
 .MyServletRequestListener.java 
 [#src-listing] 
@@ -438,15 +460,31 @@ import org.gservlet.annotation.RequestListener
 public class MyServletRequestListener {
 
     public void requestInitialized() {
-        System.out.println("request initialized")
+        println "request initialized"
     }
 
     public void requestDestroyed() {
-        System.out.println("request destroyed")
+        println "request destroyed"
     }
     
 }
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|request | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
+
+|===
 
 
 === ServletRequestAttributeListener
@@ -467,17 +505,17 @@ public class MyServletRequestAttributeListener implements ServletRequestAttribut
 
     @Override
     public void attributeAdded(ServletRequestAttributeEvent event) {
-        System.out.println("attr : " + event.getName() + " added with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
     @Override
     public void attributeRemoved(ServletRequestAttributeEvent event) {
-        System.out.println("attr : " + event.getName() + " removed with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
     @Override
     public void attributeReplaced(ServletRequestAttributeEvent event) {
-        System.out.println("attr : " + event.getName() + " replaced with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
     
 }
@@ -493,20 +531,38 @@ import org.gservlet.annotation.RequestAttributeListener
 public class MyServletRequestAttributeListener {
 
     public void attributeAdded() {
-        System.out.println("attr : " + name + " added with value: " + value)
+        println "attr $name added with value $value"
     }
 
     public void attributeRemoved() {
-        System.out.println("attr : " + name + " removed with value: " + value)
+        println "attr $name removed with value $value"
     }
 
     public void attributeReplaced() {
-        System.out.println("attr : " + name + " replaced with value: " + value)
+        println "attr $name replaced with value $value"
     }
     
 }
 ----
 
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|request | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
+
+|name | The attribute name
+
+|value | The attribute value
+|===
 
 === HttpSessionListener
 
@@ -547,16 +603,28 @@ import org.gservlet.annotation.SessionListener
 public class MyHttpSessionListener {
 	
 	public void sessionCreated() {
-		System.out.println("session created")	
+		println "session created"	
 	}
 	
 	@Override
 	public void sessionDestroyed() {
-		System.out.println("session destroyed")
+		println "session destroyed"
 	}
 	
 }
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+
+|===
 
 
 === HttpSessionAttributeListener
@@ -577,17 +645,17 @@ public class MyHttpSessionAttributeListener implements HttpSessionAttributeListe
 
     @Override
     public void attributeAdded(HttpSessionBindingEvent event) {
-        System.out.println("attr : " + event.getName() + " added with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
     @Override
     public void attributeRemoved(HttpSessionBindingEvent event) {
-        System.out.println("attr : " + event.getName() + " removed with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
     @Override
     public void attributeReplaced(HttpSessionBindingEvent event) {
-        System.out.println("attr : " + event.getName() + " replaced with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
     
 }
@@ -604,19 +672,34 @@ import org.gservlet.annotation.SessionAttributeListener
 public class MyHttpSessionAttributeListener {
 
     public void attributeAdded() {
-        System.out.println("attr : " + name + " added with value: " + value)
+        println "attr $name added with value $value"
     }
 
     public void attributeRemoved() {
-        System.out.println("attr : " + name + " removed with value: " + value)
+        println "attr $name removed with value $value"
     }
 
     public void attributeReplaced() {
-        System.out.println("attr : " + name + " replaced with value: " + value)
+        println "attr $name replaced with value $value"
     }
     
 }
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+
+|name | The attribute name
+
+|value | The attribute value
+|===
 
 === HttpSessionBindingListener
 
@@ -635,12 +718,12 @@ public class MyHttpSessionBindingListener implements HttpSessionBindingListener 
 
     @Override
     public void valueBound(HttpSessionBindingEvent event) {
-        System.out.println("attr : " + event.getName() + " bounded with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " bounded with value " + event.getValue());
     }
 
     @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
-        System.out.println("attr : " + event.getName() + " unbounded with value: " + event.getValue());
+        System.out.println("attr " + event.getName() + " unbounded with value " + event.getValue());
     }
     
 }
@@ -656,15 +739,30 @@ import org.gservlet.annotation.SessionBindingListener
 public class MyHttpSessionBindingListener {
 
     public void valueBound() {
-        System.out.println("attr : " + name + " bounded with value: " + value)
+        println "attr $name bounded with value $value"
     }
 
     public void valueUnbound() {
-        System.out.println("attr : " + name + " unbounded with value: " + value)
+        println "attr $name unbounded with value $value"
     }
     
 }
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+
+|name | The attribute name
+
+|value | The attribute value
+|===
 
 
 === HttpSessionActivationListener
@@ -705,15 +803,27 @@ import org.gservlet.annotation.SessionActivationListener
 public class MyHttpSessionActivationListener {
 
     public void sessionDidActivate() {
-        System.out.println("session activated")
+        println "session activated"
     }
 
     public void sessionWillPassivate() {
-        System.out.println("session passivated")
+        println "session passivated"
     }
     
 }
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+
+|===
 
 
 === HttpSessionIdListener
@@ -733,7 +843,7 @@ public class MyHttpSessionIdListener implements HttpSessionIdListener {
 
     @Override
     public void sessionIdChanged(HttpSessionEvent event, String oldSessionId) {
-        System.out.println("session id changed : "+oldSessionId);
+        System.out.println("the session id was "+oldSessionId);
     }
     
 }
@@ -750,11 +860,26 @@ public class MyHttpSessionIdListener {
 
     @Override
     public void sessionIdChanged() {
-        System.out.println("session id changed : "+oldSessionId)
+        println "the session id was $oldSessionId"
     }
     
 }
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+
+|oldSessionId | The old https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] Id
+
+|===
+
 
 == Parsing and Producing JSON
 == Working With a Database
@@ -771,7 +896,6 @@ See the https://www.apache.org/licenses/LICENSE-2.0[LICENSE] page for details.
 
 GServlet was written by https://github.com/laminba2003[Mamadou Lamine Ba].
 
-
 == Contributing
 
-GServlet is an open source project and contributions, of any type or any scope, drive the project forward. There are lot of ways to contribute, not just writing/fixing code.
+GServlet is an open source project and contributions, of any type or any scope, drive the project forward. There are lot of ways to contribute, not just writing/fixing code.  We provide more information about how to get involved in our link:/contribute[contribute] page.
