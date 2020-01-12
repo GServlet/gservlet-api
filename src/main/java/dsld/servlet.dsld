@@ -205,7 +205,7 @@ contribute(currentType(annos: annotatedBy(SessionAttributeListener))) {
 
 contribute(currentType(annos: annotatedBy(SessionActivationListener))) {
 	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'the Logger object'
-	property name : 'event', type : javax.servlet.http.HttpSessionBindingEvent, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'the HttpSessionBindingEvent object'
+	property name : 'event', type : javax.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'the HttpSessionEvent object'
 	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'the HttpSession object'
 }
 
