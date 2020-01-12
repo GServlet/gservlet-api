@@ -1,4 +1,4 @@
-= GServlet User Manual
+= GServlet Reference Guide
 Mamadou Lamine Ba <https://github.com/laminba2003[@laminba2003]>
 :revnumber: {project-version}
 :example-caption!:
@@ -341,6 +341,17 @@ public class MyServletContextListener {
 }
 ----
 
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
+|===
+
 === ServletContextAttributeListener
 
 This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] attribute changes. The order in which implementations of this interface are invoked is unspecified.
@@ -401,6 +412,21 @@ public class MyServletContextAttributeListener {
 }
 ----
 
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
+
+|name | The attribute name
+
+|value | The attribute value
+|===
+
 
 === ServletRequestListener
 
@@ -447,6 +473,22 @@ public class MyServletRequestListener {
     
 }
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|request | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
+
+|===
 
 
 === ServletRequestAttributeListener
@@ -507,6 +549,24 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|request | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
+
+|name | The attribute name
+
+|value | The attribute value
+|===
 
 === HttpSessionListener
 
@@ -557,6 +617,18 @@ public class MyHttpSessionListener {
 	
 }
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+
+|===
 
 
 === HttpSessionAttributeListener
@@ -618,6 +690,21 @@ public class MyHttpSessionAttributeListener {
 }
 ----
 
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+
+|name | The attribute name
+
+|value | The attribute value
+|===
+
 === HttpSessionBindingListener
 
 It causes an object to be notified when it is bound to or unbound from a session. This may be as a result of a servlet programmer explicitly unbinding an attribute from a session, due to a session being invalidated, or due to a session timing out.
@@ -665,6 +752,21 @@ public class MyHttpSessionBindingListener {
     
 }
 ----
+
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+
+|name | The attribute name
+
+|value | The attribute value
+|===
 
 
 === HttpSessionActivationListener
@@ -715,6 +817,18 @@ public class MyHttpSessionActivationListener {
 }
 ----
 
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+
+|===
+
 
 === HttpSessionIdListener
 
@@ -756,6 +870,21 @@ public class MyHttpSessionIdListener {
 }
 ----
 
+.Implicit Variables
+|===
+|Variable |Description
+
+|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+
+|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+
+|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+
+|oldSessionId | The old https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] Id
+
+|===
+
+
 == Parsing and Producing JSON
 == Working With a Database
 == Servlets Examples
@@ -770,7 +899,6 @@ See the https://www.apache.org/licenses/LICENSE-2.0[LICENSE] page for details.
 == Authors
 
 GServlet was written by https://github.com/laminba2003[Mamadou Lamine Ba].
-
 
 == Contributing
 
