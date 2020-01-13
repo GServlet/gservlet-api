@@ -48,6 +48,97 @@ dependencies {
 }
 ----
 
+## Getting Started
+
+Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. These steps are as follows:
+
+1. Create a dynamic web project
+* Create the scripts folder inside your web content directory
+* Write the servlet source code
+* Run your Java web server
+* Call your servlet from a web browser
+
+
+You can find below some examples that you can try out and for Hot Reloading, set the **GSERVLET_RELOAD** environment variable to true in your IDE. 
+    
+.CustomerServlet.java 
+[#src-listing] 
+[source,java]  
+----
+import org.gservlet.annotation.Servlet
+
+@Servlet("/customers")
+class CustomerServlet {
+
+    void get() {
+      def customers = []
+      customers << [FirstName : "John", lastName : "Doe"]
+      customers << [FirstName : "Kate", lastName : "Martinez"]
+      customers << [FirstName : "Allisson", lastName : "Becker"]
+      json(customers)
+    }
+
+    void post() {
+      def customer = request.body // get the json request payload as object
+      json(customer)
+    }
+
+    void put() {
+      def customer = request.body // get the json request payload as object
+      json(customer)
+    }
+
+    void delete() {
+      def param = request.param // shortcut to request.getParameter("param")
+      def attribute = request.attribute // shortcut to request.getAttribute("attribute")
+    }
+
+}
+----
+
+.CorsFilter.java 
+[#src-listing] 
+[source,java]  
+----
+import org.gservlet.annotation.Filter
+
+@Filter("/*")
+class CorsFilter {
+
+    void filter() {
+      response.addHeader("Access-Control-Allow-Origin", "*")
+      response.addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST, DELETE")
+      if (request.method == "OPTIONS") {
+        response.status = response.SC_ACCEPTED
+        return
+      }
+      next()
+    }
+
+}
+----
+
+.ServletRequestListener.java 
+[#src-listing] 
+[source,java]  
+----
+import org.gservlet.annotation.RequestListener
+
+@RequestListener
+class ServletRequestListener {
+
+   void init() {
+     println "request initialized"
+   }
+
+   void destroy() {
+     println "request destroyed"
+   }
+
+}
+----
+
+
 == Creating Servlets
 
 A servlet is a small Java program that runs within a Web server. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Servlet.html[Servlet] interface defines methods that all servlets must implement. To implement this interface, you can write a generic servlet that extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/GenericServlet.html[GenericServlet] class or an HTTP servlet which extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[HttpServlet] class and which overrides at least one method, usually one of these:
