@@ -920,10 +920,17 @@ p a>code:hover {
 	}
 
 	p, blockquote, dt, td.content, span.alt {
-    	font-size: 0.95rem !important;
+    	font-size: 0.94rem !important;
 	}
 	ol>li p, ul>li p, ul dd, ol dd, .olist .olist, .ulist .ulist, .ulist .olist, .olist .ulist {
-    	font-size: 0.92em!important;
+    	font-size: 0.91em!important;
+	}
+
+	.listingblock pre.highlightjs>code {
+		padding: 0.5em!important;
+	}
+	.literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] {
+    	font-size: .73em!important;
 	}
 }
 
