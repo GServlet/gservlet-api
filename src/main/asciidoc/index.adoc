@@ -9,12 +9,21 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 :doctype: book
 :page-layout!:
 :toc: left
+:nofooter:
 :sectanchors:
 :sectlinks:
 :sectnums:
 :icons: font
 :source-highlighter: highlightjs
 :source-language: asciidoc
+
+== Main Features
+
+* Servlet 3.1+ Support
+* Groovy Scripting
+* Hot Reloading
+* JSON and XML Support
+* JDBC Support
 
 == Installation
 
