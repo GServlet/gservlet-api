@@ -703,7 +703,7 @@ p a>code:hover {
 
 #header>h1:first-child {
 	color: rgba(0, 0, 0, .85);
-	margin-top: 2.25rem;
+	margin-top: 1.25rem;
 	margin-bottom: 0
 }
 
@@ -908,6 +908,10 @@ p a>code:hover {
 
 	.sidebarblock p, .sidebarblock dt, .sidebarblock td.content, p.tableblock {
     	font-size: 0.8em !important;
+	}
+	#header>h1:first-child {
+		margin-top: 0.5rem;
+		font-weight: 600;
 	}
 	h2, h3, #toctitle, .sidebarblock>.content>.title {
     	font-size: 1.2em;
