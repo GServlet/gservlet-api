@@ -49,7 +49,7 @@ html.html {
 session.counter = session.counter + 1
 ```
 
-More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for a particular release can be browsed as well.
+More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0) for a particular release can be browsed as well.
 
 ## Features
 
@@ -178,11 +178,11 @@ The built documentation can then be found in the following location:
   
     > ./target/generated-docs
     
-On the other hand, the javadocs can be found in the folder:
+On the other hand, the Javadocs can be found in the folder:
 
     > ./target/site/apidocs    
 
-We use [UMLGraph](https://www.spinellis.gr/umlgraph/index.html) to generate UML class diagrams which are embedded in the javadocs, therefore you must have [Graphviz](https://www.graphviz.org/) installed in your computer and the **GraphvizX.XX\bin** directory added to your system PATH.
+We use [UMLGraph](https://www.spinellis.gr/umlgraph/index.html) to generate UML class diagrams which are embedded in the Javadocs, therefore you must have [Graphviz](https://www.graphviz.org/) installed in your computer and the **GraphvizX.XX\bin** directory added to your system PATH.
 
 ## Versioning
 
