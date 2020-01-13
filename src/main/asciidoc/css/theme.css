@@ -1,5 +1,7 @@
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+
 @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+
 article, aside, details, figcaption, figure, footer, header, hgroup,
 	main, nav, section, summary {
 	display: block
@@ -398,13 +400,13 @@ code {
 ul, ol, dl {
 	font-size: 1em;
 	line-height: 1.6;
-	margin-bottom: 1.25em;
+	margin-bottom: 0;
 	list-style-position: outside;
 	font-family: inherit
 }
 
 ul, ol {
-	margin-left: 1.5em
+	margin-left: 2.1em;
 }
 
 ul li ul, ul li ol {
@@ -918,7 +920,17 @@ p a>code:hover {
 	}
 
 	p, blockquote, dt, td.content, span.alt {
-    	font-size: 0.95rem !important;
+    	font-size: 0.94rem !important;
+	}
+	ol>li p, ul>li p, ul dd, ol dd, .olist .olist, .ulist .ulist, .ulist .olist, .olist .ulist {
+    	font-size: 0.91em!important;
+	}
+
+	.listingblock pre.highlightjs>code {
+		padding: 0.5em!important;
+	}
+	.literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] {
+    	font-size: .73em!important;
 	}
 }
 
@@ -954,12 +966,12 @@ p a>code:hover {
 }
 
 .sect1 {
-	padding-bottom: .625em
+	padding-bottom: 0em
 }
 
 @media only screen and (min-width:768px) {
 	.sect1 {
-		padding-bottom: 1.25em
+		padding-bottom: 0em
 	}
 }
 
@@ -1485,10 +1497,14 @@ td>div.verse {
 	white-space: pre
 }
 
-ol {
-	margin-left: 1.75em
+ul, ol {
+	margin-left: 2.1em;
 }
 
+.ulist, .olist {
+	background : #fefff8;
+	padding : 5px;
+}
 ul li ol {
 	margin-left: 1.5em
 }
@@ -1503,7 +1519,7 @@ dl dd:last-child, dl dd:last-child>:last-child {
 
 ol>li p, ul>li p, ul dd, ol dd, .olist .olist, .ulist .ulist, .ulist .olist,
 	.olist .ulist {
-	margin-bottom: .625em
+	margin-bottom: .625em;
 }
 
 ul.checklist, ul.none, ol.none, ul.no-bullet, ol.no-bullet, ol.unnumbered,

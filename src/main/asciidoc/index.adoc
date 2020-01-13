@@ -1,4 +1,4 @@
-= GServlet Reference Guide
+= GServlet Developer Guide
 Mamadou Lamine Ba <https://github.com/laminba2003[@laminba2003]>
 :revnumber: {project-version}
 :example-caption!:
@@ -9,12 +9,35 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 :doctype: book
 :page-layout!:
 :toc: left
+:nofooter:
 :sectanchors:
 :sectlinks:
 :sectnums:
 :icons: font
 :source-highlighter: highlightjs
 :source-language: asciidoc
+
+== Introduction to GServlet
+
+GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. If you have no prior experience with Groovy, there are several curated lists of online resources for learning it.
+
+* https://groovy-lang.org[Official Groovy Website]
+* https://groovy-lang.org/learn.html#books[List of Programming Books]
+
+== Main Features
+
+* Servlet 3.1+ Support
+* Groovy Scripting
+* Hot Reloading
+* JSON and XML Support
+* JDBC Support
+
+== Requirements
+
+* Java 7+
+* Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
+* Java EE 7+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
+
 
 == Installation
 
@@ -52,11 +75,11 @@ dependencies {
 
 Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. These steps are as follows:
 
-1. Create a dynamic web project
-* Create the scripts folder inside your web content directory
-* Write the servlet source code
-* Run your Java web server
-* Call your servlet from a web browser
+. Create a dynamic web project
+. Create the scripts folder inside your web content directory
+. Write the servlet source code
+. Run your Java web server
+. Call your servlet from a web browser
 
 
 You can find below some examples that you can try out and for Hot Reloading, set the **GSERVLET_RELOAD** environment variable to true in your IDE. 
