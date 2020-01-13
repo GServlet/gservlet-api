@@ -481,17 +481,14 @@ import org.gservlet.annotation.ContextAttributeListener
 @ContextAttributeListener
 public class MyServletContextAttributeListener {
 
-    @Override
     public void attributeAdded() {
         println "attr $name added with value $value"
     }
 
-    @Override
     public void attributeRemoved() {
         println "attr $name removed with value $value"
     }
 
-    @Override
     public void attributeReplaced() {
         println "attr $name replaced with value $value"
     }
@@ -530,10 +527,12 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletRequestListener implements ServletRequestListener {
 
+	 @Override
     public void requestInitialized(ServletRequestEvent event) {
         System.out.println("request initialized");
     }
 
+    @Override
     public void requestDestroyed(ServletRequestEvent event) {
         System.out.println("request destroyed");
     }
@@ -697,7 +696,6 @@ public class MyHttpSessionListener {
 		println "session created"	
 	}
 	
-	@Override
 	public void sessionDestroyed() {
 		println "session destroyed"
 	}
@@ -949,7 +947,6 @@ import org.servlet.annotation.SessionIdListener
 @WebListener
 public class MyHttpSessionIdListener {
 
-    @Override
     public void sessionIdChanged() {
         println "the session id was $oldSessionId"
     }
