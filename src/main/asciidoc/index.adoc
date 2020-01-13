@@ -17,6 +17,13 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 :source-highlighter: highlightjs
 :source-language: asciidoc
 
+== Introduction to GServlet
+
+GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. If you have no prior experience with Groovy, there are several curated lists of online resources for learning it.
+
+* https://groovy-lang.org[Official Groovy Programming Language website]
+* https://groovy-lang.org/learn.html#books[List of Programming Books]
+
 == Main Features
 
 * Servlet 3.1+ Support
@@ -24,6 +31,13 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 * Hot Reloading
 * JSON and XML Support
 * JDBC Support
+
+== Requirements
+
+* Java 7+
+* Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
+* Java EE 7+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
+
 
 == Installation
 
