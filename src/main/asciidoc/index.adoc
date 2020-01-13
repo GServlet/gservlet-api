@@ -417,11 +417,11 @@ import org.gservlet.annotation.ContextListener
 @ContextListener
 public class MyServletContextListener {
 	
-	public void contextInitialized() {
+	void contextInitialized() {
 		println "context started"	
 	}
 	
-	public void contextDestroyed() {
+	void contextDestroyed() {
 		println "context destroyed"
 	}
 	
@@ -481,15 +481,15 @@ import org.gservlet.annotation.ContextAttributeListener
 @ContextAttributeListener
 public class MyServletContextAttributeListener {
 
-    public void attributeAdded() {
+    void attributeAdded() {
         println "attr $name added with value $value"
     }
 
-    public void attributeRemoved() {
+    void attributeRemoved() {
         println "attr $name removed with value $value"
     }
 
-    public void attributeReplaced() {
+    void attributeReplaced() {
         println "attr $name replaced with value $value"
     }
     
@@ -549,11 +549,11 @@ import org.gservlet.annotation.RequestListener
 @RequestListener
 public class MyServletRequestListener {
 
-    public void requestInitialized() {
+    void requestInitialized() {
         println "request initialized"
     }
 
-    public void requestDestroyed() {
+    void requestDestroyed() {
         println "request destroyed"
     }
     
@@ -620,15 +620,15 @@ import org.gservlet.annotation.RequestAttributeListener
 @RequestAttributeListener
 public class MyServletRequestAttributeListener {
 
-    public void attributeAdded() {
+    void attributeAdded() {
         println "attr $name added with value $value"
     }
 
-    public void attributeRemoved() {
+    void attributeRemoved() {
         println "attr $name removed with value $value"
     }
 
-    public void attributeReplaced() {
+    void attributeReplaced() {
         println "attr $name replaced with value $value"
     }
     
@@ -692,11 +692,11 @@ import org.gservlet.annotation.SessionListener
 @SessionListener
 public class MyHttpSessionListener {
 	
-	public void sessionCreated() {
+	void sessionCreated() {
 		println "session created"	
 	}
 	
-	public void sessionDestroyed() {
+	void sessionDestroyed() {
 		println "session destroyed"
 	}
 	
@@ -760,15 +760,15 @@ import org.gservlet.annotation.SessionAttributeListener
 @SessionAttributeListener
 public class MyHttpSessionAttributeListener {
 
-    public void attributeAdded() {
+    void attributeAdded() {
         println "attr $name added with value $value"
     }
 
-    public void attributeRemoved() {
+    void attributeRemoved() {
         println "attr $name removed with value $value"
     }
 
-    public void attributeReplaced() {
+    void attributeReplaced() {
         println "attr $name replaced with value $value"
     }
     
@@ -827,11 +827,11 @@ import org.gservlet.annotation.SessionBindingListener
 @SessionBindingListener
 public class MyHttpSessionBindingListener {
 
-    public void valueBound() {
+    void valueBound() {
         println "attr $name bounded with value $value"
     }
 
-    public void valueUnbound() {
+    void valueUnbound() {
         println "attr $name unbounded with value $value"
     }
     
@@ -891,11 +891,11 @@ import org.gservlet.annotation.SessionActivationListener
 @SessionActivationListener
 public class MyHttpSessionActivationListener {
 
-    public void sessionDidActivate() {
+    void sessionDidActivate() {
         println "session activated"
     }
 
-    public void sessionWillPassivate() {
+    void sessionWillPassivate() {
         println "session passivated"
     }
     
@@ -947,7 +947,7 @@ import org.servlet.annotation.SessionIdListener
 @WebListener
 public class MyHttpSessionIdListener {
 
-    public void sessionIdChanged() {
+    void sessionIdChanged() {
         println "the session id was $oldSessionId"
     }
     
