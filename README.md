@@ -38,7 +38,7 @@ if (!session) {
 if (!session.counter) {
     session.counter = 1
 }
-html.html { // html is implicitly bound to new MarkupBuilder(out)
+html.html {
   head {
       title('Groovy Servlet')
   }

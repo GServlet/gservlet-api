@@ -779,6 +779,10 @@ p a>code:hover {
 	padding-bottom: .5em
 }
 
+#toc.toc2 {
+	background-color: #fffacd;
+}
+
 #toc>ul {
 	margin-left: .125em
 }
@@ -825,7 +829,6 @@ p a>code:hover {
 	}
 	#toc.toc2 {
 		margin-top: 0 !important;
-		background-color: #fffacd;
 		position: fixed;
 		width: 15em;
 		left: 0;
@@ -888,6 +891,30 @@ p a>code:hover {
 	body.toc2.toc-right {
 		padding-left: 0;
 		padding-right: 20em
+	}
+}
+
+@media only all 
+  and (min-width: 320px) 
+  and (max-width: 480px) {
+	  #toc {
+    	padding: 0.4em;
+	}
+	#header, #content, #footnotes, #footer {
+		width: 98%;
+		padding-left: 0.2em;
+   	    padding-right: 0.2em;
+	}
+
+	.sidebarblock p, .sidebarblock dt, .sidebarblock td.content, p.tableblock {
+    	font-size: 0.8em !important;
+	}
+	h2, h3, #toctitle, .sidebarblock>.content>.title {
+    	font-size: 1.2em;
+	}
+
+	p, blockquote, dt, td.content, span.alt {
+    	font-size: 0.95rem !important;
 	}
 }
 
