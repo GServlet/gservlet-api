@@ -21,7 +21,7 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 
 GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. If you have no prior experience with Groovy, there are several curated lists of online resources for learning it.
 
-* https://groovy-lang.org[Official Groovy Programming Language website]
+* https://groovy-lang.org[Official Groovy Website]
 * https://groovy-lang.org/learn.html#books[List of Programming Books]
 
 == Main Features
