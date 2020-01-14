@@ -6,6 +6,8 @@
 	<artifactId>gservlet-api</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	<name>GServlet</name>
+	<url>https://gservlet.org</url>
 	<description>
 	  GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules
 	  to simplify Servlet API web development.
@@ -30,8 +32,8 @@
 	</developers>
 	<scm>
 		<connection>scm:git:git://github.com/GServlet/gservlet-api.git</connection>
-		<developerConnection>scm:git:ssh://github.com/GServlet/gservlet-api.git</developerConnection>
-		<url>https://github.com/GServlet/gservlet-api/tree/master</url>
+		<developerConnection>scm:git:git@github.com:GServlet/gservlet-api.git</developerConnection>
+		<url>https://github.com/GServlet/gservlet-api</url>
 	</scm>
 	<properties>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
