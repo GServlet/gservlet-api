@@ -36,7 +36,7 @@ import java.util.List;
 
 /**
  * 
- * The FileWatcher class checks a folder for file changes and notifies the
+ * Checks a folder for file changes and notifies the
  * listeners accordingly.
  * 
  * @author Mamadou Lamine Ba

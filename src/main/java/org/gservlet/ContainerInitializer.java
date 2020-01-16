@@ -61,7 +61,7 @@ import groovy.util.ScriptException;
 
 /**
  * 
- * The ContainerInitializer class manages the registration and the reloading of
+ * Manages the registration and the reloading of
  * a servlet, filter or listener into the web container.
  * 
  * @author Mamadou Lamine Ba

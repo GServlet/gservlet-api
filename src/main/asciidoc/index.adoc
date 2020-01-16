@@ -261,7 +261,7 @@ The generated HTML content looks like this:
 </html>
 ----
 
-.Implicit Variables
+.Servlet Implicit Variables
 |===
 |Variable |Description
 
@@ -347,7 +347,7 @@ class MyFilter {
 }
 ----
 
-.Implicit Variables
+.Filter Implicit Variables
 |===
 |Variable |Description
 
@@ -451,7 +451,7 @@ public class MyServletContextListener {
 }
 ----
 
-.Implicit Variables
+.ServletContextListener Implicit Variables
 |===
 |Variable |Description
 
@@ -519,7 +519,7 @@ public class MyServletContextAttributeListener {
 }
 ----
 
-.Implicit Variables
+.ServletContextAttributeListener Implicit Variables
 |===
 |Variable |Description
 
@@ -583,7 +583,7 @@ public class MyServletRequestListener {
 }
 ----
 
-.Implicit Variables
+.ServletRequestListener Implicit Variables
 |===
 |Variable |Description
 
@@ -658,7 +658,7 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
-.Implicit Variables
+.ServletRequestAttributeListener Implicit Variables
 |===
 |Variable |Description
 
@@ -726,7 +726,7 @@ public class MyHttpSessionListener {
 }
 ----
 
-.Implicit Variables
+.HttpSessionListener Implicit Variables
 |===
 |Variable |Description
 
@@ -798,7 +798,7 @@ public class MyHttpSessionAttributeListener {
 }
 ----
 
-.Implicit Variables
+.HttpSessionAttributeListener Implicit Variables
 |===
 |Variable |Description
 
@@ -861,7 +861,7 @@ public class MyHttpSessionBindingListener {
 }
 ----
 
-.Implicit Variables
+.HttpSessionBindingListener Implicit Variables
 |===
 |Variable |Description
 
@@ -925,7 +925,7 @@ public class MyHttpSessionActivationListener {
 }
 ----
 
-.Implicit Variables
+.HttpSessionActivationListener Implicit Variables
 |===
 |Variable |Description
 
@@ -977,7 +977,7 @@ public class MyHttpSessionIdListener {
 }
 ----
 
-.Implicit Variables
+.HttpSessionIdListener Implicit Variables
 |===
 |Variable |Description
 
@@ -999,9 +999,7 @@ public class MyHttpSessionIdListener {
 == Listeners Examples
 == Copyright and License
 
-Copyright @2019. Free use of this software is granted under the terms of the Apache 2.0 License.
-
-See the https://www.apache.org/licenses/LICENSE-2.0[LICENSE] page for details.
+Copyright @2020. Free use of this software is granted under the terms of the https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0] License.
 
 == Authors
 

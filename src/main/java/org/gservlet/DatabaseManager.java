@@ -29,7 +29,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 /**
  * 
- * The DatabaseManager handles the creation and the configuration of the data
+ * Handles the creation and the configuration of the data
  * source.
  * 
  * @author Mamadou Lamine Ba
