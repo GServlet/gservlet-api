@@ -6,6 +6,8 @@
 	<artifactId>gservlet-api</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	<name>GServlet</name>
+	<url>https://gservlet.org</url>
 	<description>
 	  GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules
 	  to simplify Servlet API web development.
@@ -30,8 +32,8 @@
 	</developers>
 	<scm>
 		<connection>scm:git:git://github.com/GServlet/gservlet-api.git</connection>
-		<developerConnection>scm:git:ssh://github.com/GServlet/gservlet-api.git</developerConnection>
-		<url>https://github.com/GServlet/gservlet-api/tree/master</url>
+		<developerConnection>scm:git:git@github.com:GServlet/gservlet-api.git</developerConnection>
+		<url>https://github.com/GServlet/gservlet-api</url>
 	</scm>
 	<properties>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -200,9 +202,10 @@
 						<version>${javadoc.version}</version>
 						<configuration>
 							<links>
-								<link>https://docs.oracle.com/javaee/6/api/</link>
+								<link>https://docs.oracle.com/javase/7/docs/api/</link>
+								<link>https://docs.oracle.com/javaee/7/api/</link>
 								<link>http://docs.groovy-lang.org/2.5.4/html/gapi/</link>
-								<link>https://javadoc.io/doc/javassist/javassist/3.12.1.GA/</link>
+								<link>https://javadoc.io/static/javassist/javassist/3.12.1.GA/</link>
 							</links>
 						</configuration>
 						<executions>
@@ -263,7 +266,13 @@
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>${javadoc.version}</version>
 						<configuration>
-							<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+							<description>GServlet API documentation</description>
+                            <doctitle>GServlet API documentation</doctitle>
+                            <windowtitle>GServlet API documentation</windowtitle>
+                            <header><![CDATA[<br>GServlet API v${release.version}]]></header>
+                             <bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
+                            </bottom>        
+                    		<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
 							<docletArtifact>
 								<groupId>org.umlgraph</groupId>
 								<artifactId>umlgraph</artifactId>
@@ -272,12 +281,13 @@
 							<additionalparam>-views</additionalparam>
 							<additionalparam>-compact</additionalparam>
 							<additionalparam>-nodefontsize 9</additionalparam>
-							<useStandardDocletOptions>false</useStandardDocletOptions>
-							<links>
-								<link>https://docs.oracle.com/javaee/6/api/</link>
-								<link>http://docs.groovy-lang.org/2.5.4/html/gapi/</link>
-								<link>https://javadoc.io/doc/javassist/javassist/3.12.1.GA/</link>
-							</links>
+							<additionalparam>
+								-link https://docs.oracle.com/javase/7/docs/api/
+								-link https://docs.oracle.com/javaee/7/api/
+								-link http://docs.groovy-lang.org/2.5.4/html/gapi/
+								-link https://javadoc.io/static/javassist/javassist/3.12.1.GA/
+							</additionalparam>
+							<useStandardDocletOptions>true</useStandardDocletOptions>
 						</configuration>
 						<executions>
 							<execution>
@@ -307,7 +317,7 @@
 											<directory>target/site/apidocs</directory>
 										</resource>
 										<resource>
-											<directory>src/main/resources</directory>
+											<directory>src/main/javadoc/resources</directory>
 										</resource>
 									</resources>
 								</configuration>
