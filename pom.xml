@@ -272,7 +272,7 @@
                             <header><![CDATA[<br>GServlet API v${release.version}]]></header>
                              <bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
                             </bottom>        
-							<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+                    		<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
 							<docletArtifact>
 								<groupId>org.umlgraph</groupId>
 								<artifactId>umlgraph</artifactId>
@@ -317,7 +317,7 @@
 											<directory>target/site/apidocs</directory>
 										</resource>
 										<resource>
-											<directory>src/main/resources</directory>
+											<directory>src/main/javadoc/resources</directory>
 										</resource>
 									</resources>
 								</configuration>
