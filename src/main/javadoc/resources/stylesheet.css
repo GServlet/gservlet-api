@@ -236,7 +236,7 @@ Page header and footer styles
 Heading styles
 */
 div.details ul.blockList ul.blockList ul.blockList li.blockList h4, div.details ul.blockList ul.blockList ul.blockListLast li.blockList h4 {
-    background-color:#dee3e9;
+    background-color:#f7db77;
     border:1px solid #d0d9e0;
     margin:0 0 6px -8px;
     padding:7px 5px;
@@ -506,7 +506,7 @@ td.colOne a:link, td.colOne a:active, td.colOne a:visited, td.colOne a:hover, td
     background-color:#FFFFFF;
 }
 .rowColor {
-    background-color:#EEEEEF;
+    background-color:#f7db77;
 }
 /*
 Content styles
