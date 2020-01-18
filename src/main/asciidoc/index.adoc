@@ -1007,4 +1007,4 @@ GServlet was written by https://github.com/laminba2003[Mamadou Lamine Ba].
 
 == Contributing
 
-GServlet is an open source project and contributions, of any type or any scope, drive the project forward. There are lot of ways to contribute, not just writing/fixing code.  We provide more information about how to get involved in our link:/contribute[contribute] page.
+Contributions of any type or any scope, drive the project forward. There are lot of ways to contribute, not just code.  We provide more information about how to get involved in our link:/contribute[contribute] page.
