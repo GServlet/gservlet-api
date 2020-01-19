@@ -57,6 +57,7 @@
 		<docs.directory>../gservlet-site/static/docs/${release.version}</docs.directory>
 		<javadoc.version>2.9.1</javadoc.version>
 		<javadocs.directory>../gservlet-site/static/javadocs/${release.version}</javadocs.directory>
+		<sources.directory>../gservlet-site/static/sources/${release.version}</sources.directory>
 		<gpg.version>1.5</gpg.version>
 		<nexus.version>1.6.7</nexus.version>
 	</properties>
@@ -201,6 +202,12 @@
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>${javadoc.version}</version>
 						<configuration>
+							<description>GServlet API documentation</description>
+							<doctitle>GServlet API documentation</doctitle>
+							<windowtitle>GServlet API documentation</windowtitle>
+							<header><![CDATA[<br>GServlet API v${release.version}]]></header>
+							<bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
+							</bottom>
 							<links>
 								<link>https://docs.oracle.com/javase/7/docs/api/</link>
 								<link>https://docs.oracle.com/javaee/7/api/</link>
@@ -267,12 +274,12 @@
 						<version>${javadoc.version}</version>
 						<configuration>
 							<description>GServlet API documentation</description>
-                            <doctitle>GServlet API documentation</doctitle>
-                            <windowtitle>GServlet API documentation</windowtitle>
-                            <header><![CDATA[<br>GServlet API v${release.version}]]></header>
-                             <bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
-                            </bottom>        
-                    		<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+							<doctitle>GServlet API documentation</doctitle>
+							<windowtitle>GServlet API documentation</windowtitle>
+							<header><![CDATA[<br>GServlet API v${release.version}]]></header>
+							<bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
+							</bottom>
+							<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
 							<docletArtifact>
 								<groupId>org.umlgraph</groupId>
 								<artifactId>umlgraph</artifactId>
@@ -284,8 +291,10 @@
 							<additionalparam>
 								-link https://docs.oracle.com/javase/7/docs/api/
 								-link https://docs.oracle.com/javaee/7/api/
-								-link http://docs.groovy-lang.org/2.5.4/html/gapi/
-								-link https://javadoc.io/static/javassist/javassist/3.12.1.GA/
+								-link
+								http://docs.groovy-lang.org/2.5.4/html/gapi/
+								-link
+								https://javadoc.io/static/javassist/javassist/3.12.1.GA/
 							</additionalparam>
 							<useStandardDocletOptions>true</useStandardDocletOptions>
 						</configuration>
@@ -295,6 +304,27 @@
 								<phase>generate-resources</phase>
 								<goals>
 									<goal>javadoc</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jxr-plugin</artifactId>
+						<version>3.0.0</version>
+						<configuration>
+							<docTitle>GServlet Source Code v${release.version}</docTitle>
+							<windowTitle>GServlet Source Code v${release.version}</windowTitle>
+							<javadocDir>${javadocs.directory}</javadocDir>
+							<bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
+							</bottom>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>jxr</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -315,6 +345,25 @@
 									<resources>
 										<resource>
 											<directory>target/site/apidocs</directory>
+										</resource>
+										<resource>
+											<directory>src/main/javadoc/resources</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-sources</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${sources.directory}</outputDirectory>
+									<overwrite>true</overwrite>
+									<resources>
+										<resource>
+											<directory>target/site/xref</directory>
 										</resource>
 										<resource>
 											<directory>src/main/javadoc/resources</directory>
