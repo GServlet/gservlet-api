@@ -291,10 +291,8 @@
 							<additionalparam>
 								-link https://docs.oracle.com/javase/7/docs/api/
 								-link https://docs.oracle.com/javaee/7/api/
-								-link
-								http://docs.groovy-lang.org/2.5.4/html/gapi/
-								-link
-								https://javadoc.io/static/javassist/javassist/3.12.1.GA/
+								-link http://docs.groovy-lang.org/2.5.4/html/gapi/
+								-link https://javadoc.io/static/javassist/javassist/3.12.1.GA/
 							</additionalparam>
 							<useStandardDocletOptions>true</useStandardDocletOptions>
 						</configuration>
