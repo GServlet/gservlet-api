@@ -170,7 +170,7 @@ For a deep insight, please read the complete [documentation](https://gservlet.or
 
 ### Documentation
 
-The developer guide generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). By default only the HTML output is enabled.
+The developer guide generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). Only the HTML output is enabled.
 
     > mvn clean install -Pdocumentation
 
