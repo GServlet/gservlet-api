@@ -190,7 +190,7 @@ We version GServlet by following [Semantic Versioning](https://semver.org), whic
 
 ## Status
 
-The current version of GServlet is 1.0.0
+The current version of GServlet is 1.0.0.
 
 ## Contributing
 
