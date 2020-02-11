@@ -160,7 +160,7 @@ class ServletRequestListener {
 }
 ```
 
-For a deep insight of how to write your artifacts, please read the complete [documentation](https://gservlet.org/documentation).
+For a deep insight of how to write your Groovy artifacts, please read the complete [documentation](https://gservlet.org/documentation).
 
 ## Building from source
 
