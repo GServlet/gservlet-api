@@ -67,7 +67,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 ## Getting Started
 
-If you are just getting started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. it is named **gservlet-api** and you just need to name a dependency on it in your project.
+If you are just getting started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
 
 ### From Maven
 
