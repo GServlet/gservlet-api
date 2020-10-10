@@ -90,9 +90,9 @@ public class StartupListener implements ServletContextListener {
 	 */
 	public Properties loadConfiguration(File file) throws IOException {
 		Properties configuration = new Properties();
-		FileReader reader = new FileReader(file);
-		configuration.load(reader);
-		reader.close();
+		try(FileReader reader = new FileReader(file)) {
+			configuration.load(reader);
+		}
 		return configuration;
 	}
 	
