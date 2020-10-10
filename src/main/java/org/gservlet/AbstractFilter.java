@@ -40,8 +40,8 @@ import groovy.xml.MarkupBuilder;
 
 /**
  * 
- * Abstract class to perform filtering tasks on either the request to a resource
- * (a servlet or static content), or on the response from a resource, or both.
+ * Abstract class to perform filtering tasks on either the request to a resource,
+ *  or on the response from a resource, or both.
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -211,7 +211,7 @@ public abstract class AbstractFilter implements Filter {
 	 * @return the FilterChain object
 	 * 
 	 */
-	public FilterChain getFilterChain() {
+	public FilterChain getChain() {
 		return requestContext.get().getFilterChain();
 	}
 
@@ -267,7 +267,7 @@ public abstract class AbstractFilter implements Filter {
 	 * 
 	 */
 	public Sql getConnection() {
-		return requestContext.get().getConnection();
+		return requestContext.get().getSql();
 	}
 
 	/**

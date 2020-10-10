@@ -73,7 +73,7 @@ public class HttpServletTest {
 		assertEquals(SessionWrapper.class, servlet.getSession().getClass());
 		assertEquals(ContextWrapper.class, servlet.getContext().getClass());
 		assertNull(servlet.getConfig());
-		assertNotNull(servlet.getConnection());
+		assertNotNull(servlet.getSql());
 	}
 
 	@SuppressWarnings("rawtypes")

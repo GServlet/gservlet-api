@@ -61,7 +61,7 @@ import groovy.util.ScriptException;
 
 /**
  * 
- * The ContainerInitializer class manages the registration and the reloading of
+ * Manages the registration and the reloading of
  * a servlet, filter or listener into the web container.
  * 
  * @author Mamadou Lamine Ba
@@ -157,9 +157,9 @@ public class ContainerInitializer {
 		Annotation[] annotations = object.getClass().getAnnotations();
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof Servlet) {
-				addServlet((Servlet) annotation, object);
+				addServlet(object);
 			} else if (annotation instanceof Filter) {
-				addFilter((Filter) annotation, object);
+				addFilter(object);
 			} else if (annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
 					|| annotation instanceof RequestListener || annotation instanceof RequestAttributeListener
 					|| annotation instanceof SessionListener || annotation instanceof SessionAttributeListener
@@ -174,12 +174,12 @@ public class ContainerInitializer {
 	 * 
 	 * Registers a servlet into the web container
 	 * 
-	 * @param annotation the servlet annotation
-	 * @param object     the object
+	 * @param object the servlet object
 	 * @throws ServletException the ServletException
 	 * 
 	 */
-	protected void addServlet(Servlet annotation, Object object) throws ServletException {
+	protected void addServlet(Object object) throws ServletException {
+		Servlet annotation = object.getClass().getAnnotation(Servlet.class);
 		String name = object.getClass().getName();
 		ServletRegistration registration = context.getServletRegistration(name);
 		if (registration == null) {
@@ -208,12 +208,12 @@ public class ContainerInitializer {
 	 * 
 	 * Registers a filter into the web container
 	 * 
-	 * @param annotation the filter annotation
-	 * @param object     the object
+	 * @param object  the filter object
 	 * @throws ServletException the ServletException
 	 * 
 	 */
-	protected void addFilter(Filter annotation, Object object) throws ServletException {
+	protected void addFilter(Object object) throws ServletException {
+		Filter annotation = object.getClass().getAnnotation(Filter.class);
 		String name = object.getClass().getName();
 		FilterRegistration registration = context.getFilterRegistration(name);
 		if (registration == null) {

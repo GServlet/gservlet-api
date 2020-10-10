@@ -153,7 +153,7 @@ public class RequestContext {
 	* @return the Sql object
 	* 
 	*/
-	public Sql getConnection() {
+	public Sql getSql() {
 		return (Sql) request.getAttribute(Constants.CONNECTION);
 	}
 

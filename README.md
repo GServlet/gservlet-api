@@ -38,7 +38,7 @@ if (!session) {
 if (!session.counter) {
     session.counter = 1
 }
-html.html { // html is implicitly bound to new MarkupBuilder(out)
+html.html {
   head {
       title('Groovy Servlet')
   }
@@ -49,7 +49,7 @@ html.html { // html is implicitly bound to new MarkupBuilder(out)
 session.counter = session.counter + 1
 ```
 
-More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [JavaDocs](https://gservlet.org/javadocs/1.0) for a particular release can be browsed as well.
+More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0) for a particular release can be browsed as well.
 
 ## Features
 
@@ -57,7 +57,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 * Groovy Scripting
 * Hot Reloading
 * JSON and XML Support
-* RDMS Support
+* JDBC Support
 
 ## Requirements
 
@@ -67,7 +67,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 ## Getting Started
 
-If you are just getting started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. it is named **gservlet-api** and you just need to name a dependency on it in your project.
+If you are just getting started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
 
 ### From Maven
 
@@ -160,7 +160,7 @@ class ServletRequestListener {
 }
 ```
 
-For a deep insight, please read the complete [documentation](https://gservlet.org/documentation).
+For a deep insight of how to write your Groovy artifacts, please read the complete [documentation](https://gservlet.org/documentation).
 
 ## Building from source
 
@@ -170,7 +170,7 @@ For a deep insight, please read the complete [documentation](https://gservlet.or
 
 ### Documentation
 
-The documentation generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). By default only the HTML output is enabled.
+The developer guide generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). Only the HTML output is enabled.
 
     > mvn clean install -Pdocumentation
 
@@ -178,9 +178,11 @@ The built documentation can then be found in the following location:
   
     > ./target/generated-docs
     
-On the other hand, the javadocs can be found in the folder:
+On the other hand, the Javadocs can be found in the folder:
 
     > ./target/site/apidocs    
+
+We use [UMLGraph](https://www.spinellis.gr/umlgraph/index.html) to generate UML class diagrams which are embedded in the Javadocs, therefore you must have [Graphviz](https://www.graphviz.org/) installed in your computer and the **GraphvizX.XX\bin** directory added to your system PATH.
 
 ## Versioning
 
@@ -188,7 +190,7 @@ We version GServlet by following [Semantic Versioning](https://semver.org), whic
 
 ## Status
 
-The current version of GServlet is 1.0.0
+The current version of GServlet is 1.0.0.
 
 ## Contributing
 

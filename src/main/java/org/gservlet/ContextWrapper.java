@@ -64,32 +64,17 @@ public class ContextWrapper implements ServletContext {
 	}
 
 	/**
-     * Adds the filter with the given name and class name to this servlet
-     * context
+     * Adds the given filter instance with the given name and class name to this ServletContext.
+     * The registered filter may be further configured via the returned
+     * {@link javax.servlet.FilterRegistration} object
      *
-     * <p>The registered filter may be further configured via the returned
-     * {@link javax.servlet.FilterRegistration} object.
-     *
-     * <p>The specified <tt>className</tt> will be loaded using the
-     * classloader associated with the application represented by this
-     * ServletContext.
-     *
-     * <p>If this ServletContext already contains a preliminary
-     * FilterRegistration for a filter with the given <tt>filterName</tt>,
-     * it will be completed (by assigning the given <tt>className</tt> to it)
-     * and returned.
-     *
-     * <p>This method supports resource injection if the class with the
-     * given <tt>className</tt> represents a Managed Bean.
-     * See the Java EE platform and JSR 299 specifications for additional
-     * details about Managed Beans and resource injection.
      *
      * @param filterName the name of the filter
      * @param className the fully qualified class name of the filter
      *
-     * @return a FilterRegistration object that may be used to further
+     * @return a {@link javax.servlet.FilterRegistration} object that may be used to further
      * configure the registered filter, or <tt>null</tt> if this
-     * ServletContext already contains a complete FilterRegistration for
+     * ServletContext already contains a complete {@link javax.servlet.FilterRegistration} for
      * a filter with the given <tt>filterName</tt>
      *
      * @throws IllegalStateException if this ServletContext has already
@@ -112,16 +97,10 @@ public class ContextWrapper implements ServletContext {
 	}
 
 	/**
-     * Registers the given filter instance with this ServletContext
-     * under the given <tt>filterName</tt>
-     *
-     * <p>The registered filter may be further configured via the returned
+     * Adds the given filter instance with this ServletContext
+     * under the given <tt>filterName</tt>. The registered filter may be further configured via the returned
      * {@link javax.servlet.FilterRegistration} object.
      *
-     * <p>If this ServletContext already contains a preliminary
-     * FilterRegistration for a filter with the given <tt>filterName</tt>,
-     * it will be completed (by assigning the class name of the given filter
-     * instance to it) and returned.
      *
      * @param filterName the name of the filter
      * @param filter the filter instance to register
@@ -154,28 +133,16 @@ public class ContextWrapper implements ServletContext {
 
 	/**
      * Adds the filter with the given name and class type to this servlet
-     * context
-     *
-     * <p>The registered filter may be further configured via the returned
+     * context. The registered filter may be further configured via the returned
      * {@link javax.servlet.FilterRegistration} object.
-     *
-     * <p>If this ServletContext already contains a preliminary
-     * FilterRegistration for a filter with the given <tt>filterName</tt>,
-     * it will be completed (by assigning the name of the given
-     * <tt>filterClass</tt> to it) and returned.
-     *
-     * <p>This method supports resource injection if the given
-     * <tt>filterClass</tt> represents a Managed Bean.
-     * See the Java EE platform and JSR 299 specifications for additional
-     * details about Managed Beans and resource injection.
      *
      * @param filterName the name of the filter
      * @param filterClass the class object from which the filter will be
      * instantiated
      *
-     * @return a FilterRegistration object that may be used to further
+     * @return a {@link javax.servlet.FilterRegistration} object that may be used to further
      * configure the registered filter, or <tt>null</tt> if this
-     * ServletContext already contains a complete FilterRegistration for a
+     * ServletContext already contains a complete {@link javax.servlet.FilterRegistration} for a
      * filter with the given <tt>filterName</tt>
      *
      * @throws IllegalStateException if this ServletContext has already
@@ -198,42 +165,8 @@ public class ContextWrapper implements ServletContext {
 	}
 
 	/**
-     * Adds the listener with the given class name to this ServletContext
-     *
-     * <p>The class with the given name will be loaded using the
-     * classloader associated with the application represented by this
-     * ServletContext, and must implement one or more of the following
-     * interfaces:
-     * <ul>
-     * <li>{@link javax.servlet.ServletContextAttributeListener}
-     * <li>{@link javax.servlet.ServletRequestListener}
-     * <li>{@link javax.servlet.ServletRequestAttributeListener}
-     * <li>{@link javax.servlet.http.HttpSessionAttributeListener}
-     * <li>{@link javax.servlet.http.HttpSessionListener}
-     * </ul>
-     *
-     * <p>If this ServletContext was passed to
-     * {@link javax.servlet.ServletContainerInitializer#onStartup}, then the class with
-     * the given name may also implement {@link javax.servlet.ServletContextListener},
-     * in addition to the interfaces listed above.
-     *
-     * <p>As part of this method call, the container must load the class
-     * with the specified class name to ensure that it implements one of
-     * the required interfaces.
-     *
-     * <p>If the class with the given name implements a listener interface
-     * whose invocation order corresponds to the declaration order (i.e.,
-     * if it implements {@link javax.servlet.ServletRequestListener},
-     * {@link javax.servlet.ServletContextListener}, or
-     * {@link javax.servlet.http.HttpSessionListener}),
-     * then the new listener will be added to the end of the ordered list of
-     * listeners of that interface.
-     *
-     * <p>This method supports resource injection if the class with the
-     * given <tt>className</tt> represents a Managed Bean.
-     * See the Java EE platform and JSR 299 specifications for additional
-     * details about Managed Beans and resource injection.
-     *
+     * Adds the listener with the given class name to this ServletContext.
+     * 
      * @param className the fully qualified class name of the listener
      *
      * @throws IllegalArgumentException if the class with the given name
@@ -258,31 +191,8 @@ public class ContextWrapper implements ServletContext {
 	}
 
 	/**
-     * Adds the given listener to this ServletContext
-     *
-     * <p>The given listener must be an instance of one or more of the
-     * following interfaces:
-     * <ul>
-     * <li>{@link javax.servlet.ServletContextAttributeListener}
-     * <li>{@link javax.servlet.ServletRequestListener}
-     * <li>{@link javax.servlet.ServletRequestAttributeListener}
-     * <li>{@link javax.servlet.http.HttpSessionAttributeListener}
-     * <li>{@link javax.servlet.http.HttpSessionListener}
-     * </ul>
-     *
-     * <p>If this ServletContext was passed to
-     * {@link javax.servlet.ServletContainerInitializer#onStartup}, then the given
-     * listener may also be an instance of {@link javax.servlet.ServletContextListener},
-     * in addition to the interfaces listed above.
-     *
-     * <p>If the given listener is an instance of a listener interface whose
-     * invocation order corresponds to the declaration order (i.e., if it
-     * is an instance of {@link javax.servlet.ServletRequestListener},
-     * {@link javax.servlet.ServletContextListener}, or
-     * {@link javax.servlet.http.HttpSessionListener}),
-     * then the listener will be added to the end of the ordered list of
-     * listeners of that interface.
-     *
+     * Adds the given listener to this ServletContext.
+     * 
      * @param <T> the class of the EventListener to add
      * @param t the listener to be added
      *
@@ -308,36 +218,7 @@ public class ContextWrapper implements ServletContext {
 	}
 
 	/**
-     * Adds a listener of the given class type to this ServletContext
-     *
-     * <p>The given <tt>listenerClass</tt> must implement one or more of the
-     * following interfaces:
-     * <ul>
-     * <li>{@link javax.servlet.ServletContextAttributeListener}
-     * <li>{@link javax.servlet.ServletRequestListener}
-     * <li>{@link javax.servlet.ServletRequestAttributeListener}
-     * <li>{@link javax.servlet.http.HttpSessionAttributeListener}
-     * <li>{@link javax.servlet.http.HttpSessionListener}
-     * </ul>
-     *
-     * <p>If this ServletContext was passed to
-     * {@link javax.servlet.ServletContainerInitializer#onStartup}, then the given
-     * <tt>listenerClass</tt> may also implement
-     * {@link javax.servlet.ServletContextListener}, in addition to the interfaces listed
-     * above.
-     *
-     * <p>If the given <tt>listenerClass</tt> implements a listener
-     * interface whose invocation order corresponds to the declaration order
-     * (i.e., if it implements {@link javax.servlet.ServletRequestListener},
-     * {@link javax.servlet.ServletContextListener}, or
-     * {@link javax.servlet.http.HttpSessionListener}),
-     * then the new listener will be added to the end of the ordered list
-     * of listeners of that interface.
-     *
-     * <p>This method supports resource injection if the given
-     * <tt>listenerClass</tt> represents a Managed Bean.
-     * See the Java EE platform and JSR 299 specifications for additional
-     * details about Managed Beans and resource injection.
+     * Adds a listener of the given class type to this ServletContext.
      *
      * @param listenerClass the listener class to be instantiated
      *
@@ -364,29 +245,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
      * Adds the servlet with the given name and class name to this servlet
-     * context
-     *
-     * <p>The registered servlet may be further configured via the returned
-     * {@link ServletRegistration} object.
-     *
-     * <p>The specified <tt>className</tt> will be loaded using the
-     * classloader associated with the application represented by this
-     * ServletContext.
-     *
-     * <p>If this ServletContext already contains a preliminary
-     * ServletRegistration for a servlet with the given <tt>servletName</tt>,
-     * it will be completed (by assigning the given <tt>className</tt> to it)
-     * and returned.
-     *
-     * <p>This method introspects the class with the given <tt>className</tt>
-     * for the {@link javax.servlet.annotation.ServletSecurity},
-     * {@link javax.servlet.annotation.MultipartConfig},
-     * <tt>javax.annotation.security.RunAs</tt>, and
-     * <tt>javax.annotation.security.DeclareRoles</tt> annotations.
-     * In addition, this method supports resource injection if the
-     * class with the given <tt>className</tt> represents a Managed Bean.
-     * See the Java EE platform and JSR 299 specifications for additional
-     * details about Managed Beans and resource injection.
+     * context.
      *
      * @param servletName the name of the servlet
      * @param className the fully qualified class name of the servlet
@@ -416,16 +275,9 @@ public class ContextWrapper implements ServletContext {
 	}
 
 	 /**
-     * Registers the given servlet instance with this ServletContext
+     * Adds the given servlet instance with this ServletContext
      * under the given <tt>servletName</tt>.
      *
-     * <p>The registered servlet may be further configured via the returned
-     * {@link ServletRegistration} object.
-     *
-     * <p>If this ServletContext already contains a preliminary
-     * ServletRegistration for a servlet with the given <tt>servletName</tt>,
-     * it will be completed (by assigning the class name of the given servlet
-     * instance to it) and returned.
      *
      * @param servletName the name of the servlet
      * @param servlet the servlet instance to register
@@ -459,25 +311,7 @@ public class ContextWrapper implements ServletContext {
 
 	 /**
      * Adds the servlet with the given name and class type to this servlet
-     * context
-     *
-     * <p>The registered servlet may be further configured via the returned
-     * {@link ServletRegistration} object.
-     *
-     * <p>If this ServletContext already contains a preliminary
-     * ServletRegistration for a servlet with the given <tt>servletName</tt>,
-     * it will be completed (by assigning the name of the given
-     * <tt>servletClass</tt> to it) and returned.
-     *
-     * <p>This method introspects the given <tt>servletClass</tt> for
-     * the {@link javax.servlet.annotation.ServletSecurity},
-     * {@link javax.servlet.annotation.MultipartConfig},
-     * <tt>javax.annotation.security.RunAs</tt>, and
-     * <tt>javax.annotation.security.DeclareRoles</tt> annotations.
-     * In addition, this method supports resource injection if the
-     * given <tt>servletClass</tt> represents a Managed Bean.
-     * See the Java EE platform and JSR 299 specifications for additional
-     * details about Managed Beans and resource injection.
+     * context.
      *
      * @param servletName the name of the servlet
      * @param servletClass the class object from which the servlet will be
@@ -510,18 +344,6 @@ public class ContextWrapper implements ServletContext {
 	/**
      * Instantiates the given Filter class.
      *
-     * <p>The returned Filter instance may be further customized before it
-     * is registered with this ServletContext via a call to
-     * {@link #addFilter(String,Filter)}.
-     *
-     * <p>The given Filter class must define a zero argument constructor,
-     * which is used to instantiate it.
-     *
-     * <p>This method supports resource injection if the given
-     * <tt>clazz</tt> represents a Managed Bean.
-     * See the Java EE platform and JSR 299 specifications for additional
-     * details about Managed Beans and resource injection.
-     *
      * @param <T> the class of the Filter to create
      * @param clazz the Filter class to instantiate
      *
@@ -546,26 +368,6 @@ public class ContextWrapper implements ServletContext {
 	/**
      * Instantiates the given EventListener class.
      *
-     * <p>The specified EventListener class must implement at least one of
-     * the {@link javax.servlet.ServletContextListener},
-     * {@link javax.servlet.ServletContextAttributeListener},
-     * {@link javax.servlet.ServletRequestListener},
-     * {@link javax.servlet.ServletRequestAttributeListener},
-     * {@link javax.servlet.http.HttpSessionAttributeListener},
-     * {@link javax.servlet.http.HttpSessionListener}
-     * interfaces.
-     *
-     * <p>The returned EventListener instance may be further customized
-     * before it is registered with this ServletContext via a call to
-     * {@link #addListener(EventListener)}.
-     *
-     * <p>The given EventListener class must define a zero argument
-     * constructor, which is used to instantiate it.
-     *
-     * <p>This method supports resource injection if the given
-     * <tt>clazz</tt> represents a Managed Bean.
-     * See the Java EE platform and JSR 299 specifications for additional
-     * details about Managed Beans and resource injection.
      *
      * @param <T> the class of the EventListener to create
      * @param clazz the EventListener class to instantiate
@@ -600,24 +402,6 @@ public class ContextWrapper implements ServletContext {
 
 	/**
      * Instantiates the given Servlet class.
-     *
-     * <p>The returned Servlet instance may be further customized before it
-     * is registered with this ServletContext via a call to
-     * {@link #addServlet(String,Servlet)}.
-     *
-     * <p>The given Servlet class must define a zero argument constructor,
-     * which is used to instantiate it.
-     *
-     * <p>This method introspects the given <tt>clazz</tt> for
-     * the following annotations:
-     * {@link javax.servlet.annotation.ServletSecurity},
-     * {@link javax.servlet.annotation.MultipartConfig},
-     * <tt>javax.annotation.security.RunAs</tt>, and
-     * <tt>javax.annotation.security.DeclareRoles</tt>.
-     * In addition, this method supports resource injection if the
-     * given <tt>clazz</tt> represents a Managed Bean.
-     * See the Java EE platform and JSR 299 specifications for additional
-     * details about Managed Beans and resource injection.
      *
      * @param <T> the class of the Servlet to create
      * @param clazz the Servlet class to instantiate
@@ -674,20 +458,6 @@ public class ContextWrapper implements ServletContext {
 	 * Returns the servlet container attribute with the given name, or
 	 * <code>null</code> if there is no attribute by that name.
 	 *
-	 * <p>
-	 * An attribute allows a servlet container to give the servlet additional
-	 * information not already provided by this interface. See your server
-	 * documentation for information about its attributes. A list of supported
-	 * attributes can be retrieved using <code>getAttributeNames</code>.
-	 *
-	 * <p>
-	 * The attribute is returned as a <code>java.lang.Object</code> or some
-	 * subclass.
-	 *
-	 * <p>
-	 * Attribute names should follow the same convention as package names. The Java
-	 * Servlet API specification reserves names matching <code>java.*</code>,
-	 * <code>javax.*</code>, and <code>sun.*</code>.
 	 *
 	 * @param name a <code>String</code> specifying the name of the attribute
 	 *
@@ -723,14 +493,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
      * Gets the class loader of the web application represented by this
-     * ServletContext.
-     *
-     * <p>If a security manager exists, and the caller's class loader
-     * is not the same as, or an ancestor of the requested class loader,
-     * then the security manager's <code>checkPermission</code> method is
-     * called with a <code>RuntimePermission("getClassLoader")</code>
-     * permission to check whether access to the requested class loader
-     * should be granted.
+     * ServletContext
      *
      * @return the class loader of the web application represented by this
      * ServletContext
@@ -753,18 +516,8 @@ public class ContextWrapper implements ServletContext {
 
 	/**
 	 * Returns a <code>ServletContext</code> object that corresponds to a specified
-	 * URL on the server.
+	 * URL on the server
 	 *
-	 * <p>
-	 * This method allows servlets to gain access to the context for various parts
-	 * of the server, and as needed obtain {@link RequestDispatcher} objects from
-	 * the context. The given path must be begin with <tt>/</tt>, is interpreted
-	 * relative to the server's document root and is matched against the context
-	 * roots of other web applications hosted on this container.
-	 *
-	 * <p>
-	 * In a security conscious environment, the servlet container may return
-	 * <code>null</code> for a given URL.
 	 *
 	 * @param uripath a <code>String</code> specifying the context path of another
 	 *                web application in the container.
@@ -782,21 +535,6 @@ public class ContextWrapper implements ServletContext {
 	/**
      * Returns the context path of the web application.
      *
-     * <p>The context path is the portion of the request URI that is used
-     * to select the context of the request. The context path always comes
-     * first in a request URI. If this context is the "root" context
-     * rooted at the base of the Web server's URL name space, this path
-     * will be an empty string. Otherwise, if the context is not rooted at
-     * the root of the server's name space, the path starts with a /
-     * character but does not end with a / character.
-     *
-     * <p>It is possible that a servlet container may match a context by
-     * more than one context path. In such cases the
-     * {@link javax.servlet.http.HttpServletRequest#getContextPath()}
-     * will return the actual context path used by the request and it may
-     * differ from the path returned by this method.
-     * The context path returned by this method should be considered as the
-     * prime or preferred context path of the application.
      *
      * @return The context path of the web application, or "" for the
      * root context
@@ -813,10 +551,6 @@ public class ContextWrapper implements ServletContext {
 	 /**
      * Gets the session tracking modes that are supported by default for this
      * <tt>ServletContext</tt>.
-     *
-     * <p>The returned set is not backed by the {@code ServletContext} object,
-     * so changes in the returned set are not reflected in the
-     * {@code ServletContext} object, and vice-versa.</p>
      *
      * @return set of the session tracking modes supported by default for
      * this <tt>ServletContext</tt>
@@ -838,9 +572,6 @@ public class ContextWrapper implements ServletContext {
      * Gets the major version of the Servlet specification that the
      * application represented by this ServletContext is based on.
      *
-     * <p>The value returned may be different from {@link #getMajorVersion},
-     * which returns the major version of the Servlet specification
-     * supported by the Servlet container.
      *
      * @return the major version of the Servlet specification that the
      * application represented by this ServletContext is based on
@@ -862,9 +593,6 @@ public class ContextWrapper implements ServletContext {
      * Gets the minor version of the Servlet specification that the
      * application represented by this ServletContext is based on.
      *
-     * <p>The value returned may be different from {@link #getMinorVersion},
-     * which returns the minor version of the Servlet specification
-     * supported by the Servlet container.
      *
      * @return the minor version of the Servlet specification that the
      * application represented by this ServletContext is based on
@@ -885,13 +613,6 @@ public class ContextWrapper implements ServletContext {
 	/**
      * Gets the session tracking modes that are in effect for this
      * <tt>ServletContext</tt>.
-     *
-     * <p>The session tracking modes in effect are those provided to
-     * {@link #setSessionTrackingModes setSessionTrackingModes}.
-     *
-     * <p>The returned set is not backed by the {@code ServletContext} object,
-     * so changes in the returned set are not reflected in the
-     * {@code ServletContext} object, and vice-versa.</p>
      *
      * @return set of the session tracking modes in effect for this
      * <tt>ServletContext</tt>
@@ -936,13 +657,6 @@ public class ContextWrapper implements ServletContext {
      * objects (keyed by filter name) corresponding to all filters
      * registered with this ServletContext.
      *
-     * <p>The returned Map includes the FilterRegistration objects
-     * corresponding to all declared and annotated filters, as well as the
-     * FilterRegistration objects corresponding to all filters that have
-     * been added via one of the <tt>addFilter</tt> methods.
-     *
-     * <p>Any changes to the returned Map must not affect this
-     * ServletContext.
      *
      * @return Map of the (complete and preliminary) FilterRegistration
      * objects corresponding to all filters currently registered with this
@@ -966,10 +680,6 @@ public class ContextWrapper implements ServletContext {
      * context-wide initialization parameter, or <code>null</code> if
      * the parameter does not exist.
      *
-     * <p>This method can make available configuration information useful
-     * to an entire web application.  For example, it can provide a
-     * webmaster's email address or the name of a system that holds
-     * critical data.
      *
      * @param	name	a <code>String</code> containing the name of the
      *                  parameter whose value is requested
@@ -1071,16 +781,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
 	 * Returns a {@link RequestDispatcher} object that acts as a wrapper for the
-	 * named servlet.
-	 *
-	 * <p>
-	 * Servlets (and JSP pages also) may be given names via server administration or
-	 * via a web application deployment descriptor. A servlet instance can determine
-	 * its name using {@link javax.servlet.ServletConfig#getServletName}.
-	 *
-	 * <p>
-	 * This method returns <code>null</code> if the <code>ServletContext</code>
-	 * cannot return a <code>RequestDispatcher</code> for any reason.
+	 * named servlet
 	 *
 	 * @param name a <code>String</code> specifying the name of a servlet to wrap
 	 *
@@ -1100,29 +801,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
      * Gets the <i>real</i> path corresponding to the given
-     * <i>virtual</i> path.
-     *
-     * <p>For example, if <tt>path</tt> is equal to <tt>/index.html</tt>,
-     * this method will return the absolute file path on the server's
-     * filesystem to which a request of the form
-     * <tt>http://&lt;host&gt;:&lt;port&gt;/&lt;contextPath&gt;/index.html</tt>
-     * would be mapped, where <tt>&lt;contextPath&gt;</tt> corresponds to the
-     * context path of this ServletContext.
-     *
-     * <p>The real path returned will be in a form
-     * appropriate to the computer and operating system on
-     * which the servlet container is running, including the
-     * proper path separators.
-     *
-     * <p>Resources inside the <tt>/META-INF/resources</tt>
-     * directories of JAR files bundled in the application's
-     * <tt>/WEB-INF/lib</tt> directory must be considered only if the
-     * container has unpacked them from their containing JAR file, in
-     * which case the path to the unpacked location must be returned.
-     *
-     * <p>This method returns <code>null</code> if the servlet container
-     * is unable to translate the given <i>virtual</i> path to a
-     * <i>real</i> path.
+     * <i>virtual</i> path
      *
      * @param path the <i>virtual</i> path to be translated to a
      * <i>real</i> path
@@ -1141,15 +820,6 @@ public class ContextWrapper implements ServletContext {
 	 * resource located at the given path. A <code>RequestDispatcher</code> object
 	 * can be used to forward a request to the resource or to include the resource
 	 * in a response. The resource can be dynamic or static.
-	 *
-	 * <p>
-	 * The pathname must begin with a <tt>/</tt> and is interpreted as relative to
-	 * the current context root. Use <code>getContext</code> to obtain a
-	 * <code>RequestDispatcher</code> for resources in foreign contexts.
-	 *
-	 * <p>
-	 * This method returns <code>null</code> if the <code>ServletContext</code>
-	 * cannot return a <code>RequestDispatcher</code>.
 	 *
 	 * @param path a <code>String</code> specifying the pathname to the resource
 	 *
@@ -1171,37 +841,6 @@ public class ContextWrapper implements ServletContext {
      * within the web application whose longest sub-path matches the
      * supplied path argument.
      *
-     * <p>Paths indicating subdirectory paths end with a <tt>/</tt>.
-     *
-     * <p>The returned paths are all relative to the root of the web
-     * application, or relative to the <tt>/META-INF/resources</tt>
-     * directory of a JAR file inside the web application's
-     * <tt>/WEB-INF/lib</tt> directory, and have a leading <tt>/</tt>.
-     *
-     * <p>The returned set is not backed by the {@code ServletContext} object,
-     * so changes in the returned set are not reflected in the
-     * {@code ServletContext} object, and vice-versa.</p>
-     *
-     * <p>For example, for a web application containing:
-     *
-     * <pre>{@code
-     *   /welcome.html
-     *   /catalog/index.html
-     *   /catalog/products.html
-     *   /catalog/offers/books.html
-     *   /catalog/offers/music.html
-     *   /customer/login.jsp
-     *   /WEB-INF/web.xml
-     *   /WEB-INF/classes/com.acme.OrderServlet.class
-     *   /WEB-INF/lib/catalog.jar!/META-INF/resources/catalog/moreOffers/books.html
-     * }</pre>
-     *
-     * <tt>getResourcePaths("/")</tt> would return
-     * <tt>{"/welcome.html", "/catalog/", "/customer/", "/WEB-INF/"}</tt>,
-     * and <tt>getResourcePaths("/catalog/")</tt> would return
-     * <tt>{"/catalog/index.html", "/catalog/products.html",
-     * "/catalog/offers/", "/catalog/moreOffers/"}</tt>.
-     *
      * @param path the partial path used to match the resources,
      * which must start with a <tt>/</tt>
      * @return a Set containing the directory listing, or null if there
@@ -1219,27 +858,6 @@ public class ContextWrapper implements ServletContext {
 	 * Returns the resource located at the named path as an <code>InputStream</code>
 	 * object.
 	 *
-	 * <p>
-	 * The data in the <code>InputStream</code> can be of any type or length. The
-	 * path must be specified according to the rules given in
-	 * <code>getResource</code>. This method returns <code>null</code> if no
-	 * resource exists at the specified path.
-	 *
-	 * <p>
-	 * Meta-information such as content length and content type that is available
-	 * via <code>getResource</code> method is lost when using this method.
-	 *
-	 * <p>
-	 * The servlet container must implement the URL handlers and
-	 * <code>URLConnection</code> objects necessary to access the resource.
-	 *
-	 * <p>
-	 * This method is different from
-	 * <code>java.lang.Class.getResourceAsStream</code>, which uses a class loader.
-	 * This method allows servlet containers to make a resource available to a
-	 * servlet from any location, without using a class loader.
-	 *
-	 *
 	 * @param path a <code>String</code> specifying the path to the resource
 	 *
 	 * @return the <code>InputStream</code> returned to the servlet, or
@@ -1254,37 +872,6 @@ public class ContextWrapper implements ServletContext {
      * Returns a directory-like listing of all the paths to resources
      * within the web application whose longest sub-path matches the
      * supplied path argument.
-     *
-     * <p>Paths indicating subdirectory paths end with a <tt>/</tt>.
-     *
-     * <p>The returned paths are all relative to the root of the web
-     * application, or relative to the <tt>/META-INF/resources</tt>
-     * directory of a JAR file inside the web application's
-     * <tt>/WEB-INF/lib</tt> directory, and have a leading <tt>/</tt>.
-     *
-     * <p>The returned set is not backed by the {@code ServletContext} object,
-     * so changes in the returned set are not reflected in the
-     * {@code ServletContext} object, and vice-versa.</p>
-     *
-     * <p>For example, for a web application containing:
-     *
-     * <pre>{@code
-     *   /welcome.html
-     *   /catalog/index.html
-     *   /catalog/products.html
-     *   /catalog/offers/books.html
-     *   /catalog/offers/music.html
-     *   /customer/login.jsp
-     *   /WEB-INF/web.xml
-     *   /WEB-INF/classes/com.acme.OrderServlet.class
-     *   /WEB-INF/lib/catalog.jar!/META-INF/resources/catalog/moreOffers/books.html
-     * }</pre>
-     *
-     * <tt>getResourcePaths("/")</tt> would return
-     * <tt>{"/welcome.html", "/catalog/", "/customer/", "/WEB-INF/"}</tt>,
-     * and <tt>getResourcePaths("/catalog/")</tt> would return
-     * <tt>{"/catalog/index.html", "/catalog/products.html",
-     * "/catalog/offers/", "/catalog/moreOffers/"}</tt>.
      *
      * @param path the partial path used to match the resources,
      * which must start with a <tt>/</tt>
@@ -1303,16 +890,6 @@ public class ContextWrapper implements ServletContext {
 	 * Returns the name and version of the servlet container on which the servlet is
 	 * running.
 	 *
-	 * <p>
-	 * The form of the returned string is <i>servername</i>/<i>versionnumber</i>.
-	 * For example, the JavaServer Web Development Kit may return the string
-	 * <code>JavaServer Web Dev Kit/1.0</code>.
-	 *
-	 * <p>
-	 * The servlet container may return other optional information after the primary
-	 * string in parentheses, for example,
-	 * <code>JavaServer Web Dev Kit/1.0 (JDK 1.1.6; Windows NT 4.0 x86)</code>.
-	 *
 	 *
 	 * @return a <code>String</code> containing at least the servlet container name
 	 *         and version number
@@ -1325,16 +902,9 @@ public class ContextWrapper implements ServletContext {
 	/**
      * @deprecated	As of Java Servlet API 2.1, with no direct replacement.
      *
-     * <p>This method was originally defined to retrieve a servlet
-     * from a <code>ServletContext</code>. In this version, this method
-     * always returns <code>null</code> and remains only to preserve
-     * binary compatibility. This method will be permanently removed
-     * in a future version of the Java Servlet API.
-     *
-     * <p>In lieu of this method, servlets can share information using the
-     * <code>ServletContext</code> class and can perform shared business logic
-     * by invoking methods on common non-servlet classes.
-     *
+     * This method was originally defined to retrieve a servlet
+     * from a <code>ServletContext</code>.
+     * 
      * @param name the servlet name
      * @return the {@code javax.servlet.Servlet Servlet} with the given name
      * @throws ServletException if an exception has occurred that interfaces
@@ -1363,12 +933,9 @@ public class ContextWrapper implements ServletContext {
 	/**
      * @deprecated	As of Java Servlet API 2.1, with no replacement.
      *
-     * <p>This method was originally defined to return an
+     * This method was originally defined to return an
      * <code>Enumeration</code>
-     * of all the servlet names known to this context. In this version,
-     * this method always returns an empty <code>Enumeration</code> and
-     * remains only to preserve binary compatibility. This method will
-     * be permanently removed in a future version of the Java Servlet API.
+     * of all the servlet names known to this context.
      *
      * @return an <code>Enumeration</code> of {@code javax.servlet.Servlet Servlet} names
      */
@@ -1404,15 +971,6 @@ public class ContextWrapper implements ServletContext {
      * objects (keyed by servlet name) corresponding to all servlets
      * registered with this ServletContext.
      *
-     * <p>The returned Map includes the ServletRegistration objects
-     * corresponding to all declared and annotated servlets, as well as the
-     * ServletRegistration objects corresponding to all servlets that have
-     * been added via one of the <tt>addServlet</tt> and <tt>addJspFile</tt>
-     * methods.
-     *
-     * <p>If permitted, any changes to the returned Map must not affect this
-     * ServletContext.
-     *
      * @return Map of the (complete and preliminary) ServletRegistration
      * objects corresponding to all servlets currently registered with this
      * ServletContext
@@ -1433,13 +991,9 @@ public class ContextWrapper implements ServletContext {
 	/**
      * @deprecated	As of Java Servlet API 2.0, with no replacement.
      *
-     * <p>This method was originally defined to return an
+     * This method was originally defined to return an
      * <code>Enumeration</code> of all the servlets known to this servlet
      * context.
-     * In this version, this method always returns an empty enumeration and
-     * remains only to preserve binary compatibility. This method
-     * will be permanently removed in a future version of the Java
-     * Servlet API.
      *
      * @return an <code>Enumeration</code> of {@code javax.servlet.Servlet Servlet}
      */
@@ -1524,8 +1078,6 @@ public class ContextWrapper implements ServletContext {
      * {@link #getAttribute} to retrieve the attribute's value
      * will return <code>null</code>.
      *
-     * <p>If listeners are configured on the <code>ServletContext</code> the
-     * container notifies them accordingly.
      *
      * @param name	a <code>String</code> specifying the name
      * 			of the attribute to be removed
@@ -1539,16 +1091,6 @@ public class ContextWrapper implements ServletContext {
      * Binds an object to a given attribute name in this ServletContext. If
      * the name specified is already used for an attribute, this
      * method will replace the attribute with the new to the new attribute.
-     * <p>If listeners are configured on the <code>ServletContext</code> the
-     * container notifies them accordingly.
-     * <p>
-     * If a null value is passed, the effect is the same as calling
-     * <code>removeAttribute()</code>.
-     *
-     * <p>Attribute names should follow the same convention as package
-     * names. The Java Servlet API specification reserves names
-     * matching <code>java.*</code>, <code>javax.*</code>, and
-     * <code>sun.*</code>.
      *
      * @param name 	a <code>String</code> specifying the name of the attribute
      *
@@ -1596,9 +1138,6 @@ public class ContextWrapper implements ServletContext {
      * Sets the session tracking modes that are to become effective for this
      * <tt>ServletContext</tt>.
      *
-     * <p>The given <tt>sessionTrackingModes</tt> replaces any
-     * session tracking modes set by a previous invocation of this
-     * method on this <tt>ServletContext</tt>.
      *
      * @param sessionTrackingModes the set of session tracking modes to
      * become effective for this <tt>ServletContext</tt>
@@ -1629,13 +1168,6 @@ public class ContextWrapper implements ServletContext {
      * Returns the configuration name of the logical host on which the
      * ServletContext is deployed.
      *
-     * Servlet containers may support multiple logical hosts. This method must
-     * return the same name for all the servlet contexts deployed on a logical
-     * host, and the name returned by this method must be distinct, stable per
-     * logical host, and suitable for use in associating server configuration
-     * information with the logical host. The returned value is NOT expected
-     * or required to be equivalent to a network address or hostname of the
-     * logical host.
      *
      * @return a <code>String</code> containing the configuration name of the
      * logical host on which the servlet context is deployed.
@@ -1654,7 +1186,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
 	* 
-	* Sets an attribute
+	* Sets an attribute with a name and value.
 	* 
 	* @param name the attribute name
 	* @param value the attribute value
@@ -1666,7 +1198,7 @@ public class ContextWrapper implements ServletContext {
 
 	/**
 	* 
-	* Gets an attribute or a parameter value
+	* Gets an attribute or a parameter value.
 	* 
 	* @param name the attribute or parameter name
 	* @return the attribute or parameter value

@@ -6,6 +6,8 @@
 	<artifactId>gservlet-api</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	<name>GServlet</name>
+	<url>https://gservlet.org</url>
 	<description>
 	  GServlet is an open source project inspired from the Groovlets, which aims to use the Groovy language and its provided modules
 	  to simplify Servlet API web development.
@@ -30,8 +32,8 @@
 	</developers>
 	<scm>
 		<connection>scm:git:git://github.com/GServlet/gservlet-api.git</connection>
-		<developerConnection>scm:git:ssh://github.com/GServlet/gservlet-api.git</developerConnection>
-		<url>https://github.com/GServlet/gservlet-api/tree/master</url>
+		<developerConnection>scm:git:git@github.com:GServlet/gservlet-api.git</developerConnection>
+		<url>https://github.com/GServlet/gservlet-api</url>
 	</scm>
 	<properties>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -55,6 +57,7 @@
 		<docs.directory>../gservlet-site/static/docs/${release.version}</docs.directory>
 		<javadoc.version>2.9.1</javadoc.version>
 		<javadocs.directory>../gservlet-site/static/javadocs/${release.version}</javadocs.directory>
+		<sources.directory>../gservlet-site/static/sources/${release.version}</sources.directory>
 		<gpg.version>1.5</gpg.version>
 		<nexus.version>1.6.7</nexus.version>
 	</properties>
@@ -199,10 +202,17 @@
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>${javadoc.version}</version>
 						<configuration>
+							<description>GServlet API documentation</description>
+							<doctitle>GServlet API documentation</doctitle>
+							<windowtitle>GServlet API documentation</windowtitle>
+							<header><![CDATA[<br>GServlet API v${release.version}]]></header>
+							<bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
+							</bottom>
 							<links>
-								<link>https://docs.oracle.com/javaee/6/api/</link>
+								<link>https://docs.oracle.com/javase/7/docs/api/</link>
+								<link>https://docs.oracle.com/javaee/7/api/</link>
 								<link>http://docs.groovy-lang.org/2.5.4/html/gapi/</link>
-								<link>https://javadoc.io/doc/javassist/javassist/3.12.1.GA/</link>
+								<link>https://javadoc.io/static/javassist/javassist/3.12.1.GA/</link>
 							</links>
 						</configuration>
 						<executions>
@@ -263,11 +273,28 @@
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>${javadoc.version}</version>
 						<configuration>
-							<links>
-								<link>https://docs.oracle.com/javaee/6/api/</link>
-								<link>http://docs.groovy-lang.org/2.5.4/html/gapi/</link>
-								<link>https://javadoc.io/doc/javassist/javassist/3.12.1.GA/</link>
-							</links>
+							<description>GServlet API documentation</description>
+							<doctitle>GServlet API documentation</doctitle>
+							<windowtitle>GServlet API documentation</windowtitle>
+							<header><![CDATA[<br>GServlet API v${release.version}]]></header>
+							<bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
+							</bottom>
+							<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+							<docletArtifact>
+								<groupId>org.umlgraph</groupId>
+								<artifactId>umlgraph</artifactId>
+								<version>5.6.6</version>
+							</docletArtifact>
+							<additionalparam>-views</additionalparam>
+							<additionalparam>-compact</additionalparam>
+							<additionalparam>-nodefontsize 9</additionalparam>
+							<additionalparam>
+								-link https://docs.oracle.com/javase/7/docs/api/
+								-link https://docs.oracle.com/javaee/7/api/
+								-link http://docs.groovy-lang.org/2.5.4/html/gapi/
+								-link https://javadoc.io/static/javassist/javassist/3.12.1.GA/
+							</additionalparam>
+							<useStandardDocletOptions>true</useStandardDocletOptions>
 						</configuration>
 						<executions>
 							<execution>
@@ -275,6 +302,27 @@
 								<phase>generate-resources</phase>
 								<goals>
 									<goal>javadoc</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jxr-plugin</artifactId>
+						<version>3.0.0</version>
+						<configuration>
+							<docTitle>GServlet Source Code v${release.version}</docTitle>
+							<windowTitle>GServlet Source Code v${release.version}</windowTitle>
+							<javadocDir>${javadocs.directory}</javadocDir>
+							<bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
+							</bottom>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>jxr</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -291,10 +339,32 @@
 								</goals>
 								<configuration>
 									<outputDirectory>${javadocs.directory}</outputDirectory>
+									<overwrite>true</overwrite>
 									<resources>
 										<resource>
 											<directory>target/site/apidocs</directory>
-											<filtering>true</filtering>
+										</resource>
+										<resource>
+											<directory>src/main/javadoc/resources</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-sources</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${sources.directory}</outputDirectory>
+									<overwrite>true</overwrite>
+									<resources>
+										<resource>
+											<directory>target/site/xref</directory>
+										</resource>
+										<resource>
+											<directory>src/main/javadoc/resources</directory>
 										</resource>
 									</resources>
 								</configuration>
@@ -307,10 +377,10 @@
 								</goals>
 								<configuration>
 									<outputDirectory>${docs.directory}</outputDirectory>
+									<overwrite>true</overwrite>
 									<resources>
 										<resource>
 											<directory>target/generated-docs</directory>
-											<filtering>true</filtering>
 										</resource>
 									</resources>
 								</configuration>
