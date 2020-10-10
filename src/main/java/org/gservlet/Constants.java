@@ -36,11 +36,11 @@ public final class Constants {
 	/**
 	 * The data source constant
 	 */
-	public static final String DATASOURCE = "gservlet.dataSource";
+	public static final String DATASOURCE = "GSERVLET_DATASOURCE";
 	/**
 	 * The database connection constant
 	 */
-	public static final String CONNECTION = "gservlet.connection";
+	public static final String DB_CONNECTION = "GSERVLET_CONNECTION";
 	/**
 	 * The reload constant
 	 */
@@ -56,11 +56,11 @@ public final class Constants {
 	/**
 	 * The handlers constant
 	 */
-	public static final String HANDLERS = "gservlet.handlers";
+	public static final String HANDLERS = "GSERVLET_HANDLERS";
 	/**
 	 * The default request filter constant
 	 */
-	public static final String REQUEST_FILTER = "gservlet.requestFilter";
+	public static final String REQUEST_FILTER = "GSERVLET_REQUESTFILTER";
 
 	/**
 	 * The private constructor

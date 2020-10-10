@@ -46,7 +46,7 @@ public class HttpServletTest {
 		final Map<Object, Object> map = new HashMap<Object, Object>();
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getSession(true)).thenReturn(mock(HttpSession.class));
-		when(request.getAttribute(CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
+		when(request.getAttribute(DB_CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
 		when(request.getServletContext()).thenReturn(mock(ServletContext.class));
 		doAnswer(new Answer() {
 			public Object answer(InvocationOnMock invocation) throws Throwable {

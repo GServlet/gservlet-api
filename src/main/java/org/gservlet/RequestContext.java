@@ -154,7 +154,7 @@ public class RequestContext {
 	* 
 	*/
 	public Sql getSql() {
-		return (Sql) request.getAttribute(Constants.CONNECTION);
+		return (Sql) request.getAttribute(Constants.DB_CONNECTION);
 	}
 
 }

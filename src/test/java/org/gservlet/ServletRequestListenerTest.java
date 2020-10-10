@@ -58,7 +58,7 @@ public class ServletRequestListenerTest {
 		assertTrue(listener.getClass().isAnnotationPresent(WebListener.class));
 		ServletContext context = mock(ServletContext.class);
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		when(request.getAttribute(CONNECTION)).thenReturn(new Sql(new BasicDataSource()));
+		when(request.getAttribute(DB_CONNECTION)).thenReturn(new Sql(new BasicDataSource()));
 		ServletRequestEvent event = new ServletRequestEvent(context, request);
 		listener.requestInitialized(event);
 		listener.requestDestroyed(event);

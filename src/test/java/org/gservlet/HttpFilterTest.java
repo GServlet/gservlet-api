@@ -46,7 +46,7 @@ public class HttpFilterTest {
 		assertEquals("/*", annotation.value()[0]);
 		final Map<Object, Object> map = new HashMap<Object, Object>();
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		when(request.getAttribute(CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
+		when(request.getAttribute(DB_CONNECTION)).thenReturn(new Sql(mock(DataSource.class)));
 		ServletContext context = mock(ServletContext.class);
 		when(request.getServletContext()).thenReturn(context);
 		when(request.getSession(true)).thenReturn(mock(HttpSession.class));

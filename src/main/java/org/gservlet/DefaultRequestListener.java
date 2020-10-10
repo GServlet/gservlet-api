@@ -48,7 +48,7 @@ public class DefaultRequestListener implements ServletRequestListener {
 	public void requestInitialized(ServletRequestEvent event) {
 		ServletRequest request = event.getServletRequest();
 		ServletContext context = event.getServletContext();
-		request.setAttribute(Constants.CONNECTION, new Sql((DataSource) context.getAttribute(Constants.DATASOURCE)));
+		request.setAttribute(Constants.DB_CONNECTION, new Sql((DataSource) context.getAttribute(Constants.DATASOURCE)));
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class DefaultRequestListener implements ServletRequestListener {
 	@Override
 	public void requestDestroyed(ServletRequestEvent event) {
 		ServletRequest request = event.getServletRequest();
-		Sql connection = (Sql) request.getAttribute(Constants.CONNECTION);
+		Sql connection = (Sql) request.getAttribute(Constants.DB_CONNECTION);
 		connection.close();
 	}
 
