@@ -267,7 +267,7 @@ public abstract class AbstractFilter implements Filter {
 	 * 
 	 */
 	public Sql getConnection() {
-		return requestContext.get().getConnection();
+		return requestContext.get().getSql();
 	}
 
 	/**
