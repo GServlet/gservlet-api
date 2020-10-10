@@ -31,7 +31,7 @@ contribute(currentType(annos: annotatedBy(Servlet))) {
 	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractServlet', doc : 'the HttpServletResponse object'
 	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractServlet', doc : 'the HttpSession object'
 	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractServlet', doc : 'the ServletContext object'
-	property name : 'connection', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractServlet', doc : 'the Sql object'
+	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractServlet', doc : 'the Sql object'
 	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractServlet', doc : 'the PrintWriter object'
 	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractServlet', doc : 'the MarkupBuilder object'
 }
@@ -59,7 +59,7 @@ contribute(currentType(annos: annotatedBy(Filter))) {
 	property name : 'chain', type : javax.servlet.FilterChain, provider : 'org.gservlet.AbstractFilter', doc : 'the FilterChain object'
 	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractFilter', doc : 'the HttpSession object'
 	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractFilter', doc : 'the ServletContext object'
-	property name : 'connection', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractFilter', doc : 'the Sql object'
+	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractFilter', doc : 'the Sql object'
 	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractFilter', doc : 'the PrintWriter object'
 	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractFilter', doc : 'the MarkupBuilder object'
 }
