@@ -67,7 +67,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 ## Getting Started
 
-If you are just getting started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. it is named **gservlet-api** and you just need to name a dependency on it in your project.
+If you are just getting started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
 
 ### From Maven
 
@@ -160,7 +160,7 @@ class ServletRequestListener {
 }
 ```
 
-For a deep insight, please read the complete [documentation](https://gservlet.org/documentation).
+For a deep insight of how to write your Groovy artifacts, please read the complete [documentation](https://gservlet.org/documentation).
 
 ## Building from source
 
@@ -170,7 +170,7 @@ For a deep insight, please read the complete [documentation](https://gservlet.or
 
 ### Documentation
 
-The developer guide generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). By default only the HTML output is enabled.
+The developer guide generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). Only the HTML output is enabled.
 
     > mvn clean install -Pdocumentation
 
@@ -190,7 +190,7 @@ We version GServlet by following [Semantic Versioning](https://semver.org), whic
 
 ## Status
 
-The current version of GServlet is 1.0.0
+The current version of GServlet is 1.0.0.
 
 ## Contributing
 

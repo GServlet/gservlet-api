@@ -298,8 +298,8 @@ public abstract class AbstractServlet extends HttpServlet {
 	 * @return the Sql object
 	 * 
 	 */
-	public Sql getConnection() {
-		return requestContext.get().getConnection();
+	public Sql getSql() {
+		return requestContext.get().getSql();
 	}
 
 	/**

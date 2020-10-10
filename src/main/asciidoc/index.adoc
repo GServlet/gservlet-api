@@ -82,7 +82,7 @@ Once your Java web server is installed and configured, you can put it to work. F
 . Call your servlet from a web browser
 
 
-You can find below some examples that you can try out and for Hot Reloading, set the **GSERVLET_RELOAD** environment variable to true in your IDE. 
+You can find below some examples that you can try out. 
     
 .CustomerServlet.java 
 [#src-listing] 
@@ -161,17 +161,16 @@ class ServletRequestListener {
 }
 ----
 
+For a hot reloading of your source code, set the **GSERVLET_RELOAD** environment variable to true in your IDE.
 
 == Creating Servlets
 
-A servlet is a small Java program that runs within a Web server. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Servlet.html[Servlet] interface defines methods that all servlets must implement. To implement this interface, you can write a generic servlet that extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/GenericServlet.html[GenericServlet] class or an HTTP servlet which extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[HttpServlet] class and which overrides at least one method, usually one of these:
+A servlet is a small Java program that runs within a Web server. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Servlet.html[Servlet] interface defines methods that all servlets must implement. To implement this interface, you can write a generic servlet that extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/GenericServlet.html[GenericServlet] class or an HTTP servlet which extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[HttpServlet] class and overrides at least one method, usually one of these:
 
 * _doGet_, for HTTP GET requests
 * _doPost_, for HTTP POST requests
 * _doPut_, for HTTP PUT requests
 * _doDelete_, for HTTP DELETE requests
-
-In the example below, we are going to create a Java servlet which extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[HttpServlet] class and which provides an implementation of the _doGet()_ method.
 
 
 .MyHttpServlet.java 
@@ -201,7 +200,7 @@ public class MyHttpServlet extends HttpServlet {
 }
 ----
 
-We are going now to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are implicit variables.
+We are going to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are now implicit variables.
 
 
 .MyHttpServlet.groovy 
@@ -224,7 +223,7 @@ class MyHttpServlet {
 }
 ----
 
-By default the Content-Type of the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to its https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable to write a better version of this servlet. It is nothing less than an instance of a Groovy MarkupBuilder bound to the response writer.
+By default the Content-Type of the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to a https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable which is an instance of a Groovy MarkupBuilder, to write a better version of this servlet.
 
 
 .MyHttpServlet.groovy 
@@ -265,30 +264,30 @@ The generated HTML content looks like this:
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|config | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletConfig.html[ServletConfig] object
+|config | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletConfig.html[ServletConfig] object
 
-|request | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|request |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|response | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+|response | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
  
-|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|connection | The http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
+|sql | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
 
-|out | The https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
+|out | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
 
-|html | The http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+|html | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
 |===
 
 == Creating Filters
 
 A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter_ method.
 
-This is how to create a Java filter that implements this interface:
+This is a Java filter that implements this interface:
 
 .MyFilter.java 
 [#src-listing] 
@@ -323,7 +322,7 @@ public class MyFilter implements Filter {
 }
 ----
 
-This is how to write a Filter with Groovy and the GServlet API:
+The Groovy version with the GServlet API looks like this:
 
 .MyFilter.groovy 
 [#src-listing] 
@@ -351,25 +350,25 @@ class MyFilter {
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|config | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterConfig.html[FilterConfig] object
+|config | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterConfig.html[FilterConfig] object
 
-|request | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|request |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|response | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+|response | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
 
-|chain | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterChain.html)[FilterChain] object
+|chain | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterChain.html)[FilterChain] object
  
-|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|connection | The http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
+|sql | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
 
-|out | The https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
+|out | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
 
-|html | The http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+|html | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
 |===
 
 == Creating Listeners
@@ -455,11 +454,11 @@ public class MyServletContextListener {
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
+|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
 |===
 
 === ServletContextAttributeListener
@@ -523,15 +522,15 @@ public class MyServletContextAttributeListener {
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
+|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
 
-|name | The attribute name
+|name | attribute name
 
-|value | The attribute value
+|value | attribute value
 |===
 
 
@@ -587,15 +586,15 @@ public class MyServletRequestListener {
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|request | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|request | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
+|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
 
 |===
 
@@ -662,19 +661,19 @@ public class MyServletRequestAttributeListener {
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|request | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|request |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
+|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
 
-|name | The attribute name
+|name | attribute name
 
-|value | The attribute value
+|value | attribute value
 |===
 
 === HttpSessionListener
@@ -730,11 +729,11 @@ public class MyHttpSessionListener {
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
 |===
 
@@ -802,20 +801,20 @@ public class MyHttpSessionAttributeListener {
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+|event |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
 
-|name | The attribute name
+|name | attribute name
 
-|value | The attribute value
+|value | attribute value
 |===
 
 === HttpSessionBindingListener
 
-It causes an object to be notified when it is bound to or unbound from a session. This may be as a result of a servlet programmer explicitly unbinding an attribute from a session, due to a session being invalidated, or due to a session timing out.
+This interface is for receiving notification events about when an object is bound to or unbound from a session. This may be as a result of a servlet programmer explicitly unbinding an attribute from a session, due to a session being invalidated, or due to a session timing out.
 
 .MyHttpSessionBindingListener.java 
 [#src-listing] 
@@ -865,15 +864,15 @@ public class MyHttpSessionBindingListener {
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+|event |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
 
-|name | The attribute name
+|name | attribute name
 
-|value | The attribute value
+|value | attribute value
 |===
 
 
@@ -929,11 +928,11 @@ public class MyHttpSessionActivationListener {
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
 |===
 
@@ -981,22 +980,19 @@ public class MyHttpSessionIdListener {
 |===
 |Variable |Description
 
-|logger | The https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
-|oldSessionId | The old https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] Id
+|oldSessionId | old https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] Id
 
 |===
 
 
 == Parsing and Producing JSON
 == Working With a Database
-== Servlets Examples
-== Filters Examples
-== Listeners Examples
 == Copyright and License
 
 Copyright @2020. Free use of this software is granted under the terms of the https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0] License.
