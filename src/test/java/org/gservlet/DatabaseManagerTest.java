@@ -15,7 +15,7 @@ public class DatabaseManagerTest {
 
 	@Test
 	public void loadConfiguration() throws Exception {
-		File folder = new File("src/test/resources/" + CONFIG_FOLDER);
+		File folder = new File("src/test/resources");
 		assertEquals(true, folder.exists());
 		ServletContext context = mock(ServletContext.class);
 		when(context.getAttribute(DATASOURCE)).thenReturn(new BasicDataSource());

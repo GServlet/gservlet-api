@@ -20,7 +20,6 @@
 package org.gservlet;
 
 import static org.gservlet.Constants.APP_CONFIG_FILE;
-import static org.gservlet.Constants.CONFIG_FOLDER;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,7 +34,7 @@ import javax.servlet.annotation.WebListener;
 
 /**
  * 
- * Bootstraps the application and the starts the registration of the servlets, filters,
+ * Bootstraps the application and starts the registration of the servlets, filters,
  * listeners into the web container.
  * 
  * @author Mamadou Lamine Ba
@@ -71,10 +70,10 @@ public class StartupListener implements ServletContextListener {
 			ServletContext context = event.getServletContext();
 			initializer = new ContainerInitializer(context);
 			databaseManager = new DatabaseManager(context);
-			File folder = new File(context.getRealPath("/") + File.separator + CONFIG_FOLDER);
-			File file = new File(folder + File.separator + APP_CONFIG_FILE);
-			databaseManager.setupDataSource(loadConfiguration(file));
-			watch(folder);
+			File root = new File(context.getRealPath("/"));
+			File configuration = new File(root + File.separator + APP_CONFIG_FILE);
+			databaseManager.setupDataSource(loadConfiguration(configuration));
+			watch(root);
 			logger.info("application started on context " + context.getContextPath());
 		} catch (Exception e) {
 			logger.log(Level.INFO, "exception during contextInitialized method", e);

@@ -491,13 +491,13 @@ blockquote, blockquote p {
 		font-weight: 600;
 	}
 	h2 {
-		font-size: 1.7em
+		font-size: 1.5em
 	}
 	h3, #toctitle, .sidebarblock>.content>.title {
-		font-size: 1.6875em
+		font-size: 1.2875em
 	}
 	h4 {
-		font-size: 1.4375em
+		font-size: 1.0375em
 	}
 }
 
@@ -527,7 +527,7 @@ table tr th, table tr td {
 }
 
 table tr.even, table tr.alt, table tr:nth-of-type(even) {
-	background: #f8f8f7
+	background: #fdfdfd
 }
 
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td,
@@ -683,6 +683,10 @@ p a>code:hover {
 
 #content {
 	width: 95%;
+}
+
+#content h3 {
+	border: 1px solid #e2dddd;
 }
 
 #header:before, #header:after, #content:before, #content:after,
@@ -1027,7 +1031,12 @@ p a>code:hover {
     display: block;
 }
 
-#content h1>a.link:hover, h2>a.link:hover, h3>a.link:hover, #toctitle>a.link:hover,
+h3>a.link {
+	background: #f8f8f8;
+    color: black;
+}
+
+#content h1>a.link:hover, h2>a.link:hover, #toctitle>a.link:hover,
 	.sidebarblock>.content>.title>a.link:hover, h4>a.link:hover, h5>a.link:hover,
 	h6>a.link:hover {
 	color: #fff

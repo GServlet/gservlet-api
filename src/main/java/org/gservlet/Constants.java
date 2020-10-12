@@ -45,10 +45,7 @@ public final class Constants {
 	 * The reload constant
 	 */
 	public static final String RELOAD = "GSERVLET_RELOAD";
-	/**
-	 * The configuration folder constant
-	 */
-	public static final String CONFIG_FOLDER = "conf";
+
 	/**
 	 * The application configuration file constant
 	 */

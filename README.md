@@ -56,7 +56,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 * Servlet 3.1+ Support
 * Groovy Scripting
 * Hot Reloading
-* JSON and XML Support
+* JSON and HTML Support
 * JDBC Support
 
 ## Requirements
@@ -186,7 +186,7 @@ We use [UMLGraph](https://www.spinellis.gr/umlgraph/index.html) to generate UML 
 
 ## Versioning
 
-We version GServlet by following [Semantic Versioning](https://semver.org), which is a general template that everyone uses and understands.
+We version GServlet by following the [Semantic Versioning](https://semver.org), which is a general template that everyone uses and understands.
 
 ## Status
 

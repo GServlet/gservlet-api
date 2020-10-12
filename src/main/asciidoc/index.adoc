@@ -1,5 +1,5 @@
 = GServlet Developer Guide
-Mamadou Lamine Ba <https://github.com/laminba2003[@laminba2003]>
+Official Documentation
 :revnumber: {project-version}
 :example-caption!:
 ifndef::imagesdir[:imagesdir: images]
@@ -29,7 +29,7 @@ GServlet is an open source project inspired from the http://docs.groovy-lang.org
 * Servlet 3.1+ Support
 * Groovy Scripting
 * Hot Reloading
-* JSON and XML Support
+* JSON and HTML Support
 * JDBC Support
 
 == Requirements
@@ -43,7 +43,7 @@ GServlet is an open source project inspired from the http://docs.groovy-lang.org
 
 To get started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
 
-=== From Maven
+=== Maven
 
 .pom.xml 
 [#src-listing] 
@@ -56,7 +56,7 @@ To get started with GServlet, you may want to begin by creating your first proje
 </dependency>
 ----
 
-=== From Gradle
+=== Gradle
 
 .build.gradle 
 [#src-listing] 
@@ -260,6 +260,8 @@ The generated HTML content looks like this:
 </html>
 ----
 
+You can read below the implicit variables made available to your servlets.
+
 .Servlet Implicit Variables
 |===
 |Variable |Description
@@ -287,7 +289,7 @@ The generated HTML content looks like this:
 
 A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter_ method.
 
-This is a Java filter that implements this interface:
+This is a Java class that implements this interface:
 
 .MyFilter.java 
 [#src-listing] 
@@ -345,6 +347,8 @@ class MyFilter {
     
 }
 ----
+
+You can read below the implicit variables made available to your filters.
 
 .Filter Implicit Variables
 |===
@@ -450,6 +454,8 @@ public class MyServletContextListener {
 }
 ----
 
+You can read below the implicit variables made available to your ServletContext listeners.
+
 .ServletContextListener Implicit Variables
 |===
 |Variable |Description
@@ -518,6 +524,8 @@ public class MyServletContextAttributeListener {
 }
 ----
 
+You can read below the implicit variables made available to your ServletContext attribute listeners.
+
 .ServletContextAttributeListener Implicit Variables
 |===
 |Variable |Description
@@ -581,6 +589,8 @@ public class MyServletRequestListener {
     
 }
 ----
+
+You can read below the implicit variables made available to your ServletRequest listeners.
 
 .ServletRequestListener Implicit Variables
 |===
@@ -657,6 +667,8 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
+You can read below the implicit variables made available to your ServletRequest attribute listeners.
+
 .ServletRequestAttributeListener Implicit Variables
 |===
 |Variable |Description
@@ -724,6 +736,8 @@ public class MyHttpSessionListener {
 	
 }
 ----
+
+You can read below the implicit variables made available to your HttpSession listeners.
 
 .HttpSessionListener Implicit Variables
 |===
@@ -797,6 +811,8 @@ public class MyHttpSessionAttributeListener {
 }
 ----
 
+You can read below the implicit variables made available to your HttpSession attribute listeners.
+
 .HttpSessionAttributeListener Implicit Variables
 |===
 |Variable |Description
@@ -859,6 +875,8 @@ public class MyHttpSessionBindingListener {
     
 }
 ----
+
+You can read below the implicit variables made available to your HttpSession binding listeners.
 
 .HttpSessionBindingListener Implicit Variables
 |===
@@ -924,6 +942,8 @@ public class MyHttpSessionActivationListener {
 }
 ----
 
+You can read below the implicit variables made available to your HttpSession activation listeners.
+
 .HttpSessionActivationListener Implicit Variables
 |===
 |Variable |Description
@@ -976,6 +996,8 @@ public class MyHttpSessionIdListener {
 }
 ----
 
+You can read below the implicit variables made available to your HttpSession Id listeners.
+
 .HttpSessionIdListener Implicit Variables
 |===
 |Variable |Description
@@ -991,15 +1013,105 @@ public class MyHttpSessionIdListener {
 |===
 
 
-== Parsing and Producing JSON
-== Working With a Database
+== Working With JSON
+
+Groovy comes with integrated support for converting between Groovy objects and JSON. The classes dedicated to JSON serialisation and parsing are found in the *_groovy.json_* package. You can get an insight of how to use them in the Groovy https://groovy-lang.org/json.html[documentation]. In the Gservlet API, we have simplified the process of parsing and producing JSON in your servlets and filters as below: 
+
+.CustomerServlet.java 
+[#src-listing] 
+[source,java]  
+----
+import org.gservlet.annotation.Servlet
+
+@Servlet("/customers")
+class CustomerServlet {
+
+    void get() {
+      def customers = []
+      customers << [FirstName : "John", lastName : "Doe"]
+      customers << [FirstName : "Kate", lastName : "Martinez"]
+      customers << [FirstName : "Allisson", lastName : "Becker"]
+      json(customers)
+    }
+
+    void post() {
+      def customer = request.body // get the json request payload as object
+      json(customer)
+    }
+
+}
+----
+
+Whenever, the content-type of the request is set to *_application/json_*, you can use its *_body_* property to get the payload as Groovy object. Your servlet or filter can use as well the built-in *_json()_* method to send json data as a response.
+
+== Working With RDBMS
+
+The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. The configuration to set up a database with the GServlet API is as simple as to create in the root directory of your web application, a file named *_application.properties_* like below :
+
+
+.application.properties 
+[#src-listing] 
+[source,plain]  
+---- 
+db.driver : oracle.jdbc.driver.OracleDriver
+db.url : jdbc:oracle:thin:@10.0.0.85:1521:ssv8acs
+db.user : ACSQA
+db.password : acs
+db.minPoolSize : 5
+db.maxPoolSize : 10
+----
+
+For each request, an http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] connection is automatically created from a data source and made available in your servlets and filters through the implicit _sql_ variable as below:
+
+.MyHttpServlet.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+
+@Servlet("/myServlet")
+class MyHttpServlet {
+	
+	void post() {
+	  sql.execute '''
+	     create table PROJECT (
+	         id integer not null,
+	         name varchar(50),
+	         url varchar(100),
+	     )
+	  '''     
+   }
+	
+}
+----
+
+.MyFilter.groovy 
+[#src-listing] 
+[source,java]  
+----  
+import org.gservlet.annotation.Filter;
+ 
+@Filter("/*")
+class MyFilter {
+ 
+    void filter() {
+        def params = [10, 'Groovy', 'http://groovy.codehaus.org']
+        sql.execute 'insert into PROJECT (id, name, url) values (?, ?, ?)', params
+        next()
+    }
+     
+}
+----
+
+After each request, the _close()_ method of the http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object is automatically invoked to bring it back to the connection pool.    
+
 == Copyright and License
 
 Copyright @2020. Free use of this software is granted under the terms of the https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0] License.
 
 == Authors
 
-GServlet was written by https://github.com/laminba2003[Mamadou Lamine Ba].
+GServlet was created by https://github.com/laminba2003[Mamadou Lamine Ba].
 
 == Contributing
 

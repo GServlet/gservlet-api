@@ -1,6 +1,6 @@
 package org.gservlet;
 
-import static org.gservlet.Constants.SCRIPTS_FOLDER;
+import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterRegistration;
 import javax.servlet.Servlet;
@@ -19,7 +18,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.servlet.annotation.WebListener;
 import org.junit.Test;
-
 import groovy.util.ScriptException;
 
 public class StartupListenerTest {
@@ -41,17 +39,13 @@ public class StartupListenerTest {
 		assertEquals(11, listener.getInitializer().getHandlers().size());
 		assertNotNull(listener.getDatabaseManager());
 		wait(2000);
-		File conf = new File(folder + "/conf/application.properties");
-		byte[] bytes = Files.readAllBytes(Paths.get(conf.getAbsolutePath()));
-		conf.delete();
+		File configuration = new File(folder + File.separator + APP_CONFIG_FILE);
+		byte[] bytes = Files.readAllBytes(Paths.get(configuration.getAbsolutePath()));
+		configuration.delete();
 		wait(2000);
-		Files.write(Paths.get(conf.getAbsolutePath()), bytes);
+		Files.write(Paths.get(configuration.getAbsolutePath()), bytes);
 		wait(2000);
-		try {
-			listener.contextDestroyed(event);
-		} catch (Exception e) {
-
-		}
+		listener.contextDestroyed(event);
 		assertEquals(0, listener.getInitializer().getHandlers().size());
 		when(context.getFilterRegistration(isA(String.class)))
 		.thenReturn(mock(FilterRegistration.Dynamic.class));
