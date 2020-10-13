@@ -41,7 +41,7 @@
 		<javassist.version>3.12.1.GA</javassist.version>
 		<servlet.version>3.1.0</servlet.version>
 		<commons.dbcp.version>2.2.0</commons.dbcp.version>
-		<junit.version>4.11</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<mockito.version>2.28.2</mockito.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
