@@ -4,7 +4,7 @@ Official Documentation
 :example-caption!:
 ifndef::imagesdir[:imagesdir: images]
 ifndef::sourcedir[:sourcedir: ../../main/java]
-:description: This guide describes how to use the GServlet API.
+:description: This developer guide describes how to use the GServlet API.
 :keywords: Java, Servlets, Groovy, reference, learn, how to
 :doctype: book
 :page-layout!:
