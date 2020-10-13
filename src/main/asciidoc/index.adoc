@@ -19,7 +19,30 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 
 == Introduction to GServlet
 
-GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. If you have no prior experience with Groovy, there are several curated lists of online resources for learning it.
+GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_], and https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[_HttpServletResponse_] objects. We have access to the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[_HttpSession_] with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_.
+
+.Groovlet.groovy 
+[#src-listing] 
+[source,java]  
+----
+if (!session) {
+    session = request.getSession(true)
+}
+if (!session.counter) {
+    session.counter = 1
+}
+html.html {
+  head {
+      title('Groovy Servlet')
+  }
+  body {
+    p("Hello, ${request.remoteHost}: ${session.counter}! ${new Date()}")
+  }
+}
+session.counter = session.counter + 1
+----
+
+The same philosophy has been adopted in this API and if you have no prior experience with the Groovy language, there are several curated lists of online resources for learning it.
 
 * https://groovy-lang.org[Official Groovy Website]
 * https://groovy-lang.org/learn.html#books[List of Programming Books]
@@ -27,10 +50,8 @@ GServlet is an open source project inspired from the http://docs.groovy-lang.org
 == Main Features
 
 * Servlet 3.1+ Support
-* Groovy Scripting
-* Hot Reloading
-* JSON and HTML Support
-* JDBC Support
+* Groovy Scripting and Hot Reloading
+* JSON, HTML and JDBC Support
 
 == Requirements
 
@@ -41,7 +62,7 @@ GServlet is an open source project inspired from the http://docs.groovy-lang.org
 
 == Installation
 
-To get started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
+To get started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
 
 === Maven
 
@@ -80,7 +101,6 @@ Once your Java web server is installed and configured, you can put it to work. F
 . Write the servlet source code
 . Run your Java web server
 . Call your servlet from a web browser
-
 
 You can find below some examples that you can try out. 
     
@@ -172,6 +192,7 @@ A servlet is a small Java program that runs within a Web server. The https://jav
 * _doPut_, for HTTP PUT requests
 * _doDelete_, for HTTP DELETE requests
 
+This is a Java class that extends the HttpServlet class:
 
 .MyHttpServlet.java 
 [#src-listing] 
@@ -200,8 +221,7 @@ public class MyHttpServlet extends HttpServlet {
 }
 ----
 
-We are going to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are now implicit variables.
-
+Now, we are going to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are now implicit variables.
 
 .MyHttpServlet.groovy 
 [#src-listing] 
@@ -324,7 +344,7 @@ public class MyFilter implements Filter {
 }
 ----
 
-The Groovy version with the GServlet API looks like this:
+The Groovy version of this filter with the GServlet API looks like this:
 
 .MyFilter.groovy 
 [#src-listing] 
@@ -400,8 +420,6 @@ During the lifetime of a typical Java EE web application, a number of events tak
 
 
 | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] id changes.
-
-
 
 |=== 
 
@@ -541,7 +559,6 @@ You can read below the implicit variables made available to your ServletContext 
 |value | attribute value
 |===
 
-
 === ServletRequestListener
 
 This interface is for receiving notification events about requests coming into and going out of scope of a web application. A request is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
@@ -607,7 +624,6 @@ You can read below the implicit variables made available to your ServletRequest 
 |event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
 
 |===
-
 
 === ServletRequestAttributeListener
 
@@ -893,7 +909,6 @@ You can read below the implicit variables made available to your HttpSession bin
 |value | attribute value
 |===
 
-
 === HttpSessionActivationListener
 
 Objects that are bound to a session may listen to container events notifying them that sessions will be passivated and activated. A container that migrates session between VMs or persists sessions is required to notify all attributes bound to sessions implementing this interface.
@@ -956,7 +971,6 @@ You can read below the implicit variables made available to your HttpSession act
 
 |===
 
-
 === HttpSessionIdListener
 
 This interface is for receiving notification events about HttpSession id changes. The order in which implementations of this interface are invoked is unspecified.
@@ -1012,7 +1026,6 @@ You can read below the implicit variables made available to your HttpSession Id 
 
 |===
 
-
 == Working With JSON
 
 Groovy comes with integrated support for converting between Groovy objects and JSON. The classes dedicated to JSON serialisation and parsing are found in the *_groovy.json_* package. You can get an insight of how to use them in the Groovy https://groovy-lang.org/json.html[documentation]. In the Gservlet API, we have simplified the process of parsing and producing JSON in your servlets and filters as below: 
@@ -1046,8 +1059,7 @@ Whenever, the content-type of the request is set to *_application/json_*, you ca
 
 == Working With RDBMS
 
-The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. The configuration to set up a database with the GServlet API is as simple as to create in the root directory of your web application, a file named *_application.properties_* like below :
-
+The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API is as simple as to create in the root directory of your web application, a file named *_application.properties_* like below :
 
 .application.properties 
 [#src-listing] 
@@ -1115,4 +1127,4 @@ GServlet was created by https://github.com/laminba2003[Mamadou Lamine Ba].
 
 == Contributing
 
-Contributions of any type or any scope, drive the project forward. There are lot of ways to contribute, not just code.  We provide more information about how to get involved in our link:/contribute[contribute] page.
+Contributions of any type or any scope, drive the project forward. There are lot of ways to contribute, not just code. We provide more information about how to get involved in our link:/contribute[contribute] page.
