@@ -192,6 +192,7 @@ A servlet is a small Java program that runs within a Web server. The https://jav
 * _doPut_, for HTTP PUT requests
 * _doDelete_, for HTTP DELETE requests
 
+This is a Java class that extends the HttpServlet class:
 
 .MyHttpServlet.java 
 [#src-listing] 
@@ -220,7 +221,7 @@ public class MyHttpServlet extends HttpServlet {
 }
 ----
 
-We are going to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are now implicit variables.
+Now, we are going to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are now implicit variables.
 
 .MyHttpServlet.groovy 
 [#src-listing] 
@@ -343,7 +344,7 @@ public class MyFilter implements Filter {
 }
 ----
 
-The Groovy version with the GServlet API looks like this:
+The Groovy version of this filter with the GServlet API looks like this:
 
 .MyFilter.groovy 
 [#src-listing] 
