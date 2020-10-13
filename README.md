@@ -54,10 +54,8 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 ## Features
 
 * Servlet 3.1+ Support
-* Groovy Scripting
-* Hot Reloading
-* JSON and HTML Support
-* JDBC Support
+* Groovy Scripting and Hot Reloading
+* JSON, HTML and JDBC Support
 
 ## Requirements
 
