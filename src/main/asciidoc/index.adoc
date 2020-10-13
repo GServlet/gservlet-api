@@ -1059,7 +1059,7 @@ Whenever, the content-type of the request is set to *_application/json_*, you ca
 
 == Working With RDBMS
 
-The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. The configuration to set up a database with the GServlet API is as simple as to create in the root directory of your web application, a file named *_application.properties_* like below :
+The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API is as simple as to create in the root directory of your web application, a file named *_application.properties_* like below :
 
 .application.properties 
 [#src-listing] 
