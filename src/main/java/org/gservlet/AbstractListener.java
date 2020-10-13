@@ -39,7 +39,7 @@ public abstract class AbstractListener implements EventListener{
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	* 

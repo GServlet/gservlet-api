@@ -45,7 +45,7 @@ public class DatabaseManager {
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(DatabaseManager.class.getName());
+	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * 

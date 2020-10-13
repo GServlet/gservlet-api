@@ -84,7 +84,7 @@ public class ContainerInitializer {
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(ContainerInitializer.class.getName());
+	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * 

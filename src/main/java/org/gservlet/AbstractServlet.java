@@ -52,7 +52,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
+	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * 

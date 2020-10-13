@@ -59,7 +59,7 @@ public abstract class AbstractFilter implements Filter {
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(AbstractFilter.class.getName());
+	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * 

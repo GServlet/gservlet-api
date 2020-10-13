@@ -67,7 +67,7 @@ public class ScriptManager {
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(ScriptManager.class.getName());
+	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * 

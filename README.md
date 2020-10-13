@@ -103,17 +103,40 @@ You can find below some examples that you can try out and for Hot Reloading, set
 ```java
 import org.gservlet.annotation.Servlet
 
-@Servlet("/customers")
-class CustomerServlet {
-	
-  void get() {
-     def customers = []
-     customers << [firstName : "Kate", lastName : "Martinez"]
-     customers << [firstName : "John", lastName : "Doe"]
-     customers << [firstName : "Alexandra", lastName : "Floriani"]
-     customers << [firstName : "Joe", lastName : "Milner"]
-     json(customers)
-  }
+@Servlet("/projects")
+class ProjectServlet {
+
+	def projects = []
+
+	void init() {
+		projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+		projects << [id : 2, name : "Spring", url : "https://spring.io"]
+		projects << [id : 3, name : "Maven", url : "https://maven.apache.org"]
+	}
+
+	void get() {
+		json(projects)
+	}
+
+	void post() {
+		def project = request.body
+		projects << project
+		json(project)
+	}
+
+	void put() {
+		def project = request.body
+		int index = projects.findIndexOf { it.id == project.id }
+		projects[index] = project
+		json(project)
+	}
+
+	void delete() {
+		def project = request.body
+		int index = projects.findIndexOf { it.id == project.id }
+		projects.remove(index)
+		json(project)
+	}
 	
 }
 ```

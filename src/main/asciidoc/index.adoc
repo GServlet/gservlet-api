@@ -104,38 +104,47 @@ Once your Java web server is installed and configured, you can put it to work. F
 
 You can find below some examples that you can try out. 
     
-.CustomerServlet.java 
+.ProjectServlet.java 
 [#src-listing] 
 [source,java]  
 ----
 import org.gservlet.annotation.Servlet
 
-@Servlet("/customers")
-class CustomerServlet {
+@Servlet("/projects")
+class ProjectServlet {
 
-    void get() {
-      def customers = []
-      customers << [FirstName : "John", lastName : "Doe"]
-      customers << [FirstName : "Kate", lastName : "Martinez"]
-      customers << [FirstName : "Allisson", lastName : "Becker"]
-      json(customers)
-    }
+	def projects = []
 
-    void post() {
-      def customer = request.body // get the json request payload as object
-      json(customer)
-    }
+	void init() {
+		projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+		projects << [id : 2, name : "Spring", url : "https://spring.io"]
+		projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
+	}
 
-    void put() {
-      def customer = request.body // get the json request payload as object
-      json(customer)
-    }
+	void get() {
+		json(projects)
+	}
 
-    void delete() {
-      def param = request.param // shortcut to request.getParameter("param")
-      def attribute = request.attribute // shortcut to request.getAttribute("attribute")
-    }
+	void post() {
+		def project = request.body
+		projects << project
+		json(project)
+	}
 
+	void put() {
+		def project = request.body
+		int index = projects.findIndexOf { it.id == project.id }
+		projects[index] = project
+		json(project)
+	}
+
+	void delete() {
+		def project = request.body
+		int index = projects.findIndexOf { it.id == project.id }
+		projects.remove(index)
+		json(project)
+	}
+	
 }
 ----
 
@@ -286,23 +295,23 @@ You can read below the implicit variables made available to your servlets.
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|config | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletConfig.html[ServletConfig] object
+|_config_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletConfig.html[ServletConfig] object
 
-|request |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|response | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+|_response_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
  
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|sql | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
+|_sql_ | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
 
-|out | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
+|_out_ | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
 
-|html | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+|_html_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
 |===
 
 == Creating Filters
@@ -374,25 +383,25 @@ You can read below the implicit variables made available to your filters.
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|config | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterConfig.html[FilterConfig] object
+|_config_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterConfig.html[FilterConfig] object
 
-|request |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|response | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+|_response_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
 
-|chain | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterChain.html)[FilterChain] object
+|_chain_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterChain.html)[FilterChain] object
  
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|sql | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
+|_sql_ | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
 
-|out | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
+|_out_ | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
 
-|html | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+|_html_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
 |===
 
 == Creating Listeners
@@ -478,11 +487,11 @@ You can read below the implicit variables made available to your ServletContext 
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
+|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
 |===
 
 === ServletContextAttributeListener
@@ -548,15 +557,15 @@ You can read below the implicit variables made available to your ServletContext 
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
+|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
 
-|name | attribute name
+|_name_ | attribute name
 
-|value | attribute value
+|_value_ | attribute value
 |===
 
 === ServletRequestListener
@@ -613,15 +622,15 @@ You can read below the implicit variables made available to your ServletRequest 
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|request | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
+|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
 
 |===
 
@@ -689,19 +698,19 @@ You can read below the implicit variables made available to your ServletRequest 
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|request |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
+|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
 
-|name | attribute name
+|_name_ | attribute name
 
-|value | attribute value
+|_value_ | attribute value
 |===
 
 === HttpSessionListener
@@ -759,11 +768,11 @@ You can read below the implicit variables made available to your HttpSession lis
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
 |===
 
@@ -833,15 +842,15 @@ You can read below the implicit variables made available to your HttpSession att
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+|_event_ |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
 
-|name | attribute name
+|_name_ | attribute name
 
-|value | attribute value
+|_value_ | attribute value
 |===
 
 === HttpSessionBindingListener
@@ -898,15 +907,15 @@ You can read below the implicit variables made available to your HttpSession bin
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+|_event_ |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
 
-|name | attribute name
+|_name_ | attribute name
 
-|value | attribute value
+|_value_ | attribute value
 |===
 
 === HttpSessionActivationListener
@@ -963,11 +972,11 @@ You can read below the implicit variables made available to your HttpSession act
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
 |===
 
@@ -1016,13 +1025,13 @@ You can read below the implicit variables made available to your HttpSession Id 
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
-|oldSessionId | old https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] Id
+|_oldSessionId_ | old https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] Id
 
 |===
 
@@ -1036,22 +1045,27 @@ Groovy comes with integrated support for converting between Groovy objects and J
 ----
 import org.gservlet.annotation.Servlet
 
-@Servlet("/customers")
-class CustomerServlet {
+@Servlet("/projects")
+class ProjectServlet {
 
-    void get() {
-      def customers = []
-      customers << [FirstName : "John", lastName : "Doe"]
-      customers << [FirstName : "Kate", lastName : "Martinez"]
-      customers << [FirstName : "Allisson", lastName : "Becker"]
-      json(customers)
-    }
+	def projects = []
 
-    void post() {
-      def customer = request.body // get the json request payload as object
-      json(customer)
-    }
+	void init() {
+		projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+		projects << [id : 2, name : "Spring", url : "https://spring.io"]
+		projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
+	}
 
+	void get() {
+		json(projects)
+	}
+
+	void post() {
+		def project = request.body
+		projects << project
+		json(project)
+	}
+	
 }
 ----
 
@@ -1075,40 +1089,36 @@ db.maxPoolSize : 10
 
 For each request, an http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] connection is automatically created from a data source and made available in your servlets and filters through the implicit _sql_ variable as below:
 
-.MyHttpServlet.groovy 
+.ProjectServlet.groovy 
 [#src-listing] 
 [source,java]  
 ---- 
 import org.gservlet.annotation.Servlet
 
 @Servlet("/myServlet")
-class MyHttpServlet {
+class ProjectServlet {
 	
 	void post() {
-	  sql.execute '''
-	     create table PROJECT (
-	         id integer not null,
-	         name varchar(50),
-	         url varchar(100),
-	     )
-	  '''     
+	   def params = [1, 'Groovy', 'https://groovy-lang.org']
+	   sql.execute 'insert into projects (id, name, url) values (?, ?, ?)', params   
    }
 	
 }
 ----
 
-.MyFilter.groovy 
+.ProjectFilter.groovy 
 [#src-listing] 
 [source,java]  
 ----  
 import org.gservlet.annotation.Filter;
  
 @Filter("/*")
-class MyFilter {
+class ProjectFilter {
  
     void filter() {
-        def params = [10, 'Groovy', 'http://groovy.codehaus.org']
-        sql.execute 'insert into PROJECT (id, name, url) values (?, ?, ?)', params
+        sql.eachRow('select * from projects') { project ->
+          println "${project.name.padRight(10)} ($project.url)"
+        }
         next()
     }
      

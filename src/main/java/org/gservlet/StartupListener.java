@@ -72,7 +72,9 @@ public class StartupListener implements ServletContextListener {
 			databaseManager = new DatabaseManager(context);
 			File root = new File(context.getRealPath("/"));
 			File configuration = new File(root + File.separator + APP_CONFIG_FILE);
-			databaseManager.setupDataSource(loadConfiguration(configuration));
+			if(configuration.exists()) {
+				databaseManager.setupDataSource(loadConfiguration(configuration));
+			}
 			watch(root);
 			logger.info("application started on context " + context.getContextPath());
 		} catch (Exception e) {
