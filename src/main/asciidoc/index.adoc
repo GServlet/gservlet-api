@@ -19,7 +19,30 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 
 == Introduction to GServlet
 
-GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. If you have no prior experience with Groovy, there are several curated lists of online resources for learning it.
+GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_], and https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[_HttpServletResponse_] objects. We have access to the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[_HttpSession_] with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_.
+
+.Groovlet.groovy 
+[#src-listing] 
+[source,java]  
+----
+if (!session) {
+    session = request.getSession(true)
+}
+if (!session.counter) {
+    session.counter = 1
+}
+html.html {
+  head {
+      title('Groovy Servlet')
+  }
+  body {
+    p("Hello, ${request.remoteHost}: ${session.counter}! ${new Date()}")
+  }
+}
+session.counter = session.counter + 1
+----
+
+The same philosophy has been adopted in this API and if you have no prior experience with the Groovy language, there are several curated lists of online resources for learning it.
 
 * https://groovy-lang.org[Official Groovy Website]
 * https://groovy-lang.org/learn.html#books[List of Programming Books]
@@ -27,10 +50,8 @@ GServlet is an open source project inspired from the http://docs.groovy-lang.org
 == Main Features
 
 * Servlet 3.1+ Support
-* Groovy Scripting
-* Hot Reloading
-* JSON and HTML Support
-* JDBC Support
+* Groovy Scripting and Hot Reloading
+* JSON, HTML and JDBC Support
 
 == Requirements
 
@@ -80,7 +101,6 @@ Once your Java web server is installed and configured, you can put it to work. F
 . Write the servlet source code
 . Run your Java web server
 . Call your servlet from a web browser
-
 
 You can find below some examples that you can try out. 
     
