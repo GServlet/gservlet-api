@@ -88,7 +88,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.gservlet:gservlet-api:1.0.0'
+    compile("org.gservlet:gservlet-api:1.0.0")
 }
 ----
 
@@ -289,7 +289,7 @@ The generated HTML content looks like this:
 </html>
 ----
 
-You can read below the implicit variables made available to your servlets.
+The implicit variables below are made available to your servlets.
 
 .Servlet Implicit Variables
 |===
@@ -377,7 +377,7 @@ class MyFilter {
 }
 ----
 
-You can read below the implicit variables made available to your filters.
+The implicit variables below are made available to your filters.
 
 .Filter Implicit Variables
 |===
@@ -481,7 +481,7 @@ public class MyServletContextListener {
 }
 ----
 
-You can read below the implicit variables made available to your ServletContext listeners.
+The implicit variables below are made available to your ServletContext listeners.
 
 .ServletContextListener Implicit Variables
 |===
@@ -551,7 +551,7 @@ public class MyServletContextAttributeListener {
 }
 ----
 
-You can read below the implicit variables made available to your ServletContext attribute listeners.
+The implicit variables below are made available to your ServletContext attribute listeners.
 
 .ServletContextAttributeListener Implicit Variables
 |===
@@ -616,7 +616,7 @@ public class MyServletRequestListener {
 }
 ----
 
-You can read below the implicit variables made available to your ServletRequest listeners.
+The implicit variables below are made available to your ServletRequest listeners.
 
 .ServletRequestListener Implicit Variables
 |===
@@ -692,7 +692,7 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
-You can read below the implicit variables made available to your ServletRequest attribute listeners.
+The implicit variables below are made available to your ServletRequest attribute listeners.
 
 .ServletRequestAttributeListener Implicit Variables
 |===
@@ -762,7 +762,7 @@ public class MyHttpSessionListener {
 }
 ----
 
-You can read below the implicit variables made available to your HttpSession listeners.
+The implicit variables below are made available to your HttpSession listeners.
 
 .HttpSessionListener Implicit Variables
 |===
@@ -836,7 +836,7 @@ public class MyHttpSessionAttributeListener {
 }
 ----
 
-You can read below the implicit variables made available to your HttpSession attribute listeners.
+The implicit variables below are made available to your HttpSession attribute listeners.
 
 .HttpSessionAttributeListener Implicit Variables
 |===
@@ -901,7 +901,7 @@ public class MyHttpSessionBindingListener {
 }
 ----
 
-You can read below the implicit variables made available to your HttpSession binding listeners.
+The implicit variables below are made available to your HttpSession binding listeners.
 
 .HttpSessionBindingListener Implicit Variables
 |===
@@ -966,7 +966,7 @@ public class MyHttpSessionActivationListener {
 }
 ----
 
-You can read below the implicit variables made available to your HttpSession activation listeners.
+The implicit variables below are made available to your HttpSession activation listeners.
 
 .HttpSessionActivationListener Implicit Variables
 |===
@@ -1007,7 +1007,7 @@ public class MyHttpSessionIdListener implements HttpSessionIdListener {
 [#src-listing] 
 [source,java]  
 ---- 
-import org.servlet.annotation.SessionIdListener
+import org.servlet.annotation.SessionIdListenerThe implicit variables below are made available
 
 @WebListener
 public class MyHttpSessionIdListener {
@@ -1019,7 +1019,7 @@ public class MyHttpSessionIdListener {
 }
 ----
 
-You can read below the implicit variables made available to your HttpSession Id listeners.
+The implicit variables below are made available to your HttpSession Id listeners.
 
 .HttpSessionIdListener Implicit Variables
 |===
@@ -1047,24 +1047,24 @@ import org.gservlet.annotation.Servlet
 
 @Servlet("/projects")
 class ProjectServlet {
+   
+   def projects = []
 
-	def projects = []
+   void init() {
+     projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+     projects << [id : 2, name : "Spring", url : "https://spring.io"]
+     projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
+   }
 
-	void init() {
-		projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
-		projects << [id : 2, name : "Spring", url : "https://spring.io"]
-		projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
-	}
+   void get() {
+     json(projects)
+   }
 
-	void get() {
-		json(projects)
-	}
-
-	void post() {
-		def project = request.body
-		projects << project
-		json(project)
-	}
+   void post() {
+     def project = request.body
+     projects << project
+     json(project)
+   }
 	
 }
 ----
@@ -1098,9 +1098,9 @@ import org.gservlet.annotation.Servlet
 @Servlet("/myServlet")
 class ProjectServlet {
 	
-	void post() {
-	   def params = [1, 'Groovy', 'https://groovy-lang.org']
-	   sql.execute 'insert into projects (id, name, url) values (?, ?, ?)', params   
+   void post() {
+     def params = [1, 'Groovy', 'https://groovy-lang.org']
+     sql.execute 'insert into projects (id, name, url) values (?, ?, ?)', params   
    }
 	
 }
@@ -1115,12 +1115,12 @@ import org.gservlet.annotation.Filter;
 @Filter("/*")
 class ProjectFilter {
  
-    void filter() {
-        sql.eachRow('select * from projects') { project ->
-          println "${project.name.padRight(10)} ($project.url)"
-        }
-        next()
-    }
+   void filter() {
+      sql.eachRow('select * from projects') { project ->
+         println "${project.name.padRight(10)} ($project.url)"
+      }
+      next()
+   }
      
 }
 ----
