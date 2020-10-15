@@ -42,7 +42,7 @@ html.html {
 session.counter = session.counter + 1
 ----
 
-The same philosophy has been adopted in this API and if you have no prior experience with the Groovy language, there are several curated lists of online resources for learning it.
+The same philosophy has been followed in the design of this API and if you have no prior experience with the Groovy language, there are several curated lists of online resources for learning it.
 
 * https://groovy-lang.org[Official Groovy Website]
 * https://groovy-lang.org/learn.html#books[List of Programming Books]
@@ -116,33 +116,33 @@ class ProjectServlet {
 	def projects = []
 
 	void init() {
-		projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
-		projects << [id : 2, name : "Spring", url : "https://spring.io"]
-		projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
+	   projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+	   projects << [id : 2, name : "Spring", url : "https://spring.io"]
+	   projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
 	}
 
 	void get() {
-		json(projects)
+	   json(projects)
 	}
 
 	void post() {
-		def project = request.body
-		projects << project
-		json(project)
+	   def project = request.body
+	   projects << project
+	   json(project)
 	}
 
 	void put() {
-		def project = request.body
-		int index = projects.findIndexOf { it.id == project.id }
-		projects[index] = project
-		json(project)
+	   def project = request.body
+	   int index = projects.findIndexOf { it.id == project.id }
+	   projects[index] = project
+	   json(project)
 	}
 
 	void delete() {
-		def project = request.body
-		int index = projects.findIndexOf { it.id == project.id }
-		projects.remove(index)
-		json(project)
+	   def project = request.body
+	   int index = projects.findIndexOf { it.id == project.id }
+	   projects.remove(index)
+	   json(project)
 	}
 	
 }
@@ -216,15 +216,14 @@ import java.io.IOException;
 @WebServlet("/myServlet")
 public class MyHttpServlet extends HttpServlet {
 	
-	@Override
-	public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {  
-	  response.setContentType("text/html");  
-	  PrintWriter out = response.getWriter();
-	  out.println("<html>");
-	  out.println("<body>");
-	  out.println("<p>Welcome to servlet</p>");
-	  out.println("</body>");
-	  out.println("</html>");  
+   public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {  
+      response.setContentType("text/html");  
+      PrintWriter out = response.getWriter();
+      out.println("<html>");
+      out.println("<body>");
+      out.println("<p>Welcome to servlet</p>");
+      out.println("</body>");
+      out.println("</html>");  
    }
 	
 }
@@ -240,13 +239,13 @@ import org.gservlet.annotation.Servlet
 
 @Servlet("/myServlet")
 class MyHttpServlet {
-	
-	void get() {
-	  out.println("<html>")
-	  out.println("<body>")
-	  out.println("<p>Welcome to servlet</p>")
-	  out.println("</body>")
-	  out.println("</html>")     
+
+   void get() {
+      out.println("<html>")
+      out.println("<body>")
+      out.println("<p>Welcome to servlet</p>")
+      out.println("</body>")
+      out.println("</html>")     
    }
 	
 }
@@ -263,14 +262,14 @@ import org.gservlet.annotation.Servlet
 
 @Servlet("/myServlet")
 class MyHttpServlet {
-	
-	void get() {
+
+  void get() {
      html.html {
        body {
          p("Welcome to gservlet")
        }
      } 
-   }
+  }
    
 }
 ----
@@ -336,17 +335,14 @@ import java.io.IOException;
 @WebFilter("/*")
 public class MyFilter implements Filter {
  
-    @Override
     public void init(FilterConfig filterConfig) throws ServletException {  
     }
  
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {  
         chain.doFilter(request, response);
     }
  
-    @Override
     public void destroy() {
     }
     
@@ -447,14 +443,12 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletContextListener implements ServletContextListener {
 	
-	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		System.out.println("context started");	
+	   System.out.println("context started");	
 	}
 	
-	@Override
 	public void contextDestroyed(ServletContextEvent event) {
-		System.out.println("context destroyed");
+	   System.out.println("context destroyed");
 	}
 	
 }
@@ -471,11 +465,11 @@ import org.gservlet.annotation.ContextListener
 public class MyServletContextListener {
 	
 	void contextInitialized() {
-		println "context started"	
+	   println "context started"	
 	}
 	
 	void contextDestroyed() {
-		println "context destroyed"
+	   println "context destroyed"
 	}
 	
 }
@@ -509,17 +503,14 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletContextAttributeListener implements ServletContextAttributeListener {
 
-    @Override
     public void attributeAdded(ServletContextAttributeEvent event) {
         System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
-    @Override
     public void attributeRemoved(ServletContextAttributeEvent event) {
         System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
-    @Override
     public void attributeReplaced(ServletContextAttributeEvent event) {
         System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
@@ -583,12 +574,10 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletRequestListener implements ServletRequestListener {
 
-	 @Override
     public void requestInitialized(ServletRequestEvent event) {
         System.out.println("request initialized");
     }
 
-    @Override
     public void requestDestroyed(ServletRequestEvent event) {
         System.out.println("request destroyed");
     }
@@ -650,17 +639,14 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletRequestAttributeListener implements ServletRequestAttributeListener {
 
-    @Override
     public void attributeAdded(ServletRequestAttributeEvent event) {
         System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
-    @Override
     public void attributeRemoved(ServletRequestAttributeEvent event) {
         System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
-    @Override
     public void attributeReplaced(ServletRequestAttributeEvent event) {
         System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
@@ -729,14 +715,12 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionListener implements HttpSessionListener {
 	
-	@Override
 	public void sessionCreated(HttpSessionEvent event) {
-		System.out.println("session created");	
+	  System.out.println("session created");	
 	}
 	
-	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
-		System.out.println("session destroyed");
+	  System.out.println("session destroyed");
 	}
 	
 }
@@ -752,11 +736,11 @@ import org.gservlet.annotation.SessionListener
 public class MyHttpSessionListener {
 	
 	void sessionCreated() {
-		println "session created"	
+	   println "session created"	
 	}
 	
 	void sessionDestroyed() {
-		println "session destroyed"
+	   println "session destroyed"
 	}
 	
 }
@@ -793,17 +777,14 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionAttributeListener implements HttpSessionAttributeListener {
 
-    @Override
     public void attributeAdded(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
-    @Override
     public void attributeRemoved(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
-    @Override
     public void attributeReplaced(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
@@ -868,12 +849,10 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionBindingListener implements HttpSessionBindingListener {
 
-    @Override
     public void valueBound(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " bounded with value " + event.getValue());
     }
 
-    @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " unbounded with value " + event.getValue());
     }
@@ -933,12 +912,10 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionActivationListener implements HttpSessionActivationListener {
 
-    @Override
     public void sessionDidActivate(HttpSessionEvent event) {
         System.out.println("session activated");
     }
 
-    @Override
     public void sessionWillPassivate(HttpSessionEvent event) {
         System.out.println("session passivated");
     }
@@ -995,7 +972,6 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionIdListener implements HttpSessionIdListener {
 
-    @Override
     public void sessionIdChanged(HttpSessionEvent event, String oldSessionId) {
         System.out.println("the session id was "+oldSessionId);
     }
