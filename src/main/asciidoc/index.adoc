@@ -1,5 +1,5 @@
 = GServlet Developer Guide
-Official Documentation
+Mamadou Lamine Ba <https://github.com/laminba2003[@laminba2003]>
 :revnumber: {project-version}
 :example-caption!:
 ifndef::imagesdir[:imagesdir: images]
