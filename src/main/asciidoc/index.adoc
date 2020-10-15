@@ -1,5 +1,5 @@
 = GServlet Developer Guide
-Official Documentation
+Mamadou Lamine Ba <https://github.com/laminba2003[@laminba2003]>
 :revnumber: {project-version}
 :example-caption!:
 ifndef::imagesdir[:imagesdir: images]
@@ -42,7 +42,7 @@ html.html {
 session.counter = session.counter + 1
 ----
 
-The same philosophy has been adopted in this API and if you have no prior experience with the Groovy language, there are several curated lists of online resources for learning it.
+The same philosophy has been followed in the design of this API and if you have no prior experience with the Groovy language, there are several curated lists of online resources for learning it.
 
 * https://groovy-lang.org[Official Groovy Website]
 * https://groovy-lang.org/learn.html#books[List of Programming Books]
@@ -88,7 +88,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.gservlet:gservlet-api:1.0.0'
+    compile("org.gservlet:gservlet-api:1.0.0")
 }
 ----
 
@@ -116,33 +116,33 @@ class ProjectServlet {
 	def projects = []
 
 	void init() {
-		projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
-		projects << [id : 2, name : "Spring", url : "https://spring.io"]
-		projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
+	   projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+	   projects << [id : 2, name : "Spring", url : "https://spring.io"]
+	   projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
 	}
 
 	void get() {
-		json(projects)
+	   json(projects)
 	}
 
 	void post() {
-		def project = request.body
-		projects << project
-		json(project)
+	   def project = request.body
+	   projects << project
+	   json(project)
 	}
 
 	void put() {
-		def project = request.body
-		int index = projects.findIndexOf { it.id == project.id }
-		projects[index] = project
-		json(project)
+	   def project = request.body
+	   int index = projects.findIndexOf { it.id == project.id }
+	   projects[index] = project
+	   json(project)
 	}
 
 	void delete() {
-		def project = request.body
-		int index = projects.findIndexOf { it.id == project.id }
-		projects.remove(index)
-		json(project)
+	   def project = request.body
+	   int index = projects.findIndexOf { it.id == project.id }
+	   projects.remove(index)
+	   json(project)
 	}
 	
 }
@@ -216,15 +216,14 @@ import java.io.IOException;
 @WebServlet("/myServlet")
 public class MyHttpServlet extends HttpServlet {
 	
-	@Override
-	public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {  
-	  response.setContentType("text/html");  
-	  PrintWriter out = response.getWriter();
-	  out.println("<html>");
-	  out.println("<body>");
-	  out.println("<p>Welcome to servlet</p>");
-	  out.println("</body>");
-	  out.println("</html>");  
+   public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {  
+      response.setContentType("text/html");  
+      PrintWriter out = response.getWriter();
+      out.println("<html>");
+      out.println("<body>");
+      out.println("<p>Welcome to servlet</p>");
+      out.println("</body>");
+      out.println("</html>");  
    }
 	
 }
@@ -240,13 +239,13 @@ import org.gservlet.annotation.Servlet
 
 @Servlet("/myServlet")
 class MyHttpServlet {
-	
-	void get() {
-	  out.println("<html>")
-	  out.println("<body>")
-	  out.println("<p>Welcome to servlet</p>")
-	  out.println("</body>")
-	  out.println("</html>")     
+
+   void get() {
+      out.println("<html>")
+      out.println("<body>")
+      out.println("<p>Welcome to servlet</p>")
+      out.println("</body>")
+      out.println("</html>")     
    }
 	
 }
@@ -263,14 +262,14 @@ import org.gservlet.annotation.Servlet
 
 @Servlet("/myServlet")
 class MyHttpServlet {
-	
-	void get() {
+
+  void get() {
      html.html {
        body {
          p("Welcome to gservlet")
        }
      } 
-   }
+  }
    
 }
 ----
@@ -289,7 +288,7 @@ The generated HTML content looks like this:
 </html>
 ----
 
-You can read below the implicit variables made available to your servlets.
+The implicit variables below are made available to your servlets.
 
 .Servlet Implicit Variables
 |===
@@ -336,17 +335,14 @@ import java.io.IOException;
 @WebFilter("/*")
 public class MyFilter implements Filter {
  
-    @Override
     public void init(FilterConfig filterConfig) throws ServletException {  
     }
  
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {  
         chain.doFilter(request, response);
     }
  
-    @Override
     public void destroy() {
     }
     
@@ -377,7 +373,7 @@ class MyFilter {
 }
 ----
 
-You can read below the implicit variables made available to your filters.
+The implicit variables below are made available to your filters.
 
 .Filter Implicit Variables
 |===
@@ -447,14 +443,12 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletContextListener implements ServletContextListener {
 	
-	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		System.out.println("context started");	
+	   System.out.println("context started");	
 	}
 	
-	@Override
 	public void contextDestroyed(ServletContextEvent event) {
-		System.out.println("context destroyed");
+	   System.out.println("context destroyed");
 	}
 	
 }
@@ -471,17 +465,17 @@ import org.gservlet.annotation.ContextListener
 public class MyServletContextListener {
 	
 	void contextInitialized() {
-		println "context started"	
+	   println "context started"	
 	}
 	
 	void contextDestroyed() {
-		println "context destroyed"
+	   println "context destroyed"
 	}
 	
 }
 ----
 
-You can read below the implicit variables made available to your ServletContext listeners.
+The implicit variables below are made available to your ServletContext listeners.
 
 .ServletContextListener Implicit Variables
 |===
@@ -509,17 +503,14 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletContextAttributeListener implements ServletContextAttributeListener {
 
-    @Override
     public void attributeAdded(ServletContextAttributeEvent event) {
         System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
-    @Override
     public void attributeRemoved(ServletContextAttributeEvent event) {
         System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
-    @Override
     public void attributeReplaced(ServletContextAttributeEvent event) {
         System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
@@ -551,7 +542,7 @@ public class MyServletContextAttributeListener {
 }
 ----
 
-You can read below the implicit variables made available to your ServletContext attribute listeners.
+The implicit variables below are made available to your ServletContext attribute listeners.
 
 .ServletContextAttributeListener Implicit Variables
 |===
@@ -583,12 +574,10 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletRequestListener implements ServletRequestListener {
 
-	 @Override
     public void requestInitialized(ServletRequestEvent event) {
         System.out.println("request initialized");
     }
 
-    @Override
     public void requestDestroyed(ServletRequestEvent event) {
         System.out.println("request destroyed");
     }
@@ -616,7 +605,7 @@ public class MyServletRequestListener {
 }
 ----
 
-You can read below the implicit variables made available to your ServletRequest listeners.
+The implicit variables below are made available to your ServletRequest listeners.
 
 .ServletRequestListener Implicit Variables
 |===
@@ -650,17 +639,14 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletRequestAttributeListener implements ServletRequestAttributeListener {
 
-    @Override
     public void attributeAdded(ServletRequestAttributeEvent event) {
         System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
-    @Override
     public void attributeRemoved(ServletRequestAttributeEvent event) {
         System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
-    @Override
     public void attributeReplaced(ServletRequestAttributeEvent event) {
         System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
@@ -692,7 +678,7 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
-You can read below the implicit variables made available to your ServletRequest attribute listeners.
+The implicit variables below are made available to your ServletRequest attribute listeners.
 
 .ServletRequestAttributeListener Implicit Variables
 |===
@@ -729,14 +715,12 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionListener implements HttpSessionListener {
 	
-	@Override
 	public void sessionCreated(HttpSessionEvent event) {
-		System.out.println("session created");	
+	  System.out.println("session created");	
 	}
 	
-	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
-		System.out.println("session destroyed");
+	  System.out.println("session destroyed");
 	}
 	
 }
@@ -752,17 +736,17 @@ import org.gservlet.annotation.SessionListener
 public class MyHttpSessionListener {
 	
 	void sessionCreated() {
-		println "session created"	
+	   println "session created"	
 	}
 	
 	void sessionDestroyed() {
-		println "session destroyed"
+	   println "session destroyed"
 	}
 	
 }
 ----
 
-You can read below the implicit variables made available to your HttpSession listeners.
+The implicit variables below are made available to your HttpSession listeners.
 
 .HttpSessionListener Implicit Variables
 |===
@@ -793,17 +777,14 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionAttributeListener implements HttpSessionAttributeListener {
 
-    @Override
     public void attributeAdded(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
-    @Override
     public void attributeRemoved(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
-    @Override
     public void attributeReplaced(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
@@ -836,7 +817,7 @@ public class MyHttpSessionAttributeListener {
 }
 ----
 
-You can read below the implicit variables made available to your HttpSession attribute listeners.
+The implicit variables below are made available to your HttpSession attribute listeners.
 
 .HttpSessionAttributeListener Implicit Variables
 |===
@@ -868,12 +849,10 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionBindingListener implements HttpSessionBindingListener {
 
-    @Override
     public void valueBound(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " bounded with value " + event.getValue());
     }
 
-    @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " unbounded with value " + event.getValue());
     }
@@ -901,7 +880,7 @@ public class MyHttpSessionBindingListener {
 }
 ----
 
-You can read below the implicit variables made available to your HttpSession binding listeners.
+The implicit variables below are made available to your HttpSession binding listeners.
 
 .HttpSessionBindingListener Implicit Variables
 |===
@@ -933,12 +912,10 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionActivationListener implements HttpSessionActivationListener {
 
-    @Override
     public void sessionDidActivate(HttpSessionEvent event) {
         System.out.println("session activated");
     }
 
-    @Override
     public void sessionWillPassivate(HttpSessionEvent event) {
         System.out.println("session passivated");
     }
@@ -966,7 +943,7 @@ public class MyHttpSessionActivationListener {
 }
 ----
 
-You can read below the implicit variables made available to your HttpSession activation listeners.
+The implicit variables below are made available to your HttpSession activation listeners.
 
 .HttpSessionActivationListener Implicit Variables
 |===
@@ -995,7 +972,6 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionIdListener implements HttpSessionIdListener {
 
-    @Override
     public void sessionIdChanged(HttpSessionEvent event, String oldSessionId) {
         System.out.println("the session id was "+oldSessionId);
     }
@@ -1007,7 +983,7 @@ public class MyHttpSessionIdListener implements HttpSessionIdListener {
 [#src-listing] 
 [source,java]  
 ---- 
-import org.servlet.annotation.SessionIdListener
+import org.servlet.annotation.SessionIdListenerThe implicit variables below are made available
 
 @WebListener
 public class MyHttpSessionIdListener {
@@ -1019,7 +995,7 @@ public class MyHttpSessionIdListener {
 }
 ----
 
-You can read below the implicit variables made available to your HttpSession Id listeners.
+The implicit variables below are made available to your HttpSession Id listeners.
 
 .HttpSessionIdListener Implicit Variables
 |===
@@ -1047,24 +1023,24 @@ import org.gservlet.annotation.Servlet
 
 @Servlet("/projects")
 class ProjectServlet {
+   
+   def projects = []
 
-	def projects = []
+   void init() {
+     projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+     projects << [id : 2, name : "Spring", url : "https://spring.io"]
+     projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
+   }
 
-	void init() {
-		projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
-		projects << [id : 2, name : "Spring", url : "https://spring.io"]
-		projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
-	}
+   void get() {
+     json(projects)
+   }
 
-	void get() {
-		json(projects)
-	}
-
-	void post() {
-		def project = request.body
-		projects << project
-		json(project)
-	}
+   void post() {
+     def project = request.body
+     projects << project
+     json(project)
+   }
 	
 }
 ----
@@ -1098,9 +1074,9 @@ import org.gservlet.annotation.Servlet
 @Servlet("/myServlet")
 class ProjectServlet {
 	
-	void post() {
-	   def params = [1, 'Groovy', 'https://groovy-lang.org']
-	   sql.execute 'insert into projects (id, name, url) values (?, ?, ?)', params   
+   void post() {
+     def params = [1, 'Groovy', 'https://groovy-lang.org']
+     sql.execute 'insert into projects (id, name, url) values (?, ?, ?)', params   
    }
 	
 }
@@ -1115,12 +1091,12 @@ import org.gservlet.annotation.Filter;
 @Filter("/*")
 class ProjectFilter {
  
-    void filter() {
-        sql.eachRow('select * from projects') { project ->
-          println "${project.name.padRight(10)} ($project.url)"
-        }
-        next()
-    }
+   void filter() {
+      sql.eachRow('select * from projects') { project ->
+         println "${project.name.padRight(10)} ($project.url)"
+      }
+      next()
+   }
      
 }
 ----
