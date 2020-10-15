@@ -81,7 +81,7 @@ If you are just getting started with GServlet, you may want to begin by creating
 
 ```groovy
  dependencies {
-    implementation 'org.gservlet:gservlet-api:1.0.0'
+    compile("org.gservlet:gservlet-api:1.0.0")
  }
 ```
 
