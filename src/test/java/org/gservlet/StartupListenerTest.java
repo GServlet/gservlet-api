@@ -22,7 +22,7 @@ import groovy.util.ScriptException;
 
 public class StartupListenerTest {
 
-	@Test(expected = ServletException.class)
+	@Test(expected = Exception.class)
 	public void test() throws InterruptedException, IOException, ServletException, ScriptException {
 		File folder = new File("src/test/resources/");
 		StartupListener listener = new StartupListener();
@@ -49,9 +49,9 @@ public class StartupListenerTest {
 		assertEquals(0, listener.getInitializer().getHandlers().size());
 		when(context.getFilterRegistration(isA(String.class)))
 		.thenReturn(mock(FilterRegistration.Dynamic.class));
-		folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
+		folder = new File(folder + File.separator + SCRIPTS_FOLDER);
 		ScriptManager scriptManager = new ScriptManager(folder);
-		File script = new File(folder + "/" + "HttpFilter.groovy");
+		File script = new File(folder + File.separator + "HttpFilter.groovy");
 		listener.getInitializer().register(scriptManager.loadObject(script));
 	}
 	
