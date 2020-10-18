@@ -244,7 +244,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	 * 
 	 */
 	public ServletConfig getConfig() {
-		return getServletConfig();
+		return new ServletConfigWrapper(getServletConfig());
 	}
 
 	/**
@@ -277,7 +277,8 @@ public abstract class AbstractServlet extends HttpServlet {
 	 * 
 	 */
 	public ServletContext getContext() {
-		return requestContext.get().getServletContext();
+		ServletContext context = getConfig().getServletContext();
+		return context !=null ? new ContextWrapper(context) : requestContext.get().getServletContext();
 	}
 
 	/**

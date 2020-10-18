@@ -134,9 +134,8 @@ class ProjectServlet {
 	void delete() {
 	  def project = request.body
 	  int index = projects.findIndexOf { it.id == project.id }
-	  projects.remove(index)
-	  json(project)
-        }
+	  json(projects.remove(index))
+   }
 	
 }
 ```

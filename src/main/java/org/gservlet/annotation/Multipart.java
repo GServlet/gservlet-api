@@ -23,38 +23,48 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.annotation.Documented;
 
 /**
- * This annotation is used on a Servlet or Filter implementation class
- * to specify an initialization parameter.
- * 
+ * Annotation that may be specified on a servlet class, indicating that instances of the
+ * <tt>Servlet</tt> expect requests that conform to the <tt>multipart/form-data</tt> MIME type.
+ *
  * @author Mamadou Lamine Ba
- * 
  */
-@Target({ElementType.TYPE})
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface InitParam {
+public @interface Multipart {
 
-	/**
-     * Name of the initialization parameter
-     *
-     * @return name of the initialization parameter
-     */
-    String name();
-    
     /**
-     * Value of the initialization parameter
+     * The directory location where files will be stored
      *
-     * @return value of the initialization parameter
-     */    
-    String value();
-    
-    /**
-     * Description of the initialization parameter
-     *
-     * @return description of the initialization parameter
+     * @return the directory location where files will be stored
      */
-    String description() default "";
+    String location() default "";
+
+    /**
+     * The maximum size allowed for uploaded files.
+     * 
+     * <p>
+     * The default is <tt>-1L</tt>, which means unlimited.
+     *
+     * @return the maximum size allowed for uploaded files
+     */
+    long maxFileSize() default -1L;
+
+    /**
+     * The maximum size allowed for <tt>multipart/form-data</tt> requests
+     * 
+     * <p>
+     * The default is <tt>-1L</tt>, which means unlimited.
+     *
+     * @return the maximum size allowed for <tt>multipart/form-data</tt> requests
+     */
+    long maxRequestSize() default -1L;
+
+    /**
+     * The size threshold after which the file will be written to disk
+     *
+     * @return the size threshold after which the file will be written to disk
+     */
+    int fileSizeThreshold() default 0;
 }

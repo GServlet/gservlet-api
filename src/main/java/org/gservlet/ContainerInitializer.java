@@ -23,6 +23,7 @@ import static org.gservlet.Constants.*;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -33,6 +34,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
+import javax.servlet.HttpConstraintElement;
+import javax.servlet.HttpMethodConstraintElement;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.ServletContextEvent;
@@ -40,6 +44,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
+import javax.servlet.ServletSecurityElement;
+import javax.servlet.annotation.HttpMethodConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingListener;
@@ -49,6 +56,7 @@ import org.gservlet.annotation.ContextAttributeListener;
 import org.gservlet.annotation.ContextListener;
 import org.gservlet.annotation.Filter;
 import org.gservlet.annotation.InitParam;
+import org.gservlet.annotation.Multipart;
 import org.gservlet.annotation.RequestAttributeListener;
 import org.gservlet.annotation.RequestListener;
 import org.gservlet.annotation.Servlet;
@@ -187,16 +195,38 @@ public class ContainerInitializer {
 			Object servlet = Proxy.newProxyInstance(this.getClass().getClassLoader(),
 					new Class[] { javax.servlet.Servlet.class }, handler);
 			handlers.put(name, handler);
-			registration = context.addServlet(name, (javax.servlet.Servlet) servlet);
+			ServletRegistration.Dynamic dynamic = context.addServlet(name, (javax.servlet.Servlet) servlet);
 			if (annotation.value().length > 0) {
-				registration.addMapping(annotation.value());
+				dynamic.addMapping(annotation.value());
 			}
 			if (annotation.urlPatterns().length > 0) {
-				registration.addMapping(annotation.urlPatterns());
+				dynamic.addMapping(annotation.urlPatterns());
 			}
 			for (InitParam param : annotation.initParams()) {
-				registration.setInitParameter(param.name(), param.value());
+				dynamic.setInitParameter(param.name(), param.value());
 			}
+			Multipart multiPart = object.getClass().getAnnotation(Multipart.class);
+			if(multiPart != null) {
+				MultipartConfigElement element = new MultipartConfigElement(multiPart.location(),
+						multiPart.maxFileSize(), multiPart.maxRequestSize(), multiPart.fileSizeThreshold());
+				dynamic.setMultipartConfig(element);
+			}
+			
+			ServletSecurity security = object.getClass().getAnnotation(ServletSecurity.class);
+			if(security != null) {
+				HttpConstraintElement constraintElement = new HttpConstraintElement(security.value().value(),
+						security.value().transportGuarantee(), security.value().rolesAllowed());
+				Collection<HttpMethodConstraintElement> methodConstraints = new ArrayList<HttpMethodConstraintElement>();
+				for(HttpMethodConstraint constraint : security.httpMethodConstraints()) {
+					HttpMethodConstraintElement element = new HttpMethodConstraintElement(constraint.value(), 
+							new HttpConstraintElement(constraint.emptyRoleSemantic(), constraint.transportGuarantee(),
+									 constraint.rolesAllowed()));
+					methodConstraints.add(element);
+				}
+				ServletSecurityElement securityElement = new ServletSecurityElement(constraintElement, methodConstraints);
+				dynamic.setServletSecurity(securityElement);
+			}
+			
 		} else {
 			String message = "The servlet with the name " + name
 					+ " has already been registered. Please use a different name or package";
@@ -316,11 +346,24 @@ public class ContainerInitializer {
 			Object object = scriptManager.loadObject(script);
 			Annotation[] annotations = object.getClass().getAnnotations();
 			for (Annotation annotation : annotations) {
-				if (annotation instanceof Servlet || annotation instanceof Filter
-						|| annotation instanceof RequestListener || annotation instanceof ContextAttributeListener
+				if (annotation instanceof RequestListener || annotation instanceof ContextAttributeListener
 						|| annotation instanceof RequestAttributeListener || annotation instanceof SessionListener
 						|| annotation instanceof SessionAttributeListener) {
 					reload(object);
+				} else if(annotation instanceof Servlet) {
+					reload(object);
+					AbstractServlet servlet = (AbstractServlet) object;
+					Servlet servletAnnotation = object.getClass().getAnnotation(Servlet.class);
+					DefaultServletConfig config = new DefaultServletConfig();
+					config.setServletContext(context);
+					for (InitParam param : servletAnnotation.initParams()) {
+						config.addInitParameter(param.name(), param.value());
+					}
+					servlet.init(config);
+				} else if(annotation instanceof Filter) {
+					reload(object);
+					AbstractFilter filter = (AbstractFilter) object;
+					filter.init();
 				}
 			}
 		} catch (Exception e) {

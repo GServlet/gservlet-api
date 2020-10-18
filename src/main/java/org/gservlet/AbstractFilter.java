@@ -245,7 +245,8 @@ public abstract class AbstractFilter implements Filter {
 	 * 
 	 */
 	public ServletContext getContext() {
-		return requestContext.get().getServletContext();
+		ServletContext context = getConfig().getServletContext();
+		return context !=null ? new ContextWrapper(context) : requestContext.get().getServletContext();
 	}
 
 	/**

@@ -19,7 +19,7 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 
 == Introduction to GServlet
 
-GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_], and https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[_HttpServletResponse_] objects. We have access to the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[_HttpSession_] with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_.
+GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_], and https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[_HttpServletResponse_] objects. We have access to the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[_HttpSession_] with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_.
 
 .Groovlet.groovy 
 [#src-listing] 
@@ -141,8 +141,7 @@ class ProjectServlet {
 	void delete() {
 	   def project = request.body
 	   int index = projects.findIndexOf { it.id == project.id }
-	   projects.remove(index)
-	   json(project)
+	   json(projects.remove(index))
 	}
 	
 }
@@ -194,7 +193,7 @@ For a hot reloading of your source code, set the **GSERVLET_RELOAD** environment
 
 == Creating Servlets
 
-A servlet is a small Java program that runs within a Web server. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Servlet.html[Servlet] interface defines methods that all servlets must implement. To implement this interface, you can write a generic servlet that extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/GenericServlet.html[GenericServlet] class or an HTTP servlet which extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[HttpServlet] class and overrides at least one method, usually one of these:
+A servlet is a small Java program that runs within a Web server. The https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html[Servlet] interface defines methods that all servlets must implement. To implement this interface, you can write a generic servlet that extends the https://docs.oracle.com/javaee/7/api/javax/servlet/GenericServlet.html[GenericServlet] class or an HTTP servlet which extends the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServlet.html[HttpServlet] class and overrides at least one method, usually one of these:
 
 * _doGet_, for HTTP GET requests
 * _doPost_, for HTTP POST requests
@@ -251,7 +250,7 @@ class MyHttpServlet {
 }
 ----
 
-By default the Content-Type of the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to a https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable which is an instance of a Groovy MarkupBuilder, to write a better version of this servlet.
+By default the Content-Type of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to its https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable which is an instance of a Groovy MarkupBuilder, to write a better version of this servlet.
 
 
 .MyHttpServlet.groovy 
@@ -288,23 +287,24 @@ The generated HTML content looks like this:
 </html>
 ----
 
-The implicit variables below are made available to your servlets.
+=== Servlet implicit variables
 
-.Servlet Implicit Variables
+The implicit variables made available to your servlets are as follows:
+
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_config_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletConfig.html[ServletConfig] object
+|_config_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html[ServletConfig] object
 
-|_request_ |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|_response_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+|_response_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
  
-|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
 |_sql_ | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
 
@@ -313,9 +313,185 @@ The implicit variables below are made available to your servlets.
 |_html_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
 |===
 
+
+=== Servlet methods
+
+|===
+|Method |Description
+
+|_void init()_ | handles the initialization process
+
+|_void get()_ | handles the GET request
+
+|_void post()_ | handles the POST request
+
+|_void put()_ |  handles the PUT request
+
+|_void delete()_ | handles the DELETE request
+ 
+|_void head()_ | handles the HEAD request
+
+|_void options()_ | handles the OPTIONS request
+
+|_void trace()_ | handles the TRACE request.
+
+|_void destroy()_ |  invoked when taken out of the service
+
+|===
+
+
+=== Servlet initialization parameters
+
+Since Servlet 3, the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a servlet or filter programmatically, and it takes a required name and value. You can add a description but this is rather informative. In the initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html[ServletConfig] object. In the GServlet API, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
+
+.UploadServlet.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.InitParam
+import org.gservlet.annotation.Servlet
+
+@Servlet( urlPatterns = "/upload",
+initParams = [
+	@InitParam(name = "uploadDirectory", value = "/images")
+] )
+class UploadServlet {
+
+	void init() {
+		println config.uploadDirectory
+		println config.getInitParameter("uploadDirectory")
+	}
+
+}
+----
+
+=== Servlet Multipart configuration
+
+Supporting file uploads is a very basic and common requirement for many web applications. Prior to Servlet 3.0, implementing file upload required the use of external libraries or complex input processing. Version 3.0 of the Java Servlet specification helps to provide a viable solution to the problem in a generic and portable way. The Servlet 3.0 specification supports file upload out of the box, so any web container that implements the specification can parse multipart requests and make mime attachments available through the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_] object. A new annotation, https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/MultipartConfig.html[@MultipartConfig], is used to indicate that the servlet on which it is declared expects requests to made using the _multipart/form-data_ MIME type. Therefore, it can retrieve the Part components of a given _multipart/form-data_ request by calling the _getPart(String name)_ or _getParts()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_] object. In the GServlet API, the annotation has been shorten to _@Multipart_ while taking the same input parameters.
+
+.UploadServlet.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.InitParam
+import org.gservlet.annotation.Servlet
+import org.gservlet.annotation.Multipart
+
+@Servlet( urlPatterns = "/upload",
+initParams = [
+	@InitParam(name = "uploadDirectory", value = "/images")
+] )
+@Multipart( fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 25 )
+class UploadServlet {
+
+	String uploadPath
+
+	void init() {
+		uploadPath = context.getRealPath(config.uploadDirectory)
+		File uploadDir = new File(uploadPath)
+		if (!uploadDir.exists()) {
+			uploadDir.mkdir()
+		}
+	}
+
+	void post() {
+		request.getParts().each { part ->
+			String file = uploadPath + File.separator + getFileName(part)
+			part.write(file)
+		}
+		json(["status" : 1])
+	}
+
+	String getFileName(part) {
+		for(String content : part.getHeader("content-disposition").split(";")) {
+			if ( content.trim().startsWith("filename")) {
+				return content.substring( content.indexOf("=") + 2, content.length() - 1 )
+			}
+		}
+		return "default.txt";
+	}
+}
+----
+
+=== Servlet Security
+
+The https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/ServletSecurity.html[@ServletSecurity] annotation is used to specify security constraints on a Java servlet. The annotations https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/HttpMethodConstraint.html[@HttpMethodConstraint] and https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/HttpConstraint.html[@HttpConstraint] are used within that annotation to define the security constraints.
+
+ 
+[#src-listing] 
+[source,java]  
+---- 
+@ServletSecurity(
+    httpMethodConstraints = <HttpMethodConstraint[]>,
+    value = <HttpConstraint>
+)
+----
+
+The _httpMethodConstraints_ attribute specifies one or more constraints for some specific HTTP methods, whereas the value attribute specifies a constraint that applies for all other HTTP methods.
+
+.Encryption for all HTTP methods 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+import javax.servlet.annotation.ServletSecurity
+import javax.servlet.annotation.ServletSecurity.TransportGuarantee
+import javax.servlet.annotation.HttpConstraint
+
+@Servlet(value="/projects")
+@ServletSecurity(@HttpConstraint(transportGuarantee = TransportGuarantee.CONFIDENTIAL))
+class ProjectServlet {
+
+	
+}
+----
+
+
+.Denying access to HTTP POST method 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+import javax.servlet.annotation.ServletSecurity
+import javax.servlet.annotation.HttpMethodConstraint
+import javax.servlet.annotation.ServletSecurity.EmptyRoleSemantic
+
+@Servlet(value="/projects")
+@ServletSecurity(httpMethodConstraints = @HttpMethodConstraint(value = "POST", 
+	emptyRoleSemantic = EmptyRoleSemantic.DENY))
+class ProjectServlet {
+
+	
+}
+----
+
+
+.Requiring that users must have the admin role 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+import javax.servlet.annotation.ServletSecurity
+import javax.servlet.annotation.HttpMethodConstraint
+
+@Servlet(value="/projects")
+@ServletSecurity(
+ httpMethodConstraints = [
+  @HttpMethodConstraint(value = "GET", rolesAllowed = "admin"),
+  @HttpMethodConstraint(value = "POST", rolesAllowed = "admin"),      
+ ]
+)
+class ProjectServlet {
+
+	
+}
+----
+
+You can find more examples about how to use the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/ServletSecurity.html[@ServletSecurity] annotation on the web.
+
 == Creating Filters
 
-A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter_ method.
+A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter_ method.
 
 This is a Java class that implements this interface:
 
@@ -373,25 +549,26 @@ class MyFilter {
 }
 ----
 
-The implicit variables below are made available to your filters.
+=== Filter implicit variables
 
-.Filter Implicit Variables
+The implicit variables made available to your filters are as follows:
+
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_config_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterConfig.html[FilterConfig] object
+|_config_ | https://docs.oracle.com/javaee/7/api/javax/servlet/FilterConfig.html[FilterConfig] object
 
-|_request_ |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|_response_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+|_response_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
 
-|_chain_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterChain.html)[FilterChain] object
+|_chain_ | https://docs.oracle.com/javaee/7/api/javax/servlet/FilterChain.html)[FilterChain] object
  
-|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
 |_sql_ | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
 
@@ -400,37 +577,54 @@ The implicit variables below are made available to your filters.
 |_html_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
 |===
 
+=== Filter methods
+
+|===
+|Method |Description
+
+|_void init()_ | handles the initialization process
+
+|_void filter()_ | handles the filtering tasks
+
+|_void destroy()_ |  invoked when taken out of the service
+
+
+|===
+
+
+=== Filter initialization parameters
+
 == Creating Listeners
 
 During the lifetime of a typical Java EE web application, a number of events take place. The Servlet API provides a number of listener interfaces that we can implement to react to these events.
 
 |=== 
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html[ServletContextListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] lifecycle changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] lifecycle changes.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] attribute changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] attribute changes.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html[ServletRequestListener] | Interface for receiving notification events about a https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequest.html[ServletRequest] coming into and going out of scope of a web application.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListener] | Interface for receiving notification events about a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html[ServletRequest] coming into and going out of scope of a web application.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] attribute changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] attribute changes.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] | Interface for receiving notification events when an object is bound to or unbound from a https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession].
-
-
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] | Interface for receiving notification events when an https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] is being passivated and and activated.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] | Interface for receiving notification events when an object is bound to or unbound from a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession].
 
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] id changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] | Interface for receiving notification events when an https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] is being passivated and and activated.
+
+
+| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] id changes.
 
 |=== 
 
 === ServletContextListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] lifecycle changes. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent[contextInitialized] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-[contextDestroyed] method in reverse order.
+This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] lifecycle changes. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent[contextInitialized] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-[contextDestroyed] method in reverse order.
 
 .MyServletContextListener.java 
 [#src-listing] 
@@ -475,7 +669,7 @@ public class MyServletContextListener {
 }
 ----
 
-The implicit variables below are made available to your ServletContext listeners.
+The implicit variables made available to your ServletContext listeners are as follows:
 
 .ServletContextListener Implicit Variables
 |===
@@ -483,14 +677,14 @@ The implicit variables below are made available to your ServletContext listeners
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
-|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
 |===
 
 === ServletContextAttributeListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] attribute changes. The order in which implementations of this interface are invoked is unspecified.
+This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] attribute changes. The order in which implementations of this interface are invoked is unspecified.
 
 .MyServletContextAttributeListener.java 
 [#src-listing] 
@@ -542,7 +736,7 @@ public class MyServletContextAttributeListener {
 }
 ----
 
-The implicit variables below are made available to your ServletContext attribute listeners.
+The implicit variables made available to your ServletContext attribute listeners are as follows:
 
 .ServletContextAttributeListener Implicit Variables
 |===
@@ -550,9 +744,9 @@ The implicit variables below are made available to your ServletContext attribute
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
-|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
 
 |_name_ | attribute name
 
@@ -561,7 +755,7 @@ The implicit variables below are made available to your ServletContext attribute
 
 === ServletRequestListener
 
-This interface is for receiving notification events about requests coming into and going out of scope of a web application. A request is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
+This interface is for receiving notification events about requests coming into and going out of scope of a web application. A request is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
 
 .MyServletRequestListener.java 
 [#src-listing] 
@@ -605,7 +799,7 @@ public class MyServletRequestListener {
 }
 ----
 
-The implicit variables below are made available to your ServletRequest listeners.
+The implicit variables made available to your ServletRequest listeners are as follows:
 
 .ServletRequestListener Implicit Variables
 |===
@@ -613,19 +807,19 @@ The implicit variables below are made available to your ServletRequest listeners
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_request_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
-|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
 
 |===
 
 === ServletRequestAttributeListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
+This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
 Notifications will be generated while the request is within the scope of the web application. A ServletRequest is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope when it exits the last servlet or the first filter in the chain. The order in which implementations of this interface are invoked is unspecified.
 
 .MyServletRequestAttributeListener.java 
@@ -678,7 +872,7 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
-The implicit variables below are made available to your ServletRequest attribute listeners.
+The implicit variables made available to your ServletRequest attribute listeners are as follows:
 
 .ServletRequestAttributeListener Implicit Variables
 |===
@@ -686,13 +880,13 @@ The implicit variables below are made available to your ServletRequest attribute
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_request_ |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|_context_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
-|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
 
 |_name_ | attribute name
 
@@ -701,7 +895,7 @@ The implicit variables below are made available to your ServletRequest attribute
 
 === HttpSessionListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent[sessionCreated] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent[sessionDestroyed] method in reverse order.
+This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent[sessionCreated] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent[sessionDestroyed] method in reverse order.
 
 
 .MyHttpSessionListener.java 
@@ -746,7 +940,7 @@ public class MyHttpSessionListener {
 }
 ----
 
-The implicit variables below are made available to your HttpSession listeners.
+The implicit variables made available to your HttpSession listeners are as follows:
 
 .HttpSessionListener Implicit Variables
 |===
@@ -754,16 +948,16 @@ The implicit variables below are made available to your HttpSession listeners.
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
 |===
 
 
 === HttpSessionAttributeListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] attribute changes. The order in which implementations of this interface are invoked is unspecified.
+This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] attribute changes. The order in which implementations of this interface are invoked is unspecified.
 
 
 .MyHttpSessionAttributeListener.java 
@@ -817,7 +1011,7 @@ public class MyHttpSessionAttributeListener {
 }
 ----
 
-The implicit variables below are made available to your HttpSession attribute listeners.
+The implicit variables made available to your HttpSession attribute listeners are as follows:
 
 .HttpSessionAttributeListener Implicit Variables
 |===
@@ -825,9 +1019,9 @@ The implicit variables below are made available to your HttpSession attribute li
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|_event_ |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+|_event_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
 
 |_name_ | attribute name
 
@@ -880,7 +1074,7 @@ public class MyHttpSessionBindingListener {
 }
 ----
 
-The implicit variables below are made available to your HttpSession binding listeners.
+The implicit variables made available to your HttpSession binding listeners are as follows:
 
 .HttpSessionBindingListener Implicit Variables
 |===
@@ -888,9 +1082,9 @@ The implicit variables below are made available to your HttpSession binding list
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|_event_ |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+|_event_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
 
 |_name_ | attribute name
 
@@ -943,7 +1137,7 @@ public class MyHttpSessionActivationListener {
 }
 ----
 
-The implicit variables below are made available to your HttpSession activation listeners.
+The implicit variables made available to your HttpSession activation listeners are as follows:
 
 .HttpSessionActivationListener Implicit Variables
 |===
@@ -951,9 +1145,9 @@ The implicit variables below are made available to your HttpSession activation l
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
 |===
 
@@ -995,7 +1189,7 @@ public class MyHttpSessionIdListener {
 }
 ----
 
-The implicit variables below are made available to your HttpSession Id listeners.
+The implicit variables made available to your HttpSession Id listeners are as follows:
 
 .HttpSessionIdListener Implicit Variables
 |===
@@ -1003,11 +1197,11 @@ The implicit variables below are made available to your HttpSession Id listeners
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_session_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|_event_ | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
-|_oldSessionId_ | old https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] Id
+|_oldSessionId_ | old https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] Id
 
 |===
 

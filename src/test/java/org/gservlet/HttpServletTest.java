@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,6 +55,8 @@ public class HttpServletTest {
 				return null;
 			}
 		}).when(request).setAttribute(anyString(), any());
+		ServletConfig config = mock(ServletConfig.class);
+		servlet.init(config);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		servlet.doGet(request, response);
 		assertEquals("get", map.get("state"));
@@ -72,7 +75,7 @@ public class HttpServletTest {
 		assertEquals(RequestWrapper.class, servlet.getRequest().getClass());
 		assertEquals(SessionWrapper.class, servlet.getSession().getClass());
 		assertEquals(ContextWrapper.class, servlet.getContext().getClass());
-		assertNull(servlet.getConfig());
+		assertNotNull(servlet.getConfig());
 		assertNotNull(servlet.getSql());
 	}
 
