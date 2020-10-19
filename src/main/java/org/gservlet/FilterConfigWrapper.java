@@ -1,46 +1,43 @@
 package org.gservlet;
 
 import java.util.Enumeration;
-import javax.servlet.ServletConfig;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 
 /**
  * 
- * A wrapper class around the ServletConfig interface.
+ * A wrapper class around the FilterConfig interface.
  * 
  * @author Mamadou Lamine Ba
  * 
  */
-public class ServletConfigWrapper implements ServletConfig {
+public class FilterConfigWrapper implements FilterConfig {
 
 	/**
-	 * The servlet config object
+	 * The filter config object
 	 */
-	private final ServletConfig servletConfig;
+	private final FilterConfig filterConfig;
 
 	/**
 	 * 
-	 * Constructs a ServletConfigWrapper for the given ServletConfig
+	 * Constructs a FilterConfigWrapper for the given FilterConfig
 	 * 
-	 * @param servletConfig the servlet config object
+	 * @param filterConfig the filter config object
 	 * 
 	 */
-	public ServletConfigWrapper(ServletConfig servletConfig) {
-		this.servletConfig = servletConfig;
+	public FilterConfigWrapper(FilterConfig filterConfig) {
+		this.filterConfig = filterConfig;
 	}
 
 	/**
-	 * Returns the name of this servlet instance. The name may be provided via
-	 * server administration, assigned in the web application deployment descriptor,
-	 * or for an unregistered (and thus unnamed) servlet instance it will be the
-	 * servlet's class name.
+	 * Returns the name of this filter instance.
 	 *
-	 * @return the name of the servlet instance
+	 * @return the name of the filter instance
 	 * 
 	 */
 	@Override
-	public String getServletName() {
-		return servletConfig.getServletName();
+	public String getFilterName() {
+		return filterConfig.getFilterName();
 	}
 
 	/**
@@ -52,7 +49,7 @@ public class ServletConfigWrapper implements ServletConfig {
 	 */
 	@Override
 	public ServletContext getServletContext() {
-		return servletConfig.getServletContext();
+		return filterConfig.getServletContext();
 	}
 
 	/**
@@ -66,20 +63,20 @@ public class ServletConfigWrapper implements ServletConfig {
 	 */
 	@Override
 	public String getInitParameter(String name) {
-		return servletConfig.getInitParameter(name);
+		return filterConfig.getInitParameter(name);
 	}
 
 	/**
-	 * Returns the names of the servlet's initialization parameters as an
+	 * Returns the names of the filter's initialization parameters as an
 	 * <code>Enumeration</code> of <code>String</code> objects, or an empty
-	 * <code>Enumeration</code> if the servlet has no initialization parameters.
+	 * <code>Enumeration</code> if the filter has no initialization parameters.
 	 *
 	 * @return an <code>Enumeration</code> of <code>String</code> objects containing
-	 *         the names of the servlet's initialization parameters
+	 *         the names of the filter's initialization parameters
 	 */
 	@Override
 	public Enumeration<String> getInitParameterNames() {
-		return servletConfig.getInitParameterNames();
+		return filterConfig.getInitParameterNames();
 	}
 
 	/**
@@ -103,7 +100,7 @@ public class ServletConfigWrapper implements ServletConfig {
 	 *         not exist
 	 */
 	public Object propertyMissing(String name) {
-		return servletConfig.getInitParameter(name);
+		return filterConfig.getInitParameter(name);
 	}
 
 }

@@ -201,7 +201,7 @@ public abstract class AbstractFilter implements Filter {
 	 * 
 	 */
 	public FilterConfig getConfig() {
-		return config;
+		return new FilterConfigWrapper(config);
 	}
 
 	/**

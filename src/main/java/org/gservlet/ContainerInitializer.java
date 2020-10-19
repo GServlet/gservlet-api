@@ -19,11 +19,11 @@
 
 package org.gservlet;
 
-import static org.gservlet.Constants.*;
+import static org.gservlet.Constants.HANDLERS;
+import static org.gservlet.Constants.SCRIPTS_FOLDER;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Proxy;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -34,8 +34,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
-import javax.servlet.HttpConstraintElement;
-import javax.servlet.HttpMethodConstraintElement;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
@@ -45,7 +43,7 @@ import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.ServletSecurityElement;
-import javax.servlet.annotation.HttpMethodConstraint;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionAttributeListener;
@@ -56,7 +54,6 @@ import org.gservlet.annotation.ContextAttributeListener;
 import org.gservlet.annotation.ContextListener;
 import org.gservlet.annotation.Filter;
 import org.gservlet.annotation.InitParam;
-import org.gservlet.annotation.Multipart;
 import org.gservlet.annotation.RequestAttributeListener;
 import org.gservlet.annotation.RequestListener;
 import org.gservlet.annotation.Servlet;
@@ -196,6 +193,7 @@ public class ContainerInitializer {
 					new Class[] { javax.servlet.Servlet.class }, handler);
 			handlers.put(name, handler);
 			ServletRegistration.Dynamic dynamic = context.addServlet(name, (javax.servlet.Servlet) servlet);
+			dynamic.setLoadOnStartup(annotation.loadOnStartup());
 			if (annotation.value().length > 0) {
 				dynamic.addMapping(annotation.value());
 			}
@@ -205,28 +203,14 @@ public class ContainerInitializer {
 			for (InitParam param : annotation.initParams()) {
 				dynamic.setInitParameter(param.name(), param.value());
 			}
-			Multipart multiPart = object.getClass().getAnnotation(Multipart.class);
-			if(multiPart != null) {
-				MultipartConfigElement element = new MultipartConfigElement(multiPart.location(),
-						multiPart.maxFileSize(), multiPart.maxRequestSize(), multiPart.fileSizeThreshold());
-				dynamic.setMultipartConfig(element);
+			MultipartConfig multiPartConfig = object.getClass().getAnnotation(MultipartConfig.class);
+			if(multiPartConfig != null) {
+				dynamic.setMultipartConfig(new MultipartConfigElement(multiPartConfig));
 			}
-			
-			ServletSecurity security = object.getClass().getAnnotation(ServletSecurity.class);
-			if(security != null) {
-				HttpConstraintElement constraintElement = new HttpConstraintElement(security.value().value(),
-						security.value().transportGuarantee(), security.value().rolesAllowed());
-				Collection<HttpMethodConstraintElement> methodConstraints = new ArrayList<HttpMethodConstraintElement>();
-				for(HttpMethodConstraint constraint : security.httpMethodConstraints()) {
-					HttpMethodConstraintElement element = new HttpMethodConstraintElement(constraint.value(), 
-							new HttpConstraintElement(constraint.emptyRoleSemantic(), constraint.transportGuarantee(),
-									 constraint.rolesAllowed()));
-					methodConstraints.add(element);
-				}
-				ServletSecurityElement securityElement = new ServletSecurityElement(constraintElement, methodConstraints);
-				dynamic.setServletSecurity(securityElement);
+			ServletSecurity servletSecurity = object.getClass().getAnnotation(ServletSecurity.class);
+			if(servletSecurity != null) {
+				dynamic.setServletSecurity(new ServletSecurityElement(servletSecurity));
 			}
-			
 		} else {
 			String message = "The servlet with the name " + name
 					+ " has already been registered. Please use a different name or package";
@@ -351,19 +335,10 @@ public class ContainerInitializer {
 						|| annotation instanceof SessionAttributeListener) {
 					reload(object);
 				} else if(annotation instanceof Servlet) {
-					reload(object);
-					AbstractServlet servlet = (AbstractServlet) object;
-					Servlet servletAnnotation = object.getClass().getAnnotation(Servlet.class);
-					DefaultServletConfig config = new DefaultServletConfig();
-					config.setServletContext(context);
-					for (InitParam param : servletAnnotation.initParams()) {
-						config.addInitParameter(param.name(), param.value());
-					}
-					servlet.init(config);
+					reload((AbstractServlet) object);
+					
 				} else if(annotation instanceof Filter) {
-					reload(object);
-					AbstractFilter filter = (AbstractFilter) object;
-					filter.init();
+					reload((AbstractFilter) object);
 				}
 			}
 		} catch (Exception e) {
@@ -375,7 +350,7 @@ public class ContainerInitializer {
 	 * 
 	 * Reloads a servlet, filter or a listener into the web container
 	 * 
-	 * @param object the object
+	 * @param object the object to be reloaded
 	 * 
 	 */
 	protected void reload(Object object) {
@@ -383,6 +358,44 @@ public class ContainerInitializer {
 		if (handler != null) {
 			handler.setTarget(object);
 		}
+	}
+	
+	/**
+	 * 
+	 * Reloads a servlet
+	 * 
+	 * @param servlet the servlet to be reloaded
+	 * @throws ServletException the ServletException
+	 * 
+	 */
+	protected void reloadServlet(AbstractServlet servlet) throws ServletException {
+		reload(servlet);
+		DefaultServletConfig config = new DefaultServletConfig();
+		config.setServletContext(context);
+		Servlet annotation = servlet.getClass().getAnnotation(Servlet.class);
+		for (InitParam param : annotation.initParams()) {
+			config.addInitParameter(param.name(), param.value());
+		}
+		servlet.init(config);
+	}
+	
+	/**
+	 * 
+	 * Reloads a filter
+	 * 
+	 * @param filter the filter to be reloaded
+	 * @throws ServletException the ServletException
+	 * 
+	 */
+	protected void reloadFilter(AbstractFilter filter) throws ServletException {
+		reload(filter);
+		DefaultFilterConfig config = new DefaultFilterConfig();
+		config.setServletContext(context);
+		Filter annotation = filter.getClass().getAnnotation(Filter.class);
+		for (InitParam param : annotation.initParams()) {
+			config.addInitParameter(param.name(), param.value());
+		}
+		filter.init(config);
 	}
 
 	/**

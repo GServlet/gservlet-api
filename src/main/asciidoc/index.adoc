@@ -16,8 +16,9 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 :icons: font
 :source-highlighter: highlightjs
 :source-language: asciidoc
+:docinfo: shared-head
 
-== Introduction to GServlet
+== Introduction
 
 GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_], and https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[_HttpServletResponse_] objects. We have access to the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[_HttpSession_] with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_.
 
@@ -259,13 +260,13 @@ By default the Content-Type of the https://docs.oracle.com/javaee/7/api/javax/se
 ---- 
 import org.gservlet.annotation.Servlet
 
-@Servlet("/myServlet")
+@Servlet(value="/projects", loadOnStartup = 1)
 class MyHttpServlet {
 
   void get() {
      html.html {
        body {
-         p("Welcome to gservlet")
+         p("Welcome to GServlet!")
        }
      } 
   }
@@ -282,7 +283,7 @@ The generated HTML content looks like this:
 <!DOCTYPE html>
 <html>
   <body>
-    <p>Welcome to gservlet</p>
+    <p>Welcome to GServlet!</p>
   </body>
 </html>
 ----
@@ -367,7 +368,7 @@ class UploadServlet {
 
 === Servlet Multipart configuration
 
-Supporting file uploads is a very basic and common requirement for many web applications. Prior to Servlet 3.0, implementing file upload required the use of external libraries or complex input processing. Version 3.0 of the Java Servlet specification helps to provide a viable solution to the problem in a generic and portable way. The Servlet 3.0 specification supports file upload out of the box, so any web container that implements the specification can parse multipart requests and make mime attachments available through the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_] object. A new annotation, https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/MultipartConfig.html[@MultipartConfig], is used to indicate that the servlet on which it is declared expects requests to made using the _multipart/form-data_ MIME type. Therefore, it can retrieve the Part components of a given _multipart/form-data_ request by calling the _getPart(String name)_ or _getParts()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_] object. In the GServlet API, the annotation has been shorten to _@Multipart_ while taking the same input parameters.
+Supporting file uploads is a very basic and common requirement for many web applications. Prior to Servlet 3.0, implementing file upload required the use of external libraries or complex input processing. Version 3.0 of the Java Servlet specification helps to provide a viable solution to the problem in a generic and portable way. The Servlet 3.0 specification supports file upload out of the box, so any web container that implements the specification can parse multipart requests and make mime attachments available through the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_] object. A new annotation, https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/MultipartConfig.html[@MultipartConfig], is used to indicate that the servlet on which it is declared expects requests to made using the _multipart/form-data_ MIME type. Therefore, it can retrieve the Part components of a given _multipart/form-data_ request by calling the _getPart(String name)_ or _getParts()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_] object.
 
 .UploadServlet.groovy 
 [#src-listing] 
@@ -375,13 +376,13 @@ Supporting file uploads is a very basic and common requirement for many web appl
 ---- 
 import org.gservlet.annotation.InitParam
 import org.gservlet.annotation.Servlet
-import org.gservlet.annotation.Multipart
+import javax.servlet.annotation.MultipartConfig
 
 @Servlet( urlPatterns = "/upload",
 initParams = [
 	@InitParam(name = "uploadDirectory", value = "/images")
 ] )
-@Multipart( fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 25 )
+@MultipartConfig( fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 25 )
 class UploadServlet {
 
 	String uploadPath
@@ -586,6 +587,8 @@ The implicit variables made available to your filters are as follows:
 
 |_void filter()_ | handles the filtering tasks
 
+|_void next()_ | Calls the next filter in the chain
+
 |_void destroy()_ |  invoked when taken out of the service
 
 
@@ -593,6 +596,30 @@ The implicit variables made available to your filters are as follows:
 
 
 === Filter initialization parameters
+
+Like for a servlet, the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for filter programmatically. In its initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/FilterConfig.html[FilterConfig] object. In the GServlet API, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
+
+.LoggingFilter.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.InitParam
+import org.gservlet.annotation.Filter
+
+@Filter( value = "/*",
+initParams = [
+	@InitParam(name = "loggingDirectory", value = "/logs")
+])
+class LoggingFilter {
+
+	void init() {
+		println config.loggingDirectory
+		println config.getInitParameter("loggingDirectory")
+	}
+
+}
+----
+
 
 == Creating Listeners
 

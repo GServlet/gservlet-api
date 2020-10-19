@@ -4,17 +4,17 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.ServletConfig;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 
 /**
 * 
-* A servlet configuration object used by a servlet container to pass information to a servlet during initialization.   
+* A filter configuration object used by a servlet container to pass information to a filter during initialization.   
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-public class DefaultServletConfig implements ServletConfig {
+public class DefaultFilterConfig implements FilterConfig {
 
 	/**
 	 * The initialization parameters Map
@@ -27,12 +27,14 @@ public class DefaultServletConfig implements ServletConfig {
 	private ServletContext servletContext;
 	
 	/**
-	 * Returns the name of this servlet instance.
+	 * Returns the name of this filter instance.
 	 *
-	 * @return the name of the servlet instance
+	 * @return the name of the filter instance
+	 * 
+	 * 
 	 */
 	@Override
-	public String getServletName() {
+	public String getFilterName() {
 		return null;
 	}
 
@@ -89,10 +91,10 @@ public class DefaultServletConfig implements ServletConfig {
 	/**
 	 * Returns the names of the servlet's initialization parameters as an
 	 * <code>Enumeration</code> of <code>String</code> objects, or an empty
-	 * <code>Enumeration</code> if the servlet has no initialization parameters.
+	 * <code>Enumeration</code> if the filter has no initialization parameters.
 	 *
 	 * @return an <code>Enumeration</code> of <code>String</code> objects containing
-	 *         the names of the servlet's initialization parameters
+	 *         the names of the filter's initialization parameters
 	 */
 	@Override
 	public Enumeration<String> getInitParameterNames() {

@@ -802,9 +802,9 @@ p a>code:hover {
 }
 
 #toc ul {
-	font-family: Tahoma, "Open Sans", "DejaVu Sans", sans-serif;
+	font-family: "Open Sans", "DejaVu Sans", sans-serif;
 	list-style-type: none;
-	font-size: 0.97em;
+	font-size: 0.95em;
 }
 
 #toc li {
@@ -845,7 +845,7 @@ p a>code:hover {
 		z-index: 1000;
 		padding: 1.25em 1em;
 		height: 100%;
-		overflow: auto
+		overflow: hidden
 	}
 	#toc.toc2 #toctitle {
 		margin-top: 0;
