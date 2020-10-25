@@ -63,7 +63,7 @@ public class StartupListenerTest {
 		configuration.delete();
 		wait(2000);
 		Files.write(Paths.get(configuration.getAbsolutePath()), bytes);
-		wait(2000);
+		wait(3000);
 		listener.contextDestroyed(event);
 		assertEquals(0, listener.getApplication().getInitializer().getHandlers().size());
 		when(context.getFilterRegistration(isA(String.class)))
