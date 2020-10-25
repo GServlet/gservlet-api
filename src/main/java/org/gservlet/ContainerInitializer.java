@@ -90,26 +90,28 @@ public class ContainerInitializer {
 	 * The logger object
 	 */
 	protected final Logger logger = Logger.getLogger(getClass().getName());
-
+	
 	/**
 	 * 
 	 * Constructs a ContainerInitializer for the given servlet context
 	 * 
 	 * @param context the servlet context
+	 * @param path the context path
 	 * @throws ServletException the ServletException
 	 * 
 	 */
-	public ContainerInitializer(ServletContext context) throws ServletException {
+	public ContainerInitializer(ServletContext context, String path) throws ServletException {
 		try {
 			this.context = context;
 			context.setAttribute(HANDLERS, handlers);
-			File folder = new File(context.getRealPath("/") + File.separator + SCRIPTS_FOLDER);
+			File folder = new File(path + File.separator + SCRIPTS_FOLDER);
 			scriptManager = new ScriptManager(folder);
 			init(folder);
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
 	}
+
 
 	/**
 	 * 
@@ -194,6 +196,7 @@ public class ContainerInitializer {
 			handlers.put(name, handler);
 			ServletRegistration.Dynamic dynamic = context.addServlet(name, (javax.servlet.Servlet) servlet);
 			dynamic.setLoadOnStartup(annotation.loadOnStartup());
+			dynamic.setAsyncSupported(annotation.asyncSupported());
 			if (annotation.value().length > 0) {
 				dynamic.addMapping(annotation.value());
 			}
@@ -235,16 +238,17 @@ public class ContainerInitializer {
 			Object filter = Proxy.newProxyInstance(this.getClass().getClassLoader(),
 					new Class[] { javax.servlet.Filter.class }, handler);
 			handlers.put(name, handler);
-			registration = context.addFilter(name, (javax.servlet.Filter) filter);
+			FilterRegistration.Dynamic dynamic = context.addFilter(name, (javax.servlet.Filter) filter);
+		    dynamic.setAsyncSupported(annotation.asyncSupported());
 			Collection<DispatcherType> dispatcherTypes = Arrays.asList(annotation.dispatcherTypes());
 			if (annotation.value().length > 0) {
-				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.value());
+				dynamic.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.value());
 			}
 			if (annotation.urlPatterns().length > 0) {
-				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.urlPatterns());
+				dynamic.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.urlPatterns());
 			}
 			for (InitParam param : annotation.initParams()) {
-				registration.setInitParameter(param.name(), param.value());
+				dynamic.setInitParameter(param.name(), param.value());
 			}
 		} else {
 			String message = "The filter with the name " + name
@@ -306,6 +310,7 @@ public class ContainerInitializer {
 	 */
 	protected void watch(File folder) {
 		new FileWatcher(folder).addListener(new FileAdapter() {
+			
 			@Override
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
@@ -314,6 +319,12 @@ public class ContainerInitializer {
 					process(file);
 				}
 			}
+			
+			@Override
+			public void onModified(FileEvent event) {
+				onCreated(event);
+			}
+			
 
 		}).watch();
 	}
@@ -335,10 +346,10 @@ public class ContainerInitializer {
 						|| annotation instanceof SessionAttributeListener) {
 					reload(object);
 				} else if(annotation instanceof Servlet) {
-					reload((AbstractServlet) object);
+					reloadServlet((AbstractServlet) object);
 					
 				} else if(annotation instanceof Filter) {
-					reload((AbstractFilter) object);
+					reloadFilter((AbstractFilter) object);
 				}
 			}
 		} catch (Exception e) {
@@ -404,7 +415,7 @@ public class ContainerInitializer {
 	 * ServletContext is about to be shutdown
 	 * 
 	 */
-	public void destroy() {
+	public void shutDown() {
 		for (DynamicInvocationHandler handler : handlers.values()) {
 			Object target = handler.getTarget();
 			if (target instanceof AbstractContextListener) {

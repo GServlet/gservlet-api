@@ -49,7 +49,7 @@ public final class Constants {
 	/**
 	 * The application configuration file constant
 	 */
-	public static final String APP_CONFIG_FILE = "application.properties";
+	public static final String APP_CONFIG_FILE = "gservlet.properties";
 	/**
 	 * The handlers constant
 	 */

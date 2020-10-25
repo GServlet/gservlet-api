@@ -40,7 +40,7 @@ public class DefaultFilterConfig extends AbstractConfig implements FilterConfig 
 	 */
 	@Override
 	public String getFilterName() {
-		return null;
+		return getClass().getName();
 	}
 
 	

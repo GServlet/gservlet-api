@@ -33,10 +33,11 @@ import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 
- * Checks a folder for file changes and notifies the
+ * Checks a folder for file changes and notifies the file
  * listeners accordingly.
  * 
  * @author Mamadou Lamine Ba
@@ -45,7 +46,7 @@ import java.util.List;
 public class FileWatcher implements Runnable {
 
 	/**
-	 * The list of listeners
+	 * The list of file listeners
 	 */
 	protected List<FileListener> listeners = new ArrayList<>();
 	/**
@@ -92,7 +93,7 @@ public class FileWatcher implements Runnable {
 	public void run() {
 		try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
 			Path path = Paths.get(folder.getAbsolutePath());
-			path.register(watchService, ENTRY_CREATE, ENTRY_DELETE);
+			path.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
 			watchServices.add(watchService);
 			boolean poll = true;
 			while (poll) {
@@ -115,7 +116,8 @@ public class FileWatcher implements Runnable {
 	protected boolean pollEvents(WatchService watchService) throws InterruptedException {
 		WatchKey key = watchService.take();
 		Path path = (Path) key.watchable();
-		for (WatchEvent<?> event : key.pollEvents()) {
+		List<WatchEvent<?>> events =  key.pollEvents().stream().distinct().collect(Collectors.toList());
+		for (WatchEvent<?> event : events) {
 			notifyListeners(event.kind(), path.resolve((Path) event.context()).toFile());
 		}
 		return key.reset();
@@ -123,7 +125,7 @@ public class FileWatcher implements Runnable {
 
 	/**
 	 * 
-	 * Notifies the listeners of a file event
+	 * Notifies the file listeners of a file event
 	 * 
 	 * @param kind the watch event kind
 	 * @param file the file upon which the event occurred upon
@@ -135,19 +137,27 @@ public class FileWatcher implements Runnable {
 			for (FileListener listener : listeners) {
 				listener.onCreated(event);
 			}
-			if (file.isDirectory()) {
-				new FileWatcher(file).setListeners(listeners).watch();
+		} 
+		if (kind == ENTRY_MODIFY) {
+			for (FileListener listener : listeners) {
+				listener.onModified(event);
 			}
-		} else if (kind == ENTRY_DELETE) {
+		} 
+		else if (kind == ENTRY_DELETE) {
 			for (FileListener listener : listeners) {
 				listener.onDeleted(event);
+			}
+		}
+		else if (kind == ENTRY_CREATE || kind == ENTRY_MODIFY) {
+			if (file.isDirectory()) {
+				new FileWatcher(file).setListeners(listeners).watch();
 			}
 		}
 	}
 
 	/**
 	 * 
-	 * Registers a new listener
+	 * Registers a new file listener
 	 * 
 	 * @param listener the file listener
 	 * @return the file watcher
@@ -160,7 +170,7 @@ public class FileWatcher implements Runnable {
 
 	/**
 	 * 
-	 * Unregisters a listener
+	 * Unregisters a file listener
 	 * 
 	 * @param listener the file listener
 	 * @return the file watcher
@@ -173,9 +183,9 @@ public class FileWatcher implements Runnable {
 
 	/**
 	 * 
-	 * Returns the list of listeners
+	 * Returns the list of file listeners
 	 * 
-	 * @return the list of listeners
+	 * @return the list of file listeners
 	 * 
 	 */
 	public List<FileListener> getListeners() {
@@ -184,9 +194,9 @@ public class FileWatcher implements Runnable {
 
 	/**
 	 * 
-	 * Sets a list of listeners
+	 * Sets a list of file listeners
 	 * 
-	 * @param listeners a list of listeners
+	 * @param listeners a list of file listeners
 	 * @return the file watcher
 	 * 
 	 */

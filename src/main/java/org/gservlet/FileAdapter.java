@@ -21,7 +21,7 @@ package org.gservlet;
 
 /**
 * 
-* An abstract adapter class for receiving file events. The methods in this class are empty. This class exists as convenience for creating listener objects.
+* An abstract adapter class for receiving file events. The methods in this class are empty. This class exists as convenience for creating FileListener objects.
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -49,6 +49,19 @@ public abstract class FileAdapter implements FileListener {
 	*/
 	@Override
 	public void onDeleted(FileEvent event) {	
+		// no implementation provided
+	}
+	
+	
+	/**
+	* 
+	* Receives notification that a file has been modified
+	* 
+	* @param event the FileEvent containing the file that was modified
+	* 
+	*/
+	@Override
+	public void onModified(FileEvent event) {	
 		// no implementation provided
 	}
 

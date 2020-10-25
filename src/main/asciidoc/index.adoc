@@ -5,7 +5,7 @@ Mamadou Lamine Ba <https://github.com/laminba2003[@laminba2003]>
 ifndef::imagesdir[:imagesdir: images]
 ifndef::sourcedir[:sourcedir: ../../main/java]
 :description: This developer guide describes how to use the GServlet API.
-:keywords: Java, Servlets, Groovy, reference, learn, how to
+:keywords: Java, Servlets, Groovy, Spring, reference, learn, how to
 :doctype: book
 :page-layout!:
 :toc: left
@@ -56,7 +56,7 @@ The same philosophy has been followed in the design of this API and if you have 
 
 == Requirements
 
-* Java 7+
+* Java 8+
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
 * Java EE 7+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 
@@ -203,7 +203,7 @@ A servlet is a small Java program that runs within a Web server. The https://doc
 
 This is a Java class that extends the HttpServlet class:
 
-.MyHttpServlet.java 
+.HelloWordServlet.java 
 [#src-listing] 
 [source,java]  
 ---- 
@@ -213,15 +213,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/myServlet")
-public class MyHttpServlet extends HttpServlet {
+@WebServlet("/index.html")
+public class HelloWordServlet extends HttpServlet {
 	
    public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {  
       response.setContentType("text/html");  
       PrintWriter out = response.getWriter();
       out.println("<html>");
       out.println("<body>");
-      out.println("<p>Welcome to servlet</p>");
+      out.println("<p>Hello World!</p>");
       out.println("</body>");
       out.println("</html>");  
    }
@@ -231,19 +231,19 @@ public class MyHttpServlet extends HttpServlet {
 
 Now, we are going to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are now implicit variables.
 
-.MyHttpServlet.groovy 
+.HelloWordServlet.groovy 
 [#src-listing] 
 [source,java]  
 ---- 
 import org.gservlet.annotation.Servlet
 
-@Servlet("/myServlet")
-class MyHttpServlet {
+@Servlet("/index.html")
+class HelloWordServlet {
 
    void get() {
       out.println("<html>")
       out.println("<body>")
-      out.println("<p>Welcome to servlet</p>")
+      out.println("<p>Hello World!</p>")
       out.println("</body>")
       out.println("</html>")     
    }
@@ -254,19 +254,19 @@ class MyHttpServlet {
 By default the Content-Type of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to its https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable which is an instance of a Groovy MarkupBuilder, to write a better version of this servlet.
 
 
-.MyHttpServlet.groovy 
+.HelloWordServlet.groovy 
 [#src-listing] 
 [source,java]  
 ---- 
 import org.gservlet.annotation.Servlet
 
-@Servlet(value="/projects", loadOnStartup = 1)
-class MyHttpServlet {
+@Servlet(value="/index.html", loadOnStartup = 1)
+class HelloWordServlet {
 
   void get() {
      html.html {
        body {
-         p("Welcome to GServlet!")
+         p("Hello World!")
        }
      } 
   }
@@ -283,7 +283,7 @@ The generated HTML content looks like this:
 <!DOCTYPE html>
 <html>
   <body>
-    <p>Welcome to GServlet!</p>
+    <p>Hello World!</p>
   </body>
 </html>
 ----
@@ -336,10 +336,17 @@ The implicit variables made available to your servlets are as follows:
 
 |_void trace()_ | handles the TRACE request.
 
+|_void forward(location)_ |  Forwards the request to the provided location
+
+|_void redirect(location)_ |  Redirects the request to the provided location
+
+|_void json(object)_ |  Sends the response as JSON
+
 |_void destroy()_ |  invoked when taken out of the service
 
 |===
 
+For an exhaustive list of the supported methods, please read the Javadocs.
 
 === Servlet initialization parameters
 
@@ -395,22 +402,24 @@ class UploadServlet {
 		}
 	}
 
-	void post() {
-		request.getParts().each { part ->
-			String file = uploadPath + File.separator + getFileName(part)
-			part.write(file)
+	void get() {
+		File uploadDir = new File(uploadPath)
+		def files = []
+		uploadDir.listFiles()?.each { file -> 
+			files << [name : file.name, length : file.length(), lastModified : file.lastModified()]
 		}
-		json(["status" : 1])
+		json(files);
 	}
 
-	String getFileName(part) {
-		for(String content : part.getHeader("content-disposition").split(";")) {
-			if ( content.trim().startsWith("filename")) {
-				return content.substring( content.indexOf("=") + 2, content.length() - 1 )
-			}
+	void post() {
+		request.getParts().each { part ->
+			String file = uploadPath + File.separator + request.getFileName(part)
+			part.write(file)
 		}
-		return "default.txt";
+		redirect(context.contextPath + "/upload");
 	}
+
+
 }
 ----
 
@@ -589,11 +598,13 @@ The implicit variables made available to your filters are as follows:
 
 |_void next()_ | Calls the next filter in the chain
 
-|_void destroy()_ |  invoked when taken out of the service
+|_void json(object)_ |  Sends the response as JSON
 
+|_void destroy()_ |  invoked when taken out of the service
 
 |===
 
+For an exhaustive list of the supported methods, please read the Javadocs. 
 
 === Filter initialization parameters
 
@@ -1270,9 +1281,9 @@ Whenever, the content-type of the request is set to *_application/json_*, you ca
 
 == Working With RDBMS
 
-The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API is as simple as to create in the root directory of your web application, a file named *_application.properties_* like below :
+The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API is as simple as to create in the root directory of your web application, a file named *_gservlet.properties_* like below :
 
-.application.properties 
+.gservlet.properties 
 [#src-listing] 
 [source,plain]  
 ---- 
@@ -1323,6 +1334,216 @@ class ProjectFilter {
 ----
 
 After each request, the _close()_ method of the http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object is automatically invoked to bring it back to the connection pool.    
+
+== IDE Support
+
+=== Eclipse
+
+To augment the editor features such as content assist, the GServlet API ships with a DSL Descriptor (DSLD) to describe the editing semantics in a way that can be interpreted by the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)] which provides Eclipse support for the Groovy programming language. 
+
+.servlet.dsld 
+[#src-listing] 
+[source,java]  
+----  
+contribute(currentType(annos: annotatedBy(Servlet))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractServlet'
+	property name : 'config', type : javax.servlet.ServletConfig, provider : 'org.gservlet.AbstractServlet'
+	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractServlet'
+	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractServlet'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractServlet'
+	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractServlet'
+	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractServlet'
+	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractServlet'
+	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractServlet'
+}
+
+contribute(currentType(annos: annotatedBy(Servlet))) {
+	delegatesTo type : org.gservlet.AbstractServlet, except : [
+		'service',
+		'doGet',
+		'doPost',
+		'doHead',
+		'doPut',
+		'doTrace',
+		'doOptions',
+		'doDelete'
+	]
+}
+
+contribute(currentType(annos: annotatedBy(Filter))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractFilter'
+	property name : 'config', type : javax.servlet.FilterConfig, provider : 'org.gservlet.AbstractFilter'
+	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractFilter'
+	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractFilter'
+	property name : 'chain', type : javax.servlet.FilterChain, provider : 'org.gservlet.AbstractFilter'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractFilter'
+	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractFilter'
+	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractFilter'
+	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractFilter'
+	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractFilter'
+}
+
+contribute(currentType(annos: annotatedBy(Filter))) {
+	delegatesTo type : org.gservlet.AbstractFilter, except : ['init', 'doFilter']
+}
+
+----
+
+=== IntelliJ IDEA
+
+In the other hand, in IntelliJ IDEA, we can write GDSL Files to have code completion on the injected methods/properties and closures. https://confluence.jetbrains.com/display/GRVY/Scripting+IDE+for+DSL+awareness[GroovyDSL] is a scripting framework with a domain-specific language designed to define the behavior of end-user DSLs as script files which are executed by the IDE on the fly, bringing new reference resolution and code completion logic into the scope of a project.
+
+.servlet.gdsl 
+[#src-listing] 
+[source,java]  
+----  
+def classContext = context(scope: classScope())
+
+contributor(classContext) {
+  if (hasAnnotation('org.gservlet.annotation.Servlet')) {
+    property name: 'logger', type: 'java.util.logging.Logger'
+    property name: 'config', type: 'javax.servlet.ServletConfig'
+    property name: 'request', type: 'javax.servlet.http.HttpServletRequest'
+    property name: 'response',type: 'javax.servlet.http.HttpServletResponse'
+    property name: 'session', type: 'javax.servlet.http.HttpSession'
+    property name: 'context', type: 'javax.servlet.ServletContext'
+    property name: 'sql', type: 'groovy.sql.Sql'
+    property name: 'out', type: 'java.io.PrintWriter'
+    property name: 'html', type: 'groovy.xml.MarkupBuilder'
+    delegatesTo(findClass('org.gservlet.AbstractServlet'))
+  }
+}
+
+contributor(classContext) {
+  if (hasAnnotation('org.gservlet.annotation.Filter')) {
+    property name: 'logger', type: 'java.util.logging.Logger'
+    property name: 'config', type: 'javax.servlet.FilterConfig'
+    property name: 'request', type: 'javax.servlet.http.HttpServletRequest'
+    property name: 'response', type: 'javax.servlet.http.HttpServletResponse'
+    property name: 'chain', type: 'javax.servlet.FilterChain'
+    property name: 'session', type: 'javax.servlet.http.HttpSession'
+    property name: 'context', type: 'javax.servlet.ServletContext'
+    property name: 'sql', type: 'groovy.sql.Sql'
+    property name: 'out', type: 'java.io.PrintWriter'
+    property name: 'html', type: 'groovy.xml.MarkupBuilder'
+    delegatesTo(findClass('org.gservlet.AbstractFilter'))
+  }
+}
+----
+
+== Frameworks Support
+
+=== Spring Boot
+
+The _scripts_ folder must created be inside the _src/main/resources_ directory of your Spring Boot applications so it can be packaged inside the final jar and you just need this configuration below to leverage the GServlet API. 
+
+.SpringConfiguration.java 
+[#src-listing] 
+[source,java]  
+----  
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import org.gservlet.GServletApplication;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Bean;
+
+@Configuration
+public class SpringConfiguration implements ServletContextInitializer {
+
+	private GServletApplication application;
+	
+	@Override
+	public void onStartup(ServletContext context) throws ServletException {
+		application = new GServletApplication(context);
+		application.startOnSpringBoot();
+		
+	}
+	
+	@Bean(destroyMethod = "stop")
+	public GServletApplication servletApplication() {
+		return application;
+	}
+	
+}
+----
+
+If you want to reuse the data source configured by Spring, this is how you must proceed: 
+
+.SpringConfiguration.java 
+[#src-listing] 
+[source,java]  
+----  
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.sql.DataSource;
+import org.gservlet.GServletApplication;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SpringConfiguration implements ServletContextInitializer {
+
+	private GServletApplication application;
+	
+	@Override
+	public void onStartup(ServletContext context) throws ServletException {
+		application = new GServletApplication(context);
+		application.startOnSpringBoot();
+		
+	}
+	
+	@Bean(destroyMethod = "stop")
+	public GServletApplication servletApplication(DataSource dataSource) {
+		application.setDataSource(dataSource);
+		return application;
+	}
+	
+}
+----
+
+=== Other Java web frameworks 
+
+If the target framework supports the Servlet API and the _@WebListener_ annotation, no configuration is required since the GServlet API ships with a context listener which starts and stops the application. This statement is
+valid for frameworks like JSF, Apache Struts.
+
+.StartupListener.java 
+[#src-listing] 
+[source,java]  
+----  
+package org.gservlet;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+
+@WebListener
+public class StartupListener implements ServletContextListener {
+
+
+	private GServletApplication application; 
+
+	@Override
+	public void contextInitialized(ServletContextEvent event) {
+		application = new GServletApplication(event.getServletContext());
+		application.start();
+	}
+	
+	
+
+	@Override
+	public void contextDestroyed(ServletContextEvent event) {
+		application.stop();
+	}
+	
+}
+----
+
+== Code Examples
+
+We have created several code examples on https://github.com/GServlet/gservlet-examples[GitHub] to help beginners and experts to learn and gain expertise at GServlet. Checkout the appropriate branch for the version that
+you are using.
+
 
 == Copyright and License
 

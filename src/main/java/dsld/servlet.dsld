@@ -25,7 +25,7 @@ import org.gservlet.annotation.*
 //@org.gservlet.AbstractServlet
 
 contribute(currentType(annos: annotatedBy(Servlet))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractServlet', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractServlet', doc : 'the Logger object'
 	property name : 'config', type : javax.servlet.ServletConfig, provider : 'org.gservlet.AbstractServlet', doc : 'the ServletConfig object'
 	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractServlet', doc : 'the HttpServletRequest object'
 	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractServlet', doc : 'the HttpServletResponse object'
@@ -52,7 +52,7 @@ contribute(currentType(annos: annotatedBy(Servlet))) {
 //@org.gservlet.AbstractFilter
 
 contribute(currentType(annos: annotatedBy(Filter))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractFilter', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractFilter', doc : 'the Logger object'
 	property name : 'config', type : javax.servlet.FilterConfig, provider : 'org.gservlet.AbstractFilter', doc : 'the FilterConfig object'
 	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractFilter', doc : 'the HttpServletRequest object'
 	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractFilter', doc : 'the HttpServletResponse object'
@@ -71,7 +71,7 @@ contribute(currentType(annos: annotatedBy(Filter))) {
 //@org.gservlet.AbstractContextListener
 
 contribute(currentType(annos: annotatedBy(ContextListener))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
 	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractContextListener', doc : 'the ServletContext object'
 	property name : 'event', type : javax.servlet.ServletContextEvent, provider : 'org.gservlet.AbstractContextListener', doc : 'the ServletContext object event'
 }
@@ -91,7 +91,7 @@ contribute(currentType(annos: annotatedBy(ContextListener))) {
 //@org.gservlet.AbstractRequestListener
 
 contribute(currentType(annos: annotatedBy(RequestListener))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
 	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractRequestListener', doc : 'the HttpServletRequest object'
 	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractRequestListener', doc : 'the HttpSession object'
 	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractRequestListener', doc : 'the ServletContext object'
@@ -113,7 +113,7 @@ contribute(currentType(annos: annotatedBy(RequestListener))) {
 //@org.gservlet.AbstractSessionListener
 
 contribute(currentType(annos: annotatedBy(SessionListener))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
 	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionListener', doc : 'the HttpSession object'
 	property name : 'event', type : javax.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionListener', doc : 'the HttpSessionEvent object'
 }
@@ -133,11 +133,11 @@ contribute(currentType(annos: annotatedBy(SessionListener))) {
 //@org.gservlet.AbstractContextAttributeListener
 
 contribute(currentType(annos: annotatedBy(ContextAttributeListener))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
 	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the ServletContext object'
 	property name : 'event', type : javax.servlet.ServletContextAttributeEvent, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the ServletContextAttributeEvent object'
-	property name : 'name', type : javax.lang.String, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the attribute name'
-	property name : 'value', type : javax.lang.Object, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the attribute value'
+	property name : 'name', type : java.lang.String, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the attribute name'
+	property name : 'value', type : java.lang.Object, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'the attribute value'
 }
 
 contribute(currentType(annos: annotatedBy(ContextAttributeListener))) {
@@ -156,13 +156,13 @@ contribute(currentType(annos: annotatedBy(ContextAttributeListener))) {
 //@org.gservlet.AbstractRequestAttributeListener
 
 contribute(currentType(annos: annotatedBy(RequestAttributeListener))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
 	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the HttpServletRequest object'
 	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the HttpSession object'
 	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the ServletContext object'
 	property name : 'event', type : javax.servlet.ServletRequestAttributeEvent, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the ServletRequestAttributeEvent object'
-	property name : 'name', type : javax.lang.String, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the attribute name'
-	property name : 'value', type : javax.lang.Object, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the attribute value'
+	property name : 'name', type : java.lang.String, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the attribute name'
+	property name : 'value', type : java.lang.Object, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'the attribute value'
 }
 
 contribute(currentType(annos: annotatedBy(RequestAttributeListener))) {
@@ -181,11 +181,11 @@ contribute(currentType(annos: annotatedBy(RequestAttributeListener))) {
 //@org.gservlet.AbstractSessionAttributeListener
 
 contribute(currentType(annos: annotatedBy(SessionAttributeListener))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
 	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the HttpSession object'
 	property name : 'event', type : javax.servlet.http.HttpSessionBindingEvent, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the HttpSessionBindingEvent object'
-	property name : 'name', type : javax.lang.String, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the attribute name'
-	property name : 'value', type : javax.lang.Object, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the attribute value'
+	property name : 'name', type : java.lang.String, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the attribute name'
+	property name : 'value', type : java.lang.Object, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'the attribute value'
 }
 
 contribute(currentType(annos: annotatedBy(SessionAttributeListener))) {
@@ -204,7 +204,7 @@ contribute(currentType(annos: annotatedBy(SessionAttributeListener))) {
 //@org.gservlet.AbstractSessionActivationListener
 
 contribute(currentType(annos: annotatedBy(SessionActivationListener))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
 	property name : 'event', type : javax.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'the HttpSessionEvent object'
 	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'the HttpSession object'
 }
@@ -224,11 +224,11 @@ contribute(currentType(annos: annotatedBy(SessionActivationListener))) {
 //@org.gservlet.AbstractSessionBindingListener
 
 contribute(currentType(annos: annotatedBy(SessionBindingListener))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
 	property name : 'event', type : javax.servlet.http.HttpSessionBindingEvent, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the HttpSessionBindingEvent object'
 	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the HttpSession object'
-	property name : 'name', type : javax.lang.String, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the attribute name'
-	property name : 'value', type : javax.lang.Object, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the attribute value'
+	property name : 'name', type : java.lang.String, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the attribute name'
+	property name : 'value', type : java.lang.Object, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'the attribute value'
 }
 
 contribute(currentType(annos: annotatedBy(SessionBindingListener))) {
@@ -246,10 +246,10 @@ contribute(currentType(annos: annotatedBy(SessionBindingListener))) {
 //@org.gservlet.AbstractSessionIdListener
 
 contribute(currentType(annos: annotatedBy(SessionIdListener))) {
-	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'the Logger object'
+	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'the Logger object'
 	property name : 'event', type : javax.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'the HttpSessionEvent object'
 	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'the HttpSession object'
-	property name : 'oldSessionId', type : javax.lang.String, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'the old session id'
+	property name : 'oldSessionId', type : java.lang.String, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'the old session id'
 }
 
 contribute(currentType(annos: annotatedBy(SessionIdListener))) {

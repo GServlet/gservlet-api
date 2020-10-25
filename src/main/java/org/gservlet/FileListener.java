@@ -48,4 +48,14 @@ public interface FileListener extends EventListener {
 	*/
 	public void onDeleted(FileEvent event);
 	
+	
+	/**
+	* 
+	* Receives notification that a file has been modified
+	* 
+	* @param event the FileEvent containing the file that was modified
+	* 
+	*/
+	public void onModified(FileEvent event);
+	
 }

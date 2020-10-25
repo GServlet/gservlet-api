@@ -13,7 +13,7 @@
 
 ## Table of contents
 1. [Description](#description)
-1. [Features](#features)
+1. [Main Features](#main-features)
 1. [Requirements](#requirements)
 1. [Getting Started](#getting-started)
 1. [Building from source](#building-from-source)
@@ -51,7 +51,7 @@ session.counter = session.counter + 1
 
 More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0) for a particular release can be browsed as well.
 
-## Features
+## Main Features
 
 * Servlet 3.1+ Support
 * Groovy Scripting and Hot Reloading
@@ -59,7 +59,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 ## Requirements
 
-* Java 7+
+* Java 8+
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
 * Java EE 7+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 

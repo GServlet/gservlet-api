@@ -37,7 +37,7 @@ public class DefaultServletConfig extends AbstractConfig implements ServletConfi
 	 */
 	@Override
 	public String getServletName() {
-		return null;
+		return getClass().getName();
 	}
 
 }
