@@ -20,12 +20,12 @@
 package org.gservlet;
 
 import static org.gservlet.Constants.APP_CONFIG_FILE;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -39,7 +39,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
@@ -245,8 +244,8 @@ public class GServletApplication {
 	private void explodeClassPathResources(String root, String folder) {
 		try {
 			List<Path> paths = getClassPathResources(folder);
-			for (Path path : paths) {
-				String resource = path.toString();
+			for (Path resourcePath : paths) {
+				String resource = resourcePath.toString();
 				if (resource.startsWith("/")) {
 					resource = resource.substring(1, resource.length());
 				}
@@ -260,8 +259,8 @@ public class GServletApplication {
 					}
 			}
 
-		} catch (URISyntaxException | IOException e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "exception encountered when exploding the classpath resources", e);
 		}
 	}
 
@@ -274,7 +273,7 @@ public class GServletApplication {
 	 * @return the list of classpath resources
 	 * 
 	 */
-	private List<Path> getClassPathResources(String folder) throws URISyntaxException, IOException {
+	private List<Path> getClassPathResources(String folder) throws IOException {
 		List<Path> paths = new ArrayList<>();
 		String jarPath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		URI uri = URI.create("jar:" + jarPath);

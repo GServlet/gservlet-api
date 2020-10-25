@@ -138,7 +138,7 @@ public class FileWatcher implements Runnable {
 				listener.onCreated(event);
 			}
 		} 
-		if (kind == ENTRY_MODIFY) {
+		else if (kind == ENTRY_MODIFY) {
 			for (FileListener listener : listeners) {
 				listener.onModified(event);
 			}
@@ -148,10 +148,8 @@ public class FileWatcher implements Runnable {
 				listener.onDeleted(event);
 			}
 		}
-		else if (kind == ENTRY_CREATE || kind == ENTRY_MODIFY) {
-			if (file.isDirectory()) {
-				new FileWatcher(file).setListeners(listeners).watch();
-			}
+		if ((kind == ENTRY_CREATE || kind == ENTRY_MODIFY) && file.isDirectory()) {
+			new FileWatcher(file).setListeners(listeners).watch();
 		}
 	}
 

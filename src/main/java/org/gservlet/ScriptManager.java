@@ -98,7 +98,7 @@ public class ScriptManager {
 			throw new ScriptException(e);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Loads a class from a groovy script file
@@ -144,21 +144,19 @@ public class ScriptManager {
 	 * @return the bytecodeProcessor object
 	 */
 	protected BytecodeProcessor createBytecodeProcessor(final ClassPool classPool) {
-		return new BytecodeProcessor() {
-			public byte[] processBytecode(String name, byte[] original) {
-				ByteArrayInputStream stream = new ByteArrayInputStream(original);
-				try {
-					CtClass ctClass = classPool.makeClass(stream);
-					ctClass.detach();
-					for (Object annotation : ctClass.getAnnotations()) {
-						processClass(classPool, ctClass, annotation.toString());
-					}
-					return ctClass.toBytecode();
-				} catch (Exception e) {
-					logger.log(Level.INFO, "exception during processBytecode method", e);
+		return (String name, byte[] original) -> {
+			ByteArrayInputStream stream = new ByteArrayInputStream(original);
+			try {
+				CtClass ctClass = classPool.makeClass(stream);
+				ctClass.detach();
+				for (Object annotation : ctClass.getAnnotations()) {
+					processClass(classPool, ctClass, annotation.toString());
 				}
-				return original;
+				return ctClass.toBytecode();
+			} catch (Exception e) {
+				logger.log(Level.INFO, "exception during processBytecode method", e);
 			}
+			return original;
 		};
 	}
 

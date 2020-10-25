@@ -103,17 +103,6 @@ public class ServletConfigWrapper implements ServletConfig {
 
 	/**
 	 * 
-	 * Sets an initialization parameter
-	 * 
-	 * @param name  the initialization parameter name
-	 * @param value the initialization parameter value
-	 * 
-	 */
-	public void propertyMissing(String name, Object value) {
-	}
-
-	/**
-	 * 
 	 * Gets the value of the initialization parameter with the given name.
 	 * 
 	 * @param name the name of the initialization parameter whose value to get

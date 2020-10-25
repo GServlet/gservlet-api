@@ -139,9 +139,8 @@ public class DatabaseManager {
 	 * 
 	 */
 	private int getMinPoolSize(Properties configuration) {
-		return configuration.getProperty("db.minPoolSize")!= null ?
-				Integer.parseInt(configuration.getProperty("db.minPoolSize").trim())
-				: 1;
+		String minPoolSize = configuration.getProperty("db.minPoolSize");
+		return minPoolSize != null ? Integer.parseInt(minPoolSize.trim()) : 1;
 	}
 	
 	/**
@@ -152,9 +151,8 @@ public class DatabaseManager {
 	 * 
 	 */
 	private int getMaxPoolSize(Properties configuration) {
-		return configuration.getProperty("db.minPoolSize")!= null ?
-				Integer.parseInt(configuration.getProperty("db.minPoolSize").trim())
-				: 3;
+		String maxPoolSize = configuration.getProperty("db.maxPoolSize");
+		return maxPoolSize!= null ? Integer.parseInt(maxPoolSize.trim()) : 3;
 	}
 
 	/**
@@ -183,7 +181,7 @@ public class DatabaseManager {
 	public void shutDown() {
 		try {
 			Object dataSource = context.getAttribute(DATASOURCE);
-			if(dataSource !=null && dataSource instanceof BasicDataSource) {
+			if(dataSource instanceof BasicDataSource) {
 				BasicDataSource basicDataSource = (BasicDataSource) context.getAttribute(DATASOURCE);
 				basicDataSource.close();	
 			}
