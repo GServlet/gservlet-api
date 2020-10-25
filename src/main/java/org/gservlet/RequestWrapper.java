@@ -38,7 +38,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 	* 
 	* Constructs a RequestWrapper for the given HttpServletRequest
 	* 
-	* @param request the request object 
+	* @param request the HttpServletRequest object 
 	*  
 	*/
 	public RequestWrapper(HttpServletRequest request) {
@@ -59,10 +59,16 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
 	/**
 	* 
-	* Gets an attribute or a parameter value
+	* Gets a parameter or an attribute value
 	* 
-	* @param name the attribute or parameter name
-	* @return the attribute or parameter value
+	* <p>
+	* if the name is equals to body and the request content-type is application/json, 
+	* this method parses the JSON request payload and returns a Groovy object.
+	* </p>
+	* 
+	* @param name the parameter or attribute name
+	* @return the parameter or attribute value
+	* 
 	* @throws IOException the IOException
 	*/
 	public Object propertyMissing(String name) throws IOException {
@@ -70,6 +76,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 			return new JsonSlurper().parse(getInputStream());
 		}
 		Object value = getParameter(name);
+		value = value != null ? value : getParameterValues(name);
 		return value != null ? value : getAttribute(name);
 	}
 	
@@ -78,7 +85,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 	* Returns the file name of a part that was received within a multipart/form-data POST request
 	* 
 	* @param part the part that was received within a multipart/form-data POST request.
-	* @return the file name or null if it cannot be found
+	* @return the file name or null if it cannot be decoded
 	* 
 	*/
 	public String getFileName(Part part) {

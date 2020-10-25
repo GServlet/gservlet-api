@@ -20,7 +20,6 @@
 package org.gservlet;
 
 import static org.gservlet.Constants.APP_CONFIG_FILE;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;

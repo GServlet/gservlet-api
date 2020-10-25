@@ -56,7 +56,7 @@ public class ContextWrapper implements ServletContext {
 	* 
 	* Constructs a ContextWrapper for the given ServletContext
 	* 
-	* @param context the servlet context 
+	* @param context the ServletContext object 
 	*  
 	*/
 	public ContextWrapper(ServletContext context) {

@@ -25,7 +25,7 @@ import javax.servlet.annotation.WebListener;
 
 /**
  * 
- * Bootstraps the application
+ * Bootstraps the GServlet application
  * 
  * @author Mamadou Lamine Ba
  * 

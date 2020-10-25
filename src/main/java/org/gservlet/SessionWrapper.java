@@ -44,7 +44,7 @@ public class SessionWrapper implements HttpSession, Serializable {
 	* 
 	* Constructs a SessionWrapper for the given HttpSession
 	* 
-	* @param session the session object 
+	* @param session the HttpSession object 
 	*  
 	*/
 	public SessionWrapper(HttpSession session) {
