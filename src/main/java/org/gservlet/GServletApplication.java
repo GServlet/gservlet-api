@@ -38,6 +38,8 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
@@ -277,7 +279,9 @@ public class GServletApplication {
 		String jarPath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		URI uri = URI.create("jar:" + jarPath);
 		try (FileSystem fs = FileSystems.newFileSystem(uri, new HashMap<>())) {
-			paths = Files.walk(fs.getPath(folder + Constants.SCRIPTS_FOLDER)).collect(Collectors.toList());
+			try(Stream<Path> stream = Files.walk(fs.getPath(folder + Constants.SCRIPTS_FOLDER))) {
+				paths = stream.collect(Collectors.toList());
+			}
 			paths.add(fs.getPath(folder + Constants.APP_CONFIG_FILE));
 		}
 		return paths;
