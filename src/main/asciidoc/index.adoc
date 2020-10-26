@@ -350,7 +350,7 @@ For an exhaustive list of the supported methods, please read the Javadocs.
 
 === Servlet initialization parameters
 
-Since Servlet 3, the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a servlet or filter programmatically, and it takes a required name and value. You can add a description but this is rather informative. In the initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html[ServletConfig] object. In the GServlet API, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
+Since Servlet 3, the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a servlet programmatically, and it takes a required name and value. You can add a description but this is rather informative. In the initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html[ServletConfig] object. In the GServlet API, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
 
 .UploadServlet.groovy 
 [#src-listing] 
@@ -608,7 +608,7 @@ For an exhaustive list of the supported methods, please read the Javadocs.
 
 === Filter initialization parameters
 
-Like for a servlet, the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for filter programmatically. In its initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/FilterConfig.html[FilterConfig] object. In the GServlet API, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
+The https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a filter programmatically. In its initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/FilterConfig.html[FilterConfig] object. Like for a servlet, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
 
 .LoggingFilter.groovy 
 [#src-listing] 
@@ -707,7 +707,7 @@ public class MyServletContextListener {
 }
 ----
 
-The implicit variables made available to your ServletContext listeners are as follows:
+The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListeners] are as follows:
 
 .ServletContextListener Implicit Variables
 |===
@@ -774,7 +774,7 @@ public class MyServletContextAttributeListener {
 }
 ----
 
-The implicit variables made available to your ServletContext attribute listeners are as follows:
+The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListeners] are as follows:
 
 .ServletContextAttributeListener Implicit Variables
 |===
@@ -837,7 +837,7 @@ public class MyServletRequestListener {
 }
 ----
 
-The implicit variables made available to your ServletRequest listeners are as follows:
+The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListeners] are as follows:
 
 .ServletRequestListener Implicit Variables
 |===
@@ -910,7 +910,7 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
-The implicit variables made available to your ServletRequest attribute listeners are as follows:
+The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListeners] are as follows:
 
 .ServletRequestAttributeListener Implicit Variables
 |===
@@ -978,7 +978,7 @@ public class MyHttpSessionListener {
 }
 ----
 
-The implicit variables made available to your HttpSession listeners are as follows:
+The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListeners] are as follows:
 
 .HttpSessionListener Implicit Variables
 |===
@@ -1049,7 +1049,7 @@ public class MyHttpSessionAttributeListener {
 }
 ----
 
-The implicit variables made available to your HttpSession attribute listeners are as follows:
+The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListeners] are as follows:
 
 .HttpSessionAttributeListener Implicit Variables
 |===
@@ -1112,7 +1112,7 @@ public class MyHttpSessionBindingListener {
 }
 ----
 
-The implicit variables made available to your HttpSession binding listeners are as follows:
+The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListeners] are as follows:
 
 .HttpSessionBindingListener Implicit Variables
 |===
@@ -1175,7 +1175,7 @@ public class MyHttpSessionActivationListener {
 }
 ----
 
-The implicit variables made available to your HttpSession activation listeners are as follows:
+The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListeners] are as follows:
 
 .HttpSessionActivationListener Implicit Variables
 |===
@@ -1215,7 +1215,7 @@ public class MyHttpSessionIdListener implements HttpSessionIdListener {
 [#src-listing] 
 [source,java]  
 ---- 
-import org.servlet.annotation.SessionIdListenerThe implicit variables below are made available
+import org.servlet.annotation.SessionIdListener
 
 @WebListener
 public class MyHttpSessionIdListener {
@@ -1227,7 +1227,7 @@ public class MyHttpSessionIdListener {
 }
 ----
 
-The implicit variables made available to your HttpSession Id listeners are as follows:
+The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListeners] are as follows:
 
 .HttpSessionIdListener Implicit Variables
 |===
@@ -1247,7 +1247,7 @@ The implicit variables made available to your HttpSession Id listeners are as fo
 
 Groovy comes with integrated support for converting between Groovy objects and JSON. The classes dedicated to JSON serialisation and parsing are found in the *_groovy.json_* package. You can get an insight of how to use them in the Groovy https://groovy-lang.org/json.html[documentation]. In the Gservlet API, we have simplified the process of parsing and producing JSON in your servlets and filters as below: 
 
-.CustomerServlet.java 
+.ProjectServlet.java 
 [#src-listing] 
 [source,java]  
 ----
