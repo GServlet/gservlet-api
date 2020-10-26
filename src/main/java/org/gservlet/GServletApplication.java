@@ -122,10 +122,8 @@ public class GServletApplication {
 	private DatabaseManager createDatabaseManager() throws IOException {
 		databaseManager = new DatabaseManager(context);
 		File root = new File(path);
-		File configuration = new File(root + File.separator + APP_CONFIG_FILE);
-		if (configuration.exists()) {
-			databaseManager.setupDataSource(loadConfiguration(configuration));
-		}
+		File file = new File(root + File.separator + APP_CONFIG_FILE);
+		databaseManager.setupDataSource(loadConfiguration(file));
 		watch(root);
 		return databaseManager;
 	}
@@ -156,8 +154,10 @@ public class GServletApplication {
 	 */
 	public Properties loadConfiguration(File file) throws IOException {
 		Properties configuration = new Properties();
-		try (FileReader reader = new FileReader(file)) {
-			configuration.load(reader);
+		if(file.exists()) {
+			try (FileReader reader = new FileReader(file)) {
+				configuration.load(reader);
+			}
 		}
 		return configuration;
 	}
