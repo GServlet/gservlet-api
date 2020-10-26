@@ -103,7 +103,7 @@ Once your Java web server is installed and configured, you can put it to work. F
 . Run your Java web server
 . Call your servlet from a web browser
 
-You can find below some examples that you can try out. 
+Below are some examples that you can try out. 
     
 .ProjectServlet.java 
 [#src-listing] 
@@ -251,7 +251,7 @@ class HelloWordServlet {
 }
 ----
 
-By default the Content-Type of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to its https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable which is an instance of a Groovy MarkupBuilder, to write a better version of this servlet.
+By default the content type of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to its https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable which is an instance of a Groovy MarkupBuilder, to write a better version of this servlet.
 
 
 .HelloWordServlet.groovy 
@@ -288,6 +288,36 @@ The generated HTML content looks like this:
 </html>
 ----
 
+=== Servlet annotation attributes
+
+There are the same as those of the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebServlet.html[@WebServlet] annotation.
+
+|===
+|Name | Type | Description
+
+| _name_ | String | name of the servlet
+
+| _value_ | String[] | URL patterns of the servlet
+
+| _urlPatterns_ |  String[] | URL patterns of the servlet
+
+| _loadOnStartup_ | Integer | load-on-startup order of the servlet
+ 
+| _initParams_ | InitParam[] | init parameters of the servlet
+
+| _asyncSupported_ | boolean | Declares whether the servlet supports asynchronous operation mode
+
+| _smallIcon_ | String | small icon of the servlet
+
+| _largeIcon_ | String | large icon of the servlet
+
+| _description_ | String | description of the servlet
+
+| _displayName_ | String | display name of the servlet
+
+|===
+
+
 === Servlet implicit variables
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html[Servlet] are as follows:
@@ -316,6 +346,8 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 
 === Servlet methods
+
+For an exhaustive list of the supported methods, please read the Javadocs.
 
 |===
 |Method |Description
@@ -346,8 +378,6 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 |===
 
-For an exhaustive list of the supported methods, please read the Javadocs.
-
 === Servlet initialization parameters
 
 Since Servlet 3, the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a servlet programmatically, and it takes a required name and value. You can add a description but this is rather informative. In the initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html[ServletConfig] object. In the GServlet API, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
@@ -372,6 +402,17 @@ class UploadServlet {
 
 }
 ----
+
+The attributes of the _@InitParam_ annotation are the same as those of the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation.
+
+|===
+|Name | Type | Description
+
+| _name_ | String | name of the initialization parameter
+
+| _value_ | String | value of the initialization parameter
+
+|===
 
 === Servlet Multipart configuration
 
@@ -501,7 +542,7 @@ You can find more examples about how to use the https://docs.oracle.com/javaee/7
 
 == Creating Filters
 
-A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter_ method.
+A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter()_ method.
 
 This is a Java class that implements this interface:
 
@@ -559,6 +600,38 @@ class MyFilter {
 }
 ----
 
+=== Filter annotation attributes
+
+There are the same as those of the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebFilter.html[@WebFilter] annotation.
+
+|===
+|Name | Type | Description
+
+| _filterName_ | String | name of the filter
+
+| _value_ | String[] | URL patterns of the filter
+
+| _urlPatterns_ |  String[] | URL patterns of the filter
+
+| _dispatcherTypes_ | DispatcherType[] | dispatcher types to which the filter applies
+ 
+| _initParams_ | InitParam[] | init parameters of the filter
+
+| _servletNames_ | String[] | names of the servlets to which the filter applies
+
+| _asyncSupported_ | boolean | Declares whether the filter supports asynchronous operation mode
+
+| _smallIcon_ | String | small icon of the filter
+
+| _largeIcon_ | String | large icon of the filter
+
+| _description_ | String | description of the filter
+
+| _displayName_ | String | display name of the filter
+
+|===
+
+
 === Filter implicit variables
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html[Filter] are as follows:
@@ -589,6 +662,8 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 === Filter methods
 
+For an exhaustive list of the supported methods, please read the Javadocs. 
+
 |===
 |Method |Description
 
@@ -604,7 +679,6 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 |===
 
-For an exhaustive list of the supported methods, please read the Javadocs. 
 
 === Filter initialization parameters
 
@@ -910,7 +984,7 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
-The implicit variables made available to ahttps://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] are as follows:
 
 .ServletRequestAttributeListener Implicit Variables
 |===
@@ -1245,7 +1319,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 == Working With JSON
 
-Groovy comes with integrated support for converting between Groovy objects and JSON. The classes dedicated to JSON serialisation and parsing are found in the *_groovy.json_* package. You can get an insight of how to use them in the Groovy https://groovy-lang.org/json.html[documentation]. In the Gservlet API, we have simplified the process of parsing and producing JSON in your servlets and filters as below: 
+Groovy comes with integrated support for converting between Groovy objects and JSON. The classes dedicated to JSON serialisation and parsing are found in the *_groovy.json_* package. You can get an insight of how to use them in the Groovy https://groovy-lang.org/json.html[documentation]. In the GServlet API, we have simplified the process of parsing and producing JSON in your servlets and filters as below: 
 
 .ProjectServlet.java 
 [#src-listing] 
@@ -1277,7 +1351,7 @@ class ProjectServlet {
 }
 ----
 
-Whenever, the content-type of the request is set to *_application/json_*, you can use its *_body_* property to get the payload as Groovy object. Your servlet or filter can use as well the built-in *_json()_* method to send json data as a response.
+Whenever, the content type of the request is set to *_application/json_*, you can use its *_body_* property to get the payload as Groovy object. Your servlet or filter can use as well the built-in *_json()_* method to send json data as a response.
 
 == Working With RDBMS
 
@@ -1541,7 +1615,7 @@ public class StartupListener implements ServletContextListener {
 
 == Code Examples
 
-We have created several code examples on https://github.com/GServlet/gservlet-examples[GitHub] to help beginners and experts to learn and gain expertise at GServlet. Checkout the appropriate branch for the version that
+We have created several code examples on https://github.com/GServlet/gservlet-examples[GitHub] to help beginners to learn and gain expertise at GServlet. Checkout the appropriate branch for the version that
 you are using.
 
 
