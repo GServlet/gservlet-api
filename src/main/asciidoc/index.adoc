@@ -1303,7 +1303,7 @@ For each request, an http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.
 ---- 
 import org.gservlet.annotation.Servlet
 
-@Servlet("/myServlet")
+@Servlet("/projects")
 class ProjectServlet {
 	
    void post() {
