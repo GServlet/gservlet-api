@@ -33,5 +33,4 @@ class ProjectServlet {
 		int index = projects.findIndexOf { it.id == project.id }
 		json(projects.remove(index))
 	}
-	
 }
