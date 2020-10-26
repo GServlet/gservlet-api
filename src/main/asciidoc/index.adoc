@@ -290,7 +290,7 @@ The generated HTML content looks like this:
 
 === Servlet implicit variables
 
-The implicit variables made available to your servlets are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html[Servlet] are as follows:
 
 |===
 |Variable |Description
@@ -561,7 +561,7 @@ class MyFilter {
 
 === Filter implicit variables
 
-The implicit variables made available to your filters are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html[Filter] are as follows:
 
 |===
 |Variable |Description
@@ -707,7 +707,7 @@ public class MyServletContextListener {
 }
 ----
 
-The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListeners] are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] are as follows:
 
 .ServletContextListener Implicit Variables
 |===
@@ -774,7 +774,7 @@ public class MyServletContextAttributeListener {
 }
 ----
 
-The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListeners] are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] are as follows:
 
 .ServletContextAttributeListener Implicit Variables
 |===
@@ -837,7 +837,7 @@ public class MyServletRequestListener {
 }
 ----
 
-The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListeners] are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListener] are as follows:
 
 .ServletRequestListener Implicit Variables
 |===
@@ -910,7 +910,7 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
-The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListeners] are as follows:
+The implicit variables made available to ahttps://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] are as follows:
 
 .ServletRequestAttributeListener Implicit Variables
 |===
@@ -978,7 +978,7 @@ public class MyHttpSessionListener {
 }
 ----
 
-The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListeners] are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] are as follows:
 
 .HttpSessionListener Implicit Variables
 |===
@@ -1049,7 +1049,7 @@ public class MyHttpSessionAttributeListener {
 }
 ----
 
-The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListeners] are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] are as follows:
 
 .HttpSessionAttributeListener Implicit Variables
 |===
@@ -1112,7 +1112,7 @@ public class MyHttpSessionBindingListener {
 }
 ----
 
-The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListeners] are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] are as follows:
 
 .HttpSessionBindingListener Implicit Variables
 |===
@@ -1175,7 +1175,7 @@ public class MyHttpSessionActivationListener {
 }
 ----
 
-The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListeners] are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] are as follows:
 
 .HttpSessionActivationListener Implicit Variables
 |===
@@ -1227,7 +1227,7 @@ public class MyHttpSessionIdListener {
 }
 ----
 
-The implicit variables made available to your https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListeners] are as follows:
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] are as follows:
 
 .HttpSessionIdListener Implicit Variables
 |===
