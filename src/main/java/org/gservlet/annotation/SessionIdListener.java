@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 import java.lang.annotation.RetentionPolicy;
 
 /**
-* This annotation is used to declare a {@link javax.servlet.http.HttpSessionIdListener}.
+* This annotation is used to declare a {@link javax.servlet.http.HttpSessionIdListener}
 * 
 * @see org.gservlet.AbstractSessionActivationListener  
 * 

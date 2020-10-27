@@ -30,7 +30,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 /**
  * 
- * Handles the creation and the configuration of the data source.
+ * Handles the creation and the configuration of the data source
  * 
  * @author Mamadou Lamine Ba
  * 

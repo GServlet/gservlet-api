@@ -29,7 +29,7 @@ import groovy.sql.Sql;
 
 /**
 * 
-* Handles the creation and the closing of a database connection.   
+* Handles the creation and the closing of a database connection
 * 
 * @author Mamadou Lamine Ba
 * 

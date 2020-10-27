@@ -30,7 +30,7 @@ import groovy.xml.MarkupBuilder;
 
 /**
 * 
-* Context holder for request-specific state.
+* Context holder for request-specific state
 * 
 * @author Mamadou Lamine Ba
 * 

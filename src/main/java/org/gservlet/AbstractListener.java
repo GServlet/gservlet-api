@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 /**
 * 
-* Abstract base class inherited by all the listeners classes.
+* Abstract base class inherited by all the listeners classes
 * 
 * @author Mamadou Lamine Ba
 * 

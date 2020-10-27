@@ -48,7 +48,7 @@ import javassist.NotFoundException;
 
 /**
  * 
- * An specific class to load Groovy scripts.
+ * An specific class to load Groovy scripts
  * 
  * @author Mamadou Lamine Ba
  * 

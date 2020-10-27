@@ -33,12 +33,12 @@ import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 
  * Checks a folder for file changes and notifies the file
- * listeners accordingly.
+ * listeners accordingly
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -116,8 +116,8 @@ public class FileWatcher implements Runnable {
 	protected boolean pollEvents(WatchService watchService) throws InterruptedException {
 		WatchKey key = watchService.take();
 		Path path = (Path) key.watchable();
-		List<WatchEvent<?>> events =  key.pollEvents().stream().distinct().collect(Collectors.toList());
-		for (WatchEvent<?> event : events) {
+		TimeUnit.MILLISECONDS.sleep(500);
+		for (WatchEvent<?> event : key.pollEvents()) {
 			notifyListeners(event.kind(), path.resolve((Path) event.context()).toFile());
 		}
 		return key.reset();

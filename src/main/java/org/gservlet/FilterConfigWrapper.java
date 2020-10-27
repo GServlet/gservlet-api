@@ -25,7 +25,7 @@ import javax.servlet.ServletContext;
 
 /**
  * 
- * A wrapper class around the FilterConfig interface.
+ * A wrapper class around the FilterConfig interface
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -49,7 +49,7 @@ public class FilterConfigWrapper implements FilterConfig {
 	}
 
 	/**
-	 * Returns the name of this filter instance.
+	 * Returns the name of the filter instance.
 	 *
 	 * @return the name of the filter instance
 	 * 
@@ -60,9 +60,9 @@ public class FilterConfigWrapper implements FilterConfig {
 	}
 
 	/**
-	 * Returns a reference to the ServletContext in which the caller is executing.
+	 * Returns a reference to the ServletContext
 	 *
-	 * @return a ServletContext object, used by the caller to interact with its servlet container
+	 * @return the ServletContext object
 	 * 
 	 * 
 	 */
@@ -77,8 +77,8 @@ public class FilterConfigWrapper implements FilterConfig {
 	 * @param name the name of the initialization parameter whose value to get
 	 *
 	 * @return a <code>String</code> containing the value of the initialization
-	 *         parameter, or <code>null</code> if the initialization parameter does
-	 *         not exist
+	 *         parameter, or <code>null</code> if it does not exist
+	 *         
 	 */
 	@Override
 	public String getInitParameter(String name) {

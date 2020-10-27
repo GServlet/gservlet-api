@@ -67,7 +67,7 @@ import groovy.util.ScriptException;
 /**
  * 
  * Manages the registration and the reloading of
- * a servlet, filter or listener into the web container.
+ * a servlet, filter or listener into the web container
  * 
  * @author Mamadou Lamine Ba
  * 

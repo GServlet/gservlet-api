@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * 
- * A wrapper class around the HttpSession class.
+ * A wrapper class around the HttpSession class
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -38,7 +38,6 @@ public class SessionWrapper implements HttpSession, Serializable {
 	 * The session object
 	 */
 	protected final transient HttpSession session;
-
 	
 	/**
 	* 

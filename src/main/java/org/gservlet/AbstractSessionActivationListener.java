@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSessionEvent;
 
 /**
 * 
-* Abstract class for receiving notification events about sessions being activated and passivated.
+* Abstract class for receiving notification events about sessions being activated and passivated
 * 
 * @author Mamadou Lamine Ba
 * 

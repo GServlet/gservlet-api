@@ -23,7 +23,7 @@ import javax.servlet.ServletConfig;
 
 /**
 * 
-* A servlet configuration object used by a servlet container to pass information to a servlet during initialization.   
+* A servlet configuration object used by a servlet container to pass information to a servlet during initialization   
 * 
 * @author Mamadou Lamine Ba
 * 

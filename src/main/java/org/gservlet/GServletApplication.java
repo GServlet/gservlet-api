@@ -44,7 +44,7 @@ import javax.sql.DataSource;
 /**
  * 
  * The Groovy Servlet Application starts the registration of the servlets,
- * filters, listeners into the web container.
+ * filters, listeners into the web container and the data source configuration
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -70,9 +70,9 @@ public class GServletApplication {
 	protected ServletContext context;
 
 	/**
-	 * The real path
+	 * The context real path
 	 */
-	protected String path;
+	protected String realPath;
 
 	/**
 	 * 
@@ -92,12 +92,12 @@ public class GServletApplication {
 	 * 
 	 * @param context the servlet context
 	 * 
-	 * @param path the given path
+	 * @param realPath the given context real path
 	 * 
 	 */
-	public GServletApplication(ServletContext context, String path) {
+	public GServletApplication(ServletContext context, String realPath) {
 		this.context = context;
-		this.path = path;
+		this.realPath = realPath;
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class GServletApplication {
 	 */
 	public void start() {
 		try {
-			initializer = new ContainerInitializer(context, path);
+			initializer = new ContainerInitializer(context, realPath);
 			databaseManager = databaseManager != null ? databaseManager : createDatabaseManager();
 			logger.info("application started on context " + context.getContextPath());
 		} catch (Exception e) {
@@ -121,7 +121,7 @@ public class GServletApplication {
 	 */
 	private DatabaseManager createDatabaseManager() throws IOException {
 		databaseManager = new DatabaseManager(context);
-		File root = new File(path);
+		File root = new File(realPath);
 		File file = new File(root + File.separator + APP_CONFIG_FILE);
 		databaseManager.setupDataSource(loadConfiguration(file));
 		watch(root);
@@ -133,13 +133,13 @@ public class GServletApplication {
 	 *
 	 */
 	public void startOnSpringBoot() {
-		path = System.getProperty("user.dir") + File.separator + "src/main/resources";
-		if (new File(path).exists()) {
+		realPath = System.getProperty("user.dir") + File.separator + "src/main/resources";
+		if (new File(realPath).exists()) {
 			start();
 		} else {
 			String folder = "BOOT-INF/classes/";
 			explodeClassPathResources(context.getRealPath("/"), folder);
-			path = context.getRealPath("/") + folder;
+			realPath = context.getRealPath("/") + folder;
 			start();
 		}
 		context.addListener(new DefaultRequestListener());
@@ -259,7 +259,7 @@ public class GServletApplication {
 			}
 
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, "exception encountered when exploding the classpath resources", e);
+			logger.log(Level.SEVERE, "exception encountered while exploding the classpath resources", e);
 		}
 	}
 

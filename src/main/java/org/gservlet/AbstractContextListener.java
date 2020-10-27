@@ -25,7 +25,7 @@ import javax.servlet.ServletContextListener;
 
 /**
 * 
-* Abstract class for receiving notification events about ServletContext lifecycle changes.
+* Abstract class for receiving notification events about ServletContext lifecycle changes
 * 
 * @author Mamadou Lamine Ba
 * 

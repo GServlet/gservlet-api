@@ -21,7 +21,7 @@ package org.gservlet;
 
 /**
 * 
-* An abstract adapter class for receiving file events. The methods in this class are empty. This class exists as convenience for creating FileListener objects.
+* An abstract adapter class for receiving file events. This class exists as convenience for creating FileListener objects
 * 
 * @author Mamadou Lamine Ba
 * 

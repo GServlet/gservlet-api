@@ -25,7 +25,7 @@ import javax.servlet.ServletContextAttributeListener;
 
 /**
 * 
-* Abstract class for receiving notification events about ServletContext attribute changes.
+* Abstract class for receiving notification events about ServletContext attribute changes
 * 
 * @author Mamadou Lamine Ba
 * 

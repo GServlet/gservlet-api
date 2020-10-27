@@ -23,7 +23,7 @@ import java.util.EventListener;
 
 /**
 * 
-* Interface for receiving notification events about files changes.
+* Interface for receiving notification events about files changes
 * 
 * @author Mamadou Lamine Ba
 * 

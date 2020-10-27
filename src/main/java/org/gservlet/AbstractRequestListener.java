@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
 
 /**
 * 
-* Abstract class for receiving notification events about requests coming into and going out of scope of a web application.
+* Abstract class for receiving notification events about requests coming into and going out of scope of a web application
 * 
 * @author Mamadou Lamine Ba
 * 

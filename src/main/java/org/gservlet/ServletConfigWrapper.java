@@ -25,7 +25,7 @@ import javax.servlet.ServletContext;
 
 /**
  * 
- * A wrapper class around the ServletConfig interface.
+ * A wrapper class around the ServletConfig interface
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -41,7 +41,7 @@ public class ServletConfigWrapper implements ServletConfig {
 	 * 
 	 * Constructs a ServletConfigWrapper for the given ServletConfig
 	 * 
-	 * @param servletConfig the servlet config object
+	 * @param servletConfig the ServletConfig object
 	 * 
 	 */
 	public ServletConfigWrapper(ServletConfig servletConfig) {
@@ -49,10 +49,7 @@ public class ServletConfigWrapper implements ServletConfig {
 	}
 
 	/**
-	 * Returns the name of this servlet instance. The name may be provided via
-	 * server administration, assigned in the web application deployment descriptor,
-	 * or for an unregistered (and thus unnamed) servlet instance it will be the
-	 * servlet's class name.
+	 * Returns the name of the servlet instance.
 	 *
 	 * @return the name of the servlet instance
 	 * 
@@ -63,10 +60,10 @@ public class ServletConfigWrapper implements ServletConfig {
 	}
 
 	/**
-	 * Returns a reference to the ServletContext in which the caller is executing.
+	 * Returns a reference to the ServletContext
 	 *
-	 * @return a ServletContext object, used by the caller to interact with its servlet container
-	 * 
+	 * @return the ServletContext object
+	 *  
 	 * 
 	 */
 	@Override
@@ -80,8 +77,8 @@ public class ServletConfigWrapper implements ServletConfig {
 	 * @param name the name of the initialization parameter whose value to get
 	 *
 	 * @return a <code>String</code> containing the value of the initialization
-	 *         parameter, or <code>null</code> if the initialization parameter does
-	 *         not exist
+	 *         parameter, or <code>null</code> if it does not exist
+	 *         
 	 */
 	@Override
 	public String getInitParameter(String name) {

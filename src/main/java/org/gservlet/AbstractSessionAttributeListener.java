@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 
 /**
 * 
-* Abstract class for receiving notification events about HttpSession attribute changes.
+* Abstract class for receiving notification events about HttpSession attribute changes
 * 
 * @author Mamadou Lamine Ba
 * 

@@ -23,7 +23,7 @@ import javax.servlet.FilterConfig;
 
 /**
 * 
-* A filter configuration object used by a servlet container to pass information to a filter during initialization.   
+* A filter configuration object used by a servlet container to pass information to a filter during initialization   
 * 
 * @author Mamadou Lamine Ba
 * 

@@ -24,7 +24,7 @@ import java.util.EventObject;
 
 /**
 * 
-* Events of this kind indicate change events for a file.
+* Events of this kind indicate change events for a file
 * 
 * @author Mamadou Lamine Ba
 * 

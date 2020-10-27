@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 
 /**
 * 
-* An InvocationHandler implementation class that must be associated with a proxy instance.
+* An InvocationHandler implementation class that must be associated with a proxy instance
 * 
 * @author Mamadou Lamine Ba
 * 

@@ -27,7 +27,7 @@ import javax.servlet.ServletContext;
 
 /**
 * 
-* Abstract base class inherited by the filters and servlets default config classes.
+* Abstract base class inherited by the filters and servlets default config classes
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -47,9 +47,9 @@ public class AbstractConfig {
 	
 
 	/**
-	 * Returns a reference to the ServletContext in which the caller is executing.
+	 * Returns a reference to the ServletContext 
 	 *
-	 * @return a ServletContext object, used by the caller to interact with its servlet container
+	 * @return the ServletContext object
 	 * 
 	 * 
 	 */
@@ -84,11 +84,11 @@ public class AbstractConfig {
 	/**
 	 * Gets the value of the initialization parameter with the given name.
 	 *
-	 * @param name the name of the initialization parameter whose value to get
+	 * @param name the name of the initialization parameter
 	 *
 	 * @return a <code>String</code> containing the value of the initialization
-	 *         parameter, or <code>null</code> if the initialization parameter does
-	 *         not exist
+	 *         parameter, or <code>null</code> if it does not exist
+	 *         
 	 */
 	public String getInitParameter(String name) {
 		return parameters.get(name);
