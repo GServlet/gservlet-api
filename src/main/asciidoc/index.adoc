@@ -1496,7 +1496,7 @@ contributor(classContext) {
 }
 ----
 
-== Frameworks Support
+== Framework Support
 
 === Spring Boot
 
