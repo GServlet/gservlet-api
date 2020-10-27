@@ -783,7 +783,6 @@ public class MyServletContextListener {
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] are as follows:
 
-.ServletContextListener Implicit Variables
 |===
 |Variable |Description
 
@@ -850,7 +849,6 @@ public class MyServletContextAttributeListener {
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] are as follows:
 
-.ServletContextAttributeListener Implicit Variables
 |===
 |Variable |Description
 
@@ -913,7 +911,6 @@ public class MyServletRequestListener {
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListener] are as follows:
 
-.ServletRequestListener Implicit Variables
 |===
 |Variable |Description
 
@@ -986,7 +983,6 @@ public class MyServletRequestAttributeListener {
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] are as follows:
 
-.ServletRequestAttributeListener Implicit Variables
 |===
 |Variable |Description
 
@@ -1054,7 +1050,6 @@ public class MyHttpSessionListener {
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] are as follows:
 
-.HttpSessionListener Implicit Variables
 |===
 |Variable |Description
 
@@ -1125,7 +1120,6 @@ public class MyHttpSessionAttributeListener {
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] are as follows:
 
-.HttpSessionAttributeListener Implicit Variables
 |===
 |Variable |Description
 
@@ -1188,7 +1182,6 @@ public class MyHttpSessionBindingListener {
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] are as follows:
 
-.HttpSessionBindingListener Implicit Variables
 |===
 |Variable |Description
 
@@ -1251,7 +1244,6 @@ public class MyHttpSessionActivationListener {
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] are as follows:
 
-.HttpSessionActivationListener Implicit Variables
 |===
 |Variable |Description
 
@@ -1303,7 +1295,6 @@ public class MyHttpSessionIdListener {
 
 The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] are as follows:
 
-.HttpSessionIdListener Implicit Variables
 |===
 |Variable |Description
 
@@ -1351,11 +1342,11 @@ class ProjectServlet {
 }
 ----
 
-Whenever, the content type of the request is set to *_application/json_*, you can use its *_body_* property to get the payload as Groovy object. Your servlet or filter can use as well the built-in *_json()_* method to send json data as a response.
+Whenever, the content type of the request is set to *_application/json_*, you can use its *_body_* property to get the payload as Groovy object. Your servlet or filter can use as well the built-in *_json()_* method to send JSON data as a response.
 
 == Working With RDBMS
 
-The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API is as simple as to create in the root directory of your web application, a file named *_gservlet.properties_* like below :
+The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API is as simple as to create in the root directory of your web application, a file named *_gservlet.properties_* like below:
 
 .gservlet.properties 
 [#src-listing] 
