@@ -67,7 +67,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 If you are just getting started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
 
-### From Maven
+### Maven
 
 ```xml
 <dependency>
@@ -77,12 +77,16 @@ If you are just getting started with GServlet, you may want to begin by creating
 </dependency>
 ```
 
-### From Gradle
+### Gradle
 
 ```groovy
- dependencies {
+ repositories {
+    mavenCentral()
+}
+
+dependencies {
     compile("org.gservlet:gservlet-api:1.0.0")
- }
+}
 ```
 
 ### Your First Groovy Servlet
@@ -98,7 +102,7 @@ Once your Java web server is installed and configured, you can put it to work. F
 
 You can find below some examples that you can try out and for Hot Reloading, set the **GSERVLET_RELOAD** environment variable to true in your IDE.
 
-##### CustomerServlet.groovy
+##### ProjectServlet.groovy
 
 ```java
 import org.gservlet.annotation.Servlet
