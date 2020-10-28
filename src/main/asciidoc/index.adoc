@@ -98,7 +98,7 @@ dependencies {
 Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. These steps are as follows:
 
 . Create a dynamic web project
-. Create the scripts folder inside your web content directory
+. Create the scripts folder inside your web app directory
 . Write the servlet source code
 . Run your Java web server
 . Call your servlet from a web browser
@@ -1454,7 +1454,7 @@ contribute(currentType(annos: annotatedBy(Filter))) {
 
 ----
 
-Make sure your project has the Groovy nature and that the Groovy DSL support is activated. Also to leverage the full power of the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)], it is highly recommended to add your _scripts_ folder as source folder. Thus, you will be able to use its wizards to create your artifacts and like for Java, the use of the default package is discouraged. The example below illustrates a good practice to follow throughout your development in order to structure your project.
+Make sure your project has the Groovy nature and the Groovy DSL support is activated. Also to leverage the full power of the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)], it is highly recommended to add your _scripts_ folder as source folder. Thus, you will be able to use its wizards to create your artifacts and like for Java, the use of the default package is discouraged. The example below illustrates a good practice to follow throughout your development in order to structure your project.
 
 .ProjectDao.groovy 
 [#src-listing] 
@@ -1616,8 +1616,7 @@ public class SpringConfiguration implements ServletContextInitializer {
 
 === Other Java web frameworks 
 
-If the target framework supports the Servlet API and the _@WebListener_ annotation, no configuration is required since the GServlet API ships with a context listener which starts and stops the application. This statement is
-valid for frameworks like JSF, Apache Struts.
+If the target framework supports the Servlet API and the _@WebListener_ annotation, no configuration is required since the GServlet API ships with a context listener which starts and stops the application. This statement is valid for frameworks like JSF, Apache Struts.
 
 .StartupListener.java 
 [#src-listing] 
@@ -1653,8 +1652,7 @@ public class StartupListener implements ServletContextListener {
 
 == Code Examples
 
-We have created several code examples on https://github.com/GServlet/gservlet-examples[GitHub] to help beginners to learn and gain expertise at GServlet. Checkout the appropriate branch for the version that
-you are using.
+We have created several code examples on https://github.com/GServlet/gservlet-examples[GitHub] to help beginners to learn and gain expertise at GServlet. Checkout the appropriate branch for the version that you are using.
 
 
 == Copyright and License
