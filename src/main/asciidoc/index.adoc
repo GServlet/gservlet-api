@@ -1454,6 +1454,53 @@ contribute(currentType(annos: annotatedBy(Filter))) {
 
 ----
 
+Make sure your project has the Groovy nature and that the Groovy DSL support is activated. Also to leverage the full power of the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)], it is highly recommended to add your _scripts_folder as source folder. Thus, you will be able to use its wizards to create your artifacts and like for Java, the use of the default package is discouraged. The example below illustrates a good practice to follow throughout your development in order to structure your project.
+
+.ProjectDao.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+package dao
+
+class ProjectDao {
+	
+   def projects = []
+
+   ProjectDao() {
+     projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+     projects << [id : 2, name : "Spring", url : "https://spring.io"]
+     projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
+   }
+	
+}
+----
+
+
+.ProjectServlet.java 
+[#src-listing] 
+[source,java]  
+----
+package servlets
+
+import org.gservlet.annotation.Servlet
+import dao.ProjectDao
+
+@Servlet("/projects")
+class ProjectServlet {
+   
+   def projectDao
+
+   void init() {
+     projectDao = new ProjectDao()
+   }
+
+   void get() {
+     json(projectDao.projects)
+   }
+	
+}
+----
+
 === IntelliJ IDEA
 
 In the other hand, in IntelliJ IDEA, we can write GDSL Files to have code completion on the injected methods/properties and closures. https://confluence.jetbrains.com/display/GRVY/Scripting+IDE+for+DSL+awareness[GroovyDSL] is a scripting framework with a domain-specific language designed to define the behavior of end-user DSLs as script files which are executed by the IDE on the fly, bringing new reference resolution and code completion logic into the scope of a project.
