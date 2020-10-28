@@ -1547,7 +1547,7 @@ contributor(classContext) {
 
 === Spring Boot
 
-The _scripts_ folder must created be inside the _src/main/resources_ directory of your Spring Boot applications so it can be packaged inside the final jar and you just need this configuration below to leverage the GServlet API. 
+The _scripts_ folder must be created inside the _src/main/resources_ directory of your Spring Boot applications so it can be packaged inside the final jar and you just need this configuration below to leverage the GServlet API. 
 
 .SpringConfiguration.java 
 [#src-listing] 
