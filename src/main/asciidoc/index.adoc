@@ -1400,6 +1400,10 @@ class ProjectFilter {
 
 After each request, the _close()_ method of the http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object is automatically invoked to bring it back to the connection pool.    
 
+== Unit Testing
+
+== Groovydoc Generation
+
 == IDE Support
 
 === Eclipse
