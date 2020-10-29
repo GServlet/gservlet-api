@@ -1402,7 +1402,7 @@ After each request, the _close()_ method of the http://docs.groovy-lang.org/late
 
 == Unit Testing
 
-== Groovydoc Generation
+== Groovydocs Generation
 
 == IDE Support
 
