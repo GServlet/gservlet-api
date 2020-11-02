@@ -93,7 +93,7 @@ public class HttpServletTest {
 		assertEquals("head", map.get("state"));
 		assertEquals(RequestWrapper.class, servlet.getRequest().getClass());
 		assertEquals(SessionWrapper.class, servlet.getSession().getClass());
-		assertEquals(ContextWrapper.class, servlet.getContext().getClass());
+		assertEquals(ServletContextWrapper.class, servlet.getContext().getClass());
 		assertNotNull(servlet.getConfig());
 		assertNotNull(servlet.getSql());
 	}

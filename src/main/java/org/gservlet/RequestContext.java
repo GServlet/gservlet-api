@@ -118,7 +118,7 @@ public class RequestContext {
 	* 
 	*/
 	public ServletContext getServletContext() {
-		return new ContextWrapper(request.getServletContext());
+		return new ServletContextWrapper(request.getServletContext());
 	}
 
 	/**

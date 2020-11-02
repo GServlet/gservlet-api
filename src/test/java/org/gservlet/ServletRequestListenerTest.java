@@ -67,7 +67,7 @@ public class ServletRequestListenerTest {
 		assertEquals("requestDestroyed", map.get("state"));
 		assertEquals(RequestWrapper.class, listener.getRequest().getClass());
 		assertEquals(SessionWrapper.class, listener.getSession().getClass());
-		assertEquals(ContextWrapper.class, listener.getContext().getClass());
+		assertEquals(ServletContextWrapper.class, listener.getContext().getClass());
 		assertNotNull(listener.getLogger());
 	}
 

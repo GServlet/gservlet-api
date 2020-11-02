@@ -66,7 +66,7 @@ public abstract class AbstractContextListener extends AbstractListener implement
 	* 
 	*/
 	public ServletContext getContext() {
-		return new ContextWrapper(getEvent().getServletContext());
+		return new ServletContextWrapper(getEvent().getServletContext());
 	}
 	
 	/**

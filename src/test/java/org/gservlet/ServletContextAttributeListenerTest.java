@@ -47,7 +47,7 @@ public class ServletContextAttributeListenerTest {
 		listener.attributeReplaced(event);
 		assertEquals("attributeReplaced", listener.getName());
 		assertEquals("myValue", listener.getValue());
-		assertEquals(ContextWrapper.class, listener.getContext().getClass());
+		assertEquals(ServletContextWrapper.class, listener.getContext().getClass());
 		assertNotNull(listener.getLogger());
 	}
 

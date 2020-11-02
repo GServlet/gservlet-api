@@ -33,7 +33,7 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-public class ContextWrapperTest {
+public class ServletContextWrapperTest {
 
 	@SuppressWarnings("rawtypes")
 	@Test
@@ -51,7 +51,7 @@ public class ContextWrapperTest {
 				return map.get(invocation.getArguments()[0]);
 			}
 		}).when(context).getAttribute(anyString());
-		ContextWrapper wrapper = new ContextWrapper(context);
+		ServletContextWrapper wrapper = new ServletContextWrapper(context);
 		Method[] methods = wrapper.getClass().getDeclaredMethods();
 		for (Method method : methods) {
 			method.setAccessible(true);

@@ -89,7 +89,7 @@ public class HttpFilterTest {
 		assertEquals("destroy", map.get("state"));
 		assertEquals(RequestWrapper.class, filter.getRequest().getClass());
 		assertEquals(SessionWrapper.class, filter.getSession().getClass());
-		assertEquals(ContextWrapper.class, filter.getContext().getClass());
+		assertEquals(ServletContextWrapper.class, filter.getContext().getClass());
 		assertNotNull(filter.getChain());
 		assertNotNull(filter.getSql());
 		filter.next();

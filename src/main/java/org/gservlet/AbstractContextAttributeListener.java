@@ -90,7 +90,7 @@ public abstract class AbstractContextAttributeListener extends AbstractListener 
 	* 
 	*/
 	public ServletContext getContext() {
-		return new ContextWrapper(getEvent().getServletContext());
+		return new ServletContextWrapper(getEvent().getServletContext());
 	}
 	
 	/**
