@@ -72,7 +72,7 @@ import groovy.util.ScriptException;
  * @author Mamadou Lamine Ba
  * 
  */
-public class ContainerInitializer {
+public class ContainerManager {
 
 	/**
 	 * The servlet context object
@@ -96,15 +96,15 @@ public class ContainerInitializer {
 	 * Constructs a ContainerInitializer for the given servlet context
 	 * 
 	 * @param context the servlet context
-	 * @param path the context path
+	 * @param directory the groovy parent directory
 	 * @throws ServletException the ServletException
 	 * 
 	 */
-	public ContainerInitializer(ServletContext context, String path) throws ServletException {
+	public ContainerManager(ServletContext context, String directory) throws ServletException {
 		try {
 			this.context = context;
 			context.setAttribute(HANDLERS, handlers);
-			File folder = new File(path + File.separator + SCRIPTS_FOLDER);
+			File folder = new File(directory + File.separator + SCRIPTS_FOLDER);
 			scriptManager = new ScriptManager(folder);
 			init(folder);
 		} catch (Exception e) {

@@ -585,7 +585,9 @@ pre, pre>code {
 	font-weight: 400;
 	text-rendering: optimizeSpeed
 }
-
+em {
+  color : #e65251	
+}
 em em {
 	font-style: normal
 }

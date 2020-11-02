@@ -52,9 +52,9 @@ import javax.sql.DataSource;
 public class GServletApplication {
 
 	/**
-	 * The container initializer object
+	 * The container manager object
 	 */
-	protected ContainerInitializer initializer;
+	protected ContainerManager containerManager;
 	/**
 	 * The database manager object
 	 */
@@ -106,7 +106,7 @@ public class GServletApplication {
 	 */
 	public void start() {
 		try {
-			initializer = new ContainerInitializer(context, realPath);
+			containerManager = new ContainerManager(context, realPath);
 			databaseManager = databaseManager != null ? databaseManager : createDatabaseManager();
 			logger.info("application started on context " + context.getContextPath());
 		} catch (Exception e) {
@@ -197,7 +197,7 @@ public class GServletApplication {
 	 *  
 	 */
 	public void stop() {
-		initializer.shutDown();
+		containerManager.shutDown();
 		databaseManager.shutDown();
 		for (WatchService watchService : FileWatcher.getWatchServices()) {
 			try {
@@ -210,13 +210,13 @@ public class GServletApplication {
 
 	/**
 	 * 
-	 * Returns the ContainerInitializer object
+	 * Returns the ContainerManager object
 	 * 
-	 * @return the ContainerInitializer object
+	 * @return the ContainerManager object
 	 * 
 	 */
-	public ContainerInitializer getInitializer() {
-		return initializer;
+	public ContainerManager getContainerManager() {
+		return containerManager;
 	}
 
 	/**

@@ -32,7 +32,7 @@ public final class Constants {
 	/**
 	 * The scripts folder constant
 	 */
-	public static final String SCRIPTS_FOLDER = "scripts";
+	public static final String SCRIPTS_FOLDER = "groovy";
 	/**
 	 * The data source constant
 	 */

@@ -54,8 +54,8 @@ public class StartupListenerTest {
 				.thenReturn(mock(ServletRegistration.Dynamic.class));
 		ServletContextEvent event = new ServletContextEvent(context);
 		listener.contextInitialized(event);
-		assertNotNull(listener.getApplication().getInitializer());
-		assertEquals(11, listener.getApplication().getInitializer().getHandlers().size());
+		assertNotNull(listener.getApplication().getContainerManager());
+		assertEquals(11, listener.getApplication().getContainerManager().getHandlers().size());
 		assertNotNull(listener.getApplication().getDatabaseManager());
 		wait(2000);
 		File configuration = new File(folder + File.separator + APP_CONFIG_FILE);
@@ -65,13 +65,13 @@ public class StartupListenerTest {
 		Files.write(Paths.get(configuration.getAbsolutePath()), bytes);
 		wait(3000);
 		listener.contextDestroyed(event);
-		assertEquals(0, listener.getApplication().getInitializer().getHandlers().size());
+		assertEquals(0, listener.getApplication().getContainerManager().getHandlers().size());
 		when(context.getFilterRegistration(isA(String.class)))
 		.thenReturn(mock(FilterRegistration.Dynamic.class));
 		folder = new File(folder + File.separator + SCRIPTS_FOLDER);
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + File.separator + "HttpFilter.groovy");
-		listener.getApplication().getInitializer().register(scriptManager.loadObject(script));
+		listener.getApplication().getContainerManager().register(scriptManager.loadObject(script));
 	}
 	
 	public void wait(int time) throws InterruptedException {

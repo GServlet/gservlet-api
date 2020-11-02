@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractListener implements EventListener{
+public abstract class AbstractListener implements EventListener {
 
 	/**
 	 * The event holder object

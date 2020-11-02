@@ -20,7 +20,7 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 
 == Introduction
 
-GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_], and https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[_HttpServletResponse_] objects. We have access to the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[_HttpSession_] with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_.
+https://github.com/GServlet/gservlet-api[GServlet] is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest], and https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] objects. We have access to the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_.
 
 .Groovlet.groovy 
 [#src-listing] 
@@ -63,7 +63,7 @@ The same philosophy has been followed in the design of this API and if you have 
 
 == Installation
 
-To get started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
+To get started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the API through a dependency management tool and the artifact can be found in Maven's central repository. It is named *_gservlet-api_* and you just need to name a dependency on it in your project.
 
 === Maven
 
@@ -98,7 +98,7 @@ dependencies {
 Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. These steps are as follows:
 
 . Create a dynamic web project
-. Create the scripts folder inside your web app directory
+. Create the *_groovy_* folder inside your web app directory
 . Write the servlet source code
 . Run your Java web server
 . Call your servlet from a web browser
@@ -114,7 +114,7 @@ import org.gservlet.annotation.Servlet
 @Servlet("/projects")
 class ProjectServlet {
 
-	def projects = []
+	List projects = []
 
 	void init() {
 	   projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
@@ -416,7 +416,7 @@ The attributes of the _@InitParam_ annotation are the same as those of the https
 
 === Servlet Multipart configuration
 
-Supporting file uploads is a very basic and common requirement for many web applications. Prior to Servlet 3.0, implementing file upload required the use of external libraries or complex input processing. Version 3.0 of the Java Servlet specification helps to provide a viable solution to the problem in a generic and portable way. The Servlet 3.0 specification supports file upload out of the box, so any web container that implements the specification can parse multipart requests and make mime attachments available through the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_] object. A new annotation, https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/MultipartConfig.html[@MultipartConfig], is used to indicate that the servlet on which it is declared expects requests to made using the _multipart/form-data_ MIME type. Therefore, it can retrieve the Part components of a given _multipart/form-data_ request by calling the _getPart(String name)_ or _getParts()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[_HttpServletRequest_] object.
+Supporting file uploads is a very basic and common requirement for many web applications. Prior to Servlet 3.0, implementing file upload required the use of external libraries or complex input processing. Version 3.0 of the Java Servlet specification helps to provide a viable solution to the problem in a generic and portable way. The Servlet 3.0 specification supports file upload out of the box, so any web container that implements the specification can parse multipart requests and make mime attachments available through the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object. A new annotation, https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/MultipartConfig.html[@MultipartConfig], is used to indicate that the servlet on which it is declared expects requests to made using the _multipart/form-data_ MIME type. Therefore, it can retrieve the Part components of a given _multipart/form-data_ request by calling the _getPart(String name)_ or _getParts()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object.
 
 .UploadServlet.groovy 
 [#src-listing] 
@@ -478,7 +478,7 @@ The https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/ServletSecurit
 )
 ----
 
-The _httpMethodConstraints_ attribute specifies one or more constraints for some specific HTTP methods, whereas the value attribute specifies a constraint that applies for all other HTTP methods.
+The _httpMethodConstraints_ attribute specifies one or more constraints for some specific HTTP methods, whereas the _value_ attribute specifies a constraint that applies for all other HTTP methods.
 
 .Encryption for all HTTP methods 
 [#src-listing] 
@@ -1321,7 +1321,7 @@ import org.gservlet.annotation.Servlet
 @Servlet("/projects")
 class ProjectServlet {
    
-   def projects = []
+   List projects = []
 
    void init() {
      projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
@@ -1404,6 +1404,155 @@ After each request, the _close()_ method of the http://docs.groovy-lang.org/late
 
 == Groovydocs Generation
 
+https://github.com/apache/groovy/blob/master/subprojects/groovy-groovydoc/src/spec/doc/groovydoc.adoc[Groovydoc] was introduced in 2007 to provide for Groovy what https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html[Javadoc] provides for Java. It is used to generate the API documentation for the Groovy and Java classes that compose your project.
+
+.ProjectServlet.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+
+/**
+ * This servlet handles the management of projects
+ * 
+ * @author John Doe
+ */
+@Servlet(value="/projects")
+class ProjectServlet {
+
+	/**
+	 * the projects list
+	 */
+	List projects = []
+
+	/**
+	 * the init method
+	 */
+	void init() {
+		projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+		projects << [id : 2, name : "Spring", url : "https://spring.io"]
+		projects << [id : 3, name : "Maven", url : "https://maven.apache.org"]
+		projects << [id : 4, name : "JMeter", url : "https://jmeter.apache.org"]
+	}
+	
+	/**
+	 * handles the GET method
+	 */
+	void get() {
+		json(projects)
+	}
+
+	/**
+	 * handles the POST method
+	 */
+	void post() {
+		def project = request.body
+		projects << project
+		json(project)
+	}
+	
+}
+----
+
+
+=== Maven
+
+https://github.com/groovy/GMavenPlus[GMavenPlus] is a rewrite of https://github.com/groovy/gmaven[GMaven], a plugin that allows you to integrate Groovy into your Maven projects. This is the basic configuration to generate Groovydocs with this plugin.
+
+.pom.xml 
+[#src-listing] 
+[source,xml]  
+---- 
+<project>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>3.0.6</version>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+				<version>1.11.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>groovydoc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sources>
+						<source>
+							<directory>${project.basedir}/src/main/resources/groovy</directory>
+							<includes>
+								<include>**/*.groovy</include>
+							</includes>
+						</source>
+					</sources>
+					<links>
+					  <link>
+					   <href>https://docs.oracle.com/javase/7/docs/api/</href>
+					   <packages>java.,javax.,org.xml.</packages>
+					  </link>
+					  <link>
+					   <href>http://docs.groovy-lang.org/latest/html/gapi/</href>
+					   <packages>groovy.,org.codehaus.groovy.</packages>
+					  </link>
+					</links>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+----
+
+Run *_mvn gplus:groovydoc_* and your documentation will be generated in the *_target/gapidocs_* directory.
+
+=== Gradle
+
+With Gradle, You can use the https://github.com/apache/groovy/blob/master/subprojects/groovy-groovydoc/src/spec/doc/groovydoc.adoc[Groovydoc] tool to generate your project documentation, and the version that is used, is the one from the Groovy dependency defined in the build script.
+
+.build.gradle 
+[#src-listing] 
+[source,java]  
+---- 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:3.0.6"
+}
+
+apply plugin: 'groovy'
+
+sourceSets {
+	main {
+		groovy {
+			srcDirs = ['src/main/resources/groovy']
+		}
+	}
+}
+
+groovydoc {
+  use = true
+  groovyClasspath = configurations.compile 
+  source = sourceSets.main.groovy
+  link 'https://docs.oracle.com/javase/7/docs/api/', 'java.'
+  link 'http://docs.groovy-lang.org/latest/html/gapi/', 'groovy.', 'org.codehaus.groovy.'
+}
+----
+
+Run *_gradle groovydoc_* and your documentation will be generated in the *_build/docs/groovydoc_* directory.
+
 == IDE Support
 
 === Eclipse
@@ -1458,7 +1607,7 @@ contribute(currentType(annos: annotatedBy(Filter))) {
 
 ----
 
-Make sure your project has the Groovy nature and the Groovy DSL support is activated. Also to leverage the full power of the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)], it is highly recommended to add your _scripts_ folder as source folder. Thus, you will be able to use its wizards to create your artifacts and like for Java, the use of the default package is discouraged. The example below illustrates a good practice to follow throughout your development in order to structure your project.
+Make sure that your project has the Groovy nature and the Groovy DSL support is activated. To leverage the full power of the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)], it is highly recommended to add the _groovy_ folder as source folder, in order to use its wizards to create your artifacts. The use of the default package is discouraged and the example below illustrates a good packaging practice to follow throughout your development for a cohesive structure of your project.
 
 .ProjectDao.groovy 
 [#src-listing] 
@@ -1468,7 +1617,7 @@ package dao
 
 class ProjectDao {
 	
-   def projects = []
+   List projects = []
 
    ProjectDao() {
      projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
@@ -1492,7 +1641,7 @@ import dao.ProjectDao
 @Servlet("/projects")
 class ProjectServlet {
    
-   def projectDao
+   ProjectDao projectDao
 
    void init() {
      projectDao = new ProjectDao()
@@ -1551,7 +1700,7 @@ contributor(classContext) {
 
 === Spring Boot
 
-The _scripts_ folder must be created inside the _src/main/resources_ directory of your Spring Boot applications so it can be packaged inside the final jar and you just need this configuration below to leverage the GServlet API. 
+The _groovy_ folder must be created inside the _src/main/resources_ directory of your Spring Boot applications so it can be packaged inside the final jar and you just need this configuration below to leverage the GServlet API. 
 
 .SpringConfiguration.java 
 [#src-listing] 
