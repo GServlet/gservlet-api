@@ -93,7 +93,7 @@ public class ContainerManager {
 	
 	/**
 	 * 
-	 * Constructs a ContainerInitializer for the given servlet context
+	 * Constructs a ContainerManager for the given servlet context
 	 * 
 	 * @param context the servlet context
 	 * @param directory the groovy parent directory

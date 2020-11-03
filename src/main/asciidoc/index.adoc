@@ -98,7 +98,7 @@ dependencies {
 Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. These steps are as follows:
 
 . Create a dynamic web project
-. Create the *_groovy_* folder inside your web app directory
+. Create the *_groovy_* folder inside your webapp directory
 . Write the servlet source code
 . Run your Java web server
 . Call your servlet from a web browser

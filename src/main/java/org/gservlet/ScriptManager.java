@@ -154,7 +154,7 @@ public class ScriptManager {
 				}
 				return ctClass.toBytecode();
 			} catch (Exception e) {
-				logger.log(Level.INFO, "exception during processBytecode method", e);
+				logger.log(Level.SEVERE, "exception during processBytecode method", e);
 			}
 			return original;
 		};

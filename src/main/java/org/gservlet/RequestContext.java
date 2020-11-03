@@ -141,8 +141,8 @@ public class RequestContext {
 	*/
 	public MarkupBuilder getHtml() throws IOException {
 		MarkupBuilder builder = new MarkupBuilder(response.getWriter());
-		getResponse().setHeader("Content-Type", "text/html");
-		getResponse().getWriter().println("<!DOCTYPE html>");
+		response.setHeader("Content-Type", "text/html");
+		response.getWriter().println("<!DOCTYPE html>");
 		return builder;
 	}
 	
