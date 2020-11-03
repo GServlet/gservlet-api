@@ -1352,10 +1352,10 @@ The *_groovy-sql_* module provides a higher-level abstraction over the current J
 [#src-listing] 
 [source,plain]  
 ---- 
-db.driver : oracle.jdbc.driver.OracleDriver
-db.url : jdbc:oracle:thin:@10.0.0.85:1521:ssv8acs
-db.user : ACSQA
-db.password : acs
+db.driver : com.mysql.cj.jdbc.Driver
+db.url : jdbc:mysql://localhost:3306/gservlet_examples
+db.user : root
+db.password : changeit
 db.minPoolSize : 5
 db.maxPoolSize : 10
 ----
@@ -1401,6 +1401,8 @@ class ProjectFilter {
 After each request, the _close()_ method of the http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object is automatically invoked to bring it back to the connection pool.    
 
 == Unit Testing
+
+Unit testing servlets is difficult, therefore it is recommended to move the main business logic in the servlet into a separate class which has no dependencies on the Servlet API. The Groovy programming language comes with great support for writing tests. In addition to the language features and test integration with state-of-the-art testing libraries and frameworks, the Groovy ecosystem has born a rich set of testing libraries and frameworks. In its https://groovy-lang.org/testing.html[testing guide], you can take at a closer look at JUnit integration, Spock for specifications, and Geb for functional tests.
 
 == Groovydocs Generation
 
