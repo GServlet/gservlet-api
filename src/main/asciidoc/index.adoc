@@ -1348,7 +1348,7 @@ Whenever, the content type of the request is set to *_application/json_*, you ca
 
 == Working With RDBMS
 
-The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API is as simple as to create in the root directory of your web application, a file named *_gservlet.properties_* like below:
+The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API is as simple as to create in the webapp directory, a file named *_gservlet.properties_*.
 
 .gservlet.properties 
 [#src-listing] 
@@ -1494,7 +1494,7 @@ https://github.com/groovy/GMavenPlus[GMavenPlus] is a rewrite of https://github.
 				<configuration>
 					<sources>
 						<source>
-							<directory>${project.basedir}/src/main/resources/groovy</directory>
+							<directory>${project.basedir}/src/main/webapp/groovy</directory>
 							<includes>
 								<include>**/*.groovy</include>
 							</includes>
@@ -1541,7 +1541,7 @@ apply plugin: 'groovy'
 sourceSets {
 	main {
 		groovy {
-			srcDirs = ['src/main/resources/groovy']
+			srcDirs = ['src/main/webapp/groovy']
 		}
 	}
 }
@@ -1709,7 +1709,7 @@ contributor(classContext) {
 
 === Spring Boot
 
-The _groovy_ folder must be created inside the _src/main/resources_ directory of your Spring Boot applications so it can be packaged inside the final jar and you just need this configuration below to leverage the GServlet API. 
+You just need this configuration below to leverage the GServlet API in your Spring Boot applications.
 
 .SpringConfiguration.java 
 [#src-listing] 

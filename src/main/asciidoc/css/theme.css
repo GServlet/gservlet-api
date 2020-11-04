@@ -1525,7 +1525,6 @@ ul, ol {
 .ulist, .olist {
 	background : #fefff8;
 	padding : 5px;
-	margin-bottom: 15px;
 }
 ul li ol {
 	margin-left: 1.5em

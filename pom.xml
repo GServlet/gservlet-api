@@ -315,7 +315,7 @@
 						<configuration>
 							<docTitle>GServlet Source Code v${release.version}</docTitle>
 							<windowTitle>GServlet Source Code v${release.version}</windowTitle>
-							<javadocDir>${javadocs.directory}</javadocDir>
+							<javadocDir>javadocs/${release.version}</javadocDir>
 							<bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
 							</bottom>
 						</configuration>
