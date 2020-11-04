@@ -1611,7 +1611,12 @@ contribute(currentType(annos: annotatedBy(Filter))) {
 
 ----
 
-Make sure that your project has the Groovy nature and the Groovy DSL support is activated. To leverage the full power of the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)], it is highly recommended to add the _groovy_ folder as source folder, in order to use its wizards to create your artifacts. The use of the default package is discouraged and the example below illustrates a good packaging practice to follow throughout your development for a cohesive structure of your project.
+Make sure that your project has the Groovy nature and the Groovy DSL support is activated. To leverage the full power of the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)], it is highly recommended to add the _groovy_ folder as source folder, so you can use its wizards to create your artifacts. 
+
+image::groovy-dsl-eclipse.png[Groovy DSL support]
+
+
+The use of the default package is discouraged and the example below illustrates a simple packaging practice to follow throughout your development for a cohesive structure of your project.
 
 .ProjectDao.groovy 
 [#src-listing] 
