@@ -95,9 +95,11 @@ dependencies {
 
 ## Getting Started
 
-Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. These steps are as follows:
+Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. Using Maven and the default directory layout, these steps are as follows:
 
-. Create a dynamic web project
+image::maven-project.png[Maven webapp project]
+
+. Create a Maven webapp https://maven.apache.org/archetypes/maven-archetype-webapp[project]
 . Create the *_groovy_* folder inside your webapp directory
 . Write the servlet source code
 . Run your Java web server
@@ -105,7 +107,7 @@ Once your Java web server is installed and configured, you can put it to work. F
 
 Below are some examples that you can try out. 
     
-.ProjectServlet.java 
+.ProjectServlet.groovy 
 [#src-listing] 
 [source,java]  
 ----
@@ -148,7 +150,7 @@ class ProjectServlet {
 }
 ----
 
-.CorsFilter.java 
+.CorsFilter.groovy 
 [#src-listing] 
 [source,java]  
 ----
@@ -170,7 +172,7 @@ class CorsFilter {
 }
 ----
 
-.ServletRequestListener.java 
+.ServletRequestListener.groovy 
 [#src-listing] 
 [source,java]  
 ----
