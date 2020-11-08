@@ -192,7 +192,7 @@ class ServletRequestListener {
 }
 ----
 
-For a hot reloading of your source code, set the **GSERVLET_RELOAD** environment variable to true in your IDE.
+NOTE: The use of the default package is discouraged and for a hot reloading of your source code, set the **GSERVLET_RELOAD** environment variable to true in your IDE.    
 
 == Creating Servlets
 
@@ -1616,7 +1616,7 @@ Make sure that your project has the Groovy nature and the Groovy DSL support is 
 image::groovy-dsl-eclipse.png[Groovy DSL support]
 
 
-The use of the default package is discouraged and the example below illustrates a simple packaging practice to follow throughout your development for a cohesive structure of your project.
+NOTE: The use of the default package is discouraged and the example below illustrates a simple packaging practice to follow throughout your development for a cohesive structure of your project.
 
 .ProjectDao.groovy 
 [#src-listing] 
@@ -1709,7 +1709,7 @@ contributor(classContext) {
 
 === Spring Boot
 
-You just need this configuration below to leverage the GServlet API in your Spring Boot applications.
+You just need this configuration below to leverage the GServlet API in your Spring Boot application. Your Groovy scripts must be created in the *_src/main/resources_* folder if your application is packaged as a jar. 
 
 .SpringConfiguration.java 
 [#src-listing] 

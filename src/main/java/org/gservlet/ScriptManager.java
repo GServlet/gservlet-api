@@ -61,7 +61,7 @@ public class ScriptManager {
 	protected final File folder;
 
 	/**
-	 * The groovy script engine object
+	 * The GroovyScriptEngine object
 	 */
 	protected final GroovyScriptEngine engine;
 	/**
@@ -81,7 +81,7 @@ public class ScriptManager {
 		this.folder = folder;
 		engine = createScriptEngine();
 	}
-
+	
 	/**
 	 * 
 	 * Loads and instantiates an object from a groovy script file
@@ -138,20 +138,18 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Creates a bytecodeProcessor for the given classPool
+	 * Creates a BytecodeProcessor for the given ClassPool instance
 	 * 
-	 * @param classPool the classPool object
-	 * @return the bytecodeProcessor object
+	 * @param classPool the ClassPool object
+	 * @return the BytecodeProcessor object
 	 */
-	protected BytecodeProcessor createBytecodeProcessor(final ClassPool classPool) {
+	protected BytecodeProcessor createBytecodeProcessor(ClassPool classPool) {
 		return (String name, byte[] original) -> {
 			ByteArrayInputStream stream = new ByteArrayInputStream(original);
 			try {
 				CtClass ctClass = classPool.makeClass(stream);
 				ctClass.detach();
-				for (Object annotation : ctClass.getAnnotations()) {
-					processClass(classPool, ctClass, annotation.toString());
-				}
+				processClass(classPool, ctClass);
 				return ctClass.toBytecode();
 			} catch (Exception e) {
 				logger.log(Level.SEVERE, "exception during processBytecode method", e);
@@ -162,37 +160,36 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Changes the bytecode of the given class based on the value of the annotation
+	 * Changes the bytecode of the given class based on the annotation
 	 * 
 	 * @param classPool  the classPool object
 	 * @param ctClass    the class
-	 * @param annotation the annotation
 	 * @throws CannotCompileException the CannotCompileException
 	 * @throws NotFoundException      the NotFoundException
 	 */
-	protected void processClass(ClassPool classPool, CtClass ctClass, String annotation)
+	protected void processClass(ClassPool classPool, CtClass ctClass)
 			throws CannotCompileException, NotFoundException {
-		if (annotation.indexOf(Servlet.class.getName()) != -1) {
+		if (ctClass.hasAnnotation(Servlet.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractServlet.class.getName()));
-		} else if (annotation.indexOf(Filter.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(Filter.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractFilter.class.getName()));
-		} else if (annotation.indexOf(ContextListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(ContextListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractContextListener.class.getName()));
-		} else if (annotation.indexOf(RequestListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(RequestListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractRequestListener.class.getName()));
-		} else if (annotation.indexOf(ContextAttributeListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(ContextAttributeListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractContextAttributeListener.class.getName()));
-		} else if (annotation.indexOf(RequestAttributeListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(RequestAttributeListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractRequestAttributeListener.class.getName()));
-		} else if (annotation.indexOf(SessionListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(SessionListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionListener.class.getName()));
-		} else if (annotation.indexOf(SessionAttributeListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(SessionAttributeListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));
-		} else if (annotation.indexOf(SessionBindingListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(SessionBindingListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionBindingListener.class.getName()));
-		} else if (annotation.indexOf(SessionActivationListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(SessionActivationListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionActivationListener.class.getName()));
-		} else if (annotation.indexOf(SessionIdListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(SessionIdListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionIdListener.class.getName()));
 		}
 	}

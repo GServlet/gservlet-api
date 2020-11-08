@@ -46,7 +46,7 @@ import groovy.xml.MarkupBuilder;
 public abstract class AbstractServlet extends HttpServlet {
 
 	/**
-	 * The request context object
+	 * The RequestContext object
 	 */
 	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
 	/**
