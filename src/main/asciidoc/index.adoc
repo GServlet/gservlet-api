@@ -1709,7 +1709,7 @@ contributor(classContext) {
 
 === Spring Boot
 
-You just need this configuration below to leverage the GServlet API in your Spring Boot application. Your Groovy scripts must be created in the *_src/main/resources_* folder if your application is packaged as a jar. 
+You just need this configuration below to leverage the GServlet API in your Spring Boot application. 
 
 .SpringConfiguration.java 
 [#src-listing] 
@@ -1775,6 +1775,8 @@ public class SpringConfiguration implements ServletContextInitializer {
 	
 }
 ----
+
+NOTE: Your Groovy scripts must be created in the *_src/main/resources_* folder if your application is packaged as a jar.
 
 === Other Java web frameworks 
 
