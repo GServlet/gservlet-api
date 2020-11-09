@@ -1780,7 +1780,7 @@ NOTE: Your Groovy scripts must be created in the *_src/main/resources_* folder i
 
 === Other Java web frameworks 
 
-If the target framework supports the _@WebListener_ annotation of the Servlet API, no configuration is required since we ship with a context listener which starts and stops the application. This statement is valid for frameworks like JSF, Apache Struts.
+If the target framework supports the _@WebListener_ annotation of the Servlet API, no configuration is required since we ship with a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] which starts and stops the application. This statement is valid for frameworks like JSF, Apache Struts.
 
 .StartupListener.java 
 [#src-listing] 
@@ -1814,7 +1814,6 @@ public class StartupListener implements ServletContextListener {
 == Code Examples
 
 We have created several code examples on https://github.com/GServlet/gservlet-examples[GitHub] to help beginners to learn and gain expertise at GServlet. Checkout the appropriate branch for the version that you are using.
-
 
 == Copyright and License
 
