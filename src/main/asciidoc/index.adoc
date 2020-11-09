@@ -1400,7 +1400,24 @@ class ProjectFilter {
 }
 ----
 
-After each request, the _close()_ method of the http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object is automatically invoked to bring it back to the connection pool.    
+After each request, the _close()_ method of the http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object is automatically invoked to bring it back to the connection pool. Below is a summary of the database configuration properties:
+
+|===
+|Name | Required | Description
+
+| _db.driver_ | true | the database driver class name
+
+| _db.url_ | true | the database url
+
+| _db.user_ |  true | the database user
+
+| _db.password_ | true | the database password
+ 
+| _db.minPoolSize_ | false | the database minimum pool size. The default value is 1
+
+| _db.maxPoolSize_ | false | the database maximum pool size. The default value is 3
+
+|===
 
 == Unit Testing
 
