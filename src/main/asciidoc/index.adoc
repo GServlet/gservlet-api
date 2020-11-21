@@ -349,7 +349,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 === Servlet methods
 
-For an exhaustive list of the supported methods, please read the Javadocs.
+For an exhaustive list of the supported methods, please read the https://gservlet.org/javadocs/1.0.0/org/gservlet/abstractservlet[Javadocs].
 
 |===
 |Method |Description
@@ -664,7 +664,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 === Filter methods
 
-For an exhaustive list of the supported methods, please read the Javadocs. 
+For an exhaustive list of the supported methods, please read the https://gservlet.org/javadocs/1.0.0/org/gservlet/abstractfilter[Javadocs]. 
 
 |===
 |Method |Description

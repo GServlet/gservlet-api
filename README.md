@@ -48,7 +48,7 @@ html.html {
 session.counter = session.counter + 1
 ```
 
-More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0) for a particular release can be browsed as well.
+More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0.0) for a particular release can be browsed as well.
 
 ## Main Features
 
@@ -183,7 +183,7 @@ class ServletRequestListener {
 }
 ```
 
-For a deep insight of how to write your Groovy artifacts, please read the complete [documentation](https://gservlet.org/documentation).
+For a deep insight of how to write your Groovy artifacts, please refer to the [developer guide](https://gservlet.org/docs/1.0.0).
 
 ## Building from source
 
