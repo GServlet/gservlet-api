@@ -291,10 +291,8 @@
 							<additionalparam>
 								-link https://docs.oracle.com/javase/7/docs/api/
 								-link https://docs.oracle.com/javaee/7/api/
-								-link
-								http://docs.groovy-lang.org/2.5.4/html/gapi/
-								-link
-								https://javadoc.io/static/javassist/javassist/3.12.1.GA/
+								-link http://docs.groovy-lang.org/2.5.4/html/gapi/
+								-link https://javadoc.io/static/javassist/javassist/3.12.1.GA/
 							</additionalparam>
 							<useStandardDocletOptions>true</useStandardDocletOptions>
 						</configuration>
@@ -315,7 +313,7 @@
 						<configuration>
 							<docTitle>GServlet Source Code v${release.version}</docTitle>
 							<windowTitle>GServlet Source Code v${release.version}</windowTitle>
-							<javadocDir>javadocs/${release.version}</javadocDir>
+							<javadocDir>${javadocs.directory}</javadocDir>
 							<bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
 							</bottom>
 						</configuration>

@@ -39,7 +39,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.sql.DataSource;
+import groovy.util.ScriptException;
 
 /**
  * 
@@ -75,6 +77,11 @@ public class GServletApplication {
 	protected String realPath;
 
 	/**
+	 * The list of script listeners
+	 */
+	protected final List<ScriptListener> listeners = new ArrayList<>();
+	
+	/**
 	 * 
 	 * Constructs an application for the given context
 	 * 
@@ -83,21 +90,8 @@ public class GServletApplication {
 	 * 
 	 */
 	public GServletApplication(ServletContext context) {
-		this(context, context.getRealPath("/"));
-	}
-
-	/**
-	 * 
-	 * Constructs an application for the given context
-	 * 
-	 * @param context the servlet context
-	 * 
-	 * @param realPath the given context real path
-	 * 
-	 */
-	public GServletApplication(ServletContext context, String realPath) {
 		this.context = context;
-		this.realPath = realPath;
+		this.realPath = context.getRealPath("/");
 	}
 
 	/**
@@ -106,8 +100,8 @@ public class GServletApplication {
 	 */
 	public void start() {
 		try {
-			containerManager = new ContainerManager(context, realPath);
-			databaseManager = databaseManager != null ? databaseManager : createDatabaseManager();
+			containerManager = createContainerManager();
+			databaseManager = createDatabaseManager();
 			logger.info("application started on context " + context.getContextPath());
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "exception during contextInitialized method", e);
@@ -115,15 +109,31 @@ public class GServletApplication {
 	}
 
 	/**
+	 * Creates and configures the container manager
+	 *
+	 * @return the container manager
+	 *
+	 * @throws ServletException the ServletException
+	 * @throws ScriptException  the  ScriptException
+	 * 
+	 */
+	private ContainerManager createContainerManager() throws ServletException, ScriptException {
+		ContainerManager containerManager = new ContainerManager(context);
+		containerManager.init(realPath, listeners);
+		return containerManager;
+	}
+	
+	/**
 	 * Creates and configures the database manager
 	 *
+	 * @return the the database manager
 	 * @throws IOException the exception
+	 * 
 	 */
 	private DatabaseManager createDatabaseManager() throws IOException {
-		databaseManager = new DatabaseManager(context);
+		DatabaseManager databaseManager = new DatabaseManager(context);
 		File root = new File(realPath);
-		File file = new File(root + File.separator + APP_CONFIG_FILE);
-		databaseManager.setupDataSource(loadConfiguration(file));
+		databaseManager.setupDataSource(loadConfiguration(new File(root + File.separator + APP_CONFIG_FILE)));
 		watch(root);
 		return databaseManager;
 	}
@@ -295,6 +305,34 @@ public class GServletApplication {
 	public void setDataSource(DataSource dataSource) {
 		databaseManager = new DatabaseManager(context);
 		databaseManager.setupDataSource(dataSource);
+	}
+	
+	/**
+	 *  Registers a new ScriptListener
+	 * 
+	 * @param listener the ScriptListener
+	 * 
+	 */
+	public void addScriptListener(ScriptListener listener) {
+		if(containerManager != null) {
+			containerManager.addScriptListener(listener);
+		} else {
+			listeners.add(listener);
+		}
+	}
+	
+	/**
+	 *  Registers a ScriptListener list
+	 * 
+	 * @param listeners the ScriptListener list
+	 * 
+	 */
+	public void addScriptListeners(List<ScriptListener> listeners) {
+		if(containerManager != null) {
+			containerManager.addScriptListeners(listeners);
+		} else {
+			this.listeners.addAll(listeners);
+		}
 	}
 
 }

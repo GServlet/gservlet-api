@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.EventListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,7 +86,7 @@ public class ContainerManager {
 	/**
 	 * The script manager object
 	 */
-	protected final ScriptManager scriptManager;
+	protected ScriptManager scriptManager;
 	/**
 	 * The logger object
 	 */
@@ -96,17 +97,13 @@ public class ContainerManager {
 	 * Constructs a ContainerManager for the given servlet context
 	 * 
 	 * @param context the servlet context
-	 * @param directory the groovy parent directory
 	 * @throws ServletException the ServletException
 	 * 
 	 */
-	public ContainerManager(ServletContext context, String directory) throws ServletException {
+	public ContainerManager(ServletContext context) throws ServletException {
 		try {
 			this.context = context;
 			context.setAttribute(HANDLERS, handlers);
-			File folder = new File(directory + File.separator + SCRIPTS_FOLDER);
-			scriptManager = new ScriptManager(folder);
-			init(folder);
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
@@ -115,21 +112,24 @@ public class ContainerManager {
 
 	/**
 	 * 
-	 * Initializes the application for the given scripts folder
-	 * 
-	 * @param folder the scripts folder
+	 * Initializes the application for the given directory
+	 *
+	 * @param directory the scripts parent directory
+	 * @param listeners the ScriptListener list
 	 * @throws ServletException the ServletException
 	 * @throws ScriptException  the ScriptException
 	 * 
 	 */
-	protected void init(File folder) throws ServletException, ScriptException {
+	public void init(String directory, List<ScriptListener> listeners) throws ServletException, ScriptException {
+		File folder = new File(directory + File.separator + SCRIPTS_FOLDER);
+		scriptManager = new ScriptManager(folder);
+		addScriptListeners(listeners);
 		loadScripts(folder);
 	}
 
 	/**
 	 * 
-	 * Loads and registers the servlets, filters or listeners for the given scripts
-	 * folder
+	 * Loads and registers the servlets, filters or listeners
 	 * 
 	 * @param folder the scripts folder
 	 * @throws ServletException the ServletException
@@ -434,6 +434,26 @@ public class ContainerManager {
 	 */
 	public Map<String, DynamicInvocationHandler> getHandlers() {
 		return handlers;
+	}
+		
+	
+	/**
+	 * Registers a new ScriptListener
+	 * 
+	 * @param listener the ScriptListener object
+	 */
+	public void addScriptListener(ScriptListener listener) {
+		scriptManager.addScriptListener(listener);
+	}
+	
+	/**
+	 *  Registers a ScriptListener list
+	 * 
+	 * @param listeners the ScriptListener list
+	 * 
+	 */
+	public void addScriptListeners(List<ScriptListener> listeners) {
+		scriptManager.addScriptListeners(listeners);
 	}
 
 }

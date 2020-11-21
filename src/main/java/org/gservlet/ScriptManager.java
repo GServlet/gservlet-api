@@ -23,6 +23,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.codehaus.groovy.control.BytecodeProcessor;
@@ -70,16 +72,25 @@ public class ScriptManager {
 	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
+	 * The list of script listeners
+	 */
+	protected final List<ScriptListener> listeners = new ArrayList<>();
+	
+	/**
 	 * 
 	 * Constructs a ScriptManager for the given folder
 	 * 
 	 * @param folder the scripts folder object
-	 * @throws MalformedURLException the MalformedURLException
+	 * @throws ScriptException the ScriptException
 	 * 
 	 */
-	public ScriptManager(File folder) throws MalformedURLException {
-		this.folder = folder;
-		engine = createScriptEngine();
+	public ScriptManager(File folder) throws ScriptException {
+		try {
+			this.folder = folder;
+			engine = createScriptEngine();
+		} catch(MalformedURLException e) {
+			throw new ScriptException(e);
+		}
 	}
 	
 	/**
@@ -93,7 +104,9 @@ public class ScriptManager {
 	 */
 	public Object loadObject(File file) throws ScriptException {
 		try {
-			return loadClass(file).getConstructor().newInstance();
+			Object object = loadClass(file).getConstructor().newInstance();
+			listeners.forEach(listener -> listener.onCreated(object));
+			return object;
 		} catch (Exception e) {
 			throw new ScriptException(e);
 		}
@@ -192,6 +205,25 @@ public class ScriptManager {
 		} else if (ctClass.hasAnnotation(SessionIdListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionIdListener.class.getName()));
 		}
+	}
+	
+	/**
+	 * Registers a new ScriptListener
+	 * 
+	 * @param listener the ScriptListener object
+	 */
+	public void addScriptListener(ScriptListener listener) {
+		this.listeners.add(listener);
+	}
+	
+	/**
+	 *  Registers a ScriptListener list
+	 * 
+	 * @param listeners the ScriptListener list
+	 * 
+	 */
+	public void addScriptListeners(List<ScriptListener> listeners) {
+		this.listeners.addAll(listeners);
 	}
 
 }

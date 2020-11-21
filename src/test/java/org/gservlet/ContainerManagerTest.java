@@ -29,6 +29,8 @@ import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.FilterRegistration;
@@ -49,7 +51,8 @@ public class ContainerManagerTest {
 				.thenReturn(mock(FilterRegistration.Dynamic.class));
 		when(context.addServlet(isA(String.class), isA(Servlet.class)))
 				.thenReturn(mock(ServletRegistration.Dynamic.class));
-		ContainerManager manager = new ContainerManager(context, "src/test/resources");
+		ContainerManager manager = new ContainerManager(context);
+		manager.init("src/test/resources", new ArrayList<ScriptListener>());
 		assertEquals(11, manager.getHandlers().size());
 		for (DynamicInvocationHandler handler : manager.getHandlers().values()) {
 			assertNotNull(handler.getTarget());
