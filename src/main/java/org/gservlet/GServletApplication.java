@@ -315,7 +315,7 @@ public class GServletApplication {
 	 */
 	public void addScriptListener(ScriptListener listener) {
 		if(containerManager != null) {
-			containerManager.addScriptListener(listener);
+			containerManager.getScriptManager().addScriptListener(listener);
 		} else {
 			listeners.add(listener);
 		}
@@ -329,7 +329,7 @@ public class GServletApplication {
 	 */
 	public void addScriptListeners(List<ScriptListener> listeners) {
 		if(containerManager != null) {
-			containerManager.addScriptListeners(listeners);
+			containerManager.getScriptManager().addScriptListeners(listeners);
 		} else {
 			this.listeners.addAll(listeners);
 		}

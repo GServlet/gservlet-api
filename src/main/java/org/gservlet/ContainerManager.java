@@ -123,7 +123,7 @@ public class ContainerManager {
 	public void init(String directory, List<ScriptListener> listeners) throws ServletException, ScriptException {
 		File folder = new File(directory + File.separator + SCRIPTS_FOLDER);
 		scriptManager = new ScriptManager(folder);
-		addScriptListeners(listeners);
+		scriptManager.addScriptListeners(listeners);
 		loadScripts(folder);
 	}
 
@@ -435,25 +435,17 @@ public class ContainerManager {
 	public Map<String, DynamicInvocationHandler> getHandlers() {
 		return handlers;
 	}
-		
-	
+
+
 	/**
-	 * Registers a new ScriptListener
 	 * 
-	 * @param listener the ScriptListener object
+	 * Returns the script manager
+	 * 
+	 * @return the script manager
 	 */
-	public void addScriptListener(ScriptListener listener) {
-		scriptManager.addScriptListener(listener);
-	}
+	public ScriptManager getScriptManager() {
+		return scriptManager;
+	}	
 	
-	/**
-	 *  Registers a ScriptListener list
-	 * 
-	 * @param listeners the ScriptListener list
-	 * 
-	 */
-	public void addScriptListeners(List<ScriptListener> listeners) {
-		scriptManager.addScriptListeners(listeners);
-	}
 
 }
