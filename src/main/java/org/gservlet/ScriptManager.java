@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
+
 import org.codehaus.groovy.control.BytecodeProcessor;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.gservlet.annotation.ContextAttributeListener;
@@ -95,20 +97,23 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Loads and instantiates an object from a groovy script file
+	 * Creates an object from a groovy script file
 	 * 
-	 * @param file the groovy script file
+	 * @param script the groovy script file
 	 * @return the instantiated object
 	 * @throws ScriptException the ScriptException
 	 * 
 	 */
-	public Object loadObject(File file) throws ScriptException {
+	public Object createObject(File script) throws ScriptException {
 		try {
-			Class<?> clazz = loadClass(file);
-			if (!clazz.isInterface()) {
+			Class<?> clazz = loadClass(script);
+			if (!clazz.isInterface() && isClassSupported(clazz)) {
 				Object object = clazz.getConstructor().newInstance();
 				listeners.forEach(listener -> listener.onCreated(object));
 				return object;
+			} else if(!clazz.isInterface() && Stream.of(clazz.getConstructors())
+                 .anyMatch((c) -> c.getParameterCount() == 0)) {
+				return clazz.getConstructor().newInstance();
 			}
 			return new Object();
 		} catch (Exception e) {
@@ -177,7 +182,7 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Changes the bytecode of the given class based on the annotation
+	 * Changes the bytecode of the given class based on the declared annotation
 	 * 
 	 * @param classPool the classPool object
 	 * @param ctClass   the class
@@ -208,6 +213,31 @@ public class ScriptManager {
 		} else if (ctClass.hasAnnotation(SessionIdListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionIdListener.class.getName()));
 		}
+	}
+
+	/**
+	 * 
+	 * Checks if the declared annotation on the given class is supported
+	 * 
+	 * @param clazz the given class
+	 * @return true if the declared annotation on the given class is supported
+	 * 
+	 */
+
+	protected boolean isClassSupported(Class<?> clazz) {
+		if (clazz.getAnnotation(Servlet.class) != null || clazz.getAnnotation(Filter.class) != null
+				|| clazz.getAnnotation(ContextListener.class) != null
+				|| clazz.getAnnotation(RequestListener.class) != null
+				|| clazz.getAnnotation(ContextAttributeListener.class) != null
+				|| clazz.getAnnotation(RequestAttributeListener.class) != null
+				|| clazz.getAnnotation(SessionListener.class) != null
+				|| clazz.getAnnotation(SessionAttributeListener.class) != null
+				|| clazz.getAnnotation(SessionBindingListener.class) != null
+				|| clazz.getAnnotation(SessionActivationListener.class) != null
+				|| clazz.getAnnotation(SessionIdListener.class) != null) {
+			return true;
+		}
+		return false;
 	}
 
 	/**

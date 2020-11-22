@@ -55,7 +55,7 @@ public class HttpFilterTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpFilter.groovy");
-		AbstractFilter filter = (AbstractFilter) scriptManager.loadObject(script);
+		AbstractFilter filter = (AbstractFilter) scriptManager.createObject(script);
 		assertNotNull(filter);
 		assertTrue(filter.getClass().isAnnotationPresent(Filter.class));
 		Filter annotation = filter.getClass().getAnnotation(Filter.class);
@@ -102,7 +102,7 @@ public class HttpFilterTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpFilter.groovy");
-		AbstractFilter filter = (AbstractFilter) scriptManager.loadObject(script);
+		AbstractFilter filter = (AbstractFilter) scriptManager.createObject(script);
 		assertNotNull(filter);
 		assertTrue(filter.getClass().isAnnotationPresent(Filter.class));
 		HttpServletRequest request = mock(HttpServletRequest.class);

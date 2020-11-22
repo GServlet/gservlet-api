@@ -54,7 +54,7 @@ public class HttpServletTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpServlet.groovy");
-		AbstractServlet servlet = (AbstractServlet) scriptManager.loadObject(script);
+		AbstractServlet servlet = (AbstractServlet) scriptManager.createObject(script);
 		assertNotNull(servlet);
 		assertTrue(servlet.getClass().isAnnotationPresent(Servlet.class));
 		Servlet annotation = servlet.getClass().getAnnotation(Servlet.class);
@@ -105,7 +105,7 @@ public class HttpServletTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpServlet.groovy");
-		AbstractServlet servlet = (AbstractServlet) scriptManager.loadObject(script);
+		AbstractServlet servlet = (AbstractServlet) scriptManager.createObject(script);
 		assertNotNull(servlet);
 		assertTrue(servlet.getClass().isAnnotationPresent(Servlet.class));
 		HttpServletRequest request = mock(HttpServletRequest.class);

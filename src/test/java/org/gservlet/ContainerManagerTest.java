@@ -74,7 +74,7 @@ public class ContainerManagerTest {
 		folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpServlet.groovy");
-		manager.register(scriptManager.loadObject(script));
+		manager.register(scriptManager.createObject(script));
 	}
 	
 	@Test
@@ -82,7 +82,7 @@ public class ContainerManagerTest {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "InvocationHandler.groovy");
-		Object object = scriptManager.loadObject(script);
+		Object object = scriptManager.createObject(script);
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
 		handler.setTarget(object);
 		FileFilter proxy = (FileFilter) Proxy.newProxyInstance(this.getClass().getClassLoader(),

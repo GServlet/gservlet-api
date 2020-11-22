@@ -37,7 +37,7 @@ public class ServletRequestAttributeListenerTest {
 		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/listeners/" + "ServletRequestAttributeListener.groovy");
-		AbstractRequestAttributeListener listener = (AbstractRequestAttributeListener) scriptManager.loadObject(script);
+		AbstractRequestAttributeListener listener = (AbstractRequestAttributeListener) scriptManager.createObject(script);
 		assertNotNull(listener);
 		assertTrue(listener.getClass().isAnnotationPresent(RequestAttributeListener.class));
 		ServletRequestAttributeEvent event = new ServletRequestAttributeEvent(mock(ServletContext.class),

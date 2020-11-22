@@ -35,11 +35,11 @@ public class ScriptManagerTest {
 		File[] files = folder.listFiles();
 		if (files != null) {
 			for (File script : files) {
-				Object object = scriptManager.loadObject(script);
+				Object object = scriptManager.createObject(script);
 				assertNotNull(object);
 			}
 		}
-		scriptManager.loadObject(new File("test.groovy"));
+		scriptManager.createObject(new File("test.groovy"));
 	}
 
 }

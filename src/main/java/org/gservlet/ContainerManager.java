@@ -142,7 +142,7 @@ public class ContainerManager {
 			if (files != null) {
 				for (File file : files) {
 					if (file.isFile()) {
-						register(scriptManager.loadObject(file));
+						register(scriptManager.createObject(file));
 					} else {
 						loadScripts(file);
 					}
@@ -338,7 +338,7 @@ public class ContainerManager {
 	 */
 	protected void process(File script) {
 		try {
-			Object object = scriptManager.loadObject(script);
+			Object object = scriptManager.createObject(script);
 			Annotation[] annotations = object.getClass().getAnnotations();
 			for (Annotation annotation : annotations) {
 				if (annotation instanceof RequestListener || annotation instanceof ContextAttributeListener

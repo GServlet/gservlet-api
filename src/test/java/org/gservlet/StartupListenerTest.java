@@ -71,7 +71,7 @@ public class StartupListenerTest {
 		folder = new File(folder + File.separator + SCRIPTS_FOLDER);
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + File.separator + "HttpFilter.groovy");
-		listener.getApplication().getContainerManager().register(scriptManager.loadObject(script));
+		listener.getApplication().getContainerManager().register(scriptManager.createObject(script));
 	}
 	
 	public void wait(int time) throws InterruptedException {
