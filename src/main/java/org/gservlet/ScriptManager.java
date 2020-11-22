@@ -112,7 +112,7 @@ public class ScriptManager {
 				listeners.forEach(listener -> listener.onCreated(object));
 				return object;
 			} else if (!clazz.isInterface()
-					&& Stream.of(clazz.getConstructors()).anyMatch((c) -> c.getParameterCount() == 0)) {
+					&& Stream.of(clazz.getConstructors()).anyMatch(c -> c.getParameterCount() == 0)) {
 				return clazz.getConstructor().newInstance();
 			}
 			return new Object();
