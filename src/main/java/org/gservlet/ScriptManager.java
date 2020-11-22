@@ -75,7 +75,7 @@ public class ScriptManager {
 	 * The list of script listeners
 	 */
 	protected final List<ScriptListener> listeners = new ArrayList<>();
-	
+
 	/**
 	 * 
 	 * Constructs a ScriptManager for the given folder
@@ -88,11 +88,11 @@ public class ScriptManager {
 		try {
 			this.folder = folder;
 			engine = createScriptEngine();
-		} catch(MalformedURLException e) {
+		} catch (MalformedURLException e) {
 			throw new ScriptException(e);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Loads and instantiates an object from a groovy script file
@@ -104,9 +104,13 @@ public class ScriptManager {
 	 */
 	public Object loadObject(File file) throws ScriptException {
 		try {
-			Object object = loadClass(file).getConstructor().newInstance();
-			listeners.forEach(listener -> listener.onCreated(object));
-			return object;
+			Class<?> clazz = loadClass(file);
+			if (!clazz.isInterface()) {
+				Object object = clazz.getConstructor().newInstance();
+				listeners.forEach(listener -> listener.onCreated(object));
+				return object;
+			}
+			return new Object();
 		} catch (Exception e) {
 			throw new ScriptException(e);
 		}
@@ -175,13 +179,12 @@ public class ScriptManager {
 	 * 
 	 * Changes the bytecode of the given class based on the annotation
 	 * 
-	 * @param classPool  the classPool object
-	 * @param ctClass    the class
+	 * @param classPool the classPool object
+	 * @param ctClass   the class
 	 * @throws CannotCompileException the CannotCompileException
 	 * @throws NotFoundException      the NotFoundException
 	 */
-	protected void processClass(ClassPool classPool, CtClass ctClass)
-			throws CannotCompileException, NotFoundException {
+	protected void processClass(ClassPool classPool, CtClass ctClass) throws CannotCompileException, NotFoundException {
 		if (ctClass.hasAnnotation(Servlet.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractServlet.class.getName()));
 		} else if (ctClass.hasAnnotation(Filter.class)) {
@@ -206,7 +209,7 @@ public class ScriptManager {
 			ctClass.setSuperclass(classPool.get(AbstractSessionIdListener.class.getName()));
 		}
 	}
-	
+
 	/**
 	 * Registers a new ScriptListener
 	 * 
@@ -215,9 +218,9 @@ public class ScriptManager {
 	public void addScriptListener(ScriptListener listener) {
 		this.listeners.add(listener);
 	}
-	
+
 	/**
-	 *  Registers a ScriptListener list
+	 * Registers a ScriptListener list
 	 * 
 	 * @param listeners the ScriptListener list
 	 * 
