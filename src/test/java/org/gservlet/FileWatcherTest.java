@@ -49,8 +49,8 @@ public class FileWatcherTest {
 				map.put("file.deleted", event.getFile().getName());
 			}
 		};
-		watcher.addListener(listener).watch();
-		assertEquals(1, watcher.getListeners().size());
+		watcher.addFileListener(listener).watch();
+		assertEquals(1, watcher.getFileListeners().size());
 		wait(2000);
 		File file = new File(folder + "/test.txt");
 		try (FileWriter writer = new FileWriter(file)) {
@@ -61,12 +61,12 @@ public class FileWatcherTest {
 		wait(2000);
 		assertEquals(file.getName(), map.get("file.created"));
 		assertEquals(file.getName(), map.get("file.deleted"));
-		watcher.removeListener(listener);
-		assertEquals(0, watcher.getListeners().size());
+		watcher.removeFileListener(listener);
+		assertEquals(0, watcher.getFileListeners().size());
 		List<FileListener> listeners = new ArrayList<>();
 		listeners.add(listener);
-		watcher.setListeners(listeners);
-		assertEquals(1, watcher.getListeners().size());
+		watcher.addFileListeners(listeners);
+		assertEquals(1, watcher.getFileListeners().size());
 		assertNotNull(FileWatcher.getWatchServices());
 		assertTrue(FileWatcher.getWatchServices().size() >= 1);
 	}

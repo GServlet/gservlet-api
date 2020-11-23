@@ -53,6 +53,7 @@
 		<surefire.version>2.22.2</surefire.version>
 		<resources.version>2.6</resources.version>
 		<asciidoctor.version>1.5.6</asciidoctor.version>
+		<asciidoctorj.diagram.version>1.5.8</asciidoctorj.diagram.version>
 		<release.version>1.0.0</release.version>
 		<docs.directory>../gservlet-site/static/docs/${release.version}</docs.directory>
 		<javadoc.version>2.9.1</javadoc.version>
@@ -249,6 +250,18 @@
 						<groupId>org.asciidoctor</groupId>
 						<artifactId>asciidoctor-maven-plugin</artifactId>
 						<version>${asciidoctor.version}</version>
+						<dependencies>
+							<dependency>
+								<groupId>org.asciidoctor</groupId>
+								<artifactId>asciidoctorj-diagram</artifactId>
+								<version>${asciidoctorj.diagram.version}</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<requires>
+								<require>asciidoctor-diagram</require>
+							</requires>
+						</configuration>
 						<executions>
 							<execution>
 								<id>output-html</id>
@@ -291,8 +304,10 @@
 							<additionalparam>
 								-link https://docs.oracle.com/javase/7/docs/api/
 								-link https://docs.oracle.com/javaee/7/api/
-								-link http://docs.groovy-lang.org/2.5.4/html/gapi/
-								-link https://javadoc.io/static/javassist/javassist/3.12.1.GA/
+								-link
+								http://docs.groovy-lang.org/2.5.4/html/gapi/
+								-link
+								https://javadoc.io/static/javassist/javassist/3.12.1.GA/
 							</additionalparam>
 							<useStandardDocletOptions>true</useStandardDocletOptions>
 						</configuration>

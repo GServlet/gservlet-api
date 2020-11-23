@@ -153,7 +153,7 @@ public class ScriptManager {
 		ClassPool classPool = ClassPool.getDefault();
 		classPool.insertClassPath(new LoaderClassPath(scriptEngine.getParentClassLoader()));
 		CompilerConfiguration configuration = new CompilerConfiguration();
-		configuration.setBytecodePostprocessor(createBytecodeProcessor(classPool));
+		configuration.setBytecodePostprocessor(createBytecodeProcessor());
 		scriptEngine.setConfig(configuration);
 		return scriptEngine;
 	}
@@ -162,16 +162,16 @@ public class ScriptManager {
 	 * 
 	 * Creates a BytecodeProcessor for the given ClassPool instance
 	 * 
-	 * @param classPool the ClassPool object
 	 * @return the BytecodeProcessor object
 	 */
-	protected BytecodeProcessor createBytecodeProcessor(ClassPool classPool) {
+	protected BytecodeProcessor createBytecodeProcessor() {
 		return (String name, byte[] original) -> {
 			ByteArrayInputStream stream = new ByteArrayInputStream(original);
 			try {
+				ClassPool classPool = ClassPool.getDefault();
 				CtClass ctClass = classPool.makeClass(stream);
 				ctClass.detach();
-				processClass(classPool, ctClass);
+				processClass(ctClass);
 				return ctClass.toBytecode();
 			} catch (Exception e) {
 				logger.log(Level.SEVERE, "exception during processBytecode method", e);
@@ -182,14 +182,14 @@ public class ScriptManager {
 
 	/**
 	 * 
-	 * Changes the bytecode of the given class based on the declared annotation
+	 * Makes the given class extend a superclass based on the declared annotation
 	 * 
-	 * @param classPool the classPool object
-	 * @param ctClass   the class
+	 * @param ctClass the class
 	 * @throws CannotCompileException the CannotCompileException
 	 * @throws NotFoundException      the NotFoundException
 	 */
-	protected void processClass(ClassPool classPool, CtClass ctClass) throws CannotCompileException, NotFoundException {
+	protected void processClass(CtClass ctClass) throws CannotCompileException, NotFoundException {
+		ClassPool classPool = ClassPool.getDefault();
 		if (ctClass.hasAnnotation(Servlet.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractServlet.class.getName()));
 		} else if (ctClass.hasAnnotation(Filter.class)) {

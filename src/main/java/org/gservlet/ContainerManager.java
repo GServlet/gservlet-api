@@ -309,7 +309,7 @@ public class ContainerManager {
 	 * 
 	 */
 	protected void watch(File folder) {
-		new FileWatcher(folder).addListener(new FileAdapter() {
+		new FileWatcher(folder).addFileListener(new FileAdapter() {
 			
 			@Override
 			public void onCreated(FileEvent event) {

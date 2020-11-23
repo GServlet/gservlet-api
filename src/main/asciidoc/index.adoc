@@ -203,7 +203,99 @@ A servlet is a small Java program that runs within a Web server. The https://doc
 * _doPut_, for HTTP PUT requests
 * _doDelete_, for HTTP DELETE requests
 
-This is a Java class that extends the HttpServlet class:
+
+[plantuml, servlet-diagram, png]     
+----
+interface Servlet {
+  + void init(ServletConfig config)
+  + void service(ServletRequest request, ServletResponse response)
+  + ServletConfig getServletConfig()
+  + String getServletInfo()
+  + void destroy()
+}
+
+interface ServletConfig {
+   + String getServletName()
+   + String getInitParameter(String name)
+   + Enumeration<String> getInitParameterNames()
+   + ServletContext getServletContext()
+}
+
+
+abstract GenericServlet {
+   + void service(ServletRequest request, ServletResponse response)
+   + String getInitParameter(String name)
+   + Enumeration<String> getInitParameterNames()
+   + ServletContext getServletContext()
+   + String getServletName()
+}
+
+abstract HttpServlet {
+   + void service(HttpServletRequest request, HttpServletResponse response)
+   + void doGet(HttpServletRequest request, HttpServletResponse response)
+   + void doPost(HttpServletRequest request, HttpServletResponse response)
+   + void doPut(HttpServletRequest request, HttpServletResponse response)
+   + void doDelete(HttpServletRequest request, HttpServletResponse response)
+   + void doHead(HttpServletRequest request, HttpServletResponse response)
+   + void doOptions(HttpServletRequest request, HttpServletResponse response)
+   + void doTrace(HttpServletRequest request, HttpServletResponse response)
+}
+
+interface ServletRequest {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + int getContentLength()
+   + String getContentType()
+   + String getParameter(String name)
+   + Enumeration<String> getParameterNames()
+   + String[] getParameterValues(String name)
+   + ServletContext getServletContext()
+}
+
+
+interface HttpServletRequest {
+   + boolean authenticate(HttpServletResponse response)
+   + HttpSession getSession()
+   + HttpSession getSession(boolean create)
+   + Principal	getUserPrincipal()
+   + String getContextPath()
+   + Cookie[] getCookies()
+}
+
+
+interface ServletResponse {
+   + void setCharacterEncoding(String charset)
+   + void setContentLength(int length)
+   + void setContentType(String type)
+   + void setLocale(Locale locale)
+   + PrintWriter getWriter()
+   + ServletOutputStream getOutputStream()
+}
+
+
+interface HttpServletResponse {
+   + void addCookie(Cookie cookie)
+   + void addDateHeader(String name, long date)
+   + void addHeader(String name, String value)
+   + void sendRedirect(String location)
+   + void setStatus(int status)
+   + String encodeURL(String url)
+}
+
+
+Servlet <|.. GenericServlet
+Servlet --> ServletConfig
+Servlet --> ServletRequest
+Servlet --> ServletResponse
+GenericServlet <|-- HttpServlet
+HttpServlet --> HttpServletRequest
+ServletRequest <|-- HttpServletRequest
+HttpServlet --> HttpServletResponse
+ServletResponse <|-- HttpServletResponse
+
+----
+
+Below is a Java class that extends the HttpServlet class:
 
 .HelloWordServlet.java 
 [#src-listing] 
@@ -546,7 +638,55 @@ You can find more examples about how to use the https://docs.oracle.com/javaee/7
 
 A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter()_ method.
 
-This is a Java class that implements this interface:
+[plantuml, filter-diagram, png]     
+----
+interface Filter {
+  + void init(FilterConfig config)
+  + void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+  + void destroy()
+}
+
+interface FilterChain {
+  + void doFilter(ServletRequest request, ServletResponse response)
+}
+
+
+interface ServletRequest {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + int getContentLength()
+   + String getContentType()
+   + String getParameter(String name)
+   + Enumeration<String> getParameterNames()
+   + String[] getParameterValues(String name)
+   + ServletContext getServletContext()
+}
+
+
+interface ServletResponse {
+   + void setCharacterEncoding(String charset)
+   + void setContentLength(int length)
+   + void setContentType(String type)
+   + void setLocale(Locale locale)
+   + PrintWriter getWriter()
+   + ServletOutputStream getOutputStream()
+}
+
+interface FilterConfig {
+   + String getFilterName()
+   + String getInitParameter(String name)
+   + Enumeration<String> getInitParameterNames()
+   + ServletContext getServletContext()
+}
+
+Filter --> FilterChain
+Filter --> ServletRequest
+Filter --> ServletResponse
+Filter --> FilterConfig
+----
+
+
+Below is a Java class that implements the Filter interface:
 
 .MyFilter.java 
 [#src-listing] 
@@ -578,7 +718,7 @@ public class MyFilter implements Filter {
 }
 ----
 
-The Groovy version of this filter with the GServlet API looks like this:
+Its Groovy version with the GServlet API looks like this:
 
 .MyFilter.groovy 
 [#src-listing] 
@@ -740,6 +880,46 @@ During the lifetime of a typical Java EE web application, a number of events tak
 
 This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] lifecycle changes. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent[contextInitialized] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-[contextDestroyed] method in reverse order.
 
+[plantuml, servletcontextlistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+
+interface ServletContextListener {
+  + void contextInitialized(ServletContextEvent event)
+  + void contextDestroyed(ServletContextEvent event)
+}
+
+class ServletContextEvent {
+  + ServletContextEvent(ServletContext context)
+  + ServletContext getServletContext()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+
+interface ServletContext {
+   + FilterRegistration.Dynamic addFilter(String filterName, Filter filter)
+   + void addListener(String className)
+   + ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet)
+   + String getRealPath(String path)
+}
+
+EventListener <|-- ServletContextListener
+ServletContextListener --> ServletContextEvent
+ServletContextEvent --> ServletContext
+EventObject <|-- ServletContextEvent
+----
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] interface:
+
 .MyServletContextListener.java 
 [#src-listing] 
 [source,java]  
@@ -762,6 +942,7 @@ public class MyServletContextListener implements ServletContextListener {
 }
 ----
 
+Its Groovy version with the GServlet API looks like this:
 
 .MyServletContextListener.groovy 
 [#src-listing] 
@@ -799,6 +980,54 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] attribute changes. The order in which implementations of this interface are invoked is unspecified.
 
+[plantuml, servletcontextattributelistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface ServletContextAttributeListener {
+  + void attributeAdded(ServletContextAttributeEvent event)
+  + void attributeRemoved(ServletContextAttributeEvent event)
+  + void attributeReplaced(ServletContextAttributeEvent event)
+}
+
+class ServletContextAttributeEvent {
+  + ServletContextAttributeEvent(ServletContext context, String name, Object value)
+  + String getName()
+  + Object getValue()
+}
+
+class ServletContextEvent {
+  + ServletContextEvent(ServletContext context)
+  + ServletContext getServletContext()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+
+interface ServletContext {
+   + FilterRegistration.Dynamic addFilter(String filterName, Filter filter)
+   + void addListener(String className)
+   + ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet)
+   + String getRealPath(String path)
+}
+
+EventListener <|-- ServletContextAttributeListener
+ServletContextAttributeListener --> ServletContextAttributeEvent
+ServletContextEvent <|-- ServletContextAttributeEvent
+ServletContextEvent --> ServletContext
+EventObject <|-- ServletContextEvent
+----
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] interface:
+
+
 .MyServletContextAttributeListener.java 
 [#src-listing] 
 [source,java]  
@@ -824,6 +1053,8 @@ public class MyServletContextAttributeListener implements ServletContextAttribut
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyServletContextAttributeListener.groovy 
 [#src-listing] 
@@ -869,6 +1100,58 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 This interface is for receiving notification events about requests coming into and going out of scope of a web application. A request is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
 
+[plantuml, servletrequestlistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface ServletRequestListener {
+  + void requestInitialized(ServletRequestEvent event)
+  + void requestDestroyed(ServletRequestEvent event)
+}
+
+class ServletRequestEvent {
+  + ServletRequestEvent(ServletContext context, ServletRequest request)
+  + ServletContext getServletContext()
+  + ServletRequest getServletRequest()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface ServletRequest {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + int getContentLength()
+   + String getContentType()
+   + String getParameter(String name)
+   + Enumeration<String> getParameterNames()
+   + String[] getParameterValues(String name)
+   + ServletContext getServletContext()
+}
+
+interface ServletContext {
+   + FilterRegistration.Dynamic addFilter(String filterName, Filter filter)
+   + void addListener(String className)
+   + ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet)
+   + String getRealPath(String path)
+}
+
+EventListener <|-- ServletRequestListener
+ServletRequestListener --> ServletRequestEvent
+ServletRequestEvent --> ServletContext
+ServletRequestEvent --> ServletRequest
+EventObject <|-- ServletRequestEvent
+----
+
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListener] interface:
+
 .MyServletRequestListener.java 
 [#src-listing] 
 [source,java]  
@@ -890,6 +1173,8 @@ public class MyServletRequestListener implements ServletRequestListener {
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyServletRequestListener.groovy 
 [#src-listing] 
@@ -933,6 +1218,56 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
 Notifications will be generated while the request is within the scope of the web application. A ServletRequest is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope when it exits the last servlet or the first filter in the chain. The order in which implementations of this interface are invoked is unspecified.
 
+
+[plantuml, servletrequestattributelistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface ServletRequestAttributeListener {
+  + void attributeAdded(ServletRequestAttributeEvent event)
+  + void attributeRemoved(ServletRequestAttributeEvent event)
+  + void attributeReplaced(ServletRequestAttributeEvent event)
+}
+
+class ServletRequestAttributeEvent {
+  + ServletRequestAttributeEvent(ServletContext context, ServletRequest request, String name, Object value)
+  + String getName()
+  + Object getValue()
+}
+
+class ServletRequestEvent {
+  + ServletRequestEvent(ServletContext context, ServletRequest request)
+  + ServletContext getServletContext()
+  + ServletRequest getServletRequest()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+
+interface ServletContext {
+   + FilterRegistration.Dynamic addFilter(String filterName, Filter filter)
+   + void addListener(String className)
+   + ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet)
+   + String getRealPath(String path)
+}
+
+EventListener <|-- ServletRequestAttributeListener
+ServletRequestAttributeListener --> ServletRequestAttributeEvent
+ServletRequestEvent <|-- ServletRequestAttributeEvent
+ServletRequestEvent --> ServletContext
+EventObject <|-- ServletRequestEvent
+----
+
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] interface:
+
 .MyServletRequestAttributeListener.java 
 [#src-listing] 
 [source,java]  
@@ -958,6 +1293,8 @@ public class MyServletRequestAttributeListener implements ServletRequestAttribut
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyServletRequestAttributeListener.groovy 
 [#src-listing] 
@@ -1007,6 +1344,44 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent[sessionCreated] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent[sessionDestroyed] method in reverse order.
 
+[plantuml, httpsessionlistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface HttpSessionListener {
+  + void sessionCreated(HttpSessionEvent event)
+  + void sessionDestroyed(HttpSessionEvent event)
+}
+
+class HttpSessionEvent {
+  + HttpSessionEvent(HttpSession session)
+  + HttpSession getSession()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface HttpSession {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + void invalidate()
+   + boolean isNew()
+   + ServletContext getServletContext()
+}
+
+EventListener <|-- HttpSessionListener
+HttpSessionListener --> HttpSessionEvent
+HttpSessionEvent --> HttpSession
+EventObject <|-- HttpSessionEvent
+----
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] interface:
 
 .MyHttpSessionListener.java 
 [#src-listing] 
@@ -1029,6 +1404,8 @@ public class MyHttpSessionListener implements HttpSessionListener {
 	
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyHttpSessionListener.groovy 
 [#src-listing] 
@@ -1068,6 +1445,60 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] attribute changes. The order in which implementations of this interface are invoked is unspecified.
 
+[plantuml, httpsessionattributelistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface HttpSessionAttributeListener {
+  + void attributeAdded(HttpSessionBindingEvent event)
+  + void attributeRemoved(HttpSessionBindingEvent event)
+  + void attributeReplaced(HttpSessionBindingEvent event)
+}
+
+class HttpSessionBindingEvent {
+  + HttpSessionBindingEvent(HttpSession session, String name)
+  + HttpSessionBindingEvent(HttpSession session, String name, Object value)
+  + String getName()
+  + Object getValue()
+}
+
+class HttpSessionEvent {
+  + ServletRequestEvent(ServletContext context, ServletRequest request)
+  + ServletContext getServletContext()
+  + ServletRequest getServletRequest()
+}
+
+class HttpSessionEvent {
+  + HttpSessionEvent(HttpSession session)
+  + HttpSession getSession()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface HttpSession {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + void invalidate()
+   + boolean isNew()
+   + ServletContext getServletContext()
+}
+
+EventListener <|-- HttpSessionAttributeListener
+HttpSessionAttributeListener --> HttpSessionBindingEvent
+HttpSessionEvent <|-- HttpSessionBindingEvent
+HttpSessionEvent --> HttpSession
+EventObject <|-- HttpSessionEvent
+----
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] interface:
+
 
 .MyHttpSessionAttributeListener.java 
 [#src-listing] 
@@ -1095,6 +1526,7 @@ public class MyHttpSessionAttributeListener implements HttpSessionAttributeListe
 }
 ----
 
+Its Groovy version with the GServlet API looks like this:
 
 .MyHttpSessionAttributeListener.groovy 
 [#src-listing] 
@@ -1140,6 +1572,54 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 This interface is for receiving notification events about when an object is bound to or unbound from a session. This may be as a result of a servlet programmer explicitly unbinding an attribute from a session, due to a session being invalidated, or due to a session timing out.
 
+[plantuml, httpsessionbindinglistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface HttpSessionBindingListener {
+  + void valueBound(HttpSessionBindingEvent event)
+  + void valueUnbound(HttpSessionBindingEvent event)
+}
+
+class HttpSessionBindingEvent {
+  + HttpSessionBindingEvent(HttpSession session, String name)
+  + HttpSessionBindingEvent(HttpSession session, String name, Object value)
+  + String getName()
+  + Object getValue()
+}
+
+class HttpSessionEvent {
+  + HttpSessionEvent(HttpSession session)
+  + HttpSession getSession()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface HttpSession {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + void invalidate()
+   + boolean isNew()
+   + ServletContext getServletContext()
+}
+
+EventListener <|-- HttpSessionBindingListener
+HttpSessionBindingListener --> HttpSessionBindingEvent
+HttpSessionEvent <|-- HttpSessionBindingEvent
+HttpSessionEvent --> HttpSession
+EventObject <|-- HttpSessionEvent
+----
+
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] interface:
+
 .MyHttpSessionBindingListener.java 
 [#src-listing] 
 [source,java]  
@@ -1161,6 +1641,8 @@ public class MyHttpSessionBindingListener implements HttpSessionBindingListener 
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyHttpSessionBindingListener.groovy 
 [#src-listing] 
@@ -1202,6 +1684,46 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 Objects that are bound to a session may listen to container events notifying them that sessions will be passivated and activated. A container that migrates session between VMs or persists sessions is required to notify all attributes bound to sessions implementing this interface.
 
+[plantuml, httpsessionactivationlistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface HttpSessionActivationListener {
+  + void sessionDidActivate(HttpSessionEvent event)
+  + void sessionWillPassivate(HttpSessionEvent event)
+}
+
+class HttpSessionEvent {
+  + HttpSessionEvent(HttpSession session)
+  + HttpSession getSession()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface HttpSession {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + void invalidate()
+   + boolean isNew()
+   + ServletContext getServletContext()
+}
+
+EventListener <|-- HttpSessionActivationListener
+HttpSessionActivationListener --> HttpSessionEvent
+HttpSessionEvent --> HttpSession
+EventObject <|-- HttpSessionEvent
+----
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] interface:
+
+
 .MyHttpSessionActivationListener.java 
 [#src-listing] 
 [source,java]  
@@ -1223,6 +1745,8 @@ public class MyHttpSessionActivationListener implements HttpSessionActivationLis
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyHttpSessionActivationListener.groovy 
 [#src-listing] 
@@ -1261,6 +1785,45 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 This interface is for receiving notification events about HttpSession id changes. The order in which implementations of this interface are invoked is unspecified.
 
+[plantuml, httpsessionidlistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface HttpSessionIdListener {
+  + void sessionIdChanged(HttpSessionEvent event, String oldSessionId)
+}
+
+class HttpSessionEvent {
+  + HttpSessionEvent(HttpSession session)
+  + HttpSession getSession()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface HttpSession {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + void invalidate()
+   + boolean isNew()
+   + ServletContext getServletContext()
+}
+
+EventListener <|-- HttpSessionIdListener
+HttpSessionIdListener --> HttpSessionEvent
+HttpSessionEvent --> HttpSession
+EventObject <|-- HttpSessionEvent
+----
+
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] interface:
+
 .MyHttpSessionIdListener.java 
 [#src-listing] 
 [source,java]  
@@ -1278,6 +1841,8 @@ public class MyHttpSessionIdListener implements HttpSessionIdListener {
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyHttpSessionIdListener.groovy 
 [#src-listing] 

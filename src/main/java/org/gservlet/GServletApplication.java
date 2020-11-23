@@ -162,7 +162,7 @@ public class GServletApplication {
 	 * @throws IOException throws an Exception if the configuration file is invalid
 	 * @return the properties of the configuration file
 	 */
-	public Properties loadConfiguration(File file) throws IOException {
+	private Properties loadConfiguration(File file) throws IOException {
 		Properties configuration = new Properties();
 		if(file.exists()) {
 			try (FileReader reader = new FileReader(file)) {
@@ -178,7 +178,7 @@ public class GServletApplication {
 	 * @param folder the root folder
 	 */
 	protected void watch(File folder) {
-		new FileWatcher(folder).addListener(new FileAdapter() {
+		new FileWatcher(folder).addFileListener(new FileAdapter() {
 			
 			@Override
 			public void onCreated(FileEvent event) {

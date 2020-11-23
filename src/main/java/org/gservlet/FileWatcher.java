@@ -113,12 +113,12 @@ public class FileWatcher implements Runnable {
 	 * @throws InterruptedException the InterruptedException 
 	 * 
 	 */
-	protected boolean pollEvents(WatchService watchService) throws InterruptedException {
+	private boolean pollEvents(WatchService watchService) throws InterruptedException {
 		WatchKey key = watchService.take();
 		Path path = (Path) key.watchable();
 		TimeUnit.MILLISECONDS.sleep(500);
 		for (WatchEvent<?> event : key.pollEvents()) {
-			notifyListeners(event.kind(), path.resolve((Path) event.context()).toFile());
+			notifyFileListeners(event.kind(), path.resolve((Path) event.context()).toFile());
 		}
 		return key.reset();
 	}
@@ -131,7 +131,7 @@ public class FileWatcher implements Runnable {
 	 * @param file the file upon which the event occurred upon
 	 * 
 	 */
-	protected void notifyListeners(WatchEvent.Kind<?> kind, File file) {
+	private void notifyFileListeners(WatchEvent.Kind<?> kind, File file) {
 		FileEvent event = new FileEvent(file);
 		if (kind == ENTRY_CREATE) {
 			for (FileListener listener : listeners) {
@@ -149,32 +149,32 @@ public class FileWatcher implements Runnable {
 			}
 		}
 		if ((kind == ENTRY_CREATE || kind == ENTRY_MODIFY) && file.isDirectory()) {
-			new FileWatcher(file).setListeners(listeners).watch();
+			new FileWatcher(file).addFileListeners(listeners).watch();
 		}
 	}
 
 	/**
 	 * 
-	 * Registers a new file listener
+	 * Adds a new file listener
 	 * 
 	 * @param listener the file listener
 	 * @return the file watcher
 	 * 
 	 */
-	public FileWatcher addListener(FileListener listener) {
+	public FileWatcher addFileListener(FileListener listener) {
 		listeners.add(listener);
 		return this;
 	}
 
 	/**
 	 * 
-	 * Unregisters a file listener
+	 * Removes a file listener
 	 * 
 	 * @param listener the file listener
 	 * @return the file watcher
 	 * 
 	 */
-	public FileWatcher removeListener(FileListener listener) {
+	public FileWatcher removeFileListener(FileListener listener) {
 		listeners.remove(listener);
 		return this;
 	}
@@ -186,19 +186,19 @@ public class FileWatcher implements Runnable {
 	 * @return the list of file listeners
 	 * 
 	 */
-	public List<FileListener> getListeners() {
+	public List<FileListener> getFileListeners() {
 		return listeners;
 	}
 
 	/**
 	 * 
-	 * Sets a list of file listeners
+	 * Adds a list of file listeners
 	 * 
 	 * @param listeners a list of file listeners
 	 * @return the file watcher
 	 * 
 	 */
-	public FileWatcher setListeners(List<FileListener> listeners) {
+	public FileWatcher addFileListeners(List<FileListener> listeners) {
 		this.listeners = listeners;
 		return this;
 	}
