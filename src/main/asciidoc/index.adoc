@@ -1628,7 +1628,7 @@ contribute(currentType(annos: annotatedBy(Filter))) {
 
 ----
 
-Make sure that your project has the Groovy nature and the Groovy DSL support is activated. To leverage the full power of the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)], it is highly recommended to add the _groovy_ folder as source folder, so you can use its wizards to create your artifacts. 
+Make sure your Eclipse project has the Groovy nature and that the Groovy DSL support is activated. To leverage the full power of the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)], it is highly recommended to add the _groovy_ folder as source folder, so you can use its wizards to create your artifacts. 
 
 image::groovy-dsl-eclipse.png[Groovy DSL support]
 
@@ -1659,7 +1659,7 @@ class ProjectDao {
 [#src-listing] 
 [source,java]  
 ----
-package servlets
+package servlet
 
 import org.gservlet.annotation.Servlet
 import dao.ProjectDao
