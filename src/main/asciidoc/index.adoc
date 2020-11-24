@@ -1920,7 +1920,7 @@ Whenever, the content type of the request is set to *_application/json_*, you ca
 
 The most commonly used approach for creating XML with Groovy is to use a builder. An implicit _xml_ variable bound to an instance of a MarkupBuilder has been made available to your servlets and filters for that purpose.
 
-.BookServlet.java 
+.BookServlet.groovy
 [#src-listing] 
 [source,java]  
 ---- 
