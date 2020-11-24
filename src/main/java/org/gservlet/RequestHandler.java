@@ -47,7 +47,7 @@ public interface RequestHandler {
 	 * @return the JSON output
 	 * 
 	 */
-	default public String stringify(Object object) {
+	public default String stringify(Object object) {
 		return toJson(object);
 	}
 
@@ -59,7 +59,7 @@ public interface RequestHandler {
 	 * @return the JSON output
 	 * 
 	 */
-	default public Object parse(InputStream inputStream) {
+	public default Object parse(InputStream inputStream) {
 		return new JsonSlurper().parse(inputStream);
 	}
 	
@@ -72,7 +72,7 @@ public interface RequestHandler {
 	 * @throws IOException the IOException
 	 * 
 	 */
-	default public void json(Object response) throws IOException {
+	public default void json(Object response) throws IOException {
 		getResponse().setHeader("Content-Type", "application/json");
 		getResponse().getWriter().write(toJson(response));
 	}
@@ -94,7 +94,7 @@ public interface RequestHandler {
 	 * @return the HttpServletRequest object
 	 * 
 	 */
-	default public HttpServletRequest getRequest() {
+	public default HttpServletRequest getRequest() {
 		return getRequestContext().getRequest();
 	}
 
@@ -105,7 +105,7 @@ public interface RequestHandler {
 	 * @return the HttpSession object
 	 * 
 	 */
-	default public HttpSession getSession() {
+	public default HttpSession getSession() {
 		return getRequestContext().getSession();
 	}
 	
@@ -116,7 +116,7 @@ public interface RequestHandler {
 	 * @return the HttpServletResponse object
 	 * 
 	 */
-	default public HttpServletResponse getResponse() {
+	public default HttpServletResponse getResponse() {
 		return getRequestContext().getResponse();
 	}
 
@@ -127,7 +127,7 @@ public interface RequestHandler {
 	 * @return the Sql object
 	 * 
 	 */
-	default public Sql getSql() {
+	public default Sql getSql() {
 		return getRequestContext().getSql();
 	}
 
@@ -139,7 +139,7 @@ public interface RequestHandler {
 	 * @throws IOException the IOException
 	 * 
 	 */
-	default public PrintWriter getOut() throws IOException {
+	public default PrintWriter getOut() throws IOException {
 		return getResponse().getWriter();
 	}
 
@@ -151,7 +151,7 @@ public interface RequestHandler {
 	 * @throws IOException the IOException
 	 * 
 	 */
-	default public MarkupBuilder getHtml() throws IOException {
+	public default MarkupBuilder getHtml() throws IOException {
 		return getRequestContext().getHtml();
 	}
 	
@@ -163,7 +163,7 @@ public interface RequestHandler {
 	 * @throws IOException the IOException
 	 * 
 	 */
-	default public MarkupBuilder getXml() throws IOException {
+	public default MarkupBuilder getXml() throws IOException {
 		return getRequestContext().getXml();
 	}
 }
