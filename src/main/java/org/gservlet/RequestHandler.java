@@ -32,7 +32,7 @@ import groovy.xml.MarkupBuilder;
 
 /**
  * 
- * Interface for handling requests
+ * Interface for handling requests and producing responses
  * 
  * @author Mamadou Lamine Ba
  * 
