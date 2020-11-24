@@ -2188,6 +2188,7 @@ contribute(currentType(annos: annotatedBy(Servlet))) {
 	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractServlet'
 	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractServlet'
 	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractServlet'
+property name : 'xml', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractServlet'
 }
 
 contribute(currentType(annos: annotatedBy(Servlet))) {
@@ -2295,6 +2296,7 @@ contributor(classContext) {
     property name: 'sql', type: 'groovy.sql.Sql'
     property name: 'out', type: 'java.io.PrintWriter'
     property name: 'html', type: 'groovy.xml.MarkupBuilder'
+    property name: 'xml', type: 'groovy.xml.MarkupBuilder'
     delegatesTo(findClass('org.gservlet.AbstractServlet'))
   }
 }
@@ -2311,6 +2313,7 @@ contributor(classContext) {
     property name: 'sql', type: 'groovy.sql.Sql'
     property name: 'out', type: 'java.io.PrintWriter'
     property name: 'html', type: 'groovy.xml.MarkupBuilder'
+    property name: 'xml', type: 'groovy.xml.MarkupBuilder'
     delegatesTo(findClass('org.gservlet.AbstractFilter'))
   }
 }
