@@ -134,7 +134,7 @@ public class RequestContext {
 
 	/**
 	* 
-	* Returns the MarkupBuilder object
+	* Returns the MarkupBuilder object for producing HTML content
 	* 
 	* @return the MarkupBuilder object
 	* @throws IOException the IOException
@@ -145,6 +145,20 @@ public class RequestContext {
 		response.getWriter().println("<!DOCTYPE html>");
 		return builder;
 	}
+	
+	
+	/**
+	* 
+	* Returns the MarkupBuilder object for producing XML content
+	* 
+	* @return the MarkupBuilder object
+	* @throws IOException the IOException
+	*/
+	public MarkupBuilder getXml() throws IOException {
+		MarkupBuilder builder = new MarkupBuilder(response.getWriter());
+		return builder;
+	}
+	
 	
 	/**
 	* 

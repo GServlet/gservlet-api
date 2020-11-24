@@ -285,7 +285,7 @@ public abstract class AbstractFilter implements Filter {
 
 	/**
 	 * 
-	 * Returns the MarkupBuilder object
+	 * Returns the MarkupBuilder object for producing HTML content
 	 * 
 	 * @return the MarkupBuilder object
 	 * @throws IOException the IOException
@@ -293,6 +293,18 @@ public abstract class AbstractFilter implements Filter {
 	 */
 	public MarkupBuilder getHtml() throws IOException {
 		return requestContext.get().getHtml();
+	}
+	
+	/**
+	 * 
+	 * Returns the MarkupBuilder object for producing XML content
+	 * 
+	 * @return the MarkupBuilder object
+	 * @throws IOException the IOException
+	 * 
+	 */
+	public MarkupBuilder getXml() throws IOException {
+		return requestContext.get().getXml();
 	}
 
 	/**

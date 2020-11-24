@@ -52,7 +52,7 @@ The same philosophy has been followed in the design of this API and if you have 
 
 * Servlet 3.1+ Support
 * Groovy Scripting and Hot Reloading
-* JSON, HTML and JDBC Support
+* JSON, XML, HTML and JDBC Support
 
 == Requirements
 
@@ -436,6 +436,8 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |_out_ | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
 
 |_html_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+
+|_xml_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
 |===
 
 
@@ -800,6 +802,9 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |_out_ | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
 
 |_html_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+
+|_xml_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+
 |===
 
 === Filter methods
@@ -1910,6 +1915,30 @@ class ProjectServlet {
 ----
 
 Whenever, the content type of the request is set to *_application/json_*, you can use its *_body_* property to get the payload as Groovy object. Your servlet or filter can use as well the built-in *_json()_* method to send JSON data as a response.
+
+== Working With XML
+
+The most commonly used approach for creating XML with Groovy is to use a builder. An implicit _xml_ variable bound to an instance of a MarkupBuilder has been made available to your servlets and filters for that purpose.
+
+.BookServlet.java 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+
+@Servlet(value="/books")
+class BookServlet {
+
+  void get() {
+	 xml.books {
+		 book(id: "1", name : "Groovy in Action")
+		 book(id: "2", name : "Spring in Action")
+		 book(id: "3", name : "Maven in Action")
+	 } 
+  }
+   
+}
+----
 
 == Working With RDBMS
 
