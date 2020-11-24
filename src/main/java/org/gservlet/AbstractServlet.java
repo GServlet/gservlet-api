@@ -19,10 +19,7 @@
 
 package org.gservlet;
 
-import static groovy.json.JsonOutput.toJson;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -30,10 +27,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import groovy.json.JsonSlurper;
-import groovy.sql.Sql;
-import groovy.xml.MarkupBuilder;
 
 /**
  * 
@@ -43,7 +36,7 @@ import groovy.xml.MarkupBuilder;
  * 
  */
 @SuppressWarnings("serial")
-public abstract class AbstractServlet extends HttpServlet {
+public abstract class AbstractServlet extends HttpServlet implements RequestHandler {
 
 	/**
 	 * The RequestContext object
@@ -183,7 +176,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	 * 
 	 */
 	public void forward(String location) throws ServletException, IOException {
-		HttpServletRequest request = requestContext.get().getRequest();
+		HttpServletRequest request = getRequest();
 		request.getRequestDispatcher(location).forward(request, getResponse());
 	}
 
@@ -201,43 +194,6 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	 * 
-	 * Sends the response as JSON
-	 * 
-	 * @param response the response object
-	 * @throws IOException the IOException
-	 * 
-	 */
-	public void json(Object response) throws IOException {
-		getResponse().setHeader("Content-Type", "application/json");
-		getResponse().getWriter().write(toJson(response));
-	}
-
-	/**
-	 * 
-	 * Converts the object to JSON
-	 * 
-	 * @param object the object
-	 * @return the JSON output
-	 * 
-	 */
-	public String stringify(Object object) {
-		return toJson(object);
-	}
-
-	/**
-	 * 
-	 * Parses the input stream to JSON
-	 * 
-	 * @param inputStream the input stream
-	 * @return the JSON output
-	 * 
-	 */
-	public Object parse(InputStream inputStream) {
-		return new JsonSlurper().parse(inputStream);
-	}
-
-	/**
-	 * 
 	 * Returns the ServletConfig object
 	 * 
 	 * @return the ServletConfig object
@@ -249,28 +205,6 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	 * 
-	 * Returns the HttpServletRequest object
-	 * 
-	 * @return the HttpServletRequest object
-	 * 
-	 */
-	public HttpServletRequest getRequest() {
-		return requestContext.get().getRequest();
-	}
-
-	/**
-	 * 
-	 * Returns the HttpSession object
-	 * 
-	 * @return the HttpSession object
-	 * 
-	 */
-	public HttpSession getSession() {
-		return requestContext.get().getSession();
-	}
-
-	/**
-	 * 
 	 * Returns the ServletContext object
 	 * 
 	 * @return the ServletContext object
@@ -278,66 +212,9 @@ public abstract class AbstractServlet extends HttpServlet {
 	 */
 	public ServletContext getContext() {
 		ServletContext context = getConfig().getServletContext();
-		return context !=null ? new ServletContextWrapper(context) : requestContext.get().getServletContext();
+		return context !=null ? new ServletContextWrapper(context) : getRequestContext().getServletContext();
 	}
 
-	/**
-	 * 
-	 * Returns the HttpServletResponse object
-	 * 
-	 * @return the HttpServletResponse object
-	 * 
-	 */
-	public HttpServletResponse getResponse() {
-		return requestContext.get().getResponse();
-	}
-
-	/**
-	 * 
-	 * Returns the Sql object
-	 * 
-	 * @return the Sql object
-	 * 
-	 */
-	public Sql getSql() {
-		return requestContext.get().getSql();
-	}
-
-	/**
-	 * 
-	 * Returns the PrintWriter object
-	 * 
-	 * @return the PrintWriter object
-	 * @throws IOException the IOException
-	 * 
-	 */
-	public PrintWriter getOut() throws IOException {
-		return getResponse().getWriter();
-	}
-
-	/**
-	 * 
-	 * Returns the MarkupBuilder object for producing HTML content
-	 * 
-	 * @return the MarkupBuilder object
-	 * @throws IOException the IOException
-	 * 
-	 */
-	public MarkupBuilder getHtml() throws IOException {
-		return requestContext.get().getHtml();
-	}
-	
-	/**
-	 * 
-	 * Returns the MarkupBuilder object for producing XML content
-	 * 
-	 * @return the MarkupBuilder object
-	 * @throws IOException the IOException
-	 * 
-	 */
-	public MarkupBuilder getXml() throws IOException {
-		return requestContext.get().getXml();
-	}
 	/**
 	 * 
 	 * Returns the Logger object
@@ -348,5 +225,17 @@ public abstract class AbstractServlet extends HttpServlet {
 	public Logger getLogger() {
 		return logger;
 	}
+
+	/**
+	 * 
+	 * Returns the RequestContext object
+	 * 
+	 * @return the RequestContext object
+	 * 
+	 */
+	public RequestContext getRequestContext() {
+		return requestContext.get();
+	}
+
 
 }

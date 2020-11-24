@@ -140,10 +140,9 @@ public class RequestContext {
 	* @throws IOException the IOException
 	*/
 	public MarkupBuilder getHtml() throws IOException {
-		MarkupBuilder builder = new MarkupBuilder(response.getWriter());
 		response.setHeader("Content-Type", "text/html");
 		response.getWriter().println("<!DOCTYPE html>");
-		return builder;
+		return new MarkupBuilder(response.getWriter());
 	}
 	
 	
@@ -155,8 +154,8 @@ public class RequestContext {
 	* @throws IOException the IOException
 	*/
 	public MarkupBuilder getXml() throws IOException {
-		MarkupBuilder builder = new MarkupBuilder(response.getWriter());
-		return builder;
+		response.setHeader("Content-Type", "text/xml");
+		return new MarkupBuilder(response.getWriter());
 	}
 	
 	

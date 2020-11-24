@@ -19,10 +19,7 @@
 
 package org.gservlet;
 
-import static groovy.json.JsonOutput.toJson;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -33,10 +30,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import groovy.json.JsonSlurper;
-import groovy.sql.Sql;
-import groovy.xml.MarkupBuilder;
 
 /**
  * 
@@ -46,7 +39,7 @@ import groovy.xml.MarkupBuilder;
  * @author Mamadou Lamine Ba
  * 
  */
-public abstract class AbstractFilter implements Filter {
+public abstract class AbstractFilter implements Filter, RequestHandler {
 
 	/**
 	 * The filter config object
@@ -124,13 +117,13 @@ public abstract class AbstractFilter implements Filter {
 	 * 
 	 * Invokes the doFilter(request, response) method of the FilterChain object
 	 * 
-	 * @throws IOException      the IOException
+	 * @throws IOException the IOException
 	 * @throws ServletException the ServletException
 	 * 
 	 */
 	public void next() throws IOException, ServletException {
-		FilterChain chain = requestContext.get().getFilterChain();
-		chain.doFilter(requestContext.get().getRequest(), getResponse());
+		FilterChain chain = getRequestContext().getFilterChain();
+		chain.doFilter(getRequest(), getResponse());
 	}
 
 	/**
@@ -143,43 +136,7 @@ public abstract class AbstractFilter implements Filter {
 	public void destroy() {
 		// no implementation provided
 	}
-
-	/**
-	 * 
-	 * Sends the response as JSON
-	 * 
-	 * @param response the response object
-	 * @throws IOException the IOException
-	 */
-	public void json(Object response) throws IOException {
-		getResponse().setHeader("Content-Type", "application/json");
-		getResponse().getWriter().write(toJson(response));
-	}
-
-	/**
-	 * 
-	 * Converts the object to JSON
-	 * 
-	 * @param object the object
-	 * @return the JSON output
-	 * 
-	 */
-	public String stringify(Object object) {
-		return toJson(object);
-	}
-
-	/**
-	 * 
-	 * Parses the input stream to JSON
-	 * 
-	 * @param inputStream the input stream
-	 * @return the JSON output
-	 * 
-	 */
-	public Object parse(InputStream inputStream) {
-		return new JsonSlurper().parse(inputStream);
-	}
-
+	
 	/**
 	 * 
 	 * Returns a String containing the value of the named initialization parameter,
@@ -212,30 +169,10 @@ public abstract class AbstractFilter implements Filter {
 	 * 
 	 */
 	public FilterChain getChain() {
-		return requestContext.get().getFilterChain();
+		return getRequestContext().getFilterChain();
 	}
 
-	/**
-	 * 
-	 * Returns the HttpServletRequest object
-	 * 
-	 * @return the HttpServletRequest object
-	 * 
-	 */
-	public HttpServletRequest getRequest() {
-		return requestContext.get().getRequest();
-	}
-
-	/**
-	 * 
-	 * Returns the HttpSession object
-	 * 
-	 * @return the HttpSession object
-	 * 
-	 */
-	public HttpSession getSession() {
-		return requestContext.get().getSession();
-	}
+	
 
 	/**
 	 * 
@@ -246,65 +183,7 @@ public abstract class AbstractFilter implements Filter {
 	 */
 	public ServletContext getContext() {
 		ServletContext context = getConfig().getServletContext();
-		return context !=null ? new ServletContextWrapper(context) : requestContext.get().getServletContext();
-	}
-
-	/**
-	 * 
-	 * Returns the HttpServletResponse object
-	 * 
-	 * @return the HttpServletResponse object
-	 * 
-	 */
-	public HttpServletResponse getResponse() {
-		return requestContext.get().getResponse();
-	}
-
-	/**
-	 * 
-	 * Returns the Sql object
-	 * 
-	 * @return the Sql object
-	 * 
-	 */
-	public Sql getSql() {
-		return requestContext.get().getSql();
-	}
-
-	/**
-	 * 
-	 * Returns the PrintWriter object
-	 * 
-	 * @return the PrintWriter object
-	 * @throws IOException the IOException
-	 * 
-	 */
-	public PrintWriter getOut() throws IOException {
-		return getResponse().getWriter();
-	}
-
-	/**
-	 * 
-	 * Returns the MarkupBuilder object for producing HTML content
-	 * 
-	 * @return the MarkupBuilder object
-	 * @throws IOException the IOException
-	 * 
-	 */
-	public MarkupBuilder getHtml() throws IOException {
-		return requestContext.get().getHtml();
-	}
-	
-	/**
-	 * 
-	 * Returns the MarkupBuilder object for producing XML content
-	 * 
-	 * @return the MarkupBuilder object
-	 * @throws IOException the IOException
-	 * 
-	 */
-	public MarkupBuilder getXml() throws IOException {
-		return requestContext.get().getXml();
+		return context !=null ? new ServletContextWrapper(context) : getRequestContext().getServletContext();
 	}
 
 	/**
@@ -316,6 +195,17 @@ public abstract class AbstractFilter implements Filter {
 	 */
 	public Logger getLogger() {
 		return logger;
+	}
+	
+	/**
+	 * 
+	 * Returns the RequestContext object
+	 * 
+	 * @return the RequestContext object
+	 * 
+	 */
+	public RequestContext getRequestContext() {
+		return requestContext.get();
 	}
 
 }

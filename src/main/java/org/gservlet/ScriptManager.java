@@ -225,7 +225,7 @@ public class ScriptManager {
 	 */
 
 	protected boolean isClassSupported(Class<?> clazz) {
-		if (clazz.getAnnotation(Servlet.class) != null || clazz.getAnnotation(Filter.class) != null
+		return (clazz.getAnnotation(Servlet.class) != null || clazz.getAnnotation(Filter.class) != null
 				|| clazz.getAnnotation(ContextListener.class) != null
 				|| clazz.getAnnotation(RequestListener.class) != null
 				|| clazz.getAnnotation(ContextAttributeListener.class) != null
@@ -234,10 +234,7 @@ public class ScriptManager {
 				|| clazz.getAnnotation(SessionAttributeListener.class) != null
 				|| clazz.getAnnotation(SessionBindingListener.class) != null
 				|| clazz.getAnnotation(SessionActivationListener.class) != null
-				|| clazz.getAnnotation(SessionIdListener.class) != null) {
-			return true;
-		}
-		return false;
+				|| clazz.getAnnotation(SessionIdListener.class) != null) ? true : false;
 	}
 
 	/**

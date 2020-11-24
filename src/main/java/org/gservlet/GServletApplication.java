@@ -87,7 +87,6 @@ public class GServletApplication {
 	 * 
 	 * @param context the servlet context
 	 * 
-	 * 
 	 */
 	public GServletApplication(ServletContext context) {
 		this.context = context;
@@ -100,8 +99,8 @@ public class GServletApplication {
 	 */
 	public void start() {
 		try {
-			containerManager = createContainerManager();
-			databaseManager = createDatabaseManager();
+			initContainerManager();
+			initDatabaseManager();
 			logger.info("application started on context " + context.getContextPath());
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "exception during contextInitialized method", e);
@@ -109,33 +108,29 @@ public class GServletApplication {
 	}
 
 	/**
-	 * Creates and configures the container manager
+	 * Creates and initializes the container manager
 	 *
-	 * @return the container manager
 	 *
 	 * @throws ServletException the ServletException
 	 * @throws ScriptException  the  ScriptException
 	 * 
 	 */
-	private ContainerManager createContainerManager() throws ServletException, ScriptException {
-		ContainerManager containerManager = new ContainerManager(context);
+	private void initContainerManager() throws ServletException, ScriptException {
+		containerManager = new ContainerManager(context);
 		containerManager.init(realPath, listeners);
-		return containerManager;
 	}
 	
 	/**
-	 * Creates and configures the database manager
+	 * Creates and initializes the database manager
 	 *
-	 * @return the the database manager
 	 * @throws IOException the exception
 	 * 
 	 */
-	private DatabaseManager createDatabaseManager() throws IOException {
-		DatabaseManager databaseManager = new DatabaseManager(context);
+	private void initDatabaseManager() throws IOException {
+		databaseManager = new DatabaseManager(context);
 		File root = new File(realPath);
 		databaseManager.setupDataSource(loadConfiguration(new File(root + File.separator + APP_CONFIG_FILE)));
 		watch(root);
-		return databaseManager;
 	}
 
 	/**
