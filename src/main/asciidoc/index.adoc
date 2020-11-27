@@ -1884,7 +1884,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 Groovy comes with integrated support for converting between Groovy objects and JSON. The classes dedicated to JSON serialisation and parsing are found in the *_groovy.json_* package. You can get an insight of how to use them in the Groovy https://groovy-lang.org/json.html[documentation]. In the GServlet API, we have simplified the process of parsing and producing JSON in your servlets and filters as below: 
 
-.ProjectServlet.java 
+.JSON Generation 
 [#src-listing] 
 [source,java]  
 ----
@@ -1916,18 +1916,39 @@ class ProjectServlet {
 
 Whenever, the content type of the request is set to *_application/json_*, you can use its *_body_* property to get the payload as Groovy object. Your servlet or filter can use as well the built-in *_json()_* method to send JSON data as a response.
 
-== Working With XML
+== Working With HTML and XML
 
-The most commonly used approach for creating XML with Groovy is to use a builder. An implicit _xml_ variable bound to an instance of a MarkupBuilder has been made available to your servlets and filters for that purpose.
+The most commonly used approach for creating HTML and XML content with Groovy is to use a builder. Two implicit variables, _html_ and _xml_, which are bound to an instance of a MarkupBuilder have been made available to your servlets and filters for that purpose.
 
-.BookServlet.groovy
+.HTML Generation
 [#src-listing] 
 [source,java]  
 ---- 
 import org.gservlet.annotation.Servlet
 
-@Servlet(value="/books")
-class BookServlet {
+@Servlet("/index.html")
+class HtmlServlet {
+
+  void get() {
+     html.html {
+       body {
+         p("Hello World!")
+       }
+     } 
+  }
+   
+}
+----
+
+
+.XML Generation
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+
+@Servlet("/books")
+class XmlServlet {
 
   void get() {
 	 xml.books {
@@ -1939,6 +1960,7 @@ class BookServlet {
    
 }
 ----
+
 
 == Working With RDBMS
 

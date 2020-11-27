@@ -75,8 +75,8 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 		if (name != null && name.equals("body") && getContentType().equalsIgnoreCase("application/json")) {
 			return new JsonSlurper().parse(getInputStream());
 		}
-		Object value = getParameter(name);
-		value = value != null ? value : getParameterValues(name);
+		Object value = getParameterValues(name);
+		value = value != null && ((String[]) value).length > 1 ? value : getParameter(name);
 		return value != null ? value : getAttribute(name);
 	}
 	
