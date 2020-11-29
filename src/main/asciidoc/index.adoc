@@ -1880,6 +1880,115 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 |===
 
+== Handling Request Parameters
+
+The request parameters are sent along with the request. You can send them as part of the URL or as part of the body of an HTTP request. The _request.getParameter()_ method is used to get the value of a request parameter from the request and returns a string. We can also get an array of parameter values with the _request.getParameterValues()_ method which returns an array of strings.
+
+.ServletParameters.java 
+[#src-listing] 
+[source,java]  
+----
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import java.io.IOException;
+
+@WebServlet("/parameters")
+public class ServletParameters extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String param1 = request.getParameter("param1");
+        String param2 = request.getParameter("param2");
+        String[] paramArray = request.getParameterValues("paramArray");
+    }
+
+}
+----
+
+You can still use the approach above but handling request parameters with the GServlet API is a simple as this: 
+
+.ServletParameters.groovy 
+[#src-listing] 
+[source,java]  
+----
+import org.gservlet.annotation.Servlet
+
+@Servlet("/parameters")
+class ServletParameters {
+   
+   void get() {
+     String param1 = request.param1
+     String param2 = request.param2
+     String[] paramArray = request.paramArray
+   }
+
+}
+----
+
+
+== Managing Attributes
+
+An attribute is an object that is used to share information in a web application. Attributes can be SET and GET from one of the following scopes : _request_, _session_, _application_. 
+
+.ServletAttributes.java 
+[#src-listing] 
+[source,java]  
+----
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import java.io.IOException;
+
+@WebServlet("/attributes")
+public class ServletAttributes extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("attribute1","Attribute 1");
+        System.out.println(request.getAttribute("attribute1"));
+        
+        HttpSession session = request.getSession()
+        session.setAttribute("attribute2","Attribute 2");
+        System.out.println(session.getAttribute("attribute2"));
+        
+        ServletContext context = request.getServletContext();
+        context.setAttribute("attribute3","Attribute 3");
+        System.out.println(context.getAttribute("attribute3"));
+    }
+
+}
+----
+
+You can still use the approach above but managing attributes with the GServlet API is a simple as this: 
+
+.ServletAttributes.groovy 
+[#src-listing] 
+[source,java]  
+----
+import org.gservlet.annotation.Servlet
+
+@Servlet("/attributes")
+class ServletAttributes {
+   
+   void get() {
+      request.attribute1 = "Attribute 1"
+      println request.attribute1
+        
+      session.attribute2 = "Attribute 2"
+      println session.attribute2
+        
+      context.attribute3 = "Attribute 3"
+      context.attribute3
+   }
+
+}
+----
+
 == Working With JSON
 
 Groovy comes with integrated support for converting between Groovy objects and JSON. The classes dedicated to JSON serialisation and parsing are found in the *_groovy.json_* package. You can get an insight of how to use them in the Groovy https://groovy-lang.org/json.html[documentation]. In the GServlet API, we have simplified the process of parsing and producing JSON in your servlets and filters as below: 
