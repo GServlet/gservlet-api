@@ -2518,7 +2518,7 @@ public class SpringConfiguration implements ServletContextInitializer {
 }
 ----
 
-If you want to enable Spring autowiring, this is how to do it using an implementation of the https://gservlet.org/javadocs/1.0.0/org/gservlet/scriptlistener[ScriptListener] interface:
+To enable Spring autowiring, you can use an implementation of the https://gservlet.org/javadocs/1.0.0/org/gservlet/scriptlistener[ScriptListener] interface like this:
 
 .SpringConfiguration.java 
 [#src-listing] 
