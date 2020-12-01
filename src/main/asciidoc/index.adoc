@@ -2407,7 +2407,7 @@ class ProjectServlet {
 
 === IntelliJ IDEA
 
-In the other hand, in IntelliJ IDEA, we can write GDSL Files to have code completion on the injected methods/properties and closures. https://confluence.jetbrains.com/display/GRVY/Scripting+IDE+for+DSL+awareness[GroovyDSL] is a scripting framework with a domain-specific language designed to define the behavior of end-user DSLs as script files which are executed by the IDE on the fly, bringing new reference resolution and code completion logic into the scope of a project.
+In the other hand, in IntelliJ IDEA, we can write GDSL files to have code completion on the injected methods/properties and closures. https://confluence.jetbrains.com/display/GRVY/Scripting+IDE+for+DSL+awareness[GroovyDSL] is a scripting framework with a domain-specific language designed to define the behavior of end-user DSLs as script files which are executed by the IDE on the fly, bringing new reference resolution and code completion logic into the scope of a project.
 
 .servlet.gdsl 
 [#src-listing] 
