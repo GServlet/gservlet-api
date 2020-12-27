@@ -89,9 +89,11 @@ public class HttpFilterTest {
 		config.addInitParameter("param1", "paramValue1");
 		config.addInitParameter("param2", "paramValue2");
 		filter.init(configWrapper);
+		assertEquals(config.getFilterName(), config.getClass().getName());
 		assertEquals(2, Collections.list(filter.getConfig().getInitParameterNames()).size());
 		assertEquals("paramValue1", filter.getConfig().getInitParameter("param1"));
 		assertEquals("paramValue2", filter.getConfig().getInitParameter("param2"));
+		assertEquals("paramValue2", configWrapper.propertyMissing("param2"));
 		assertNull(filter.getConfig().getServletContext());
 		assertEquals("init", map.get("state"));
 		assertNotNull(filter.getConfig());

@@ -84,9 +84,11 @@ public class HttpServletTest {
 		config.addInitParameter("param1", "paramValue1");
 		config.addInitParameter("param2", "paramValue2");
 		servlet.init(configWrapper);
+		assertEquals(config.getServletName(), config.getClass().getName());
 		assertEquals(2, Collections.list(servlet.getConfig().getInitParameterNames()).size());
 		assertEquals("paramValue1", servlet.getConfig().getInitParameter("param1"));
 		assertEquals("paramValue2", servlet.getConfig().getInitParameter("param2"));
+		assertEquals("paramValue2", configWrapper.propertyMissing("param2"));
 		assertNull(servlet.getConfig().getServletContext());
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		servlet.doGet(request, response);
