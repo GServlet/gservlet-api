@@ -47,7 +47,6 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import groovy.sql.Sql;
-import groovy.xml.MarkupBuilder;
 
 public class HttpServletTest {
 
@@ -128,8 +127,8 @@ public class HttpServletTest {
 		when(response.getWriter()).thenReturn(new PrintWriter(out));
 		servlet.doGet(request, response);
 		assertNotNull(servlet.getOut());
-		MarkupBuilder builder = servlet.getHtml();
-		assertNotNull(builder);
+		assertNotNull(servlet.getHtml());
+		assertNotNull(servlet.getXml());
 		assertEquals("<!DOCTYPE html>", out.toString().trim());
 		out = new StringWriter();
 		when(response.getWriter()).thenReturn(new PrintWriter(out));

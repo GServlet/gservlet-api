@@ -49,7 +49,6 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import groovy.sql.Sql;
-import groovy.xml.MarkupBuilder;
 
 public class HttpFilterTest {
 
@@ -123,8 +122,8 @@ public class HttpFilterTest {
 		when(response.getWriter()).thenReturn(new PrintWriter(out));
 		filter.doFilter(request, response, mock(FilterChain.class));
 		assertNotNull(filter.getOut());
-		MarkupBuilder builder = filter.getHtml();
-		assertNotNull(builder);
+		assertNotNull(filter.getHtml());
+		assertNotNull(filter.getXml());
 		assertEquals("<!DOCTYPE html>", out.toString().trim());
 		out = new StringWriter();
 		when(response.getWriter()).thenReturn(new PrintWriter(out));

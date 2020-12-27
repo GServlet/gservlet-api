@@ -21,17 +21,25 @@ package org.gservlet;
 
 import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.io.File;
 import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 public class DatabaseManagerTest {
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void loadConfiguration() throws Exception {
 		File folder = new File("src/test/resources");
@@ -45,6 +53,18 @@ public class DatabaseManagerTest {
 		configuration.load(reader);
 		reader.close();
 		assertTrue(databaseManager.isConfigurationValid(configuration));
+		final Map<Object, Object> map = new HashMap<Object, Object>();
+		doAnswer(new Answer() {
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				map.put(invocation.getArguments()[0], invocation.getArguments()[1]);
+				return null;
+			}
+		}).when(context).setAttribute(anyString(), any());
+		databaseManager.setupDataSource(configuration);
+		assertEquals(map.get(DATASOURCE).getClass(), BasicDataSource.class);
+		BasicDataSource dataSource = new BasicDataSource();
+		databaseManager.setupDataSource(dataSource);
+		assertEquals(map.get(DATASOURCE), dataSource);
 		databaseManager.shutDown();
 	}
 
