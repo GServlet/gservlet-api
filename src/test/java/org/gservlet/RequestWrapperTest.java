@@ -19,6 +19,7 @@
 
 package org.gservlet;
 
+import static org.gservlet.Constants.DB_CONNECTION;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -34,9 +35,15 @@ import java.util.Map;
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import javax.sql.DataSource;
+
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
+import groovy.sql.Sql;
 
 public class RequestWrapperTest {
 
@@ -95,6 +102,10 @@ public class RequestWrapperTest {
 		});
 		Map result = (Map) wrapper.propertyMissing("body");
 		assertEquals("value", result.get("key"));
+		Part part = mock(Part.class);
+		when(part.getHeader("content-disposition")).thenReturn("form-data; name=\"fieldName\"; filename=\"filename.jpg\"");
+		assertEquals("filename.jpg", wrapper.getFileName(part));
+		
 	}
 
 }
