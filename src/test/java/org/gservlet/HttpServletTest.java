@@ -19,15 +19,24 @@
 
 package org.gservlet;
 
-import static org.gservlet.Constants.*;
-import static org.junit.Assert.*;
+import static org.gservlet.Constants.DB_CONNECTION;
+import static org.gservlet.Constants.SCRIPTS_FOLDER;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,11 +48,6 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import groovy.sql.Sql;
 import groovy.xml.MarkupBuilder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.any;
 
 public class HttpServletTest {
 
@@ -74,8 +78,16 @@ public class HttpServletTest {
 				return null;
 			}
 		}).when(request).setAttribute(anyString(), any());
-		ServletConfig config = mock(ServletConfig.class);
-		servlet.init(config);
+		
+		DefaultServletConfig config = new DefaultServletConfig();
+		ServletConfigWrapper configWrapper = new ServletConfigWrapper(config);
+		config.addInitParameter("param1", "paramValue1");
+		config.addInitParameter("param2", "paramValue2");
+		servlet.init(configWrapper);
+		assertEquals(2, Collections.list(servlet.getConfig().getInitParameterNames()).size());
+		assertEquals("paramValue1", servlet.getConfig().getInitParameter("param1"));
+		assertEquals("paramValue2", servlet.getConfig().getInitParameter("param2"));
+		assertNull(servlet.getConfig().getServletContext());
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		servlet.doGet(request, response);
 		assertEquals("get", map.get("state"));
