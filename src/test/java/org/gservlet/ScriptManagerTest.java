@@ -22,6 +22,8 @@ package org.gservlet;
 import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import java.io.File;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.junit.Test;
 import groovy.util.ScriptException;
 
@@ -39,7 +41,18 @@ public class ScriptManagerTest {
 				assertNotNull(object);
 			}
 		}
+		AtomicInteger count = new AtomicInteger(); 
+		ScriptListener listener = new ScriptListener() {
+			@Override
+			public void onCreated(Object object) {
+				count.incrementAndGet();
+			}
+		};
+		scriptManager.addScriptListener(listener);
+		scriptManager.createObject(new File("HttpServlet.groovy"));
+		assertEquals(1, count.intValue());
 		scriptManager.createObject(new File("test.groovy"));
+		
 	}
 
 }
