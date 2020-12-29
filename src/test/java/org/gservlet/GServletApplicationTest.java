@@ -19,6 +19,7 @@
 
 package org.gservlet;
 
+import static org.gservlet.Constants.DATASOURCE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
@@ -30,6 +31,8 @@ import javax.servlet.FilterRegistration;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
+
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.Test;
 
 public class GServletApplicationTest {
@@ -43,6 +46,8 @@ public class GServletApplicationTest {
 				.thenReturn(mock(FilterRegistration.Dynamic.class));
 		when(context.addServlet(isA(String.class), isA(Servlet.class)))
 				.thenReturn(mock(ServletRegistration.Dynamic.class));
+		BasicDataSource dataSource = new BasicDataSource();
+		when(context.getAttribute(DATASOURCE)).thenReturn(dataSource);
 		GServletApplication application = new GServletApplication(context);
 		ScriptListener listener = new ScriptListener() {
 			@Override
@@ -59,7 +64,8 @@ public class GServletApplicationTest {
 		application.addScriptListeners(Arrays.asList(mock(ScriptListener.class), mock(ScriptListener.class)));
 		assertEquals(7, application.getScriptListeners().size());
 		assertEquals(7, application.getContainerManager().getScriptManager().getScriptListeners().size());
-		
+		application.setDataSource(dataSource);
+		assertEquals(dataSource, application.getDatabaseManager().getDataSource());
 	}
 
 

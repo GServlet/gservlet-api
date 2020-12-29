@@ -190,4 +190,15 @@ public class DatabaseManager {
 		}
 	}
 	
+	/**
+	 * Returns the data source
+	 * 
+	 * @return the data source
+	 * 
+	 */
+	
+	public DataSource getDataSource() {
+		return (DataSource) context.getAttribute(DATASOURCE);
+	}
+	
 }
