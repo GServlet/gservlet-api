@@ -329,5 +329,19 @@ public class GServletApplication {
 			this.listeners.addAll(listeners);
 		}
 	}
+	
+	/**
+	 * 
+	 * Returns the list of script listeners
+	 * 
+	 * @return the list of script listeners
+	 */
+	public List<ScriptListener> getScriptListeners() {
+		if(containerManager != null) {
+			return containerManager.getScriptManager().getScriptListeners();
+		} else {
+			return listeners;
+		}
+	}
 
 }

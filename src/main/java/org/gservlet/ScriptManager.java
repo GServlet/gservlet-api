@@ -255,5 +255,15 @@ public class ScriptManager {
 	public void addScriptListeners(List<ScriptListener> listeners) {
 		this.listeners.addAll(listeners);
 	}
+	
+	/**
+	 * 
+	 * Returns the list of script listeners
+	 * 
+	 * @return the list of script listeners
+	 */
+	public List<ScriptListener> getScriptListeners() {
+		return listeners;
+	}
 
 }
