@@ -23,7 +23,6 @@ import static org.gservlet.Constants.*;
 import static org.junit.Assert.*;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.junit.Test;
 import groovy.util.ScriptException;
 

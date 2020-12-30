@@ -30,7 +30,6 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
-
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.FilterRegistration;
