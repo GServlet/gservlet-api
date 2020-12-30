@@ -1,3 +1,22 @@
+/**
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
 package org.gservlet;
 
 import static org.gservlet.Constants.SCRIPTS_FOLDER;
@@ -10,6 +29,7 @@ import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.FilterRegistration;
@@ -18,7 +38,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import org.junit.Test;
 
-public class ContainerInitializerTest {
+public class ContainerManagerTest {
 
 	@Test(expected = ServletException.class)
 	public void init() throws Exception {
@@ -30,37 +50,38 @@ public class ContainerInitializerTest {
 				.thenReturn(mock(FilterRegistration.Dynamic.class));
 		when(context.addServlet(isA(String.class), isA(Servlet.class)))
 				.thenReturn(mock(ServletRegistration.Dynamic.class));
-		ContainerInitializer initializer = new ContainerInitializer(context);
-		assertEquals(11, initializer.getHandlers().size());
-		for (DynamicInvocationHandler handler : initializer.getHandlers().values()) {
+		ContainerManager manager = new ContainerManager(context);
+		manager.init("src/test/resources", new ArrayList<ScriptListener>());
+		assertEquals(11, manager.getHandlers().size());
+		for (DynamicInvocationHandler handler : manager.getHandlers().values()) {
 			assertNotNull(handler.getTarget());
 		}
 		wait(2000);
-		File file = new File(folder + "/scripts/script.groovy");
+		File file = new File(folder + "/groovy/script.groovy");
 		PrintWriter printWriter = new PrintWriter(new FileWriter(file));
 		printWriter.println("import org.gservlet.annotation.Servlet");
 		printWriter.println("@Servlet(\"/servlet\")");
 		printWriter.println("class HttpServlet {}");
 		printWriter.close();
 		wait(2000);
-		assertEquals(11, initializer.getHandlers().size());
+		assertEquals(11, manager.getHandlers().size());
 		file.delete();
-		initializer.destroy();
-		assertEquals(0, initializer.getHandlers().size());
+		manager.shutDown();
+		assertEquals(0, manager.getHandlers().size());
 		when(context.getServletRegistration(isA(String.class)))
 		.thenReturn(mock(ServletRegistration.Dynamic.class));
 		folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpServlet.groovy");
-		initializer.register(scriptManager.loadObject(script));
+		manager.register(scriptManager.createObject(script));
 	}
 	
 	@Test
 	public void testDynamicInvocationHandler() throws Exception {
-		File folder = new File("src/test/resources/scripts");
+		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "InvocationHandler.groovy");
-		Object object = scriptManager.loadObject(script);
+		Object object = scriptManager.createObject(script);
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
 		handler.setTarget(object);
 		FileFilter proxy = (FileFilter) Proxy.newProxyInstance(this.getClass().getClassLoader(),

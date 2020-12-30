@@ -19,7 +19,8 @@
 
 package org.gservlet;
 
-import static org.gservlet.Constants.*;
+import static org.gservlet.Constants.HANDLERS;
+import static org.gservlet.Constants.SCRIPTS_FOLDER;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Proxy;
@@ -28,11 +29,13 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.EventListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.ServletContextEvent;
@@ -40,6 +43,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
+import javax.servlet.ServletSecurityElement;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingListener;
@@ -62,12 +68,12 @@ import groovy.util.ScriptException;
 /**
  * 
  * Manages the registration and the reloading of
- * a servlet, filter or listener into the web container.
+ * a servlet, filter or listener into the web container
  * 
  * @author Mamadou Lamine Ba
  * 
  */
-public class ContainerInitializer {
+public class ContainerManager {
 
 	/**
 	 * The servlet context object
@@ -80,49 +86,50 @@ public class ContainerInitializer {
 	/**
 	 * The script manager object
 	 */
-	protected final ScriptManager scriptManager;
+	protected ScriptManager scriptManager;
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(ContainerInitializer.class.getName());
-
+	protected final Logger logger = Logger.getLogger(getClass().getName());
+	
 	/**
 	 * 
-	 * Constructs a ContainerInitializer for the given servlet context
+	 * Constructs a ContainerManager for the given servlet context
 	 * 
 	 * @param context the servlet context
 	 * @throws ServletException the ServletException
 	 * 
 	 */
-	public ContainerInitializer(ServletContext context) throws ServletException {
+	public ContainerManager(ServletContext context) throws ServletException {
 		try {
 			this.context = context;
 			context.setAttribute(HANDLERS, handlers);
-			File folder = new File(context.getRealPath("/") + File.separator + SCRIPTS_FOLDER);
-			scriptManager = new ScriptManager(folder);
-			init(folder);
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
 	}
 
+
 	/**
 	 * 
-	 * Initializes the application for the given scripts folder
-	 * 
-	 * @param folder the scripts folder
+	 * Initializes the application for the given directory
+	 *
+	 * @param directory the scripts parent directory
+	 * @param listeners the ScriptListener list
 	 * @throws ServletException the ServletException
 	 * @throws ScriptException  the ScriptException
 	 * 
 	 */
-	protected void init(File folder) throws ServletException, ScriptException {
+	public void init(String directory, List<ScriptListener> listeners) throws ServletException, ScriptException {
+		File folder = new File(directory + File.separator + SCRIPTS_FOLDER);
+		scriptManager = new ScriptManager(folder);
+		scriptManager.addScriptListeners(listeners);
 		loadScripts(folder);
 	}
 
 	/**
 	 * 
-	 * Loads and registers the servlets, filters or listeners for the given scripts
-	 * folder
+	 * Loads and registers the servlets, filters or listeners
 	 * 
 	 * @param folder the scripts folder
 	 * @throws ServletException the ServletException
@@ -135,7 +142,7 @@ public class ContainerInitializer {
 			if (files != null) {
 				for (File file : files) {
 					if (file.isFile()) {
-						register(scriptManager.loadObject(file));
+						register(scriptManager.createObject(file));
 					} else {
 						loadScripts(file);
 					}
@@ -187,15 +194,25 @@ public class ContainerInitializer {
 			Object servlet = Proxy.newProxyInstance(this.getClass().getClassLoader(),
 					new Class[] { javax.servlet.Servlet.class }, handler);
 			handlers.put(name, handler);
-			registration = context.addServlet(name, (javax.servlet.Servlet) servlet);
+			ServletRegistration.Dynamic dynamic = context.addServlet(name, (javax.servlet.Servlet) servlet);
+			dynamic.setLoadOnStartup(annotation.loadOnStartup());
+			dynamic.setAsyncSupported(annotation.asyncSupported());
 			if (annotation.value().length > 0) {
-				registration.addMapping(annotation.value());
+				dynamic.addMapping(annotation.value());
 			}
 			if (annotation.urlPatterns().length > 0) {
-				registration.addMapping(annotation.urlPatterns());
+				dynamic.addMapping(annotation.urlPatterns());
 			}
 			for (InitParam param : annotation.initParams()) {
-				registration.setInitParameter(param.name(), param.value());
+				dynamic.setInitParameter(param.name(), param.value());
+			}
+			MultipartConfig multiPartConfig = object.getClass().getAnnotation(MultipartConfig.class);
+			if(multiPartConfig != null) {
+				dynamic.setMultipartConfig(new MultipartConfigElement(multiPartConfig));
+			}
+			ServletSecurity servletSecurity = object.getClass().getAnnotation(ServletSecurity.class);
+			if(servletSecurity != null) {
+				dynamic.setServletSecurity(new ServletSecurityElement(servletSecurity));
 			}
 		} else {
 			String message = "The servlet with the name " + name
@@ -221,16 +238,17 @@ public class ContainerInitializer {
 			Object filter = Proxy.newProxyInstance(this.getClass().getClassLoader(),
 					new Class[] { javax.servlet.Filter.class }, handler);
 			handlers.put(name, handler);
-			registration = context.addFilter(name, (javax.servlet.Filter) filter);
+			FilterRegistration.Dynamic dynamic = context.addFilter(name, (javax.servlet.Filter) filter);
+		    dynamic.setAsyncSupported(annotation.asyncSupported());
 			Collection<DispatcherType> dispatcherTypes = Arrays.asList(annotation.dispatcherTypes());
 			if (annotation.value().length > 0) {
-				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.value());
+				dynamic.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.value());
 			}
 			if (annotation.urlPatterns().length > 0) {
-				registration.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.urlPatterns());
+				dynamic.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.urlPatterns());
 			}
 			for (InitParam param : annotation.initParams()) {
-				registration.setInitParameter(param.name(), param.value());
+				dynamic.setInitParameter(param.name(), param.value());
 			}
 		} else {
 			String message = "The filter with the name " + name
@@ -291,7 +309,8 @@ public class ContainerInitializer {
 	 * 
 	 */
 	protected void watch(File folder) {
-		new FileWatcher(folder).addListener(new FileAdapter() {
+		new FileWatcher(folder).addFileListener(new FileAdapter() {
+			
 			@Override
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
@@ -300,6 +319,12 @@ public class ContainerInitializer {
 					process(file);
 				}
 			}
+			
+			@Override
+			public void onModified(FileEvent event) {
+				onCreated(event);
+			}
+			
 
 		}).watch();
 	}
@@ -313,14 +338,18 @@ public class ContainerInitializer {
 	 */
 	protected void process(File script) {
 		try {
-			Object object = scriptManager.loadObject(script);
+			Object object = scriptManager.createObject(script);
 			Annotation[] annotations = object.getClass().getAnnotations();
 			for (Annotation annotation : annotations) {
-				if (annotation instanceof Servlet || annotation instanceof Filter
-						|| annotation instanceof RequestListener || annotation instanceof ContextAttributeListener
+				if (annotation instanceof RequestListener || annotation instanceof ContextAttributeListener
 						|| annotation instanceof RequestAttributeListener || annotation instanceof SessionListener
 						|| annotation instanceof SessionAttributeListener) {
 					reload(object);
+				} else if(annotation instanceof Servlet) {
+					reloadServlet((AbstractServlet) object);
+					
+				} else if(annotation instanceof Filter) {
+					reloadFilter((AbstractFilter) object);
 				}
 			}
 		} catch (Exception e) {
@@ -332,7 +361,7 @@ public class ContainerInitializer {
 	 * 
 	 * Reloads a servlet, filter or a listener into the web container
 	 * 
-	 * @param object the object
+	 * @param object the object to be reloaded
 	 * 
 	 */
 	protected void reload(Object object) {
@@ -341,6 +370,44 @@ public class ContainerInitializer {
 			handler.setTarget(object);
 		}
 	}
+	
+	/**
+	 * 
+	 * Reloads a servlet
+	 * 
+	 * @param servlet the servlet to be reloaded
+	 * @throws ServletException the ServletException
+	 * 
+	 */
+	protected void reloadServlet(AbstractServlet servlet) throws ServletException {
+		reload(servlet);
+		DefaultServletConfig config = new DefaultServletConfig();
+		config.setServletContext(context);
+		Servlet annotation = servlet.getClass().getAnnotation(Servlet.class);
+		for (InitParam param : annotation.initParams()) {
+			config.addInitParameter(param.name(), param.value());
+		}
+		servlet.init(config);
+	}
+	
+	/**
+	 * 
+	 * Reloads a filter
+	 * 
+	 * @param filter the filter to be reloaded
+	 * @throws ServletException the ServletException
+	 * 
+	 */
+	protected void reloadFilter(AbstractFilter filter) throws ServletException {
+		reload(filter);
+		DefaultFilterConfig config = new DefaultFilterConfig();
+		config.setServletContext(context);
+		Filter annotation = filter.getClass().getAnnotation(Filter.class);
+		for (InitParam param : annotation.initParams()) {
+			config.addInitParameter(param.name(), param.value());
+		}
+		filter.init(config);
+	}
 
 	/**
 	 * 
@@ -348,7 +415,7 @@ public class ContainerInitializer {
 	 * ServletContext is about to be shutdown
 	 * 
 	 */
-	public void destroy() {
+	public void shutDown() {
 		for (DynamicInvocationHandler handler : handlers.values()) {
 			Object target = handler.getTarget();
 			if (target instanceof AbstractContextListener) {
@@ -368,5 +435,17 @@ public class ContainerInitializer {
 	public Map<String, DynamicInvocationHandler> getHandlers() {
 		return handlers;
 	}
+
+
+	/**
+	 * 
+	 * Returns the script manager
+	 * 
+	 * @return the script manager
+	 */
+	public ScriptManager getScriptManager() {
+		return scriptManager;
+	}	
+	
 
 }

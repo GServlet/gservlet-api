@@ -23,7 +23,7 @@ import java.util.EventListener;
 
 /**
 * 
-* Interface for receiving notification events about files changes.
+* Interface for receiving notification events about files changes
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -47,5 +47,15 @@ public interface FileListener extends EventListener {
 	* 
 	*/
 	public void onDeleted(FileEvent event);
+	
+	
+	/**
+	* 
+	* Receives notification that a file has been modified
+	* 
+	* @param event the FileEvent containing the file that was modified
+	* 
+	*/
+	public void onModified(FileEvent event);
 	
 }

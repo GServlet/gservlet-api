@@ -4,8 +4,8 @@ Mamadou Lamine Ba <https://github.com/laminba2003[@laminba2003]>
 :example-caption!:
 ifndef::imagesdir[:imagesdir: images]
 ifndef::sourcedir[:sourcedir: ../../main/java]
-:description: This guide describes how to use the GServlet API.
-:keywords: Java, Servlets, Groovy, reference, learn, how to
+:description: This developer guide describes how to use the GServlet API.
+:keywords: Java, Servlets, Groovy, Spring, reference, learn, how to
 :doctype: book
 :page-layout!:
 :toc: left
@@ -16,10 +16,34 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 :icons: font
 :source-highlighter: highlightjs
 :source-language: asciidoc
+:docinfo: shared-head
 
-== Introduction to GServlet
+== Introduction
 
-GServlet is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. If you have no prior experience with Groovy, there are several curated lists of online resources for learning it.
+https://github.com/GServlet/gservlet-api[GServlet] is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest], and https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] objects. We have access to the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_.
+
+.Groovlet.groovy 
+[#src-listing] 
+[source,java]  
+----
+if (!session) {
+    session = request.getSession(true)
+}
+if (!session.counter) {
+    session.counter = 1
+}
+html.html {
+  head {
+      title('Groovy Servlet')
+  }
+  body {
+    p("Hello, ${request.remoteHost}: ${session.counter}! ${new Date()}")
+  }
+}
+session.counter = session.counter + 1
+----
+
+The same philosophy has been followed in the design of this API and if you have no prior experience with the Groovy language, there are several curated lists of online resources for learning it.
 
 * https://groovy-lang.org[Official Groovy Website]
 * https://groovy-lang.org/learn.html#books[List of Programming Books]
@@ -27,23 +51,21 @@ GServlet is an open source project inspired from the http://docs.groovy-lang.org
 == Main Features
 
 * Servlet 3.1+ Support
-* Groovy Scripting
-* Hot Reloading
-* JSON and XML Support
-* JDBC Support
+* Groovy Scripting and Hot Reloading
+* JSON, XML, HTML and JDBC Support
 
 == Requirements
 
-* Java 7+
+* Java 8+
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
 * Java EE 7+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 
 
 == Installation
 
-To get started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
+To get started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the API through a dependency management tool and the artifact can be found in Maven's central repository. It is named *_gservlet-api_* and you just need to name a dependency on it in your project.
 
-=== From Maven
+=== Maven
 
 .pom.xml 
 [#src-listing] 
@@ -56,7 +78,7 @@ To get started with GServlet, you may want to begin by creating your first proje
 </dependency>
 ----
 
-=== From Gradle
+=== Gradle
 
 .build.gradle 
 [#src-listing] 
@@ -67,59 +89,68 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.gservlet:gservlet-api:1.0.0'
+    compile("org.gservlet:gservlet-api:1.0.0")
 }
 ----
 
 ## Getting Started
 
-Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. These steps are as follows:
+Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. Using Maven, these steps are as follows:
 
-. Create a dynamic web project
-. Create the scripts folder inside your web content directory
+image::maven-project.png[Maven webapp project]
+
+. Create a Maven webapp https://maven.apache.org/archetypes/maven-archetype-webapp[project]
+. Create the *_groovy_* folder inside your webapp directory
 . Write the servlet source code
 . Run your Java web server
 . Call your servlet from a web browser
 
-
-You can find below some examples that you can try out. 
+Below are some examples that you can try out. 
     
-.CustomerServlet.java 
+.ProjectServlet.groovy 
 [#src-listing] 
 [source,java]  
 ----
 import org.gservlet.annotation.Servlet
 
-@Servlet("/customers")
-class CustomerServlet {
+@Servlet("/projects")
+class ProjectServlet {
 
-    void get() {
-      def customers = []
-      customers << [FirstName : "John", lastName : "Doe"]
-      customers << [FirstName : "Kate", lastName : "Martinez"]
-      customers << [FirstName : "Allisson", lastName : "Becker"]
-      json(customers)
-    }
+	List projects = []
 
-    void post() {
-      def customer = request.body // get the json request payload as object
-      json(customer)
-    }
+	void init() {
+	   projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+	   projects << [id : 2, name : "Spring", url : "https://spring.io"]
+	   projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
+	}
 
-    void put() {
-      def customer = request.body // get the json request payload as object
-      json(customer)
-    }
+	void get() {
+	   json(projects)
+	}
 
-    void delete() {
-      def param = request.param // shortcut to request.getParameter("param")
-      def attribute = request.attribute // shortcut to request.getAttribute("attribute")
-    }
+	void post() {
+	   def project = request.body
+	   projects << project
+	   json(project)
+	}
 
+	void put() {
+	   def project = request.body
+	   int index = projects.findIndexOf { it.id == project.id }
+	   projects[index] = project
+	   json(project)
+	}
+
+	void delete() {
+	   def project = request.body
+	   int index = projects.findIndexOf { it.id == project.id }
+	   json(projects.remove(index))
+	}
+	
 }
 ----
 
-.CorsFilter.java 
+.CorsFilter.groovy 
 [#src-listing] 
 [source,java]  
 ----
@@ -141,7 +172,7 @@ class CorsFilter {
 }
 ----
 
-.ServletRequestListener.java 
+.ServletRequestListener.groovy 
 [#src-listing] 
 [source,java]  
 ----
@@ -161,11 +192,11 @@ class ServletRequestListener {
 }
 ----
 
-For a hot reloading of your source code, set the **GSERVLET_RELOAD** environment variable to true in your IDE.
+NOTE: Keep a note that the use of the default package is discouraged and for a hot reloading of your source code, set the **GSERVLET_RELOAD** environment variable to true in your IDE.    
 
 == Creating Servlets
 
-A servlet is a small Java program that runs within a Web server. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Servlet.html[Servlet] interface defines methods that all servlets must implement. To implement this interface, you can write a generic servlet that extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/GenericServlet.html[GenericServlet] class or an HTTP servlet which extends the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html[HttpServlet] class and overrides at least one method, usually one of these:
+A servlet is a small Java program that runs within a Web server. The https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html[Servlet] interface defines methods that all servlets must implement. To implement this interface, you can write a generic servlet that extends the https://docs.oracle.com/javaee/7/api/javax/servlet/GenericServlet.html[GenericServlet] class or an HTTP servlet which extends the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServlet.html[HttpServlet] class and overrides at least one method, usually one of these:
 
 * _doGet_, for HTTP GET requests
 * _doPost_, for HTTP POST requests
@@ -173,7 +204,100 @@ A servlet is a small Java program that runs within a Web server. The https://jav
 * _doDelete_, for HTTP DELETE requests
 
 
-.MyHttpServlet.java 
+[plantuml, servlet-diagram, png]     
+----
+interface Servlet {
+  + void init(ServletConfig config)
+  + void service(ServletRequest request, ServletResponse response)
+  + ServletConfig getServletConfig()
+  + String getServletInfo()
+  + void destroy()
+}
+
+interface ServletConfig {
+   + String getServletName()
+   + String getInitParameter(String name)
+   + Enumeration<String> getInitParameterNames()
+   + ServletContext getServletContext()
+}
+
+
+abstract GenericServlet {
+   + void service(ServletRequest request, ServletResponse response)
+   + String getInitParameter(String name)
+   + Enumeration<String> getInitParameterNames()
+   + ServletContext getServletContext()
+   + String getServletName()
+}
+
+abstract HttpServlet {
+   + void service(HttpServletRequest request, HttpServletResponse response)
+   + void doGet(HttpServletRequest request, HttpServletResponse response)
+   + void doPost(HttpServletRequest request, HttpServletResponse response)
+   + void doPut(HttpServletRequest request, HttpServletResponse response)
+   + void doDelete(HttpServletRequest request, HttpServletResponse response)
+   + void doHead(HttpServletRequest request, HttpServletResponse response)
+   + void doOptions(HttpServletRequest request, HttpServletResponse response)
+   + void doTrace(HttpServletRequest request, HttpServletResponse response)
+}
+
+interface ServletRequest {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + int getContentLength()
+   + String getContentType()
+   + String getParameter(String name)
+   + Enumeration<String> getParameterNames()
+   + String[] getParameterValues(String name)
+   + ServletContext getServletContext()
+}
+
+
+interface HttpServletRequest {
+   + boolean authenticate(HttpServletResponse response)
+   + HttpSession getSession()
+   + HttpSession getSession(boolean create)
+   + Principal	getUserPrincipal()
+   + String getContextPath()
+   + Cookie[] getCookies()
+}
+
+
+interface ServletResponse {
+   + void setCharacterEncoding(String charset)
+   + void setContentLength(int length)
+   + void setContentType(String type)
+   + void setLocale(Locale locale)
+   + PrintWriter getWriter()
+   + ServletOutputStream getOutputStream()
+}
+
+
+interface HttpServletResponse {
+   + void addCookie(Cookie cookie)
+   + void addDateHeader(String name, long date)
+   + void addHeader(String name, String value)
+   + void sendRedirect(String location)
+   + void setStatus(int status)
+   + String encodeURL(String url)
+}
+
+
+Servlet <|.. GenericServlet
+Servlet --> ServletConfig
+Servlet --> ServletRequest
+Servlet --> ServletResponse
+GenericServlet <|-- HttpServlet
+HttpServlet --> HttpServletRequest
+ServletRequest <|-- HttpServletRequest
+HttpServlet --> HttpServletResponse
+ServletResponse <|-- HttpServletResponse
+
+----
+
+Below is a Java class that extends the HttpServlet class:
+
+.HelloWordServlet.java 
 [#src-listing] 
 [source,java]  
 ---- 
@@ -183,65 +307,63 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/myServlet")
-public class MyHttpServlet extends HttpServlet {
+@WebServlet("/index.html")
+public class HelloWordServlet extends HttpServlet {
 	
-	@Override
-	public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {  
-	  response.setContentType("text/html");  
-	  PrintWriter out = response.getWriter();
-	  out.println("<html>");
-	  out.println("<body>");
-	  out.println("<p>Welcome to servlet</p>");
-	  out.println("</body>");
-	  out.println("</html>");  
+   public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {  
+      response.setContentType("text/html");  
+      PrintWriter out = response.getWriter();
+      out.println("<html>");
+      out.println("<body>");
+      out.println("<p>Hello World!</p>");
+      out.println("</body>");
+      out.println("</html>");  
    }
 	
 }
 ----
 
-We are going to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are now implicit variables.
+Now, we are going to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are now implicit variables.
 
-
-.MyHttpServlet.groovy 
+.HelloWordServlet.groovy 
 [#src-listing] 
 [source,java]  
 ---- 
 import org.gservlet.annotation.Servlet
 
-@Servlet("/myServlet")
-class MyHttpServlet {
-	
-	void get() {
-	  out.println("<html>")
-	  out.println("<body>")
-	  out.println("<p>Welcome to servlet</p>")
-	  out.println("</body>")
-	  out.println("</html>")     
+@Servlet("/index.html")
+class HelloWordServlet {
+
+   void get() {
+      out.println("<html>")
+      out.println("<body>")
+      out.println("<p>Hello World!</p>")
+      out.println("</body>")
+      out.println("</html>")     
    }
 	
 }
 ----
 
-By default the Content-Type of the https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to a https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable which is an instance of a Groovy MarkupBuilder, to write a better version of this servlet.
+By default the content type of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to its https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable which is an instance of a Groovy MarkupBuilder, to write a better version of this servlet.
 
 
-.MyHttpServlet.groovy 
+.HelloWordServlet.groovy 
 [#src-listing] 
 [source,java]  
 ---- 
 import org.gservlet.annotation.Servlet
 
-@Servlet("/myServlet")
-class MyHttpServlet {
-	
-	void get() {
+@Servlet(value="/index.html", loadOnStartup = 1)
+class HelloWordServlet {
+
+  void get() {
      html.html {
        body {
-         p("Welcome to gservlet")
+         p("Hello World!")
        }
      } 
-   }
+  }
    
 }
 ----
@@ -255,39 +377,318 @@ The generated HTML content looks like this:
 <!DOCTYPE html>
 <html>
   <body>
-    <p>Welcome to gservlet</p>
+    <p>Hello World!</p>
   </body>
 </html>
 ----
 
-.Servlet Implicit Variables
+=== Servlet annotation attributes
+
+There are the same as those of the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebServlet.html[@WebServlet] annotation.
+
+|===
+|Name | Type | Description
+
+| _name_ | String | name of the servlet
+
+| _value_ | String[] | URL patterns of the servlet
+
+| _urlPatterns_ |  String[] | URL patterns of the servlet
+
+| _loadOnStartup_ | Integer | load-on-startup order of the servlet
+ 
+| _initParams_ | InitParam[] | init parameters of the servlet
+
+| _asyncSupported_ | boolean | Declares whether the servlet supports asynchronous operation mode
+
+| _smallIcon_ | String | small icon of the servlet
+
+| _largeIcon_ | String | large icon of the servlet
+
+| _description_ | String | description of the servlet
+
+| _displayName_ | String | display name of the servlet
+
+|===
+
+
+=== Servlet implicit variables
+
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html[Servlet] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|config | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletConfig.html[ServletConfig] object
+|_config_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html[ServletConfig] object
 
-|request |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|response | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+|_response_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
  
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
-|sql | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
+|_sql_ | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
 
-|out | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
+|_out_ | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
 
-|html | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+|_html_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+
+|_xml_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
 |===
+
+
+=== Servlet methods
+
+For an exhaustive list of the supported methods, please read the https://gservlet.org/javadocs/1.0.0/org/gservlet/abstractservlet[Javadocs].
+
+|===
+|Method |Description
+
+|_void init()_ | handles the initialization process
+
+|_void get()_ | handles the GET request
+
+|_void post()_ | handles the POST request
+
+|_void put()_ |  handles the PUT request
+
+|_void delete()_ | handles the DELETE request
+ 
+|_void head()_ | handles the HEAD request
+
+|_void options()_ | handles the OPTIONS request
+
+|_void trace()_ | handles the TRACE request.
+
+|_void forward(location)_ |  Forwards the request to the provided location
+
+|_void redirect(location)_ |  Redirects the request to the provided location
+
+|_void json(object)_ |  Sends the response as JSON
+
+|_void destroy()_ |  invoked when taken out of the service
+
+|===
+
+=== Servlet initialization parameters
+
+Since Servlet 3, the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a servlet programmatically, and it takes a required name and value. You can add a description but this is rather informative. In the initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html[ServletConfig] object. In the GServlet API, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
+
+.UploadServlet.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.InitParam
+import org.gservlet.annotation.Servlet
+
+@Servlet( urlPatterns = "/upload",
+initParams = [
+	@InitParam(name = "uploadDirectory", value = "/images")
+] )
+class UploadServlet {
+
+	void init() {
+		println config.uploadDirectory
+		println config.getInitParameter("uploadDirectory")
+	}
+
+}
+----
+
+The attributes of the _@InitParam_ annotation are the same as those of the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation.
+
+|===
+|Name | Type | Description
+
+| _name_ | String | name of the initialization parameter
+
+| _value_ | String | value of the initialization parameter
+
+|===
+
+=== Servlet Multipart configuration
+
+Supporting file uploads is a very basic and common requirement for many web applications. Prior to Servlet 3.0, implementing file upload required the use of external libraries or complex input processing. Version 3.0 of the Java Servlet specification helps to provide a viable solution to the problem in a generic and portable way. The Servlet 3.0 specification supports file upload out of the box, so any web container that implements the specification can parse multipart requests and make mime attachments available through the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object. A new annotation, https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/MultipartConfig.html[@MultipartConfig], is used to indicate that the servlet on which it is declared expects requests to made using the _multipart/form-data_ MIME type. Therefore, it can retrieve the Part components of a given _multipart/form-data_ request by calling the _getPart(String name)_ or _getParts()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object.
+
+.UploadServlet.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.InitParam
+import org.gservlet.annotation.Servlet
+import javax.servlet.annotation.MultipartConfig
+
+@Servlet( urlPatterns = "/upload",
+initParams = [
+	@InitParam(name = "uploadDirectory", value = "/images")
+] )
+@MultipartConfig( fileSizeThreshold = 1048576, maxFileSize = 5242880L, maxRequestSize = 26214400L )
+class UploadServlet {
+
+	String uploadPath
+
+	void init() {
+		uploadPath = context.getRealPath(config.uploadDirectory)
+		File uploadDir = new File(uploadPath)
+		if (!uploadDir.exists()) {
+			uploadDir.mkdir()
+		}
+	}
+
+	void get() {
+		File uploadDir = new File(uploadPath)
+		def files = []
+		uploadDir.listFiles()?.each { file -> 
+			files << [name : file.name, length : file.length(), lastModified : file.lastModified()]
+		}
+		json(files);
+	}
+
+	void post() {
+		request.getParts().each { part ->
+			String file = uploadPath + File.separator + request.getFileName(part)
+			part.write(file)
+		}
+		redirect(context.contextPath + "/upload");
+	}
+
+
+}
+----
+
+=== Servlet Security
+
+The https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/ServletSecurity.html[@ServletSecurity] annotation is used to specify security constraints on a Java servlet. The annotations https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/HttpMethodConstraint.html[@HttpMethodConstraint] and https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/HttpConstraint.html[@HttpConstraint] are used within that annotation to define the security constraints.
+
+ 
+[#src-listing] 
+[source,java]  
+---- 
+@ServletSecurity(
+    httpMethodConstraints = <HttpMethodConstraint[]>,
+    value = <HttpConstraint>
+)
+----
+
+The _httpMethodConstraints_ attribute specifies one or more constraints for some specific HTTP methods, whereas the _value_ attribute specifies a constraint that applies for all other HTTP methods.
+
+.Encryption for all HTTP methods 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+import javax.servlet.annotation.ServletSecurity
+import javax.servlet.annotation.ServletSecurity.TransportGuarantee
+import javax.servlet.annotation.HttpConstraint
+
+@Servlet(value="/projects")
+@ServletSecurity(@HttpConstraint(transportGuarantee = TransportGuarantee.CONFIDENTIAL))
+class ProjectServlet {
+
+	
+}
+----
+
+
+.Denying access to HTTP POST method 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+import javax.servlet.annotation.ServletSecurity
+import javax.servlet.annotation.HttpMethodConstraint
+import javax.servlet.annotation.ServletSecurity.EmptyRoleSemantic
+
+@Servlet(value="/projects")
+@ServletSecurity(httpMethodConstraints = @HttpMethodConstraint(value = "POST", 
+	emptyRoleSemantic = EmptyRoleSemantic.DENY))
+class ProjectServlet {
+
+	
+}
+----
+
+
+.Requiring that users must have the admin role 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+import javax.servlet.annotation.ServletSecurity
+import javax.servlet.annotation.HttpMethodConstraint
+
+@Servlet(value="/projects")
+@ServletSecurity(
+ httpMethodConstraints = [
+  @HttpMethodConstraint(value = "GET", rolesAllowed = "admin"),
+  @HttpMethodConstraint(value = "POST", rolesAllowed = "admin"),      
+ ]
+)
+class ProjectServlet {
+
+	
+}
+----
+
+You can find more examples about how to use the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/ServletSecurity.html[@ServletSecurity] annotation on the web.
 
 == Creating Filters
 
-A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://javaee.github.io/javaee-spec/javadocs/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter_ method.
+A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter()_ method.
 
-This is a Java filter that implements this interface:
+[plantuml, filter-diagram, png]     
+----
+interface Filter {
+  + void init(FilterConfig config)
+  + void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+  + void destroy()
+}
+
+interface FilterChain {
+  + void doFilter(ServletRequest request, ServletResponse response)
+}
+
+
+interface ServletRequest {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + int getContentLength()
+   + String getContentType()
+   + String getParameter(String name)
+   + Enumeration<String> getParameterNames()
+   + String[] getParameterValues(String name)
+   + ServletContext getServletContext()
+}
+
+
+interface ServletResponse {
+   + void setCharacterEncoding(String charset)
+   + void setContentLength(int length)
+   + void setContentType(String type)
+   + void setLocale(Locale locale)
+   + PrintWriter getWriter()
+   + ServletOutputStream getOutputStream()
+}
+
+interface FilterConfig {
+   + String getFilterName()
+   + String getInitParameter(String name)
+   + Enumeration<String> getInitParameterNames()
+   + ServletContext getServletContext()
+}
+
+Filter --> FilterChain
+Filter --> ServletRequest
+Filter --> ServletResponse
+Filter --> FilterConfig
+----
+
+
+Below is a Java class that implements the Filter interface:
 
 .MyFilter.java 
 [#src-listing] 
@@ -305,24 +706,21 @@ import java.io.IOException;
 @WebFilter("/*")
 public class MyFilter implements Filter {
  
-    @Override
     public void init(FilterConfig filterConfig) throws ServletException {  
     }
  
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {  
         chain.doFilter(request, response);
     }
  
-    @Override
     public void destroy() {
     }
     
 }
 ----
 
-The Groovy version with the GServlet API looks like this:
+Its Groovy version with the GServlet API looks like this:
 
 .MyFilter.groovy 
 [#src-listing] 
@@ -346,30 +744,114 @@ class MyFilter {
 }
 ----
 
-.Filter Implicit Variables
+=== Filter annotation attributes
+
+There are the same as those of the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebFilter.html[@WebFilter] annotation.
+
+|===
+|Name | Type | Description
+
+| _filterName_ | String | name of the filter
+
+| _value_ | String[] | URL patterns of the filter
+
+| _urlPatterns_ |  String[] | URL patterns of the filter
+
+| _dispatcherTypes_ | DispatcherType[] | dispatcher types to which the filter applies
+ 
+| _initParams_ | InitParam[] | init parameters of the filter
+
+| _servletNames_ | String[] | names of the servlets to which the filter applies
+
+| _asyncSupported_ | boolean | Declares whether the filter supports asynchronous operation mode
+
+| _smallIcon_ | String | small icon of the filter
+
+| _largeIcon_ | String | large icon of the filter
+
+| _description_ | String | description of the filter
+
+| _displayName_ | String | display name of the filter
+
+|===
+
+
+=== Filter implicit variables
+
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html[Filter] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|config | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterConfig.html[FilterConfig] object
+|_config_ | https://docs.oracle.com/javaee/7/api/javax/servlet/FilterConfig.html[FilterConfig] object
 
-|request |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|response | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+|_response_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
 
-|chain | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/FilterChain.html)[FilterChain] object
+|_chain_ | https://docs.oracle.com/javaee/7/api/javax/servlet/FilterChain.html)[FilterChain] object
  
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
-|sql | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
+|_sql_ | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
 
-|out | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
+|_out_ | https://docs.oracle.com/javase/7/docs/api/java/io/PrintWriter.html[PrintWriter] object
 
-|html | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+|_html_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+
+|_xml_ | http://docs.groovy-lang.org/latest/html/api/groovy/xml/MarkupBuilder.html[MarkupBuilder] object
+
 |===
+
+=== Filter methods
+
+For an exhaustive list of the supported methods, please read the https://gservlet.org/javadocs/1.0.0/org/gservlet/abstractfilter[Javadocs]. 
+
+|===
+|Method |Description
+
+|_void init()_ | handles the initialization process
+
+|_void filter()_ | handles the filtering tasks
+
+|_void next()_ | Calls the next filter in the chain
+
+|_void json(object)_ |  Sends the response as JSON
+
+|_void destroy()_ |  invoked when taken out of the service
+
+|===
+
+
+=== Filter initialization parameters
+
+The https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a filter programmatically. In its initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/FilterConfig.html[FilterConfig] object. Like for a servlet, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
+
+.LoggingFilter.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.InitParam
+import org.gservlet.annotation.Filter
+
+@Filter( value = "/*",
+initParams = [
+	@InitParam(name = "loggingDirectory", value = "/logs")
+])
+class LoggingFilter {
+
+	void init() {
+		println config.loggingDirectory
+		println config.getInitParameter("loggingDirectory")
+	}
+
+}
+----
+
 
 == Creating Listeners
 
@@ -377,33 +859,71 @@ During the lifetime of a typical Java EE web application, a number of events tak
 
 |=== 
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html[ServletContextListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] lifecycle changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] lifecycle changes.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] attribute changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] attribute changes.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html[ServletRequestListener] | Interface for receiving notification events about a https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequest.html[ServletRequest] coming into and going out of scope of a web application.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListener] | Interface for receiving notification events about a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html[ServletRequest] coming into and going out of scope of a web application.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] attribute changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] attribute changes.
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] | Interface for receiving notification events when an object is bound to or unbound from a https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession].
-
-
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] | Interface for receiving notification events when an https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] is being passivated and and activated.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] | Interface for receiving notification events when an object is bound to or unbound from a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession].
 
 
-| https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] | Interface for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] id changes.
+| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] | Interface for receiving notification events when an https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] is being passivated and and activated.
 
 
+| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] id changes.
 
 |=== 
 
 === ServletContextListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] lifecycle changes. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent[contextInitialized] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-[contextDestroyed] method in reverse order.
+This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] lifecycle changes. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent[contextInitialized] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-[contextDestroyed] method in reverse order.
+
+[plantuml, servletcontextlistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+
+interface ServletContextListener {
+  + void contextInitialized(ServletContextEvent event)
+  + void contextDestroyed(ServletContextEvent event)
+}
+
+class ServletContextEvent {
+  + ServletContextEvent(ServletContext context)
+  + ServletContext getServletContext()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+
+interface ServletContext {
+   + FilterRegistration.Dynamic addFilter(String filterName, Filter filter)
+   + void addListener(String className)
+   + ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet)
+   + String getRealPath(String path)
+}
+
+EventListener <|-- ServletContextListener
+ServletContextListener --> ServletContextEvent
+ServletContextEvent --> ServletContext
+EventObject <|-- ServletContextEvent
+----
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] interface:
 
 .MyServletContextListener.java 
 [#src-listing] 
@@ -416,19 +936,18 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletContextListener implements ServletContextListener {
 	
-	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		System.out.println("context started");	
+	   System.out.println("context started");	
 	}
 	
-	@Override
 	public void contextDestroyed(ServletContextEvent event) {
-		System.out.println("context destroyed");
+	   System.out.println("context destroyed");
 	}
 	
 }
 ----
 
+Its Groovy version with the GServlet API looks like this:
 
 .MyServletContextListener.groovy 
 [#src-listing] 
@@ -440,30 +959,79 @@ import org.gservlet.annotation.ContextListener
 public class MyServletContextListener {
 	
 	void contextInitialized() {
-		println "context started"	
+	   println "context started"	
 	}
 	
 	void contextDestroyed() {
-		println "context destroyed"
+	   println "context destroyed"
 	}
 	
 }
 ----
 
-.ServletContextListener Implicit Variables
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
 |===
 
 === ServletContextAttributeListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] attribute changes. The order in which implementations of this interface are invoked is unspecified.
+This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] attribute changes. The order in which implementations of this interface are invoked is unspecified.
+
+[plantuml, servletcontextattributelistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface ServletContextAttributeListener {
+  + void attributeAdded(ServletContextAttributeEvent event)
+  + void attributeRemoved(ServletContextAttributeEvent event)
+  + void attributeReplaced(ServletContextAttributeEvent event)
+}
+
+class ServletContextAttributeEvent {
+  + ServletContextAttributeEvent(ServletContext context, String name, Object value)
+  + String getName()
+  + Object getValue()
+}
+
+class ServletContextEvent {
+  + ServletContextEvent(ServletContext context)
+  + ServletContext getServletContext()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+
+interface ServletContext {
+   + FilterRegistration.Dynamic addFilter(String filterName, Filter filter)
+   + void addListener(String className)
+   + ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet)
+   + String getRealPath(String path)
+}
+
+EventListener <|-- ServletContextAttributeListener
+ServletContextAttributeListener --> ServletContextAttributeEvent
+ServletContextEvent <|-- ServletContextAttributeEvent
+ServletContextEvent --> ServletContext
+EventObject <|-- ServletContextEvent
+----
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] interface:
+
 
 .MyServletContextAttributeListener.java 
 [#src-listing] 
@@ -476,23 +1044,22 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletContextAttributeListener implements ServletContextAttributeListener {
 
-    @Override
     public void attributeAdded(ServletContextAttributeEvent event) {
         System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
-    @Override
     public void attributeRemoved(ServletContextAttributeEvent event) {
         System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
-    @Override
     public void attributeReplaced(ServletContextAttributeEvent event) {
         System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyServletContextAttributeListener.groovy 
 [#src-listing] 
@@ -518,25 +1085,77 @@ public class MyServletContextAttributeListener {
 }
 ----
 
-.ServletContextAttributeListener Implicit Variables
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
 
-|name | attribute name
+|_name_ | attribute name
 
-|value | attribute value
+|_value_ | attribute value
 |===
-
 
 === ServletRequestListener
 
-This interface is for receiving notification events about requests coming into and going out of scope of a web application. A request is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
+This interface is for receiving notification events about requests coming into and going out of scope of a web application. A request is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
+
+[plantuml, servletrequestlistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface ServletRequestListener {
+  + void requestInitialized(ServletRequestEvent event)
+  + void requestDestroyed(ServletRequestEvent event)
+}
+
+class ServletRequestEvent {
+  + ServletRequestEvent(ServletContext context, ServletRequest request)
+  + ServletContext getServletContext()
+  + ServletRequest getServletRequest()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface ServletRequest {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + int getContentLength()
+   + String getContentType()
+   + String getParameter(String name)
+   + Enumeration<String> getParameterNames()
+   + String[] getParameterValues(String name)
+   + ServletContext getServletContext()
+}
+
+interface ServletContext {
+   + FilterRegistration.Dynamic addFilter(String filterName, Filter filter)
+   + void addListener(String className)
+   + ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet)
+   + String getRealPath(String path)
+}
+
+EventListener <|-- ServletRequestListener
+ServletRequestListener --> ServletRequestEvent
+ServletRequestEvent --> ServletContext
+ServletRequestEvent --> ServletRequest
+EventObject <|-- ServletRequestEvent
+----
+
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListener] interface:
 
 .MyServletRequestListener.java 
 [#src-listing] 
@@ -549,18 +1168,18 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletRequestListener implements ServletRequestListener {
 
-	 @Override
     public void requestInitialized(ServletRequestEvent event) {
         System.out.println("request initialized");
     }
 
-    @Override
     public void requestDestroyed(ServletRequestEvent event) {
         System.out.println("request destroyed");
     }
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyServletRequestListener.groovy 
 [#src-listing] 
@@ -582,27 +1201,77 @@ public class MyServletRequestListener {
 }
 ----
 
-.ServletRequestListener Implicit Variables
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListener] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|request | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
 
 |===
 
-
 === ServletRequestAttributeListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
+This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
 Notifications will be generated while the request is within the scope of the web application. A ServletRequest is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope when it exits the last servlet or the first filter in the chain. The order in which implementations of this interface are invoked is unspecified.
+
+
+[plantuml, servletrequestattributelistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface ServletRequestAttributeListener {
+  + void attributeAdded(ServletRequestAttributeEvent event)
+  + void attributeRemoved(ServletRequestAttributeEvent event)
+  + void attributeReplaced(ServletRequestAttributeEvent event)
+}
+
+class ServletRequestAttributeEvent {
+  + ServletRequestAttributeEvent(ServletContext context, ServletRequest request, String name, Object value)
+  + String getName()
+  + Object getValue()
+}
+
+class ServletRequestEvent {
+  + ServletRequestEvent(ServletContext context, ServletRequest request)
+  + ServletContext getServletContext()
+  + ServletRequest getServletRequest()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+
+interface ServletContext {
+   + FilterRegistration.Dynamic addFilter(String filterName, Filter filter)
+   + void addListener(String className)
+   + ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet)
+   + String getRealPath(String path)
+}
+
+EventListener <|-- ServletRequestAttributeListener
+ServletRequestAttributeListener --> ServletRequestAttributeEvent
+ServletRequestEvent <|-- ServletRequestAttributeEvent
+ServletRequestEvent --> ServletContext
+EventObject <|-- ServletRequestEvent
+----
+
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] interface:
 
 .MyServletRequestAttributeListener.java 
 [#src-listing] 
@@ -615,23 +1284,22 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyServletRequestAttributeListener implements ServletRequestAttributeListener {
 
-    @Override
     public void attributeAdded(ServletRequestAttributeEvent event) {
         System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
-    @Override
     public void attributeRemoved(ServletRequestAttributeEvent event) {
         System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
-    @Override
     public void attributeReplaced(ServletRequestAttributeEvent event) {
         System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyServletRequestAttributeListener.groovy 
 [#src-listing] 
@@ -657,29 +1325,68 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
-.ServletRequestAttributeListener Implicit Variables
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|request |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|context | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
 
-|name | attribute name
+|_name_ | attribute name
 
-|value | attribute value
+|_value_ | attribute value
 |===
 
 === HttpSessionListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes. Implementations of this interface are invoked at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent[sessionCreated] method in the order in which they have been declared, and at their https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent[sessionDestroyed] method in reverse order.
+This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent[sessionCreated] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent[sessionDestroyed] method in reverse order.
 
+[plantuml, httpsessionlistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface HttpSessionListener {
+  + void sessionCreated(HttpSessionEvent event)
+  + void sessionDestroyed(HttpSessionEvent event)
+}
+
+class HttpSessionEvent {
+  + HttpSessionEvent(HttpSession session)
+  + HttpSession getSession()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface HttpSession {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + void invalidate()
+   + boolean isNew()
+   + ServletContext getServletContext()
+}
+
+EventListener <|-- HttpSessionListener
+HttpSessionListener --> HttpSessionEvent
+HttpSessionEvent --> HttpSession
+EventObject <|-- HttpSessionEvent
+----
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] interface:
 
 .MyHttpSessionListener.java 
 [#src-listing] 
@@ -692,18 +1399,18 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionListener implements HttpSessionListener {
 	
-	@Override
 	public void sessionCreated(HttpSessionEvent event) {
-		System.out.println("session created");	
+	  System.out.println("session created");	
 	}
 	
-	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
-		System.out.println("session destroyed");
+	  System.out.println("session destroyed");
 	}
 	
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyHttpSessionListener.groovy 
 [#src-listing] 
@@ -715,32 +1422,87 @@ import org.gservlet.annotation.SessionListener
 public class MyHttpSessionListener {
 	
 	void sessionCreated() {
-		println "session created"	
+	   println "session created"	
 	}
 	
 	void sessionDestroyed() {
-		println "session destroyed"
+	   println "session destroyed"
 	}
 	
 }
 ----
 
-.HttpSessionListener Implicit Variables
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
 |===
 
 
 === HttpSessionAttributeListener
 
-This interface is for receiving notification events about https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] attribute changes. The order in which implementations of this interface are invoked is unspecified.
+This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] attribute changes. The order in which implementations of this interface are invoked is unspecified.
+
+[plantuml, httpsessionattributelistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface HttpSessionAttributeListener {
+  + void attributeAdded(HttpSessionBindingEvent event)
+  + void attributeRemoved(HttpSessionBindingEvent event)
+  + void attributeReplaced(HttpSessionBindingEvent event)
+}
+
+class HttpSessionBindingEvent {
+  + HttpSessionBindingEvent(HttpSession session, String name)
+  + HttpSessionBindingEvent(HttpSession session, String name, Object value)
+  + String getName()
+  + Object getValue()
+}
+
+class HttpSessionEvent {
+  + ServletRequestEvent(ServletContext context, ServletRequest request)
+  + ServletContext getServletContext()
+  + ServletRequest getServletRequest()
+}
+
+class HttpSessionEvent {
+  + HttpSessionEvent(HttpSession session)
+  + HttpSession getSession()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface HttpSession {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + void invalidate()
+   + boolean isNew()
+   + ServletContext getServletContext()
+}
+
+EventListener <|-- HttpSessionAttributeListener
+HttpSessionAttributeListener --> HttpSessionBindingEvent
+HttpSessionEvent <|-- HttpSessionBindingEvent
+HttpSessionEvent --> HttpSession
+EventObject <|-- HttpSessionEvent
+----
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] interface:
 
 
 .MyHttpSessionAttributeListener.java 
@@ -754,17 +1516,14 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionAttributeListener implements HttpSessionAttributeListener {
 
-    @Override
     public void attributeAdded(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " added with value " + event.getValue());
     }
 
-    @Override
     public void attributeRemoved(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " removed with value " + event.getValue());
     }
 
-    @Override
     public void attributeReplaced(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " replaced with value " + event.getValue());
     }
@@ -772,6 +1531,7 @@ public class MyHttpSessionAttributeListener implements HttpSessionAttributeListe
 }
 ----
 
+Its Groovy version with the GServlet API looks like this:
 
 .MyHttpSessionAttributeListener.groovy 
 [#src-listing] 
@@ -797,24 +1557,73 @@ public class MyHttpSessionAttributeListener {
 }
 ----
 
-.HttpSessionAttributeListener Implicit Variables
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+|_event_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
 
-|name | attribute name
+|_name_ | attribute name
 
-|value | attribute value
+|_value_ | attribute value
 |===
 
 === HttpSessionBindingListener
 
 This interface is for receiving notification events about when an object is bound to or unbound from a session. This may be as a result of a servlet programmer explicitly unbinding an attribute from a session, due to a session being invalidated, or due to a session timing out.
+
+[plantuml, httpsessionbindinglistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface HttpSessionBindingListener {
+  + void valueBound(HttpSessionBindingEvent event)
+  + void valueUnbound(HttpSessionBindingEvent event)
+}
+
+class HttpSessionBindingEvent {
+  + HttpSessionBindingEvent(HttpSession session, String name)
+  + HttpSessionBindingEvent(HttpSession session, String name, Object value)
+  + String getName()
+  + Object getValue()
+}
+
+class HttpSessionEvent {
+  + HttpSessionEvent(HttpSession session)
+  + HttpSession getSession()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface HttpSession {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + void invalidate()
+   + boolean isNew()
+   + ServletContext getServletContext()
+}
+
+EventListener <|-- HttpSessionBindingListener
+HttpSessionBindingListener --> HttpSessionBindingEvent
+HttpSessionEvent <|-- HttpSessionBindingEvent
+HttpSessionEvent --> HttpSession
+EventObject <|-- HttpSessionEvent
+----
+
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] interface:
 
 .MyHttpSessionBindingListener.java 
 [#src-listing] 
@@ -827,18 +1636,18 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionBindingListener implements HttpSessionBindingListener {
 
-    @Override
     public void valueBound(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " bounded with value " + event.getValue());
     }
 
-    @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " unbounded with value " + event.getValue());
     }
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyHttpSessionBindingListener.groovy 
 [#src-listing] 
@@ -860,25 +1669,65 @@ public class MyHttpSessionBindingListener {
 }
 ----
 
-.HttpSessionBindingListener Implicit Variables
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event |  https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+|_event_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
 
-|name | attribute name
+|_name_ | attribute name
 
-|value | attribute value
+|_value_ | attribute value
 |===
-
 
 === HttpSessionActivationListener
 
 Objects that are bound to a session may listen to container events notifying them that sessions will be passivated and activated. A container that migrates session between VMs or persists sessions is required to notify all attributes bound to sessions implementing this interface.
+
+[plantuml, httpsessionactivationlistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface HttpSessionActivationListener {
+  + void sessionDidActivate(HttpSessionEvent event)
+  + void sessionWillPassivate(HttpSessionEvent event)
+}
+
+class HttpSessionEvent {
+  + HttpSessionEvent(HttpSession session)
+  + HttpSession getSession()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface HttpSession {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + void invalidate()
+   + boolean isNew()
+   + ServletContext getServletContext()
+}
+
+EventListener <|-- HttpSessionActivationListener
+HttpSessionActivationListener --> HttpSessionEvent
+HttpSessionEvent --> HttpSession
+EventObject <|-- HttpSessionEvent
+----
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] interface:
+
 
 .MyHttpSessionActivationListener.java 
 [#src-listing] 
@@ -891,18 +1740,18 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionActivationListener implements HttpSessionActivationListener {
 
-    @Override
     public void sessionDidActivate(HttpSessionEvent event) {
         System.out.println("session activated");
     }
 
-    @Override
     public void sessionWillPassivate(HttpSessionEvent event) {
         System.out.println("session passivated");
     }
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyHttpSessionActivationListener.groovy 
 [#src-listing] 
@@ -924,22 +1773,61 @@ public class MyHttpSessionActivationListener {
 }
 ----
 
-.HttpSessionActivationListener Implicit Variables
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
 |===
-
 
 === HttpSessionIdListener
 
 This interface is for receiving notification events about HttpSession id changes. The order in which implementations of this interface are invoked is unspecified.
+
+[plantuml, httpsessionidlistener-diagram, png]     
+----
+
+interface EventListener {
+  
+}
+
+interface HttpSessionIdListener {
+  + void sessionIdChanged(HttpSessionEvent event, String oldSessionId)
+}
+
+class HttpSessionEvent {
+  + HttpSessionEvent(HttpSession session)
+  + HttpSession getSession()
+}
+
+class EventObject {
+  # Object source
+  + EventObject(Object source)
+  + Object getSource()
+}
+
+interface HttpSession {
+   + Object getAttribute(String name)
+   + Enumeration<String> getAttributeNames()
+   + void invalidate()
+   + boolean isNew()
+   + ServletContext getServletContext()
+}
+
+EventListener <|-- HttpSessionIdListener
+HttpSessionIdListener --> HttpSessionEvent
+HttpSessionEvent --> HttpSession
+EventObject <|-- HttpSessionEvent
+----
+
+
+Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] interface:
 
 .MyHttpSessionIdListener.java 
 [#src-listing] 
@@ -952,13 +1840,14 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class MyHttpSessionIdListener implements HttpSessionIdListener {
 
-    @Override
     public void sessionIdChanged(HttpSessionEvent event, String oldSessionId) {
         System.out.println("the session id was "+oldSessionId);
     }
     
 }
 ----
+
+Its Groovy version with the GServlet API looks like this:
 
 .MyHttpSessionIdListener.groovy 
 [#src-listing] 
@@ -976,31 +1865,744 @@ public class MyHttpSessionIdListener {
 }
 ----
 
-.HttpSessionIdListener Implicit Variables
+The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] are as follows:
+
 |===
 |Variable |Description
 
-|logger | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|session | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
-|event | https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
-|oldSessionId | old https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html[HttpSession] Id
+|_oldSessionId_ | old https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] Id
 
 |===
 
+== Handling Request Parameters
 
-== Parsing and Producing JSON
-== Working With a Database
+The request parameters are sent along with the request. You can send them as part of the URL or as part of the body of an HTTP request. The _request.getParameter()_ method is used to get the value of a request parameter from the request and returns a string. We can also get an array of parameter values with the _request.getParameterValues()_ method which returns an array of strings.
+
+.ServletParameters.java 
+[#src-listing] 
+[source,java]  
+----
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import java.io.IOException;
+
+@WebServlet("/parameters")
+public class ServletParameters extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String param1 = request.getParameter("param1");
+        String param2 = request.getParameter("param2");
+        String[] paramArray = request.getParameterValues("paramArray");
+    }
+
+}
+----
+
+You can still use the approach above but handling request parameters with the GServlet API is a simple as this: 
+
+.ServletParameters.groovy 
+[#src-listing] 
+[source,java]  
+----
+import org.gservlet.annotation.Servlet
+
+@Servlet("/parameters")
+class ServletParameters {
+   
+   void get() {
+     String param1 = request.param1
+     String param2 = request.param2
+     String[] paramArray = request.paramArray
+   }
+
+}
+----
+
+
+== Managing Attributes
+
+An attribute is an object that is used to share information in a web application. Attributes can be SET and GET from one of the following scopes : _request_, _session_, _application_. 
+
+.ServletAttributes.java 
+[#src-listing] 
+[source,java]  
+----
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import java.io.IOException;
+
+@WebServlet("/attributes")
+public class ServletAttributes extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("attribute1","Attribute 1");
+        System.out.println(request.getAttribute("attribute1"));
+        
+        HttpSession session = request.getSession()
+        session.setAttribute("attribute2","Attribute 2");
+        System.out.println(session.getAttribute("attribute2"));
+        
+        ServletContext context = request.getServletContext();
+        context.setAttribute("attribute3","Attribute 3");
+        System.out.println(context.getAttribute("attribute3"));
+    }
+
+}
+----
+
+You can still use the approach above but managing attributes with the GServlet API is a simple as this: 
+
+.ServletAttributes.groovy 
+[#src-listing] 
+[source,java]  
+----
+import org.gservlet.annotation.Servlet
+
+@Servlet("/attributes")
+class ServletAttributes {
+   
+   void get() {
+      request.attribute1 = "Attribute 1"
+      println request.attribute1
+        
+      session.attribute2 = "Attribute 2"
+      println session.attribute2
+        
+      context.attribute3 = "Attribute 3"
+      context.attribute3
+   }
+
+}
+----
+
+== Working With JSON
+
+Groovy comes with integrated support for converting between Groovy objects and JSON. The classes dedicated to JSON serialisation and parsing are found in the *_groovy.json_* package. You can get an insight of how to use them in the Groovy https://groovy-lang.org/json.html[documentation]. In the GServlet API, we have simplified the process of parsing and producing JSON in your servlets and filters as below: 
+
+.JSON Generation 
+[#src-listing] 
+[source,java]  
+----
+import org.gservlet.annotation.Servlet
+
+@Servlet("/projects")
+class ProjectServlet {
+   
+   List projects = []
+
+   void init() {
+     projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+     projects << [id : 2, name : "Spring", url : "https://spring.io"]
+     projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
+   }
+
+   void get() {
+     json(projects)
+   }
+
+   void post() {
+     def project = request.body
+     projects << project
+     json(project)
+   }
+	
+}
+----
+
+Whenever, the content type of the request is set to *_application/json_*, you can use its *_body_* property to get the payload as Groovy object. Your servlet or filter can use as well the built-in *_json()_* method to send JSON data as a response.
+
+== Working With HTML and XML
+
+The most commonly used approach for creating HTML and XML content with Groovy is to use a builder. Two implicit variables, _html_ and _xml_, which are bound to an instance of a MarkupBuilder have been made available to your servlets and filters for that purpose.
+
+.HTML Generation
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+
+@Servlet("/index.html")
+class HtmlServlet {
+
+  void get() {
+     html.html {
+       body {
+         p("Hello World!")
+       }
+     } 
+  }
+   
+}
+----
+
+
+.XML Generation
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+
+@Servlet("/books")
+class XmlServlet {
+
+  void get() {
+	 xml.books {
+		 book(id: "1", name : "Groovy in Action")
+		 book(id: "2", name : "Spring in Action")
+		 book(id: "3", name : "Maven in Action")
+	 } 
+  }
+   
+}
+----
+
+
+== Working With RDBMS
+
+The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API is as simple as to create in the webapp directory, a file named *_gservlet.properties_*.
+
+.gservlet.properties 
+[#src-listing] 
+[source,plain]  
+---- 
+db.driver : com.mysql.cj.jdbc.Driver
+db.url : jdbc:mysql://localhost:3306/gservlet_examples
+db.user : root
+db.password : changeit
+db.minPoolSize : 5
+db.maxPoolSize : 10
+----
+
+For each request, an http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] connection is automatically created from a data source and made available in your servlets and filters through the implicit _sql_ variable as below:
+
+.ProjectServlet.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+
+@Servlet("/projects")
+class ProjectServlet {
+	
+   void post() {
+     def params = [1, 'Groovy', 'https://groovy-lang.org']
+     sql.execute 'insert into projects (id, name, url) values (?, ?, ?)', params   
+   }
+	
+}
+----
+
+.ProjectFilter.groovy 
+[#src-listing] 
+[source,java]  
+----  
+import org.gservlet.annotation.Filter;
+ 
+@Filter("/*")
+class ProjectFilter {
+ 
+   void filter() {
+      sql.eachRow('select * from projects') { project ->
+         println "${project.name.padRight(10)} ($project.url)"
+      }
+      next()
+   }
+     
+}
+----
+
+After each request, the _close()_ method of the http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object is automatically invoked to bring it back to the connection pool. Below is a summary of the database configuration properties:
+
+|===
+|Name | Required | Description
+
+| _db.driver_ | true | database driver class name
+
+| _db.url_ | true | database url
+
+| _db.user_ |  true | database user
+
+| _db.password_ | true | database password
+ 
+| _db.minPoolSize_ | false | database minimum pool size. The default value is 1
+
+| _db.maxPoolSize_ | false | database maximum pool size. The default value is 3
+
+|===
+
+== Unit Testing
+
+Unit testing servlets is difficult, therefore it is recommended to move the main business logic in the servlet into a separate class which has no dependencies on the Servlet API. The Groovy programming language comes with great support for writing tests. In addition to the language features and test integration with state-of-the-art testing libraries and frameworks, the Groovy ecosystem has born a rich set of testing libraries and frameworks. In its https://groovy-lang.org/testing.html[testing guide], you can take at a closer look at JUnit integration, Spock for specifications, and Geb for functional tests.
+
+== Groovydocs Generation
+
+https://github.com/apache/groovy/blob/master/subprojects/groovy-groovydoc/src/spec/doc/groovydoc.adoc[Groovydoc] was introduced in 2007 to provide for Groovy what https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html[Javadoc] provides for Java. It is used to generate the API documentation for the Groovy and Java classes that compose your project.
+
+.ProjectServlet.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+
+/**
+ * This servlet handles the management of projects
+ * 
+ * @author John Doe
+ */
+@Servlet(value="/projects")
+class ProjectServlet {
+
+	/**
+	 * the projects list
+	 */
+	List projects = []
+
+	/**
+	 * the init method
+	 */
+	void init() {
+		projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+		projects << [id : 2, name : "Spring", url : "https://spring.io"]
+		projects << [id : 3, name : "Maven", url : "https://maven.apache.org"]
+		projects << [id : 4, name : "JMeter", url : "https://jmeter.apache.org"]
+	}
+	
+	/**
+	 * handles the GET method
+	 */
+	void get() {
+		json(projects)
+	}
+
+	/**
+	 * handles the POST method
+	 */
+	void post() {
+		def project = request.body
+		projects << project
+		json(project)
+	}
+	
+}
+----
+
+
+=== Maven
+
+https://github.com/groovy/GMavenPlus[GMavenPlus] is a rewrite of https://github.com/groovy/gmaven[GMaven], a plugin that allows you to integrate Groovy into your Maven projects. This is the basic configuration to generate Groovydocs with this plugin.
+
+.pom.xml 
+[#src-listing] 
+[source,xml]  
+---- 
+<project>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>3.0.6</version>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+				<version>1.11.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>groovydoc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sources>
+						<source>
+							<directory>${project.basedir}/src/main/webapp/groovy</directory>
+							<includes>
+								<include>**/*.groovy</include>
+							</includes>
+						</source>
+					</sources>
+					<links>
+					  <link>
+					   <href>https://docs.oracle.com/javase/7/docs/api/</href>
+					   <packages>java.,javax.,org.xml.</packages>
+					  </link>
+					  <link>
+					   <href>http://docs.groovy-lang.org/latest/html/gapi/</href>
+					   <packages>groovy.,org.codehaus.groovy.</packages>
+					  </link>
+					</links>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+----
+
+Run *_mvn gplus:groovydoc_* and your documentation will be generated in the *_target/gapidocs_* directory.
+
+=== Gradle
+
+With Gradle, You can use the https://github.com/apache/groovy/blob/master/subprojects/groovy-groovydoc/src/spec/doc/groovydoc.adoc[Groovydoc] tool to generate your project documentation, and the version that is used, is the one from the Groovy dependency defined in the build script.
+
+.build.gradle 
+[#src-listing] 
+[source,java]  
+---- 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:3.0.6"
+}
+
+apply plugin: 'groovy'
+
+sourceSets {
+	main {
+		groovy {
+			srcDirs = ['src/main/webapp/groovy']
+		}
+	}
+}
+
+groovydoc {
+  use = true
+  groovyClasspath = configurations.compile 
+  source = sourceSets.main.groovy
+  link 'https://docs.oracle.com/javase/7/docs/api/', 'java.'
+  link 'http://docs.groovy-lang.org/latest/html/gapi/', 'groovy.', 'org.codehaus.groovy.'
+}
+----
+
+Run *_gradle groovydoc_* and your documentation will be generated in the *_build/docs/groovydoc_* directory.
+
+== IDE Support
+
+=== Eclipse
+
+To augment the editor features such as content assist, the GServlet API ships with a DSL Descriptor (DSLD) to describe the editing semantics in a way that can be interpreted by the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)] which provides Eclipse support for the Groovy programming language. 
+
+.servlet.dsld 
+[#src-listing] 
+[source,java]  
+----  
+contribute(currentType(annos: annotatedBy(Servlet))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractServlet'
+	property name : 'config', type : javax.servlet.ServletConfig, provider : 'org.gservlet.AbstractServlet'
+	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractServlet'
+	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractServlet'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractServlet'
+	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractServlet'
+	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractServlet'
+	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractServlet'
+	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractServlet'
+}
+
+contribute(currentType(annos: annotatedBy(Servlet))) {
+	delegatesTo type : org.gservlet.AbstractServlet, except : [
+		'service',
+		'doGet',
+		'doPost',
+		'doHead',
+		'doPut',
+		'doTrace',
+		'doOptions',
+		'doDelete'
+	]
+}
+
+contribute(currentType(annos: annotatedBy(Filter))) {
+	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractFilter'
+	property name : 'config', type : javax.servlet.FilterConfig, provider : 'org.gservlet.AbstractFilter'
+	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractFilter'
+	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractFilter'
+	property name : 'chain', type : javax.servlet.FilterChain, provider : 'org.gservlet.AbstractFilter'
+	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractFilter'
+	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractFilter'
+	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractFilter'
+	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractFilter'
+	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractFilter'
+}
+
+contribute(currentType(annos: annotatedBy(Filter))) {
+	delegatesTo type : org.gservlet.AbstractFilter, except : ['init', 'doFilter']
+}
+
+----
+
+Make sure your Eclipse project has the Groovy nature and that the Groovy DSL support is activated. To leverage the full power of the https://marketplace.eclipse.org/content/groovy-development-tools[Groovy Development Tools (GDT)], it is highly recommended to add the _groovy_ folder as source folder, so you can use its wizards to create your artifacts. 
+
+image::groovy-dsl-eclipse.png[Groovy DSL support]
+
+
+NOTE: The use of the default package is discouraged and the example below illustrates a simple packaging practice to follow throughout your development for a cohesive structure of your project.
+
+.ProjectDao.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+package dao
+
+class ProjectDao {
+	
+   List projects = []
+
+   ProjectDao() {
+     projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+     projects << [id : 2, name : "Spring", url : "https://spring.io"]
+     projects << [id : 3, name : "Maven",  url : "https://maven.apache.org"]
+   }
+	
+}
+----
+
+
+.ProjectServlet.java 
+[#src-listing] 
+[source,java]  
+----
+package servlet
+
+import org.gservlet.annotation.Servlet
+import dao.ProjectDao
+
+@Servlet("/projects")
+class ProjectServlet {
+   
+   ProjectDao projectDao
+
+   void init() {
+     projectDao = new ProjectDao()
+   }
+
+   void get() {
+     json(projectDao.projects)
+   }
+	
+}
+----
+
+=== IntelliJ IDEA
+
+In the other hand, in IntelliJ IDEA, we can write GDSL files to have code completion on the injected methods/properties and closures. https://confluence.jetbrains.com/display/GRVY/Scripting+IDE+for+DSL+awareness[GroovyDSL] is a scripting framework with a domain-specific language designed to define the behavior of end-user DSLs as script files which are executed by the IDE on the fly, bringing new reference resolution and code completion logic into the scope of a project.
+
+.servlet.gdsl 
+[#src-listing] 
+[source,java]  
+----  
+def classContext = context(scope: classScope())
+
+contributor(classContext) {
+  if (hasAnnotation('org.gservlet.annotation.Servlet')) {
+    property name: 'logger', type: 'java.util.logging.Logger'
+    property name: 'config', type: 'javax.servlet.ServletConfig'
+    property name: 'request', type: 'javax.servlet.http.HttpServletRequest'
+    property name: 'response',type: 'javax.servlet.http.HttpServletResponse'
+    property name: 'session', type: 'javax.servlet.http.HttpSession'
+    property name: 'context', type: 'javax.servlet.ServletContext'
+    property name: 'sql', type: 'groovy.sql.Sql'
+    property name: 'out', type: 'java.io.PrintWriter'
+    property name: 'html', type: 'groovy.xml.MarkupBuilder'
+    delegatesTo(findClass('org.gservlet.AbstractServlet'))
+  }
+}
+
+contributor(classContext) {
+  if (hasAnnotation('org.gservlet.annotation.Filter')) {
+    property name: 'logger', type: 'java.util.logging.Logger'
+    property name: 'config', type: 'javax.servlet.FilterConfig'
+    property name: 'request', type: 'javax.servlet.http.HttpServletRequest'
+    property name: 'response', type: 'javax.servlet.http.HttpServletResponse'
+    property name: 'chain', type: 'javax.servlet.FilterChain'
+    property name: 'session', type: 'javax.servlet.http.HttpSession'
+    property name: 'context', type: 'javax.servlet.ServletContext'
+    property name: 'sql', type: 'groovy.sql.Sql'
+    property name: 'out', type: 'java.io.PrintWriter'
+    property name: 'html', type: 'groovy.xml.MarkupBuilder'
+    delegatesTo(findClass('org.gservlet.AbstractFilter'))
+  }
+}
+----
+
+== Framework Support
+
+=== Spring Boot
+
+You just need this configuration below to leverage the GServlet API in your Spring Boot application. 
+
+.SpringConfiguration.java 
+[#src-listing] 
+[source,java]  
+----  
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import org.gservlet.GServletApplication;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Bean;
+
+@Configuration
+public class SpringConfiguration implements ServletContextInitializer {
+
+	private GServletApplication application;
+	
+	@Override
+	public void onStartup(ServletContext context) throws ServletException {
+		application = new GServletApplication(context);
+		application.startOnSpringBoot();
+		
+	}
+	
+	@Bean(destroyMethod = "stop")
+	public GServletApplication servletApplication() {
+		return application;
+	}
+	
+}
+----
+
+If you want to reuse the data source configured by Spring, this is how you must proceed: 
+
+.SpringConfiguration.java 
+[#src-listing] 
+[source,java]  
+----  
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.sql.DataSource;
+import org.gservlet.GServletApplication;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SpringConfiguration implements ServletContextInitializer {
+
+	private GServletApplication application;
+	
+	@Override
+	public void onStartup(ServletContext context) throws ServletException {
+		application = new GServletApplication(context);
+		application.startOnSpringBoot();
+		
+	}
+	
+	@Bean(destroyMethod = "stop")
+	public GServletApplication servletApplication(DataSource dataSource) {
+		application.setDataSource(dataSource);
+		return application;
+	}
+	
+}
+----
+
+To enable Spring autowiring, you can use an implementation of the https://gservlet.org/javadocs/1.0.0/org/gservlet/scriptlistener[ScriptListener] interface like this:
+
+.SpringConfiguration.java 
+[#src-listing] 
+[source,java]  
+----  
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.sql.DataSource;
+import org.gservlet.GServletApplication;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
+@Configuration
+public class SpringConfiguration implements ServletContextInitializer {
+
+	private GServletApplication application;
+	
+	@Override
+	public void onStartup(ServletContext context) throws ServletException {
+		application = new GServletApplication(context);
+		application.addScriptListener(bean -> {
+			SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(bean, context);
+		});
+		application.startOnSpringBoot();		
+	}
+	
+	@Bean(destroyMethod = "stop")
+	public GServletApplication servletApplication(DataSource dataSource) {
+		application.setDataSource(dataSource);
+		return application;
+	}
+	
+}
+----
+
+NOTE: Your Groovy scripts must be created in the *_src/main/resources_* folder if your application is packaged as a jar.
+
+=== Other Java web frameworks 
+
+If the target framework supports the _@WebListener_ annotation of the Servlet API, no configuration is required since we ship with a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] which starts and stops the application. This statement is valid for frameworks like JSF, Apache Struts.
+
+.StartupListener.java 
+[#src-listing] 
+[source,java]  
+----  
+package org.gservlet;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+
+@WebListener
+public class StartupListener implements ServletContextListener {
+
+	private GServletApplication application; 
+
+	@Override
+	public void contextInitialized(ServletContextEvent event) {
+		application = new GServletApplication(event.getServletContext());
+		application.start();
+	}
+	
+	@Override
+	public void contextDestroyed(ServletContextEvent event) {
+		application.stop();
+	}
+	
+}
+----
+
+== Code Examples
+
+We have created several code examples on https://github.com/GServlet/gservlet-examples[GitHub] to help beginners to learn and gain expertise at GServlet. Checkout the appropriate branch for the version that you are using.
+
 == Copyright and License
 
 Copyright @2020. Free use of this software is granted under the terms of the https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0] License.
 
 == Authors
 
-GServlet was written by https://github.com/laminba2003[Mamadou Lamine Ba].
+GServlet was created by https://github.com/laminba2003[Mamadou Lamine Ba].
 
 == Contributing
 
-Contributions of any type or any scope, drive the project forward. There are lot of ways to contribute, not just code.  We provide more information about how to get involved in our link:/contribute[contribute] page.
+Contributions of any type or any scope, drive the project forward. There are lot of ways to contribute, not just code. We provide more information about how to get involved in our link:/contribute[contribute] page.

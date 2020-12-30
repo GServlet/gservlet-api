@@ -25,12 +25,12 @@ import java.util.logging.Logger;
 
 /**
 * 
-* Abstract base class inherited by all the listeners classes.
+* Abstract base class inherited by all the listeners classes
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractListener implements EventListener{
+public abstract class AbstractListener implements EventListener {
 
 	/**
 	 * The event holder object
@@ -39,7 +39,7 @@ public abstract class AbstractListener implements EventListener{
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(this.getClass().getName());
+	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	* 

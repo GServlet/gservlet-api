@@ -487,17 +487,17 @@ blockquote, blockquote p {
 		line-height: 1.2
 	}
 	h1 {
-		font-size: 2.75em;
+		font-size: 2.45em;
 		font-weight: 600;
 	}
 	h2 {
-		font-size: 1.7em
+		font-size: 1.5em
 	}
 	h3, #toctitle, .sidebarblock>.content>.title {
-		font-size: 1.6875em
+		font-size: 1.2875em
 	}
 	h4 {
-		font-size: 1.4375em
+		font-size: 1.0375em
 	}
 }
 
@@ -527,7 +527,7 @@ table tr th, table tr td {
 }
 
 table tr.even, table tr.alt, table tr:nth-of-type(even) {
-	background: #f8f8f7
+	background: #fdfdfd
 }
 
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td,
@@ -585,7 +585,9 @@ pre, pre>code {
 	font-weight: 400;
 	text-rendering: optimizeSpeed
 }
-
+em {
+  color : #e65251	
+}
 em em {
 	font-style: normal
 }
@@ -669,6 +671,10 @@ p a>code:hover {
 	color: rgba(0, 0, 0, .9)
 }
 
+#header {
+	background : #f8f8f8;
+}
+
 #header, #content, #footnotes, #footer {
 	width: 100%;
 	margin-left: auto;
@@ -683,6 +689,10 @@ p a>code:hover {
 
 #content {
 	width: 95%;
+}
+
+#content h3 {
+	border: 1px solid #e2dddd;
 }
 
 #header:before, #header:after, #content:before, #content:after,
@@ -798,9 +808,9 @@ p a>code:hover {
 }
 
 #toc ul {
-	font-family: Tahoma, "Open Sans", "DejaVu Sans", sans-serif;
+	font-family: "Open Sans", "DejaVu Sans", sans-serif;
 	list-style-type: none;
-	font-size: 0.97em;
+	font-size: 0.95em;
 }
 
 #toc li {
@@ -841,7 +851,7 @@ p a>code:hover {
 		z-index: 1000;
 		padding: 1.25em 1em;
 		height: 100%;
-		overflow: auto
+		overflow: hidden
 	}
 	#toc.toc2 #toctitle {
 		margin-top: 0;
@@ -1022,12 +1032,17 @@ p a>code:hover {
 	color: #fff;
     text-decoration: none;
     background: #e65251;
-    padding: 10px;
+    padding: 8px;
     width: 100%;
     display: block;
 }
 
-#content h1>a.link:hover, h2>a.link:hover, h3>a.link:hover, #toctitle>a.link:hover,
+h3>a.link {
+	background: #fffacd;
+    color: black;
+}
+
+#content h1>a.link:hover, h2>a.link:hover, #toctitle>a.link:hover,
 	.sidebarblock>.content>.title>a.link:hover, h4>a.link:hover, h5>a.link:hover,
 	h6>a.link:hover {
 	color: #fff

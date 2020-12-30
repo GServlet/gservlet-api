@@ -25,7 +25,7 @@ import javax.servlet.ServletContextListener;
 
 /**
 * 
-* Abstract class for receiving notification events about ServletContext lifecycle changes.
+* Abstract class for receiving notification events about ServletContext lifecycle changes
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -66,7 +66,7 @@ public abstract class AbstractContextListener extends AbstractListener implement
 	* 
 	*/
 	public ServletContext getContext() {
-		return new ContextWrapper(getEvent().getServletContext());
+		return new ServletContextWrapper(getEvent().getServletContext());
 	}
 	
 	/**

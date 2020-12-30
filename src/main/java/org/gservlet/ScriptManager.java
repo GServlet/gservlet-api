@@ -23,8 +23,11 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import org.codehaus.groovy.control.BytecodeProcessor;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.gservlet.annotation.ContextAttributeListener;
@@ -48,7 +51,7 @@ import javassist.NotFoundException;
 
 /**
  * 
- * An specific class to load Groovy scripts.
+ * An specific class to load Groovy scripts
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -61,44 +64,62 @@ public class ScriptManager {
 	protected final File folder;
 
 	/**
-	 * The groovy script engine object
+	 * The GroovyScriptEngine object
 	 */
 	protected final GroovyScriptEngine engine;
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(ScriptManager.class.getName());
+	protected final Logger logger = Logger.getLogger(getClass().getName());
+
+	/**
+	 * The list of script listeners
+	 */
+	protected final List<ScriptListener> listeners = new ArrayList<>();
 
 	/**
 	 * 
 	 * Constructs a ScriptManager for the given folder
 	 * 
 	 * @param folder the scripts folder object
-	 * @throws MalformedURLException the MalformedURLException
+	 * @throws ScriptException the ScriptException
 	 * 
 	 */
-	public ScriptManager(File folder) throws MalformedURLException {
-		this.folder = folder;
-		engine = createScriptEngine();
+	public ScriptManager(File folder) throws ScriptException {
+		try {
+			this.folder = folder;
+			engine = createScriptEngine();
+		} catch (MalformedURLException e) {
+			throw new ScriptException(e);
+		}
 	}
 
 	/**
 	 * 
-	 * Loads and instantiates an object from a groovy script file
+	 * Creates an object from a groovy script file
 	 * 
-	 * @param file the groovy script file
+	 * @param script the groovy script file
 	 * @return the instantiated object
 	 * @throws ScriptException the ScriptException
 	 * 
 	 */
-	public Object loadObject(File file) throws ScriptException {
+	public Object createObject(File script) throws ScriptException {
 		try {
-			return loadClass(file).getConstructor().newInstance();
+			Class<?> clazz = loadClass(script);
+			if (!clazz.isInterface() && isClassSupported(clazz)) {
+				Object object = clazz.getConstructor().newInstance();
+				listeners.forEach(listener -> listener.onCreated(object));
+				return object;
+			} else if (!clazz.isInterface()
+					&& Stream.of(clazz.getConstructors()).anyMatch(c -> c.getParameterCount() == 0)) {
+				return clazz.getConstructor().newInstance();
+			}
+			return new Object();
 		} catch (Exception e) {
 			throw new ScriptException(e);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Loads a class from a groovy script file
@@ -131,72 +152,117 @@ public class ScriptManager {
 		ClassPool classPool = ClassPool.getDefault();
 		classPool.insertClassPath(new LoaderClassPath(scriptEngine.getParentClassLoader()));
 		CompilerConfiguration configuration = new CompilerConfiguration();
-		configuration.setBytecodePostprocessor(createBytecodeProcessor(classPool));
+		configuration.setBytecodePostprocessor(createBytecodeProcessor());
 		scriptEngine.setConfig(configuration);
 		return scriptEngine;
 	}
 
 	/**
 	 * 
-	 * Creates a bytecodeProcessor for the given classPool
+	 * Creates a BytecodeProcessor for the given ClassPool instance
 	 * 
-	 * @param classPool the classPool object
-	 * @return the bytecodeProcessor object
+	 * @return the BytecodeProcessor object
 	 */
-	protected BytecodeProcessor createBytecodeProcessor(final ClassPool classPool) {
-		return new BytecodeProcessor() {
-			public byte[] processBytecode(String name, byte[] original) {
-				ByteArrayInputStream stream = new ByteArrayInputStream(original);
-				try {
-					CtClass ctClass = classPool.makeClass(stream);
-					ctClass.detach();
-					for (Object annotation : ctClass.getAnnotations()) {
-						processClass(classPool, ctClass, annotation.toString());
-					}
-					return ctClass.toBytecode();
-				} catch (Exception e) {
-					logger.log(Level.INFO, "exception during processBytecode method", e);
-				}
-				return original;
+	protected BytecodeProcessor createBytecodeProcessor() {
+		return (String name, byte[] original) -> {
+			ByteArrayInputStream stream = new ByteArrayInputStream(original);
+			try {
+				ClassPool classPool = ClassPool.getDefault();
+				CtClass ctClass = classPool.makeClass(stream);
+				ctClass.detach();
+				processClass(ctClass);
+				return ctClass.toBytecode();
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "exception during processBytecode method", e);
 			}
+			return original;
 		};
 	}
 
 	/**
 	 * 
-	 * Changes the bytecode of the given class based on the value of the annotation
+	 * Makes the given class extend a superclass based on the declared annotation
 	 * 
-	 * @param classPool  the classPool object
-	 * @param ctClass    the class
-	 * @param annotation the annotation
+	 * @param ctClass the class
 	 * @throws CannotCompileException the CannotCompileException
 	 * @throws NotFoundException      the NotFoundException
 	 */
-	protected void processClass(ClassPool classPool, CtClass ctClass, String annotation)
-			throws CannotCompileException, NotFoundException {
-		if (annotation.indexOf(Servlet.class.getName()) != -1) {
+	protected void processClass(CtClass ctClass) throws CannotCompileException, NotFoundException {
+		ClassPool classPool = ClassPool.getDefault();
+		if (ctClass.hasAnnotation(Servlet.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractServlet.class.getName()));
-		} else if (annotation.indexOf(Filter.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(Filter.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractFilter.class.getName()));
-		} else if (annotation.indexOf(ContextListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(ContextListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractContextListener.class.getName()));
-		} else if (annotation.indexOf(RequestListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(RequestListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractRequestListener.class.getName()));
-		} else if (annotation.indexOf(ContextAttributeListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(ContextAttributeListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractContextAttributeListener.class.getName()));
-		} else if (annotation.indexOf(RequestAttributeListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(RequestAttributeListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractRequestAttributeListener.class.getName()));
-		} else if (annotation.indexOf(SessionListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(SessionListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionListener.class.getName()));
-		} else if (annotation.indexOf(SessionAttributeListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(SessionAttributeListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));
-		} else if (annotation.indexOf(SessionBindingListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(SessionBindingListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionBindingListener.class.getName()));
-		} else if (annotation.indexOf(SessionActivationListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(SessionActivationListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionActivationListener.class.getName()));
-		} else if (annotation.indexOf(SessionIdListener.class.getName()) != -1) {
+		} else if (ctClass.hasAnnotation(SessionIdListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionIdListener.class.getName()));
 		}
+	}
+
+	/**
+	 * 
+	 * Checks if the declared annotation on the given class is supported
+	 * 
+	 * @param clazz the given class
+	 * @return true if the declared annotation on the given class is supported
+	 * 
+	 */
+
+	protected boolean isClassSupported(Class<?> clazz) {
+		return clazz.getAnnotation(Servlet.class) != null || clazz.getAnnotation(Filter.class) != null
+				|| clazz.getAnnotation(ContextListener.class) != null
+				|| clazz.getAnnotation(RequestListener.class) != null
+				|| clazz.getAnnotation(ContextAttributeListener.class) != null
+				|| clazz.getAnnotation(RequestAttributeListener.class) != null
+				|| clazz.getAnnotation(SessionListener.class) != null
+				|| clazz.getAnnotation(SessionAttributeListener.class) != null
+				|| clazz.getAnnotation(SessionBindingListener.class) != null
+				|| clazz.getAnnotation(SessionActivationListener.class) != null
+				|| clazz.getAnnotation(SessionIdListener.class) != null;
+	}
+
+	/**
+	 * Registers a new ScriptListener
+	 * 
+	 * @param listener the ScriptListener object
+	 */
+	public void addScriptListener(ScriptListener listener) {
+		this.listeners.add(listener);
+	}
+
+	/**
+	 * Registers a ScriptListener list
+	 * 
+	 * @param listeners the ScriptListener list
+	 * 
+	 */
+	public void addScriptListeners(List<ScriptListener> listeners) {
+		this.listeners.addAll(listeners);
+	}
+	
+	/**
+	 * 
+	 * Returns the list of script listeners
+	 * 
+	 * @return the list of script listeners
+	 */
+	public List<ScriptListener> getScriptListeners() {
+		return listeners;
 	}
 
 }

@@ -19,10 +19,7 @@
 
 package org.gservlet;
 
-import static groovy.json.JsonOutput.toJson;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -30,10 +27,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import groovy.json.JsonSlurper;
-import groovy.sql.Sql;
-import groovy.xml.MarkupBuilder;
 
 /**
  * 
@@ -43,16 +36,16 @@ import groovy.xml.MarkupBuilder;
  * 
  */
 @SuppressWarnings("serial")
-public abstract class AbstractServlet extends HttpServlet {
+public abstract class AbstractServlet extends HttpServlet implements RequestHandler {
 
 	/**
-	 * The request context object
+	 * The RequestContext object
 	 */
 	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
+	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * 
@@ -183,7 +176,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	 * 
 	 */
 	public void forward(String location) throws ServletException, IOException {
-		HttpServletRequest request = requestContext.get().getRequest();
+		HttpServletRequest request = getRequest();
 		request.getRequestDispatcher(location).forward(request, getResponse());
 	}
 
@@ -201,72 +194,13 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	/**
 	 * 
-	 * Sends the response as JSON
-	 * 
-	 * @param response the response object
-	 * @throws IOException the IOException
-	 * 
-	 */
-	public void json(Object response) throws IOException {
-		getResponse().setHeader("Content-Type", "application/json");
-		getResponse().getWriter().write(toJson(response));
-	}
-
-	/**
-	 * 
-	 * Converts the object to JSON
-	 * 
-	 * @param object the object
-	 * @return the JSON output
-	 * 
-	 */
-	public String stringify(Object object) {
-		return toJson(object);
-	}
-
-	/**
-	 * 
-	 * Parses the input stream to JSON
-	 * 
-	 * @param inputStream the input stream
-	 * @return the JSON output
-	 * 
-	 */
-	public Object parse(InputStream inputStream) {
-		return new JsonSlurper().parse(inputStream);
-	}
-
-	/**
-	 * 
 	 * Returns the ServletConfig object
 	 * 
 	 * @return the ServletConfig object
 	 * 
 	 */
 	public ServletConfig getConfig() {
-		return getServletConfig();
-	}
-
-	/**
-	 * 
-	 * Returns the HttpServletRequest object
-	 * 
-	 * @return the HttpServletRequest object
-	 * 
-	 */
-	public HttpServletRequest getRequest() {
-		return requestContext.get().getRequest();
-	}
-
-	/**
-	 * 
-	 * Returns the HttpSession object
-	 * 
-	 * @return the HttpSession object
-	 * 
-	 */
-	public HttpSession getSession() {
-		return requestContext.get().getSession();
+		return new ServletConfigWrapper(getServletConfig());
 	}
 
 	/**
@@ -277,53 +211,8 @@ public abstract class AbstractServlet extends HttpServlet {
 	 * 
 	 */
 	public ServletContext getContext() {
-		return requestContext.get().getServletContext();
-	}
-
-	/**
-	 * 
-	 * Returns the HttpServletResponse object
-	 * 
-	 * @return the HttpServletResponse object
-	 * 
-	 */
-	public HttpServletResponse getResponse() {
-		return requestContext.get().getResponse();
-	}
-
-	/**
-	 * 
-	 * Returns the Sql object
-	 * 
-	 * @return the Sql object
-	 * 
-	 */
-	public Sql getSql() {
-		return requestContext.get().getSql();
-	}
-
-	/**
-	 * 
-	 * Returns the PrintWriter object
-	 * 
-	 * @return the PrintWriter object
-	 * @throws IOException the IOException
-	 * 
-	 */
-	public PrintWriter getOut() throws IOException {
-		return getResponse().getWriter();
-	}
-
-	/**
-	 * 
-	 * Returns the MarkupBuilder object
-	 * 
-	 * @return the MarkupBuilder object
-	 * @throws IOException the IOException
-	 * 
-	 */
-	public MarkupBuilder getHtml() throws IOException {
-		return requestContext.get().getHtml();
+		ServletContext context = getConfig().getServletContext();
+		return context !=null ? new ServletContextWrapper(context) : getRequestContext().getServletContext();
 	}
 
 	/**
@@ -336,5 +225,17 @@ public abstract class AbstractServlet extends HttpServlet {
 	public Logger getLogger() {
 		return logger;
 	}
+
+	/**
+	 * 
+	 * Returns the RequestContext object
+	 * 
+	 * @return the RequestContext object
+	 * 
+	 */
+	public RequestContext getRequestContext() {
+		return requestContext.get();
+	}
+
 
 }

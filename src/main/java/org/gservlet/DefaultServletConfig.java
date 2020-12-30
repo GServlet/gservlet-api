@@ -17,24 +17,27 @@
  *  under the License.
  */
 
-package org.gservlet.annotation;
+package org.gservlet;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-import java.lang.annotation.RetentionPolicy;
+import javax.servlet.ServletConfig;
 
 /**
-* This annotation is used to declare a {@link javax.servlet.http.HttpSessionActivationListener}
 * 
-* @see org.gservlet.AbstractSessionActivationListener  
+* A servlet configuration object used by a servlet container to pass information to a servlet during initialization   
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Documented
-public @interface SessionActivationListener {
+public class DefaultServletConfig extends AbstractConfig implements ServletConfig {
+	
+	/**
+	 * Returns the name of this servlet instance.
+	 *
+	 * @return the name of the servlet instance
+	 */
+	@Override
+	public String getServletName() {
+		return getClass().getName();
+	}
+
 }

@@ -27,7 +27,9 @@ import java.lang.annotation.Documented;
 
 /**
  * This annotation is used on a Servlet or Filter implementation class
- * to specify an initialization parameter.
+ * to specify an initialization parameter
+ * 
+ * @author Mamadou Lamine Ba
  * 
  */
 @Target({ElementType.TYPE})

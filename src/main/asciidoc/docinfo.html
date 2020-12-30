@@ -1,0 +1,64 @@
+<meta name="author" content="Mamadou Lamine Ba">
+<meta property="og:type" content="website">
+<meta name="description" content="GServlet is an open source project which aims to use the Groovy language and its provided modules to simplify Servlet API web development."> 
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@gservlet">
+<meta name="twitter:domain" property="og:site_name" content="gservlet.org">
+<meta name="twitter:url" property="og:url" content="https://gservlet.org/docs/1.0.0">
+<meta name="twitter:title" property="og:title" content="GServlet Developer Guide"> 
+<meta name="twitter:description" property="og:description" content="GServlet is an open source project which aims to use the Groovy language and its provided modules to simplify Servlet API web development."> 
+<meta name="twitter:image" property="og:image" content="https://gservlet.org/images/logo.png">
+<link rel="icon" href="images/favicon.png" type="image/png">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js"></script>
+
+<style>
+
+.tocify ul {
+    margin: 0;
+ }
+
+.tocify-focus {
+    color: #e65251; 
+}
+
+.tocify-focus > a {
+    color: #e65251; 
+}
+</style>
+
+<script type="text/javascript">
+    $(function () {
+        $("#toc").append("<div id='generated-toc'></div>");
+        $("#generated-toc").tocify({
+            extendPage: false,
+            context: "#content",
+            highlightOnScroll: true,
+            hideEffect: "slideUp",
+            hashGenerator: function(text, element) {
+                return $(element).attr("id");
+            },
+            smoothScroll: false,
+            theme: "none",
+            selectors: $( "#content" ).has( "h1" ).size() > 0 ? "h1,h2,h3,h4,h5" : "h2,h3,h4,h5",
+            ignoreSelector: ".discrete"
+        });
+
+        var handleTocOnResize = function() {
+            if ($(document).width() < 768) {
+                $("#generated-toc").hide();
+                $(".sectlevel0").show();
+                $(".sectlevel1").show();
+            }
+            else {
+                $("#generated-toc").show();
+                $(".sectlevel0").hide();
+                $(".sectlevel1").hide();
+            }
+        }
+
+        $(window).resize(handleTocOnResize);
+        handleTocOnResize();
+    });
+</script>

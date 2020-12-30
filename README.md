@@ -13,7 +13,7 @@
 
 ## Table of contents
 1. [Description](#description)
-1. [Features](#features)
+1. [Main Features](#main-features)
 1. [Requirements](#requirements)
 1. [Getting Started](#getting-started)
 1. [Building from source](#building-from-source)
@@ -26,8 +26,7 @@
 
 GServlet is an open source project inspired from the [Groovlets](http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html), which aims to use the Groovy language and its provided modules to simplify Servlet API web development.
 Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. 
-Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the [_HttpServletRequest_](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html), and [_HttpServletResponse_](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html) objects. We have access to the [_HttpSession_](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html) with the _session_ variable. 
-If we want to output data, we can use _out_, _sout_, and _html_. This is more like a script as it does not have a class wrapper.
+Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the [HttpServletRequest](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html), and [HttpServletResponse](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html) objects. We have access to the [HttpSession](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html) with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_. This is more like a script as it does not have a class wrapper.
 
 ### Groovlet 
 
@@ -49,19 +48,17 @@ html.html {
 session.counter = session.counter + 1
 ```
 
-More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0) for a particular release can be browsed as well.
+More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0.0) for a particular release can be browsed as well.
 
-## Features
+## Main Features
 
 * Servlet 3.1+ Support
-* Groovy Scripting
-* Hot Reloading
-* JSON and XML Support
-* JDBC Support
+* Groovy Scripting and Hot Reloading
+* JSON, XML, HTML and JDBC Support
 
 ## Requirements
 
-* Java 7+
+* Java 8+
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
 * Java EE 7+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 
@@ -69,7 +66,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 If you are just getting started with GServlet, you may want to begin by creating your first project. This section shows you how to get up and running quickly. It is highly recommended to consume the GServlet API through a dependency management tool and the artifact can be found in Maven's central repository. It is named **gservlet-api** and you just need to name a dependency on it in your project.
 
-### From Maven
+### Maven
 
 ```xml
 <dependency>
@@ -79,12 +76,16 @@ If you are just getting started with GServlet, you may want to begin by creating
 </dependency>
 ```
 
-### From Gradle
+### Gradle
 
 ```groovy
- dependencies {
-    implementation 'org.gservlet:gservlet-api:1.0.0'
- }
+ repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.gservlet:gservlet-api:1.0.0")
+}
 ```
 
 ### Your First Groovy Servlet
@@ -92,30 +93,52 @@ If you are just getting started with GServlet, you may want to begin by creating
 Once your Java web server is installed and configured, you can put it to work. Five steps take you from writing your first Groovy servlet to running it. These steps are as follows:
 
 1. Create a dynamic web project
-2. Create the scripts folder inside your web content directory
+2. Create the *_groovy_* folder inside your webapp directory
 3. Write the servlet source code
 4. Run your Java web server
 5. Call your servlet from a web browser
 
 
-You can find below some examples that you can try out and for Hot Reloading, set the **GSERVLET_RELOAD** environment variable to true in your IDE.
+You can find below some examples that you can try out and for a hot reloading of your source code, set the **GSERVLET_RELOAD** environment variable to true in your IDE.
 
-##### CustomerServlet.groovy
+##### ProjectServlet.groovy
 
 ```java
 import org.gservlet.annotation.Servlet
 
-@Servlet("/customers")
-class CustomerServlet {
-	
-  void get() {
-     def customers = []
-     customers << [firstName : "Kate", lastName : "Martinez"]
-     customers << [firstName : "John", lastName : "Doe"]
-     customers << [firstName : "Alexandra", lastName : "Floriani"]
-     customers << [firstName : "Joe", lastName : "Milner"]
-     json(customers)
-  }
+@Servlet("/projects")
+class ProjectServlet {
+
+	def projects = []
+
+	void init() {
+	   projects << [id : 1, name : "Groovy", url : "https://groovy-lang.org"]
+	   projects << [id : 2, name : "Spring", url : "https://spring.io"]
+	   projects << [id : 3, name : "Maven", url : "https://maven.apache.org"]
+	}
+
+	void get() {
+	   json(projects)
+	}
+
+	void post() {
+	   def project = request.body
+	   projects << project
+	   json(project)
+	}
+
+	void put() {
+	   def project = request.body
+	   int index = projects.findIndexOf { it.id == project.id }
+	   projects[index] = project
+	   json(project)
+	}
+
+	void delete() {
+	  def project = request.body
+	  int index = projects.findIndexOf { it.id == project.id }
+	  json(projects.remove(index))
+   }
 	
 }
 ```
@@ -160,7 +183,7 @@ class ServletRequestListener {
 }
 ```
 
-For a deep insight of how to write your Groovy artifacts, please read the complete [documentation](https://gservlet.org/documentation).
+For a deep insight of how to write your Groovy artifacts, please refer to the [developer guide](https://gservlet.org/docs/1.0.0).
 
 ## Building from source
 
@@ -172,7 +195,7 @@ For a deep insight of how to write your Groovy artifacts, please read the comple
 
 The developer guide generated with Maven is based on [Asciidoctor](http://asciidoctor.org/). Only the HTML output is enabled.
 
-    > mvn clean install -Pdocumentation
+    > mvn clean generate-resources -Pdocumentation
 
 The built documentation can then be found in the following location:
   
@@ -186,7 +209,7 @@ We use [UMLGraph](https://www.spinellis.gr/umlgraph/index.html) to generate UML 
 
 ## Versioning
 
-We version GServlet by following [Semantic Versioning](https://semver.org), which is a general template that everyone uses and understands.
+We version GServlet by following the [Semantic Versioning](https://semver.org), which is a general template that everyone uses and understands.
 
 ## Status
 

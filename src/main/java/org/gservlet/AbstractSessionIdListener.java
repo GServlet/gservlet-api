@@ -25,8 +25,7 @@ import javax.servlet.http.HttpSessionIdListener;
 
 /**
  * 
- * Abstract class for receiving notification events about HttpSession id
- * changes.
+ * Abstract class for receiving notification events about HttpSession id changes
  * 
  * @author Mamadou Lamine Ba
  * 

@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
 
 /**
 * 
-* Abstract class for receiving notification events about ServletRequest attribute changes.
+* Abstract class for receiving notification events about ServletRequest attribute changes
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -92,7 +92,7 @@ public abstract class AbstractRequestAttributeListener extends AbstractListener 
 	* 
 	*/
 	public ServletContext getContext() {
-		return new ContextWrapper(getEvent().getServletContext());
+		return new ServletContextWrapper(getEvent().getServletContext());
 	}
 
 	/**

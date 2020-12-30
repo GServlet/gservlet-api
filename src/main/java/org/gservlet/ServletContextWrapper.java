@@ -40,12 +40,12 @@ import javax.servlet.descriptor.JspConfigDescriptor;
 
 /**
 * 
-* A wrapper class around the ServletContext class.
+* A wrapper class around the ServletContext class
 * 
 * @author Mamadou Lamine Ba
 * 
 */
-public class ContextWrapper implements ServletContext {
+public class ServletContextWrapper implements ServletContext {
 
 	/**
 	 * The servlet context object
@@ -56,10 +56,10 @@ public class ContextWrapper implements ServletContext {
 	* 
 	* Constructs a ContextWrapper for the given ServletContext
 	* 
-	* @param context the servlet context 
+	* @param context the ServletContext object 
 	*  
 	*/
-	public ContextWrapper(ServletContext context) {
+	public ServletContextWrapper(ServletContext context) {
 		this.context = context;
 	}
 

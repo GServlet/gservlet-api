@@ -25,12 +25,12 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
+import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 /**
  * 
- * Handles the creation and the configuration of the data
- * source.
+ * Handles the creation and the configuration of the data source
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -45,7 +45,7 @@ public class DatabaseManager {
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(DatabaseManager.class.getName());
+	protected final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * 
@@ -66,27 +66,103 @@ public class DatabaseManager {
 	public void setupDataSource(Properties configuration) {
 		if (isConfigurationValid(configuration)) {
 			BasicDataSource dataSource = new BasicDataSource();
-			dataSource.setDriverClassName(configuration.getProperty("db.driver").trim());
-			dataSource.setUrl(configuration.getProperty("db.url").trim());
-			dataSource.setUsername(configuration.getProperty("db.user").trim());
-			dataSource.setPassword(configuration.getProperty("db.password"));
-			dataSource.setInitialSize(Integer.parseInt(configuration.getProperty("db.minPoolSize").trim()));
-			dataSource.setMaxTotal(Integer.parseInt(configuration.getProperty("db.maxPoolSize").trim()));
+			dataSource.setDriverClassName(getDriverClassName(configuration));
+			dataSource.setUrl(getUrl(configuration));
+			dataSource.setUsername(getUsername(configuration));
+			dataSource.setPassword(getPassword(configuration));
+			dataSource.setInitialSize(getMinPoolSize(configuration));
+			dataSource.setMaxTotal(getMaxPoolSize(configuration));
 			context.setAttribute(DATASOURCE, dataSource);
 		}
+	}
+	
 
+	/**
+	 * Stores the provided data source as an attribute in the context
+	 *
+	 * @param dataSource the provided data source
+	 * 
+	 */
+	public void setupDataSource(DataSource dataSource) {
+		context.setAttribute(DATASOURCE, dataSource);
+	}
+	
+	/**
+	 * Returns the driver class name.
+	 * 
+	 * @param configuration the configuration
+	 * @return the driver class name
+	 * 
+	 */
+	private String getDriverClassName(Properties configuration) {
+		return configuration.getProperty("db.driver").trim();
+	}
+	
+	/**
+	 * Returns the connection url
+	 * 
+	 * @param configuration the configuration
+	 * @return the connection url
+	 * 
+	 */
+	private String getUrl(Properties configuration) {
+		return configuration.getProperty("db.url").trim();
 	}
 
 	/**
-	 * Checks if the configuration is valid.
+	 * Returns the user name
+	 * 
+	 * @param configuration the configuration
+	 * @return the user name.
+	 * 
+	 */
+	private String getUsername(Properties configuration) {
+		return configuration.getProperty("db.user").trim();
+	}
+	
+	/**
+	 * Returns the user password
+	 * 
+	 * @param configuration the configuration
+	 * @return the user password.
+	 * 
+	 */
+	private String getPassword(Properties configuration) {
+		return configuration.getProperty("db.password").trim();
+	}
+	
+	/**
+	 * Returns the min pool size. The default value is 1
+	 * 
+	 * @param configuration the configuration
+	 * @return the min pool size.
+	 * 
+	 */
+	private int getMinPoolSize(Properties configuration) {
+		String minPoolSize = configuration.getProperty("db.minPoolSize");
+		return minPoolSize != null ? Integer.parseInt(minPoolSize.trim()) : 1;
+	}
+	
+	/**
+	 * Returns the max pool size. The default value is 3
+	 * 
+	 * @param configuration the configuration
+	 * @return the max pool size
+	 * 
+	 */
+	private int getMaxPoolSize(Properties configuration) {
+		String maxPoolSize = configuration.getProperty("db.maxPoolSize");
+		return maxPoolSize!= null ? Integer.parseInt(maxPoolSize.trim()) : 3;
+	}
+
+	/**
+	 * Checks if the configuration is valid
 	 * <p>
 	 * The required properties are : <br>
 	 * db.driver : the jdbc driver class <br>
 	 * db.url : the database url <br>
 	 * db.user : the database user <br>
 	 * db.password : the database user password <br>
-	 * db.minPoolSize : the database min pool size <br>
-	 * db.maxPoolSize : the database max pool size
 	 * </p>
 	 * 
 	 * @param configuration the configuration
@@ -95,23 +171,34 @@ public class DatabaseManager {
 	 */
 	public boolean isConfigurationValid(Properties configuration) {
 		return configuration.containsKey("db.driver") && configuration.containsKey("db.url")
-				&& configuration.containsKey("db.user") && configuration.containsKey("db.password")
-				&& configuration.containsKey("db.minPoolSize") && configuration.containsKey("db.maxPoolSize");
+				&& configuration.containsKey("db.user") && configuration.containsKey("db.password");
 	}
 
 	/**
 	 * Closes the data source
 	 * 
-	 * 
 	 */
-	public void destroy() {
+	public void shutDown() {
 		try {
-			BasicDataSource dataSource = (BasicDataSource) context.getAttribute(DATASOURCE);
-			if (dataSource != null) {
-				dataSource.close();
+			Object dataSource = context.getAttribute(DATASOURCE);
+			if(dataSource instanceof BasicDataSource) {
+				BasicDataSource basicDataSource = (BasicDataSource) context.getAttribute(DATASOURCE);
+				basicDataSource.close();	
 			}
 		} catch (SQLException e) {
 			logger.log(Level.INFO, "exception during destroy method", e);
 		}
 	}
+	
+	/**
+	 * Returns the data source
+	 * 
+	 * @return the data source
+	 * 
+	 */
+	
+	public DataSource getDataSource() {
+		return (DataSource) context.getAttribute(DATASOURCE);
+	}
+	
 }

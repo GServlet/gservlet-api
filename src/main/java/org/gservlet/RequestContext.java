@@ -30,7 +30,7 @@ import groovy.xml.MarkupBuilder;
 
 /**
 * 
-* Context holder for request-specific state.
+* Context holder for request-specific state
 * 
 * @author Mamadou Lamine Ba
 * 
@@ -118,7 +118,7 @@ public class RequestContext {
 	* 
 	*/
 	public ServletContext getServletContext() {
-		return new ContextWrapper(request.getServletContext());
+		return new ServletContextWrapper(request.getServletContext());
 	}
 
 	/**
@@ -134,17 +134,30 @@ public class RequestContext {
 
 	/**
 	* 
-	* Returns the MarkupBuilder object
+	* Returns the MarkupBuilder object for producing HTML content
 	* 
 	* @return the MarkupBuilder object
 	* @throws IOException the IOException
 	*/
 	public MarkupBuilder getHtml() throws IOException {
-		MarkupBuilder builder = new MarkupBuilder(response.getWriter());
-		getResponse().setHeader("Content-Type", "text/html");
-		getResponse().getWriter().println("<!DOCTYPE html>");
-		return builder;
+		response.setHeader("Content-Type", "text/html");
+		response.getWriter().println("<!DOCTYPE html>");
+		return new MarkupBuilder(response.getWriter());
 	}
+	
+	
+	/**
+	* 
+	* Returns the MarkupBuilder object for producing XML content
+	* 
+	* @return the MarkupBuilder object
+	* @throws IOException the IOException
+	*/
+	public MarkupBuilder getXml() throws IOException {
+		response.setHeader("Content-Type", "text/xml");
+		return new MarkupBuilder(response.getWriter());
+	}
+	
 	
 	/**
 	* 
@@ -154,7 +167,7 @@ public class RequestContext {
 	* 
 	*/
 	public Sql getSql() {
-		return (Sql) request.getAttribute(Constants.CONNECTION);
+		return (Sql) request.getAttribute(Constants.DB_CONNECTION);
 	}
 
 }

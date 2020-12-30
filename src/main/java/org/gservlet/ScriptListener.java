@@ -17,24 +17,24 @@
  *  under the License.
  */
 
-package org.gservlet.annotation;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-import java.lang.annotation.RetentionPolicy;
+package org.gservlet;
 
 /**
-* This annotation is used to declare a {@link javax.servlet.http.HttpSessionActivationListener}
-* 
-* @see org.gservlet.AbstractSessionActivationListener  
-* 
-* @author Mamadou Lamine Ba
-* 
-*/
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Documented
-public @interface SessionActivationListener {
+ * 
+ * Interface for receiving notification events about objects creation
+ * 
+ * @author Mamadou Lamine Ba
+ * 
+ */
+public interface ScriptListener {
+
+	/**
+	* 
+	* Receives notification that an object has been created
+	* 
+	* @param object the object that was created 
+	* 
+	*/
+	public void onCreated(Object object);
+	
 }
