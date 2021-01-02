@@ -48,6 +48,34 @@ html.html {
 session.counter = session.counter + 1
 ```
 
+The same philosophy has been followed in the design of this API while maintaining a class-based programming approach.
+
+### SessionCounterServlet.groovy
+ 
+```java
+import org.gservlet.annotation.Servlet
+
+@Servlet("/counter")
+class SessionCounterServlet {
+
+  void get() {
+    if (!session.counter) {
+      session.counter = 1
+    }
+    html.html {
+      head {
+        title('Groovy Servlet')
+      }
+      body {
+        p("Hello, ${request.remoteHost}: ${session.counter}! ${new Date()}")
+      }
+    }
+    session.counter = session.counter + 1
+  }
+
+}
+```
+
 More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0.0) for a particular release can be browsed as well.
 
 ## Main Features
