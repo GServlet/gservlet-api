@@ -54,11 +54,9 @@ public class HttpServletTest {
 	@Test
 	public void testMethods() throws Exception {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
-		assertEquals(true, folder.exists());
 		ScriptManager scriptManager = new ScriptManager(folder);
 		File script = new File(folder + "/" + "HttpServlet.groovy");
 		AbstractServlet servlet = (AbstractServlet) scriptManager.createObject(script);
-		assertNotNull(servlet);
 		assertTrue(servlet.getClass().isAnnotationPresent(Servlet.class));
 		Servlet annotation = servlet.getClass().getAnnotation(Servlet.class);
 		assertEquals("HttpServlet", servlet.getClass().getName());
