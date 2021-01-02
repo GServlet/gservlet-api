@@ -43,7 +43,36 @@ html.html {
 session.counter = session.counter + 1
 ----
 
-The same philosophy has been followed in the design of this API and if you have no prior experience with the Groovy language, there are several curated lists of online resources for learning it.
+The same philosophy has been followed in the design of this API while maintaining a class-based programming approach.
+
+.SessionCounterServlet.groovy 
+[#src-listing] 
+[source,java]  
+---- 
+import org.gservlet.annotation.Servlet
+
+@Servlet("/counter")
+class SessionCounterServlet {
+
+  void get() {
+    if (!session.counter) {
+      session.counter = 1
+    }
+    html.html {
+      head {
+        title('Groovy Servlet')
+      }
+      body {
+        p("Hello, ${request.remoteHost}: ${session.counter}! ${new Date()}")
+      }
+    }
+    session.counter = session.counter + 1
+  }
+
+}
+----
+
+If you have no prior experience with the Groovy language, there are several curated lists of online resources for learning it.
 
 * https://groovy-lang.org[Official Groovy Website]
 * https://groovy-lang.org/learn.html#books[List of Programming Books]
@@ -323,7 +352,7 @@ public class HelloWordServlet extends HttpServlet {
 }
 ----
 
-Now, we are going to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are now implicit variables.
+We are going to write its Groovy counterpart with the GServlet API so you can perceive the difference in terms of simplicity and clarity. The name of the HTTP request method handlers are shortened to _get_, _post_ and so on. They take no arguments since the request and the response are now implicit variables.
 
 .HelloWordServlet.groovy 
 [#src-listing] 
@@ -2073,7 +2102,7 @@ class XmlServlet {
 
 == Working With RDBMS
 
-The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API is as simple as to create in the webapp directory, a file named *_gservlet.properties_*.
+The *_groovy-sql_* module provides a higher-level abstraction over the current Java’s JDBC technology and it supports a wide variety of databases. To set up a database with the GServlet API, you have to create in the webapp directory, a file named *_gservlet.properties_*.
 
 .gservlet.properties 
 [#src-listing] 
@@ -2087,7 +2116,7 @@ db.minPoolSize : 5
 db.maxPoolSize : 10
 ----
 
-For each request, an http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] connection is automatically created from a data source and made available in your servlets and filters through the implicit _sql_ variable as below:
+For each request, an http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] connection is automatically created from a data source and made available to your servlets and filters through the implicit _sql_ variable as below:
 
 .ProjectServlet.groovy 
 [#src-listing] 
@@ -2606,3 +2635,7 @@ GServlet was created by https://github.com/laminba2003[Mamadou Lamine Ba].
 == Contributing
 
 Contributions of any type or any scope, drive the project forward. There are lot of ways to contribute, not just code. We provide more information about how to get involved in our link:/contribute[contribute] page.
+
+== Reporting or Fixing Issues
+
+You can search for existing issues in order to fix them or to raise a new one. We use the https://github.com/GServlet/gservlet-api/issues[GitHub's issue tracker] to keep a track of all our current issues.
