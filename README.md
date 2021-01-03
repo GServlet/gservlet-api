@@ -10,6 +10,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/GServlet/gservlet-api/badge.png?branch=master)](https://coveralls.io/github/GServlet/gservlet-api?branch=master)
 [![License](http://img.shields.io/:license-apache-blue.png)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.gservlet/gservlet-api/badge.png)](https://maven-badges.herokuapp.com/maven-central/org.gservlet/gservlet-api/)
+[![Javadocs](https://javadoc.io/badge/org.gservlet/gservlet-api.png)]
+(https://javadoc.io/doc/org.gservlet/gservlet-api)
 [![follow on Twitter](https://img.shields.io/twitter/follow/gservlet?style=social)](https://twitter.com/intent/follow?screen_name=gservlet)
 
 ## Table of contents
