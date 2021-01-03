@@ -214,6 +214,10 @@ class ServletRequestListener {
 
 For a deep insight of how to write your Groovy artifacts, please refer to the [developer guide](https://gservlet.org/docs/1.0.0).
 
+## Code Examples
+
+We have created several code examples on [GitHub](https://github.com/GServlet/gservlet-examples) to help beginners to learn and gain expertise at GServlet. Checkout the appropriate branch for the version that you are using.
+
 ## Building from source
 
     > git clone git@github.com:gservlet/gservlet-api.git
