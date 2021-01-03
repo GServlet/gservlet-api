@@ -249,6 +249,22 @@ We version GServlet by following the [Semantic Versioning](https://semver.org), 
 
 The current version of GServlet is 1.0.0.
 
+## Snapshot builds
+You can access snapshot builds from the sonatype snapshot repository by adding the following to your `repositories`:
+```xml
+<repository>
+	<id>sonatype-nexus-snapshots</id>
+	<name>Sonatype Nexus Snapshots</name>
+	<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+	<snapshots>
+		<enabled>true</enabled>
+	</snapshots>
+	<releases>
+		<enabled>false</enabled>
+	</releases>
+</repository>
+```
+
 ## Contributing
 
 New contributors are always welcome. We collected some helpful hints on how to get started on our [Contribute](https://gservlet.org/contribute) page.
