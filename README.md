@@ -216,7 +216,7 @@ For a deep insight of how to write your Groovy artifacts, please refer to the [d
 
 ## Code Examples
 
-We have created several code examples on [GitHub](https://github.com/GServlet/gservlet-examples) to help beginners to learn and gain expertise at GServlet. Checkout the appropriate branch for the version that you are using.
+We have created several [code examples](https://github.com/GServlet/gservlet-examples) to help beginners to learn and gain expertise at GServlet. Checkout the appropriate branch for the version that you are using.
 
 ## Building from source
 
