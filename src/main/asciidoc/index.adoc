@@ -1421,8 +1421,8 @@ Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/j
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.HttpSessionEvent;
-import javax.servlet.HttpSessionListener;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 import javax.servlet.annotation.WebListener;
 
 @WebListener
@@ -1538,8 +1538,8 @@ Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/j
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.HttpSessionBindingEvent;
-import javax.servlet.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.annotation.WebListener;
 
 @WebListener
@@ -1658,7 +1658,7 @@ Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/j
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 import javax.servlet.annotation.WebListener;
 
