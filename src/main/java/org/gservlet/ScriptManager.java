@@ -206,7 +206,6 @@ public class ScriptManager {
 		} else if (ctClass.hasAnnotation(SessionAttributeListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionAttributeListener.class.getName()));
 		} else if (ctClass.hasAnnotation(SessionBindingListener.class)) {
-			System.out.println("inhering binding super class");
 			ctClass.setSuperclass(classPool.get(AbstractSessionBindingListener.class.getName()));
 		} else if (ctClass.hasAnnotation(SessionActivationListener.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractSessionActivationListener.class.getName()));
