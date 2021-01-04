@@ -1884,7 +1884,7 @@ Its Groovy version with the GServlet API looks like this:
 ---- 
 import org.servlet.annotation.SessionIdListener
 
-@WebListener
+@SessionIdListener
 public class MyHttpSessionIdListener {
 
     void sessionIdChanged() {
