@@ -27,7 +27,7 @@ import java.lang.annotation.Retention;
 
 /**
 * 
-* This annotation is used to declare a {@link javax.servlet.http.HttpServlet}
+* This annotation is used to declare a {@link jakarta.servlet.http.HttpServlet}
 *
 * This annotation is processed at deployment time,
 * and the corresponding servlet made available at the specified URL
@@ -82,8 +82,8 @@ public @interface Servlet {
      * Declares whether the servlet supports asynchronous operation mode.
      *
      * @return {@code true} if the servlet supports asynchronous operation mode
-     * @see javax.servlet.ServletRequest#startAsync
-     * @see javax.servlet.ServletRequest#startAsync(ServletRequest,
+     * @see jakarta.servlet.ServletRequest#startAsync
+     * @see jakarta.servlet.ServletRequest#startAsync(ServletRequest,
      * ServletResponse)
      */
     boolean asyncSupported() default false;

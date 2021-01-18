@@ -1208,37 +1208,148 @@ public class ServletContextWrapper implements ServletContext {
 		return value != null ? value : getInitParameter(name);
 	}
 
+
+    /**
+     * Adds the servlet with the given jsp file to this servlet context.
+     *
+     * <p>
+     * The registered servlet may be further configured via the returned {@link ServletRegistration} object.
+     *
+     * <p>
+     * If this ServletContext already contains a preliminary ServletRegistration for a servlet with the given
+     * <tt>servletName</tt>, it will be completed (by assigning the given <tt>jspFile</tt> to it) and returned.
+     *
+     * @param servletName the name of the servlet
+     * @param jspFile the full path to a JSP file within the web application beginning with a `/'.
+     *
+     * @return a ServletRegistration object that may be used to further configure the registered servlet, or <tt>null</tt>
+     * if this ServletContext already contains a complete ServletRegistration for a servlet with the given
+     * <tt>servletName</tt>
+     *
+     * @throws IllegalStateException if this ServletContext has already been initialized
+     *
+     * @throws IllegalArgumentException if <code>servletName</code> is null or an empty String
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
 	@Override
-	public jakarta.servlet.ServletRegistration.Dynamic addJspFile(String servletName, String jspFile) {
+	public ServletRegistration.Dynamic addJspFile(String servletName, String jspFile) {
 		return context.addJspFile(servletName, jspFile);
 	}
 
+	/**
+     * Gets the session timeout in minutes that are supported by default for this <tt>ServletContext</tt>.
+     *
+     * @return the session timeout in minutes that are supported by default for this <tt>ServletContext</tt>
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
 	@Override
 	public int getSessionTimeout() {
 		return context.getSessionTimeout();
 	}
 
+	/**
+     * Sets the session timeout in minutes for this ServletContext.
+     *
+     * @param sessionTimeout session timeout in minutes
+     *
+     * @throws IllegalStateException if this ServletContext has already been initialized
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
 	@Override
 	public void setSessionTimeout(int sessionTimeout) {
 		context.setSessionTimeout(sessionTimeout);
 		
 	}
 
+	/**
+     * Gets the request character encoding that are supported by default for this <tt>ServletContext</tt>. This method
+     * returns null if no request encoding character encoding has been specified in deployment descriptor or container
+     * specific configuration (for all web applications in the container).
+     *
+     * @return the request character encoding that are supported by default for this <tt>ServletContext</tt>
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
 	@Override
 	public String getRequestCharacterEncoding() {
 		return context.getRequestCharacterEncoding();
 	}
 
+	/**
+     * Sets the request character encoding for this ServletContext.
+     *
+     * @param encoding request character encoding
+     *
+     * @throws IllegalStateException if this ServletContext has already been initialized
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
 	@Override
 	public void setRequestCharacterEncoding(String encoding) {
 		context.setRequestCharacterEncoding(encoding);
 	}
 
+	 /**
+     * Gets the response character encoding that are supported by default for this <tt>ServletContext</tt>. This method
+     * returns null if no response encoding character encoding has been specified in deployment descriptor or container
+     * specific configuration (for all web applications in the container).
+     *
+     * @return the request character encoding that are supported by default for this <tt>ServletContext</tt>
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
 	@Override
 	public String getResponseCharacterEncoding() {
 		return context.getResponseCharacterEncoding();
 	}
 
+	/**
+     * Sets the response character encoding for this ServletContext.
+     *
+     * @param encoding response character encoding
+     *
+     * @throws IllegalStateException if this ServletContext has already been initialized
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
 	@Override
 	public void setResponseCharacterEncoding(String encoding) {
 		context.setResponseCharacterEncoding(encoding);

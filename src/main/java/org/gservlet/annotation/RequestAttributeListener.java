@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 import java.lang.annotation.RetentionPolicy;
 
 /**
-* This annotation is used to declare a {@link javax.servlet.ServletRequestAttributeListener}
+* This annotation is used to declare a {@link jakarta.servlet.ServletRequestAttributeListener}
 * 
 * @see org.gservlet.AbstractRequestAttributeListener 
 * 

@@ -20,7 +20,7 @@
 /**
  * Contains a number of classes and interfaces to create servlets, filters, listeners with the Groovy language.
  * 
- * @see javax.servlet
+ * @see jakarta.servlet
  * @author Mamadou Lamine Ba
  * 
  */
