@@ -20,7 +20,7 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 
 == Introduction
 
-https://github.com/GServlet/gservlet-api[GServlet] is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest], and https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] objects. We have access to the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_.
+https://github.com/GServlet/gservlet-api[GServlet] is an open source project inspired from the http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html[Groovlets], which aims to use the Groovy language and its provided modules to simplify Servlet API web development. Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletRequest.html[HttpServletRequest], and https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletResponse.html[HttpServletResponse] objects. We have access to the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_.
 
 .Groovlet.groovy 
 [#src-listing] 
@@ -225,7 +225,7 @@ NOTE: Keep a note that the use of the default package is discouraged and for a h
 
 == Creating Servlets
 
-A servlet is a small Java program that runs within a Web server. The https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html[Servlet] interface defines methods that all servlets must implement. To implement this interface, you can write a generic servlet that extends the https://docs.oracle.com/javaee/7/api/javax/servlet/GenericServlet.html[GenericServlet] class or an HTTP servlet which extends the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServlet.html[HttpServlet] class and overrides at least one method, usually one of these:
+A servlet is a small Java program that runs within a Web server. The https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/Servlet.html[Servlet] interface defines methods that all servlets must implement. To implement this interface, you can write a generic servlet that extends the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/GenericServlet.html[GenericServlet] class or an HTTP servlet which extends the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServlet.html[HttpServlet] class and overrides at least one method, usually one of these:
 
 * _doGet_, for HTTP GET requests
 * _doPost_, for HTTP POST requests
@@ -330,10 +330,10 @@ Below is a Java class that extends the HttpServlet class:
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/index.html")
@@ -374,7 +374,7 @@ class HelloWordServlet {
 }
 ----
 
-By default the content type of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to its https://docs.oracle.com/javaee/7/api/javax/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable which is an instance of a Groovy MarkupBuilder, to write a better version of this servlet.
+By default the content type of the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletResponse.html[HttpServletResponse] is set to _text/html_ and the implicit _out_ variable used to generate the HMTL content is nothing less than a reference to its https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletResponse.html#getWriter[PrintWriter] object. We could use as well the implicit _html_ variable which is an instance of a Groovy MarkupBuilder, to write a better version of this servlet.
 
 
 .HelloWordServlet.groovy 
@@ -413,7 +413,7 @@ The generated HTML content looks like this:
 
 === Servlet annotation attributes
 
-There are the same as those of the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebServlet.html[@WebServlet] annotation.
+There are the same as those of the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/annotation/WebServlet.html[@WebServlet] annotation.
 
 |===
 |Name | Type | Description
@@ -443,22 +443,22 @@ There are the same as those of the https://docs.oracle.com/javaee/7/api/javax/se
 
 === Servlet implicit variables
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/Servlet.html[Servlet] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/Servlet.html[Servlet] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_config_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html[ServletConfig] object
+|_config_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletConfig.html[ServletConfig] object
 
-|_request_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|_response_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+|_response_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
  
-|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] object
 
-|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContext.html[ServletContext] object
 
 |_sql_ | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
 
@@ -505,7 +505,7 @@ For an exhaustive list of the supported methods, please read the https://gservle
 
 === Servlet initialization parameters
 
-Since Servlet 3, the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a servlet programmatically, and it takes a required name and value. You can add a description but this is rather informative. In the initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html[ServletConfig] object. In the GServlet API, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
+Since Servlet 3, the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a servlet programmatically, and it takes a required name and value. You can add a description but this is rather informative. In the initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletConfig.html[ServletConfig] object. In the GServlet API, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
 
 .UploadServlet.groovy 
 [#src-listing] 
@@ -528,7 +528,7 @@ class UploadServlet {
 }
 ----
 
-The attributes of the _@InitParam_ annotation are the same as those of the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation.
+The attributes of the _@InitParam_ annotation are the same as those of the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/annotation/WebInitParam.html[@WebInitParam] annotation.
 
 |===
 |Name | Type | Description
@@ -541,7 +541,7 @@ The attributes of the _@InitParam_ annotation are the same as those of the https
 
 === Servlet Multipart configuration
 
-Supporting file uploads is a very basic and common requirement for many web applications. Prior to Servlet 3.0, implementing file upload required the use of external libraries or complex input processing. Version 3.0 of the Java Servlet specification helps to provide a viable solution to the problem in a generic and portable way. The Servlet 3.0 specification supports file upload out of the box, so any web container that implements the specification can parse multipart requests and make mime attachments available through the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object. A new annotation, https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/MultipartConfig.html[@MultipartConfig], is used to indicate that the servlet on which it is declared expects requests to made using the _multipart/form-data_ MIME type. Therefore, it can retrieve the Part components of a given _multipart/form-data_ request by calling the _getPart(String name)_ or _getParts()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object.
+Supporting file uploads is a very basic and common requirement for many web applications. Prior to Servlet 3.0, implementing file upload required the use of external libraries or complex input processing. Version 3.0 of the Java Servlet specification helps to provide a viable solution to the problem in a generic and portable way. The Servlet 3.0 specification supports file upload out of the box, so any web container that implements the specification can parse multipart requests and make mime attachments available through the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletRequest.html[HttpServletRequest] object. A new annotation, https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/annotation/MultipartConfig.html[@MultipartConfig], is used to indicate that the servlet on which it is declared expects requests to made using the _multipart/form-data_ MIME type. Therefore, it can retrieve the Part components of a given _multipart/form-data_ request by calling the _getPart(String name)_ or _getParts()_ method of the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletRequest.html[HttpServletRequest] object.
 
 .UploadServlet.groovy 
 [#src-listing] 
@@ -549,7 +549,7 @@ Supporting file uploads is a very basic and common requirement for many web appl
 ---- 
 import org.gservlet.annotation.InitParam
 import org.gservlet.annotation.Servlet
-import javax.servlet.annotation.MultipartConfig
+import jakarta.servlet.annotation.MultipartConfig
 
 @Servlet( urlPatterns = "/upload",
 initParams = [
@@ -591,7 +591,7 @@ class UploadServlet {
 
 === Servlet Security
 
-The https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/ServletSecurity.html[@ServletSecurity] annotation is used to specify security constraints on a Java servlet. The annotations https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/HttpMethodConstraint.html[@HttpMethodConstraint] and https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/HttpConstraint.html[@HttpConstraint] are used within that annotation to define the security constraints.
+The https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/annotation/ServletSecurity.html[@ServletSecurity] annotation is used to specify security constraints on a Java servlet. The annotations https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/annotation/HttpMethodConstraint.html[@HttpMethodConstraint] and https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/annotation/HttpConstraint.html[@HttpConstraint] are used within that annotation to define the security constraints.
 
  
 [#src-listing] 
@@ -610,9 +610,9 @@ The _httpMethodConstraints_ attribute specifies one or more constraints for some
 [source,java]  
 ---- 
 import org.gservlet.annotation.Servlet
-import javax.servlet.annotation.ServletSecurity
-import javax.servlet.annotation.ServletSecurity.TransportGuarantee
-import javax.servlet.annotation.HttpConstraint
+import jakarta.servlet.annotation.ServletSecurity
+import jakarta.servlet.annotation.ServletSecurity.TransportGuarantee
+import jakarta.servlet.annotation.HttpConstraint
 
 @Servlet(value="/projects")
 @ServletSecurity(@HttpConstraint(transportGuarantee = TransportGuarantee.CONFIDENTIAL))
@@ -628,9 +628,9 @@ class ProjectServlet {
 [source,java]  
 ---- 
 import org.gservlet.annotation.Servlet
-import javax.servlet.annotation.ServletSecurity
-import javax.servlet.annotation.HttpMethodConstraint
-import javax.servlet.annotation.ServletSecurity.EmptyRoleSemantic
+import jakarta.servlet.annotation.ServletSecurity
+import jakarta.servlet.annotation.HttpMethodConstraint
+import jakarta.servlet.annotation.ServletSecurity.EmptyRoleSemantic
 
 @Servlet(value="/projects")
 @ServletSecurity(httpMethodConstraints = @HttpMethodConstraint(value = "POST", 
@@ -647,8 +647,8 @@ class ProjectServlet {
 [source,java]  
 ---- 
 import org.gservlet.annotation.Servlet
-import javax.servlet.annotation.ServletSecurity
-import javax.servlet.annotation.HttpMethodConstraint
+import jakarta.servlet.annotation.ServletSecurity
+import jakarta.servlet.annotation.HttpMethodConstraint
 
 @Servlet(value="/projects")
 @ServletSecurity(
@@ -663,11 +663,11 @@ class ProjectServlet {
 }
 ----
 
-You can find more examples about how to use the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/ServletSecurity.html[@ServletSecurity] annotation on the web.
+You can find more examples about how to use the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/annotation/ServletSecurity.html[@ServletSecurity] annotation on the web.
 
 == Creating Filters
 
-A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter()_ method.
+A filter is an object that performs filtering tasks on either the request to a resource (a servlet or static content), or on the response from a resource, or both. The https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/Filter.html[Filter] interface defines methods that all filters must implement. Filters perform filtering in the _doFilter()_ method.
 
 [plantuml, filter-diagram, png]     
 ----
@@ -723,13 +723,13 @@ Below is a Java class that implements the Filter interface:
 [#src-listing] 
 [source,java]  
 ----  
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.ServletException;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
  
 @WebFilter("/*")
@@ -775,7 +775,7 @@ class MyFilter {
 
 === Filter annotation attributes
 
-There are the same as those of the https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebFilter.html[@WebFilter] annotation.
+There are the same as those of the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/annotation/WebFilter.html[@WebFilter] annotation.
 
 |===
 |Name | Type | Description
@@ -807,24 +807,24 @@ There are the same as those of the https://docs.oracle.com/javaee/7/api/javax/se
 
 === Filter implicit variables
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html[Filter] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/Filter.html[Filter] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_config_ | https://docs.oracle.com/javaee/7/api/javax/servlet/FilterConfig.html[FilterConfig] object
+|_config_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/FilterConfig.html[FilterConfig] object
 
-|_request_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|_response_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
+|_response_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletResponse.html)[HttpServletResponse] object
 
-|_chain_ | https://docs.oracle.com/javaee/7/api/javax/servlet/FilterChain.html)[FilterChain] object
+|_chain_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/FilterChain.html)[FilterChain] object
  
-|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] object
 
-|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContext.html[ServletContext] object
 
 |_sql_ | http://docs.groovy-lang.org/latest/html/api/groovy/sql/Sql.html[Sql] object
 
@@ -858,7 +858,7 @@ For an exhaustive list of the supported methods, please read the https://gservle
 
 === Filter initialization parameters
 
-The https://docs.oracle.com/javaee/7/api/javax/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a filter programmatically. In its initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://docs.oracle.com/javaee/7/api/javax/servlet/FilterConfig.html[FilterConfig] object. Like for a servlet, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
+The https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/annotation/WebInitParam.html[@WebInitParam] annotation is used to specify initialization parameters for a filter programmatically. In its initialization method _init()_, we can get our parameters using the _getInitParameter()_ method of the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/FilterConfig.html[FilterConfig] object. Like for a servlet, the annotation has been shorten to _@InitParam_ and you can get an initialization parameter through the implicit _config_ variable using just its name or as described above.
 
 .LoggingFilter.groovy 
 [#src-listing] 
@@ -888,31 +888,31 @@ During the lifetime of a typical Java EE web application, a number of events tak
 
 |=== 
 
-| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] lifecycle changes.
+| https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextListener.html[ServletContextListener] | Interface for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContext.html[ServletContext] lifecycle changes.
 
-| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] attribute changes.
+| https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] | Interface for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContext.html[ServletContext] attribute changes.
 
-| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListener] | Interface for receiving notification events about a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html[ServletRequest] coming into and going out of scope of a web application.
+| https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequestListener.html[ServletRequestListener] | Interface for receiving notification events about a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequest.html[ServletRequest] coming into and going out of scope of a web application.
 
-| https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
+| https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] | Interface for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequest.html[ServletRequest] attribute changes.
 
-| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes.
+| https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionListener.html[HttpSessionListener] | Interface for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] lifecycle changes.
 
-| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] attribute changes.
+| https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] | Interface for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] attribute changes.
 
-| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] | Interface for receiving notification events when an object is bound to or unbound from a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession].
-
-
-| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] | Interface for receiving notification events when an https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] is being passivated and and activated.
+| https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] | Interface for receiving notification events when an object is bound to or unbound from a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession].
 
 
-| https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] | Interface for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] id changes.
+| https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] | Interface for receiving notification events when an https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] is being passivated and and activated.
+
+
+| https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] | Interface for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] id changes.
 
 |=== 
 
 === ServletContextListener
 
-This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] lifecycle changes. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextInitialized-javax.servlet.ServletContextEvent[contextInitialized] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html#contextDestroyed-javax.servlet.ServletContextEvent-[contextDestroyed] method in reverse order.
+This interface is for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContext.html[ServletContext] lifecycle changes. Implementations of this interface are invoked at their https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextListener.html#contextInitialized-jakarta.servlet.ServletContextEvent[contextInitialized] method in the order in which they have been declared, and at their https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextListener.html#contextDestroyed-jakarta.servlet.ServletContextEvent-[contextDestroyed] method in reverse order.
 
 [plantuml, servletcontextlistener-diagram, png]     
 ----
@@ -952,15 +952,15 @@ ServletContextEvent --> ServletContext
 EventObject <|-- ServletContextEvent
 ----
 
-Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] interface:
+Below is a Java class that implements the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextListener.html[ServletContextListener] interface:
 
 .MyServletContextListener.java 
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class MyServletContextListener implements ServletContextListener {
@@ -998,21 +998,21 @@ public class MyServletContextListener {
 }
 ----
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextListener.html[ServletContextListener] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContext.html[ServletContext] object
 
-|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextEvent.html[ServletContextEvent] object
+|_event_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextEvent.html[ServletContextEvent] object
 |===
 
 === ServletContextAttributeListener
 
-This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] attribute changes. The order in which implementations of this interface are invoked is unspecified.
+This interface is for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContext.html[ServletContext] attribute changes. The order in which implementations of this interface are invoked is unspecified.
 
 [plantuml, servletcontextattributelistener-diagram, png]     
 ----
@@ -1059,16 +1059,16 @@ ServletContextEvent --> ServletContext
 EventObject <|-- ServletContextEvent
 ----
 
-Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] interface:
+Below is a Java class that implements the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] interface:
 
 
 .MyServletContextAttributeListener.java 
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.ServletContextAttributeEvent;
-import javax.servlet.ServletContextAttributeListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.ServletContextAttributeEvent;
+import jakarta.servlet.ServletContextAttributeListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class MyServletContextAttributeListener implements ServletContextAttributeListener {
@@ -1114,16 +1114,16 @@ public class MyServletContextAttributeListener {
 }
 ----
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextAttributeListener.html[ServletContextAttributeListener] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContext.html[ServletContext] object
 
-|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
+|_event_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextAttributeEvent.html[ServletContextAttributeEvent] object
 
 |_name_ | attribute name
 
@@ -1132,7 +1132,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 === ServletRequestListener
 
-This interface is for receiving notification events about requests coming into and going out of scope of a web application. A request is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestInitialized-javax.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html#requestDestroyed-javax.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
+This interface is for receiving notification events about requests coming into and going out of scope of a web application. A request is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope as it exits the last servlet or the first filter in the chain. Implementations of this interface are invoked at their https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequestListener.html#requestInitialized-jakarta.servlet.ServletRequestEvent[requestInitialized] method in the order in which they have been declared, and at their https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequestListener.html#requestDestroyed-jakarta.servlet.ServletRequestEvent-[requestDestroyed] method in reverse order.
 
 [plantuml, servletrequestlistener-diagram, png]     
 ----
@@ -1184,15 +1184,15 @@ EventObject <|-- ServletRequestEvent
 ----
 
 
-Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListener] interface:
+Below is a Java class that implements the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequestListener.html[ServletRequestListener] interface:
 
 .MyServletRequestListener.java 
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.ServletRequestEvent;
-import javax.servlet.ServletRequestListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.ServletRequestEvent;
+import jakarta.servlet.ServletRequestListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class MyServletRequestListener implements ServletRequestListener {
@@ -1230,26 +1230,26 @@ public class MyServletRequestListener {
 }
 ----
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestListener.html[ServletRequestListener] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequestListener.html[ServletRequestListener] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_request_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] object
 
-|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContext.html[ServletContext] object
 
-|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestEvent.html[ServletRequestEvent] object
+|_event_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequestEvent.html[ServletRequestEvent] object
 
 |===
 
 === ServletRequestAttributeListener
 
-This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html[ServletRequest] attribute changes.
+This interface is for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequest.html[ServletRequest] attribute changes.
 Notifications will be generated while the request is within the scope of the web application. A ServletRequest is defined as coming into scope of a web application when it is about to enter the first servlet or filter of the web application, and as going out of scope when it exits the last servlet or the first filter in the chain. The order in which implementations of this interface are invoked is unspecified.
 
 
@@ -1300,15 +1300,15 @@ EventObject <|-- ServletRequestEvent
 ----
 
 
-Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] interface:
+Below is a Java class that implements the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] interface:
 
 .MyServletRequestAttributeListener.java 
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.ServletRequestAttributeEvent;
-import javax.servlet.ServletRequestAttributeListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.ServletRequestAttributeEvent;
+import jakarta.servlet.ServletRequestAttributeListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class MyServletRequestAttributeListener implements ServletRequestAttributeListener {
@@ -1354,20 +1354,20 @@ public class MyServletRequestAttributeListener {
 }
 ----
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequestAttributeListener.html[ServletRequestAttributeListener] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_request_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
+|_request_ |  https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
-|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] object
 
-|_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
+|_context_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContext.html[ServletContext] object
 
-|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
+|_event_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletRequestAttributeEvent.html[ServletRequestAttributeEvent] object
 
 |_name_ | attribute name
 
@@ -1376,7 +1376,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 === HttpSessionListener
 
-This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] lifecycle changes. Implementations of this interface are invoked at their https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionCreated-javax.servlet.http.HttpSessionEvent[sessionCreated] method in the order in which they have been declared, and at their https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html#sessionDestroyed-javax.servlet.http.HttpSessionEvent[sessionDestroyed] method in reverse order.
+This interface is for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] lifecycle changes. Implementations of this interface are invoked at their https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionListener.html#sessionCreated-jakarta.servlet.http.HttpSessionEvent[sessionCreated] method in the order in which they have been declared, and at their https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionListener.html#sessionDestroyed-jakarta.servlet.http.HttpSessionEvent[sessionDestroyed] method in reverse order.
 
 [plantuml, httpsessionlistener-diagram, png]     
 ----
@@ -1415,15 +1415,15 @@ HttpSessionEvent --> HttpSession
 EventObject <|-- HttpSessionEvent
 ----
 
-Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] interface:
+Below is a Java class that implements the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionListener.html[HttpSessionListener] interface:
 
 .MyHttpSessionListener.java 
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.http.HttpSessionEvent;
+import jakarta.servlet.http.HttpSessionListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class MyHttpSessionListener implements HttpSessionListener {
@@ -1461,23 +1461,23 @@ public class MyHttpSessionListener {
 }
 ----
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionListener.html[HttpSessionListener] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionListener.html[HttpSessionListener] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] object
 
-|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
 |===
 
 
 === HttpSessionAttributeListener
 
-This interface is for receiving notification events about https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] attribute changes. The order in which implementations of this interface are invoked is unspecified.
+This interface is for receiving notification events about https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] attribute changes. The order in which implementations of this interface are invoked is unspecified.
 
 [plantuml, httpsessionattributelistener-diagram, png]     
 ----
@@ -1531,16 +1531,16 @@ HttpSessionEvent --> HttpSession
 EventObject <|-- HttpSessionEvent
 ----
 
-Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] interface:
+Below is a Java class that implements the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] interface:
 
 
 .MyHttpSessionAttributeListener.java 
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.http.HttpSessionBindingEvent;
-import javax.servlet.http.HttpSessionAttributeListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.http.HttpSessionBindingEvent;
+import jakarta.servlet.http.HttpSessionAttributeListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class MyHttpSessionAttributeListener implements HttpSessionAttributeListener {
@@ -1586,16 +1586,16 @@ public class MyHttpSessionAttributeListener {
 }
 ----
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionAttributeListener.html[HttpSessionAttributeListener] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] object
 
-|_event_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+|_event_ |  https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
 
 |_name_ | attribute name
 
@@ -1652,15 +1652,15 @@ EventObject <|-- HttpSessionEvent
 ----
 
 
-Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] interface:
+Below is a Java class that implements the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] interface:
 
 .MyHttpSessionBindingListener.java 
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.http.HttpSessionBindingEvent;
-import javax.servlet.http.HttpSessionBindingListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.http.HttpSessionBindingEvent;
+import jakarta.servlet.http.HttpSessionBindingListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class MyHttpSessionBindingListener implements HttpSessionBindingListener {
@@ -1698,16 +1698,16 @@ public class MyHttpSessionBindingListener {
 }
 ----
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionBindingListener.html[HttpSessionBindingListener] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] object
 
-|_event_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
+|_event_ |  https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionBindingEvent.html[HttpSessionBindingEvent] object
 
 |_name_ | attribute name
 
@@ -1755,16 +1755,16 @@ HttpSessionEvent --> HttpSession
 EventObject <|-- HttpSessionEvent
 ----
 
-Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] interface:
+Below is a Java class that implements the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] interface:
 
 
 .MyHttpSessionActivationListener.java 
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionActivationListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.http.HttpSessionEvent;
+import jakarta.servlet.http.HttpSessionActivationListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class MyHttpSessionActivationListener implements HttpSessionActivationListener {
@@ -1802,16 +1802,16 @@ public class MyHttpSessionActivationListener {
 }
 ----
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionActivationListener.html[HttpSessionActivationListener] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] object
 
-|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
 |===
 
@@ -1856,15 +1856,15 @@ EventObject <|-- HttpSessionEvent
 ----
 
 
-Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] interface:
+Below is a Java class that implements the https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] interface:
 
 .MyHttpSessionIdListener.java 
 [#src-listing] 
 [source,java]  
 ---- 
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionIdListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.http.HttpSessionEvent;
+import jakarta.servlet.http.HttpSessionIdListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class MyHttpSessionIdListener implements HttpSessionIdListener {
@@ -1894,18 +1894,18 @@ public class MyHttpSessionIdListener {
 }
 ----
 
-The implicit variables made available to a https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] are as follows:
+The implicit variables made available to a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionIdListener.html[HttpSessionIdListener] are as follows:
 
 |===
 |Variable |Description
 
 |_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
 
-|_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
+|_session_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] object
 
-|_event_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
+|_event_ | https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSessionEvent.html[HttpSessionEvent] object
 
-|_oldSessionId_ | old https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] Id
+|_oldSessionId_ | old https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html[HttpSession] Id
 
 |===
 
@@ -1917,11 +1917,11 @@ The request parameters are sent along with the request. You can send them as par
 [#src-listing] 
 [source,java]  
 ----
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 
 @WebServlet("/parameters")
@@ -1965,13 +1965,13 @@ An attribute is an object that is used to share information in a web application
 [#src-listing] 
 [source,java]  
 ----
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 
 @WebServlet("/attributes")
@@ -2340,11 +2340,11 @@ To augment the editor features such as content assist, the GServlet API ships wi
 ----  
 contribute(currentType(annos: annotatedBy(Servlet))) {
 	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractServlet'
-	property name : 'config', type : javax.servlet.ServletConfig, provider : 'org.gservlet.AbstractServlet'
-	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractServlet'
-	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractServlet'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractServlet'
-	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractServlet'
+	property name : 'config', type : jakarta.servlet.ServletConfig, provider : 'org.gservlet.AbstractServlet'
+	property name : 'request', type : jakarta.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractServlet'
+	property name : 'response', type : jakarta.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractServlet'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractServlet'
+	property name : 'context', type : jakarta.servlet.ServletContext, provider : 'org.gservlet.AbstractServlet'
 	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractServlet'
 	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractServlet'
 	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractServlet'
@@ -2365,12 +2365,12 @@ contribute(currentType(annos: annotatedBy(Servlet))) {
 
 contribute(currentType(annos: annotatedBy(Filter))) {
 	property name : 'logger', type : java.util.Logger, provider : 'org.gservlet.AbstractFilter'
-	property name : 'config', type : javax.servlet.FilterConfig, provider : 'org.gservlet.AbstractFilter'
-	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractFilter'
-	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractFilter'
-	property name : 'chain', type : javax.servlet.FilterChain, provider : 'org.gservlet.AbstractFilter'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractFilter'
-	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractFilter'
+	property name : 'config', type : jakarta.servlet.FilterConfig, provider : 'org.gservlet.AbstractFilter'
+	property name : 'request', type : jakarta.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractFilter'
+	property name : 'response', type : jakarta.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractFilter'
+	property name : 'chain', type : jakarta.servlet.FilterChain, provider : 'org.gservlet.AbstractFilter'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractFilter'
+	property name : 'context', type : jakarta.servlet.ServletContext, provider : 'org.gservlet.AbstractFilter'
 	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractFilter'
 	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractFilter'
 	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractFilter'
@@ -2447,11 +2447,11 @@ def classContext = context(scope: classScope())
 contributor(classContext) {
   if (hasAnnotation('org.gservlet.annotation.Servlet')) {
     property name: 'logger', type: 'java.util.logging.Logger'
-    property name: 'config', type: 'javax.servlet.ServletConfig'
-    property name: 'request', type: 'javax.servlet.http.HttpServletRequest'
-    property name: 'response',type: 'javax.servlet.http.HttpServletResponse'
-    property name: 'session', type: 'javax.servlet.http.HttpSession'
-    property name: 'context', type: 'javax.servlet.ServletContext'
+    property name: 'config', type: 'jakarta.servlet.ServletConfig'
+    property name: 'request', type: 'jakarta.servlet.http.HttpServletRequest'
+    property name: 'response',type: 'jakarta.servlet.http.HttpServletResponse'
+    property name: 'session', type: 'jakarta.servlet.http.HttpSession'
+    property name: 'context', type: 'jakarta.servlet.ServletContext'
     property name: 'sql', type: 'groovy.sql.Sql'
     property name: 'out', type: 'java.io.PrintWriter'
     property name: 'html', type: 'groovy.xml.MarkupBuilder'
@@ -2462,12 +2462,12 @@ contributor(classContext) {
 contributor(classContext) {
   if (hasAnnotation('org.gservlet.annotation.Filter')) {
     property name: 'logger', type: 'java.util.logging.Logger'
-    property name: 'config', type: 'javax.servlet.FilterConfig'
-    property name: 'request', type: 'javax.servlet.http.HttpServletRequest'
-    property name: 'response', type: 'javax.servlet.http.HttpServletResponse'
-    property name: 'chain', type: 'javax.servlet.FilterChain'
-    property name: 'session', type: 'javax.servlet.http.HttpSession'
-    property name: 'context', type: 'javax.servlet.ServletContext'
+    property name: 'config', type: 'jakarta.servlet.FilterConfig'
+    property name: 'request', type: 'jakarta.servlet.http.HttpServletRequest'
+    property name: 'response', type: 'jakarta.servlet.http.HttpServletResponse'
+    property name: 'chain', type: 'jakarta.servlet.FilterChain'
+    property name: 'session', type: 'jakarta.servlet.http.HttpSession'
+    property name: 'context', type: 'jakarta.servlet.ServletContext'
     property name: 'sql', type: 'groovy.sql.Sql'
     property name: 'out', type: 'java.io.PrintWriter'
     property name: 'html', type: 'groovy.xml.MarkupBuilder'
@@ -2486,8 +2486,8 @@ You just need this configuration below to leverage the GServlet API in your Spri
 [#src-listing] 
 [source,java]  
 ----  
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 import org.gservlet.GServletApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
@@ -2518,8 +2518,8 @@ If you want to reuse the data source configured by Spring, this is how you must 
 [#src-listing] 
 [source,java]  
 ----  
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 import javax.sql.DataSource;
 import org.gservlet.GServletApplication;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
@@ -2553,8 +2553,8 @@ To enable Spring autowiring, you can use an implementation of the https://gservl
 [#src-listing] 
 [source,java]  
 ----  
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 import javax.sql.DataSource;
 import org.gservlet.GServletApplication;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
@@ -2589,7 +2589,7 @@ NOTE: Your Groovy scripts must be created in the *_src/main/resources_* folder i
 
 === Other Java web frameworks 
 
-If the target framework supports the _@WebListener_ annotation of the Servlet API, no configuration is required since we ship with a https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContextListener.html[ServletContextListener] which starts and stops the application. This statement is valid for frameworks like JSF, Apache Struts.
+If the target framework supports the _@WebListener_ annotation of the Servlet API, no configuration is required since we ship with a https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/ServletContextListener.html[ServletContextListener] which starts and stops the application. This statement is valid for frameworks like JSF, Apache Struts.
 
 .StartupListener.java 
 [#src-listing] 
@@ -2597,9 +2597,9 @@ If the target framework supports the _@WebListener_ annotation of the Servlet AP
 ----  
 package org.gservlet;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
 public class StartupListener implements ServletContextListener {
