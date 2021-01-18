@@ -21,8 +21,8 @@ package org.gservlet;
 
 import java.io.Serializable;
 import java.util.Enumeration;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * 
@@ -167,10 +167,10 @@ public class SessionWrapper implements HttpSession, Serializable {
 	 *             replacement. It will be removed in a future version of the Java
 	 *             Servlet API.
 	 *
-	 * @return the @see javax.servlet.http.HttpSessionContext for this session.
+	 * @return the @see jakarta.servlet.http.HttpSessionContext for this session.
 	 */
 	@Deprecated
-	public javax.servlet.http.HttpSessionContext getSessionContext() {
+	public jakarta.servlet.http.HttpSessionContext getSessionContext() {
 		return session.getSessionContext();
 	}
 

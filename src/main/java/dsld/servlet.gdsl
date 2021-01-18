@@ -24,11 +24,11 @@ def classContext = context(scope: classScope())
 contributor(classContext) {
   if (hasAnnotation('org.gservlet.annotation.Servlet')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'config', type : 'javax.servlet.ServletConfig', doc : 'ServletConfig object'
-	property name : 'request', type : 'javax.servlet.http.HttpServletRequest', doc : 'HttpServletRequest object'
-	property name : 'response', type : 'javax.servlet.http.HttpServletResponse', doc : 'HttpServletResponse object'
-	property name : 'session', type : 'javax.servlet.http.HttpSession', doc : 'HttpSession object'
-	property name : 'context', type : 'javax.servlet.ServletContext', doc : 'ServletContext object'
+	property name : 'config', type : 'jakarta.servlet.ServletConfig', doc : 'ServletConfig object'
+	property name : 'request', type : 'jakarta.servlet.http.HttpServletRequest', doc : 'HttpServletRequest object'
+	property name : 'response', type : 'jakarta.servlet.http.HttpServletResponse', doc : 'HttpServletResponse object'
+	property name : 'session', type : 'jakarta.servlet.http.HttpSession', doc : 'HttpSession object'
+	property name : 'context', type : 'jakarta.servlet.ServletContext', doc : 'ServletContext object'
 	property name : 'sql', type : 'groovy.sql.Sql', doc : 'Sql object'
 	property name : 'out', type : 'java.io.PrintWriter', doc : 'PrintWriter object'
 	property name : 'html', type : 'groovy.xml.MarkupBuilder', doc : 'MarkupBuilder object'
@@ -40,12 +40,12 @@ contributor(classContext) {
 contributor(classContext) {
  if (hasAnnotation('org.gservlet.annotation.Filter')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'config', type : 'javax.servlet.FilterConfig', doc : 'FilterConfig object'
-	property name : 'request', type : 'javax.servlet.http.HttpServletRequest', doc : 'HttpServletRequest object'
-	property name : 'response', type : 'javax.servlet.http.HttpServletResponse', doc : 'HttpServletResponse object'
-	property name : 'chain', type : 'javax.servlet.FilterChain', doc : 'FilterChain object'
-	property name : 'session', type : 'javax.servlet.http.HttpSession', doc : 'HttpSession object'
-	property name : 'context', type : 'javax.servlet.ServletContext', doc : 'ServletContext object'
+	property name : 'config', type : 'jakarta.servlet.FilterConfig', doc : 'FilterConfig object'
+	property name : 'request', type : 'jakarta.servlet.http.HttpServletRequest', doc : 'HttpServletRequest object'
+	property name : 'response', type : 'jakarta.servlet.http.HttpServletResponse', doc : 'HttpServletResponse object'
+	property name : 'chain', type : 'jakarta.servlet.FilterChain', doc : 'FilterChain object'
+	property name : 'session', type : 'jakarta.servlet.http.HttpSession', doc : 'HttpSession object'
+	property name : 'context', type : 'jakarta.servlet.ServletContext', doc : 'ServletContext object'
 	property name : 'sql', type : 'groovy.sql.Sql', doc : 'Sql object'
 	property name : 'out', type : 'java.io.PrintWriter', doc : 'PrintWriter object'
 	property name : 'html', type : 'groovy.xml.MarkupBuilder', doc : 'MarkupBuilder object'
@@ -57,8 +57,8 @@ contributor(classContext) {
 contributor(classContext) {  
    if (hasAnnotation('org.gservlet.annotation.ContextListener')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'context', type : 'javax.servlet.ServletContext', doc : 'ServletContext object'
-	property name : 'event', type : 'javax.servlet.ServletContextEvent', doc : 'ServletContext object event'
+	property name : 'context', type : 'jakarta.servlet.ServletContext', doc : 'ServletContext object'
+	property name : 'event', type : 'jakarta.servlet.ServletContextEvent', doc : 'ServletContext object event'
 	delegatesTo(findClass('org.gservlet.AbstractContextListener'))
 	delegatesTo(findClass('org.gservlet.AbstractListener'))
   }
@@ -67,10 +67,10 @@ contributor(classContext) {
 contributor(classContext) {  
   if (hasAnnotation('org.gservlet.annotation.RequestListener')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'request', type : 'javax.servlet.http.HttpServletRequest', doc : 'HttpServletRequest object'
-	property name : 'session', type : 'javax.servlet.http.HttpSession', doc : 'HttpSession object'
-	property name : 'context', type : 'javax.servlet.ServletContext', doc : 'ServletContext object'
-	property name : 'event', type : 'javax.servlet.ServletRequestEvent', doc : 'ServletRequestEvent object'
+	property name : 'request', type : 'jakarta.servlet.http.HttpServletRequest', doc : 'HttpServletRequest object'
+	property name : 'session', type : 'jakarta.servlet.http.HttpSession', doc : 'HttpSession object'
+	property name : 'context', type : 'jakarta.servlet.ServletContext', doc : 'ServletContext object'
+	property name : 'event', type : 'jakarta.servlet.ServletRequestEvent', doc : 'ServletRequestEvent object'
 	delegatesTo(findClass('org.gservlet.AbstractRequestListener'))
 	delegatesTo(findClass('org.gservlet.AbstractListener'))
   }
@@ -79,8 +79,8 @@ contributor(classContext) {
 contributor(classContext) {  
    if (hasAnnotation('org.gservlet.annotation.SessionListener')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'session', type : 'javax.servlet.http.HttpSession', doc : 'HttpSession object'
-	property name : 'event', type : 'javax.servlet.http.HttpSessionEvent', doc : 'HttpSessionEvent object'
+	property name : 'session', type : 'jakarta.servlet.http.HttpSession', doc : 'HttpSession object'
+	property name : 'event', type : 'jakarta.servlet.http.HttpSessionEvent', doc : 'HttpSessionEvent object'
 	delegatesTo(findClass('org.gservlet.AbstractSessionListener'))
 	delegatesTo(findClass('org.gservlet.AbstractListener'))
   }
@@ -89,8 +89,8 @@ contributor(classContext) {
 contributor(classContext) {  
    if (hasAnnotation('org.gservlet.annotation.ContextAttributeListener')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'context', type : 'javax.servlet.ServletContext', doc : 'ServletContext object'
-	property name : 'event', type : 'javax.servlet.ServletContextAttributeEvent', doc : 'ServletContextAttributeEvent object'
+	property name : 'context', type : 'jakarta.servlet.ServletContext', doc : 'ServletContext object'
+	property name : 'event', type : 'jakarta.servlet.ServletContextAttributeEvent', doc : 'ServletContextAttributeEvent object'
 	property name : 'name', type : 'java.lang.String', doc : 'attribute name'
 	property name : 'value', type : 'java.lang.Object', doc : 'attribute value'
 	delegatesTo(findClass('org.gservlet.AbstractContextAttributeListener'))
@@ -101,10 +101,10 @@ contributor(classContext) {
 contributor(classContext) {
   if (hasAnnotation('org.gservlet.annotation.RequestAttributeListener')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'request', type : 'javax.servlet.http.HttpServletRequest', doc : 'HttpServletRequest object'
-	property name : 'session', type : 'javax.servlet.http.HttpSession', doc : 'HttpSession object'
-	property name : 'context', type : 'javax.servlet.ServletContext', doc : 'ServletContext object'
-	property name : 'event', type : 'javax.servlet.ServletRequestAttributeEvent', doc : 'ServletRequestAttributeEvent object'
+	property name : 'request', type : 'jakarta.servlet.http.HttpServletRequest', doc : 'HttpServletRequest object'
+	property name : 'session', type : 'jakarta.servlet.http.HttpSession', doc : 'HttpSession object'
+	property name : 'context', type : 'jakarta.servlet.ServletContext', doc : 'ServletContext object'
+	property name : 'event', type : 'jakarta.servlet.ServletRequestAttributeEvent', doc : 'ServletRequestAttributeEvent object'
 	property name : 'name', type : 'java.lang.String', doc : 'attribute name'
 	property name : 'value', type : 'java.lang.Object', doc : 'attribute value'
 	delegatesTo(findClass('org.gservlet.AbstractRequestAttributeListener'))
@@ -115,8 +115,8 @@ contributor(classContext) {
 contributor(classContext) {  
    if (hasAnnotation('org.gservlet.annotation.SessionAttributeListener')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'session', type : 'javax.servlet.http.HttpSession', doc : 'HttpSession object'
-	property name : 'event', type : 'javax.servlet.http.HttpSessionBindingEvent', doc : 'HttpSessionBindingEvent object'
+	property name : 'session', type : 'jakarta.servlet.http.HttpSession', doc : 'HttpSession object'
+	property name : 'event', type : 'jakarta.servlet.http.HttpSessionBindingEvent', doc : 'HttpSessionBindingEvent object'
 	property name : 'name', type : 'java.lang.String', doc : 'attribute name'
 	property name : 'value', type : 'java.lang.Object', doc : 'attribute value'
 	delegatesTo(findClass('org.gservlet.AbstractSessionAttributeListener'))
@@ -127,8 +127,8 @@ contributor(classContext) {
 contributor(classContext) { 
   if (hasAnnotation('org.gservlet.annotation.SessionActivationListener')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'event', type : 'javax.servlet.http.HttpSessionEvent', doc : 'HttpSessionEvent object'
-	property name : 'session', type : 'javax.servlet.http.HttpSession', doc : 'HttpSession object'
+	property name : 'event', type : 'jakarta.servlet.http.HttpSessionEvent', doc : 'HttpSessionEvent object'
+	property name : 'session', type : 'jakarta.servlet.http.HttpSession', doc : 'HttpSession object'
 	delegatesTo(findClass('org.gservlet.AbstractSessionActivationListener'))
 	delegatesTo(findClass('org.gservlet.AbstractListener'))
   }
@@ -137,8 +137,8 @@ contributor(classContext) {
  contributor(classContext) { 
    if (hasAnnotation('org.gservlet.annotation.SessionBindingListener')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'event', type : 'javax.servlet.http.HttpSessionBindingEvent', doc : 'HttpSessionBindingEvent object'
-	property name : 'session', type : 'javax.servlet.http.HttpSession', doc : 'HttpSession object'
+	property name : 'event', type : 'jakarta.servlet.http.HttpSessionBindingEvent', doc : 'HttpSessionBindingEvent object'
+	property name : 'session', type : 'jakarta.servlet.http.HttpSession', doc : 'HttpSession object'
 	property name : 'name', type : 'java.lang.String', doc : 'attribute name'
 	property name : 'value', type : 'java.lang.Object', doc : 'attribute value'
 	delegatesTo(findClass('org.gservlet.AbstractSessionBindingListener'))
@@ -149,8 +149,8 @@ contributor(classContext) {
  contributor(classContext) {
    if (hasAnnotation('org.gservlet.annotation.SessionIdListener')) {  
     property name : 'logger', type : 'java.util.logging.Logger', doc : 'Logger object'
-	property name : 'event', type : 'javax.servlet.http.HttpSessionEvent', doc : 'HttpSessionEvent object'
-	property name : 'session', type : 'javax.servlet.http.HttpSession', doc : 'HttpSession object'
+	property name : 'event', type : 'jakarta.servlet.http.HttpSessionEvent', doc : 'HttpSessionEvent object'
+	property name : 'session', type : 'jakarta.servlet.http.HttpSession', doc : 'HttpSession object'
 	property name : 'oldSessionId', type : 'java.lang.String', doc : 'old session id'
 	delegatesTo(findClass('org.gservlet.AbstractSessionIdListener'))
 	delegatesTo(findClass('org.gservlet.AbstractListener'))

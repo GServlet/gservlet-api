@@ -1,10 +1,10 @@
 import org.gservlet.annotation.Servlet
 import org.gservlet.annotation.InitParam
-import javax.servlet.annotation.MultipartConfig
-import javax.servlet.annotation.ServletSecurity
-import javax.servlet.annotation.ServletSecurity.TransportGuarantee
-import javax.servlet.annotation.HttpConstraint
-import javax.servlet.annotation.HttpMethodConstraint
+import jakarta.servlet.annotation.MultipartConfig
+import jakarta.servlet.annotation.ServletSecurity
+import jakarta.servlet.annotation.ServletSecurity.TransportGuarantee
+import jakarta.servlet.annotation.HttpConstraint
+import jakarta.servlet.annotation.HttpMethodConstraint
 
 @Servlet(value="/servlet", urlPatterns = ['/test/servlet'],
 initParams = [

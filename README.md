@@ -82,7 +82,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 ## Main Features
 
-* Servlet 3.1+ Support
+* Jakarta Servlet 5.0 Support
 * Groovy Scripting and Hot Reloading
 * JSON, XML, HTML and JDBC Support
 
@@ -90,7 +90,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 * Java 8+
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
-* Java EE 7+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
+* Jakarta Servlet EE 9 compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 
 ## Getting Started
 

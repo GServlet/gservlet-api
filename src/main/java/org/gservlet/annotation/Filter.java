@@ -24,11 +24,11 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.servlet.DispatcherType;
+import jakarta.servlet.DispatcherType;
 
 /**
 * 
-* This annotation is used to declare a {@link javax.servlet.Filter} 
+* This annotation is used to declare a {@link jakarta.servlet.Filter} 
 *
 * This annotation is processed at deployment time,
 * and the corresponding filter applied to the specified URL patterns,
@@ -91,8 +91,8 @@ public @interface Filter {
      * Declares whether the filter supports asynchronous operation mode.
      *
      * @return {@code true} if the filter supports asynchronous operation mode
-     * @see javax.servlet.ServletRequest#startAsync
-     * @see javax.servlet.ServletRequest#startAsync(ServletRequest,
+     * @see jakarta.servlet.ServletRequest#startAsync
+     * @see jakarta.servlet.ServletRequest#startAsync(ServletRequest,
      * ServletResponse)
      */
 	boolean asyncSupported() default false;
