@@ -247,7 +247,7 @@ We version GServlet by following the [Semantic Versioning](https://semver.org), 
 
 ## Status
 
-The current version of GServlet is 1.0.0.
+The current version of GServlet is 2.0.0. You can search for previous releases on [Maven Central](https://mvnrepository.com/artifact/org.gservlet/gservlet-api)
 
 ## Snapshot builds
 You can access snapshot builds from the sonatype snapshot repository by adding the following to your `repositories`:
