@@ -90,7 +90,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 * Java 8+
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
-* Jakarta Servlet EE 9 compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
+* Jakarta EE 9 compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 
 ## Getting Started
 
