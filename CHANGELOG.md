@@ -17,6 +17,6 @@
 
 ### Added
 
-- Servlet 3.1+ Support
+- Java EE 7+ and Servlet 3.1+ Support
 - Groovy Scripting and Hot Reloading
 - JSON, XML, HTML and JDBC Support
