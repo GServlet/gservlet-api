@@ -102,7 +102,7 @@ If you are just getting started with GServlet, you may want to begin by creating
 <dependency>
  <groupId>org.gservlet<groupId/>
  <artifactId>gservlet-api</artifactId>
- <version>1.0.0</version>
+ <version>2.0.0</version>
 </dependency>
 ```
 
@@ -114,7 +114,7 @@ If you are just getting started with GServlet, you may want to begin by creating
 }
 
 dependencies {
-    compile("org.gservlet:gservlet-api:1.0.0")
+    compile("org.gservlet:gservlet-api:2.0.0")
 }
 ```
 
@@ -213,7 +213,7 @@ class ServletRequestListener {
 }
 ```
 
-For a deep insight of how to write your Groovy artifacts, please refer to the [developer guide](https://gservlet.org/docs/1.0.0).
+For a deep insight of how to write your Groovy artifacts, please refer to the [developer guide](https://gservlet.org/docs/2.0.0).
 
 ## Code Examples
 
