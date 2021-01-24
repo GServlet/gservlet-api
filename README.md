@@ -253,9 +253,9 @@ The current version of GServlet is 2.0.0. You can search for previous releases o
 
 ## Release Plan
 
-1.0.x : Java EE 8 and Jakarta EE 8 support
-2.0.x : Jakarta EE 9 support
-3.0.x : Jakarta EE 10 support
+* 1.0.x : Java EE 8 and Jakarta EE 8 support
+* 2.0.x : Jakarta EE 9 support
+* 3.0.x : Jakarta EE 10 support
 
 ## Snapshot builds
 You can access snapshot builds from the sonatype snapshot repository by adding the following to your `repositories`:
