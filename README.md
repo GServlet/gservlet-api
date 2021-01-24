@@ -7,7 +7,7 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=GServlet_gservlet-api&metric=security_rating)](https://sonarcloud.io/dashboard?id=GServlet_gservlet-api)
-[![Coverage Status](https://coveralls.io/repos/github/GServlet/gservlet-api/badge.png?branch=master)](https://coveralls.io/github/GServlet/gservlet-api?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/GServlet/gservlet-api/badge.png?branch=develop)](https://coveralls.io/github/GServlet/gservlet-api?branch=develop)
 [![License](http://img.shields.io/:license-apache-blue.png)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.gservlet/gservlet-api/badge.png)](https://maven-badges.herokuapp.com/maven-central/org.gservlet/gservlet-api/)
 [![Javadocs](https://javadoc.io/badge/org.gservlet/gservlet-api.png)](https://javadoc.io/doc/org.gservlet/gservlet-api)
