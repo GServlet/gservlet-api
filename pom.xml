@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.gservlet</groupId>
 	<artifactId>gservlet-api</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>GServlet</name>
 	<url>https://gservlet.org</url>
@@ -38,8 +38,8 @@
 	<properties>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<groovy.version>3.0.7</groovy.version>
-		<javassist.version>3.12.1.GA</javassist.version>
-		<servlet.version>3.1.0</servlet.version>
+		<javassist.version>3.27.0-GA</javassist.version>
+		<servlet.version>5.0.0</servlet.version>
 		<commons.dbcp.version>2.2.0</commons.dbcp.version>
 		<junit.version>4.13.1</junit.version>
 		<mockito.version>2.28.2</mockito.version>
@@ -54,7 +54,7 @@
 		<resources.version>2.6</resources.version>
 		<asciidoctor.version>1.5.6</asciidoctor.version>
 		<asciidoctorj.diagram.version>1.5.8</asciidoctorj.diagram.version>
-		<release.version>1.0.0</release.version>
+		<release.version>2.0.0</release.version>
 		<docs.directory>../gservlet-site/static/docs/${release.version}</docs.directory>
 		<javadoc.version>2.9.1</javadoc.version>
 		<javadocs.directory>../gservlet-site/static/javadocs/${release.version}</javadocs.directory>
@@ -64,11 +64,11 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${servlet.version}</version>
-			<scope>provided</scope>
-		</dependency>
+		    <groupId>jakarta.servlet</groupId>
+		    <artifactId>jakarta.servlet-api</artifactId>
+		    <version>${servlet.version}</version>
+		    <scope>provided</scope>
+		</dependency>		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
@@ -95,9 +95,9 @@
 			<version>${groovy.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>${javassist.version}</version>
+		    <groupId>org.javassist</groupId>
+		    <artifactId>javassist</artifactId>
+		    <version>${javassist.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -210,10 +210,10 @@
 							<bottom><![CDATA[Use is subject to <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="_top"> the Apache 2.0 license terms</a>.]]>
 							</bottom>
 							<links>
-								<link>https://docs.oracle.com/javase/7/docs/api/</link>
-								<link>https://docs.oracle.com/javaee/7/api/</link>
-								<link>http://docs.groovy-lang.org/2.5.4/html/gapi/</link>
-								<link>https://javadoc.io/static/javassist/javassist/3.12.1.GA/</link>
+								<link>https://docs.oracle.com/javase/8/docs/api/</link>
+								<link>https://jakarta.ee/specifications/platform/9/apidocs/</link>
+								<link>http://docs.groovy-lang.org/${groovy.version}/html/gapi/</link>
+								<link>https://javadoc.io/doc/org.javassist/javassist/3.26.0-GA/</link>
 							</links>
 						</configuration>
 						<executions>

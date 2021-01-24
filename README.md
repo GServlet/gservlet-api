@@ -21,6 +21,8 @@
 1. [Building from source](#building-from-source)
 1. [Versioning](#versioning)
 1. [Status](#status)
+1. [Relase Plan](#release-plan)
+1. [Snapshot builds](#snapshot-builds)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -28,7 +30,7 @@
 
 GServlet is an open source project inspired from the [Groovlets](http://docs.groovy-lang.org/latest/html/documentation/servlet-userguide.html), which aims to use the Groovy language and its provided modules to simplify Servlet API web development.
 Groovlets are Groovy scripts executed by a servlet. They are run on request, having the whole web context (request, response, etc.) bound to the evaluation context. They are much more suitable for smaller web applications. 
-Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the [HttpServletRequest](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletRequest.html), and [HttpServletResponse](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServletResponse.html) objects. We have access to the [HttpSession](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpSession.html) with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_. This is more like a script as it does not have a class wrapper.
+Compared to Java Servlets, coding in Groovy can be much simpler. It has a couple of implicit variables we can use, for example, _request_, _response_ to access the [HttpServletRequest](https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletRequest.html), and [HttpServletResponse](https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpServletResponse.html) objects. We have access to the [HttpSession](https://jakarta.ee/specifications/platform/9/apidocs/jakarta/servlet/http/HttpSession.html) with the _session_ variable. If we want to output data, we can use _out_, _sout_, and _html_. This is more like a script as it does not have a class wrapper.
 
 ### Groovlet 
 
@@ -82,7 +84,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 ## Main Features
 
-* Servlet 3.1+ Support
+* Jakarta Servlet 5.0 Support
 * Groovy Scripting and Hot Reloading
 * JSON, XML, HTML and JDBC Support
 
@@ -90,7 +92,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 * Java 8+
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
-* Java EE 7+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
+* Jakarta EE 9 compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 
 ## Getting Started
 
@@ -102,7 +104,7 @@ If you are just getting started with GServlet, you may want to begin by creating
 <dependency>
  <groupId>org.gservlet<groupId/>
  <artifactId>gservlet-api</artifactId>
- <version>1.0.0</version>
+ <version>2.0.0</version>
 </dependency>
 ```
 
@@ -114,7 +116,7 @@ If you are just getting started with GServlet, you may want to begin by creating
 }
 
 dependencies {
-    compile("org.gservlet:gservlet-api:1.0.0")
+    compile("org.gservlet:gservlet-api:2.0.0")
 }
 ```
 
@@ -213,7 +215,7 @@ class ServletRequestListener {
 }
 ```
 
-For a deep insight of how to write your Groovy artifacts, please refer to the [developer guide](https://gservlet.org/docs/1.0.0).
+For a deep insight of how to write your Groovy artifacts, please refer to the [developer guide](https://gservlet.org/docs/2.0.0).
 
 ## Code Examples
 
@@ -247,7 +249,13 @@ We version GServlet by following the [Semantic Versioning](https://semver.org), 
 
 ## Status
 
-The current version of GServlet is 1.0.0.
+The current version of GServlet is 2.0.0. You can search for previous releases on [Maven Central](https://mvnrepository.com/artifact/org.gservlet/gservlet-api)
+
+## Release Plan
+
+* 1.0.x : Java EE 8 and Jakarta EE 8 support
+* 2.0.x : Jakarta EE 9 support
+* 3.0.x : Jakarta EE 10 support
 
 ## Snapshot builds
 You can access snapshot builds from the sonatype snapshot repository by adding the following to your `repositories`:

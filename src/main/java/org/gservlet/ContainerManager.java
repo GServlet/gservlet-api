@@ -33,24 +33,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextAttributeListener;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
-import javax.servlet.ServletRequestAttributeListener;
-import javax.servlet.ServletRequestListener;
-import javax.servlet.ServletSecurityElement;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.ServletSecurity;
-import javax.servlet.http.HttpSessionActivationListener;
-import javax.servlet.http.HttpSessionAttributeListener;
-import javax.servlet.http.HttpSessionBindingListener;
-import javax.servlet.http.HttpSessionIdListener;
-import javax.servlet.http.HttpSessionListener;
+import jakarta.servlet.DispatcherType;
+import jakarta.servlet.FilterRegistration;
+import jakarta.servlet.MultipartConfigElement;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextAttributeListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRegistration;
+import jakarta.servlet.ServletRequestAttributeListener;
+import jakarta.servlet.ServletRequestListener;
+import jakarta.servlet.ServletSecurityElement;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.ServletSecurity;
+import jakarta.servlet.http.HttpSessionActivationListener;
+import jakarta.servlet.http.HttpSessionAttributeListener;
+import jakarta.servlet.http.HttpSessionBindingListener;
+import jakarta.servlet.http.HttpSessionIdListener;
+import jakarta.servlet.http.HttpSessionListener;
 import org.gservlet.annotation.ContextAttributeListener;
 import org.gservlet.annotation.ContextListener;
 import org.gservlet.annotation.Filter;
@@ -192,9 +192,9 @@ public class ContainerManager {
 		if (registration == null) {
 			DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
 			Object servlet = Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { javax.servlet.Servlet.class }, handler);
+					new Class[] { jakarta.servlet.Servlet.class }, handler);
 			handlers.put(name, handler);
-			ServletRegistration.Dynamic dynamic = context.addServlet(name, (javax.servlet.Servlet) servlet);
+			ServletRegistration.Dynamic dynamic = context.addServlet(name, (jakarta.servlet.Servlet) servlet);
 			dynamic.setLoadOnStartup(annotation.loadOnStartup());
 			dynamic.setAsyncSupported(annotation.asyncSupported());
 			if (annotation.value().length > 0) {
@@ -236,9 +236,9 @@ public class ContainerManager {
 		if (registration == null) {
 			DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
 			Object filter = Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { javax.servlet.Filter.class }, handler);
+					new Class[] { jakarta.servlet.Filter.class }, handler);
 			handlers.put(name, handler);
-			FilterRegistration.Dynamic dynamic = context.addFilter(name, (javax.servlet.Filter) filter);
+			FilterRegistration.Dynamic dynamic = context.addFilter(name, (jakarta.servlet.Filter) filter);
 		    dynamic.setAsyncSupported(annotation.asyncSupported());
 			Collection<DispatcherType> dispatcherTypes = Arrays.asList(annotation.dispatcherTypes());
 			if (annotation.value().length > 0) {

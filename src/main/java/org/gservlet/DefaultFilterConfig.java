@@ -19,7 +19,7 @@
 
 package org.gservlet;
 
-import javax.servlet.FilterConfig;
+import jakarta.servlet.FilterConfig;
 
 /**
 * 

@@ -26,11 +26,11 @@ import org.gservlet.annotation.*
 
 contribute(currentType(annos: annotatedBy(Servlet))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractServlet', doc : 'Logger object'
-	property name : 'config', type : javax.servlet.ServletConfig, provider : 'org.gservlet.AbstractServlet', doc : 'ServletConfig object'
-	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractServlet', doc : 'HttpServletRequest object'
-	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractServlet', doc : 'HttpServletResponse object'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractServlet', doc : 'HttpSession object'
-	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractServlet', doc : 'ServletContext object'
+	property name : 'config', type : jakarta.servlet.ServletConfig, provider : 'org.gservlet.AbstractServlet', doc : 'ServletConfig object'
+	property name : 'request', type : jakarta.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractServlet', doc : 'HttpServletRequest object'
+	property name : 'response', type : jakarta.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractServlet', doc : 'HttpServletResponse object'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractServlet', doc : 'HttpSession object'
+	property name : 'context', type : jakarta.servlet.ServletContext, provider : 'org.gservlet.AbstractServlet', doc : 'ServletContext object'
 	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractServlet', doc : 'Sql object'
 	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractServlet', doc : 'PrintWriter object'
 	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractServlet', doc : 'MarkupBuilder object'
@@ -54,12 +54,12 @@ contribute(currentType(annos: annotatedBy(Servlet))) {
 
 contribute(currentType(annos: annotatedBy(Filter))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractFilter', doc : 'Logger object'
-	property name : 'config', type : javax.servlet.FilterConfig, provider : 'org.gservlet.AbstractFilter', doc : 'FilterConfig object'
-	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractFilter', doc : 'HttpServletRequest object'
-	property name : 'response', type : javax.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractFilter', doc : 'HttpServletResponse object'
-	property name : 'chain', type : javax.servlet.FilterChain, provider : 'org.gservlet.AbstractFilter', doc : 'FilterChain object'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractFilter', doc : 'HttpSession object'
-	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractFilter', doc : 'ServletContext object'
+	property name : 'config', type : jakarta.servlet.FilterConfig, provider : 'org.gservlet.AbstractFilter', doc : 'FilterConfig object'
+	property name : 'request', type : jakarta.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractFilter', doc : 'HttpServletRequest object'
+	property name : 'response', type : jakarta.servlet.http.HttpServletResponse, provider : 'org.gservlet.AbstractFilter', doc : 'HttpServletResponse object'
+	property name : 'chain', type : jakarta.servlet.FilterChain, provider : 'org.gservlet.AbstractFilter', doc : 'FilterChain object'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractFilter', doc : 'HttpSession object'
+	property name : 'context', type : jakarta.servlet.ServletContext, provider : 'org.gservlet.AbstractFilter', doc : 'ServletContext object'
 	property name : 'sql', type : groovy.sql.Sql, provider : 'org.gservlet.AbstractFilter', doc : 'Sql object'
 	property name : 'out', type : java.io.PrintWriter, provider : 'org.gservlet.AbstractFilter', doc : 'PrintWriter object'
 	property name : 'html', type : groovy.xml.MarkupBuilder, provider : 'org.gservlet.AbstractFilter', doc : 'MarkupBuilder object'
@@ -74,8 +74,8 @@ contribute(currentType(annos: annotatedBy(Filter))) {
 
 contribute(currentType(annos: annotatedBy(ContextListener))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'Logger object'
-	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractContextListener', doc : 'ServletContext object'
-	property name : 'event', type : javax.servlet.ServletContextEvent, provider : 'org.gservlet.AbstractContextListener', doc : 'ServletContext object event'
+	property name : 'context', type : jakarta.servlet.ServletContext, provider : 'org.gservlet.AbstractContextListener', doc : 'ServletContext object'
+	property name : 'event', type : jakarta.servlet.ServletContextEvent, provider : 'org.gservlet.AbstractContextListener', doc : 'ServletContext object event'
 }
 
 contribute(currentType(annos: annotatedBy(ContextListener))) {
@@ -94,10 +94,10 @@ contribute(currentType(annos: annotatedBy(ContextListener))) {
 
 contribute(currentType(annos: annotatedBy(RequestListener))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'Logger object'
-	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractRequestListener', doc : 'HttpServletRequest object'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractRequestListener', doc : 'HttpSession object'
-	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractRequestListener', doc : 'ServletContext object'
-	property name : 'event', type : javax.servlet.ServletRequestEvent, provider : 'org.gservlet.AbstractRequestListener', doc : 'ServletRequestEvent object'
+	property name : 'request', type : jakarta.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractRequestListener', doc : 'HttpServletRequest object'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractRequestListener', doc : 'HttpSession object'
+	property name : 'context', type : jakarta.servlet.ServletContext, provider : 'org.gservlet.AbstractRequestListener', doc : 'ServletContext object'
+	property name : 'event', type : jakarta.servlet.ServletRequestEvent, provider : 'org.gservlet.AbstractRequestListener', doc : 'ServletRequestEvent object'
 }
 
 contribute(currentType(annos: annotatedBy(RequestListener))) {
@@ -116,8 +116,8 @@ contribute(currentType(annos: annotatedBy(RequestListener))) {
 
 contribute(currentType(annos: annotatedBy(SessionListener))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'Logger object'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionListener', doc : 'HttpSession object'
-	property name : 'event', type : javax.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionListener', doc : 'HttpSessionEvent object'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionListener', doc : 'HttpSession object'
+	property name : 'event', type : jakarta.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionListener', doc : 'HttpSessionEvent object'
 }
 
 contribute(currentType(annos: annotatedBy(SessionListener))) {
@@ -136,8 +136,8 @@ contribute(currentType(annos: annotatedBy(SessionListener))) {
 
 contribute(currentType(annos: annotatedBy(ContextAttributeListener))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'Logger object'
-	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'ServletContext object'
-	property name : 'event', type : javax.servlet.ServletContextAttributeEvent, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'ServletContextAttributeEvent object'
+	property name : 'context', type : jakarta.servlet.ServletContext, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'ServletContext object'
+	property name : 'event', type : jakarta.servlet.ServletContextAttributeEvent, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'ServletContextAttributeEvent object'
 	property name : 'name', type : java.lang.String, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'attribute name'
 	property name : 'value', type : java.lang.Object, provider : 'org.gservlet.AbstractContextAttributeListener', doc : 'attribute value'
 }
@@ -159,10 +159,10 @@ contribute(currentType(annos: annotatedBy(ContextAttributeListener))) {
 
 contribute(currentType(annos: annotatedBy(RequestAttributeListener))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'Logger object'
-	property name : 'request', type : javax.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'HttpServletRequest object'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'HttpSession object'
-	property name : 'context', type : javax.servlet.ServletContext, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'ServletContext object'
-	property name : 'event', type : javax.servlet.ServletRequestAttributeEvent, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'ServletRequestAttributeEvent object'
+	property name : 'request', type : jakarta.servlet.http.HttpServletRequest, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'HttpServletRequest object'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'HttpSession object'
+	property name : 'context', type : jakarta.servlet.ServletContext, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'ServletContext object'
+	property name : 'event', type : jakarta.servlet.ServletRequestAttributeEvent, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'ServletRequestAttributeEvent object'
 	property name : 'name', type : java.lang.String, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'attribute name'
 	property name : 'value', type : java.lang.Object, provider : 'org.gservlet.AbstractRequestAttributeListener', doc : 'attribute value'
 }
@@ -184,8 +184,8 @@ contribute(currentType(annos: annotatedBy(RequestAttributeListener))) {
 
 contribute(currentType(annos: annotatedBy(SessionAttributeListener))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'Logger object'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'HttpSession object'
-	property name : 'event', type : javax.servlet.http.HttpSessionBindingEvent, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'HttpSessionBindingEvent object'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'HttpSession object'
+	property name : 'event', type : jakarta.servlet.http.HttpSessionBindingEvent, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'HttpSessionBindingEvent object'
 	property name : 'name', type : java.lang.String, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'attribute name'
 	property name : 'value', type : java.lang.Object, provider : 'org.gservlet.AbstractSessionAttributeListener', doc : 'attribute value'
 }
@@ -207,8 +207,8 @@ contribute(currentType(annos: annotatedBy(SessionAttributeListener))) {
 
 contribute(currentType(annos: annotatedBy(SessionActivationListener))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'Logger object'
-	property name : 'event', type : javax.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'HttpSessionEvent object'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'HttpSession object'
+	property name : 'event', type : jakarta.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'HttpSessionEvent object'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionActivationListener', doc : 'HttpSession object'
 }
 
 contribute(currentType(annos: annotatedBy(SessionActivationListener))) {
@@ -227,8 +227,8 @@ contribute(currentType(annos: annotatedBy(SessionActivationListener))) {
 
 contribute(currentType(annos: annotatedBy(SessionBindingListener))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'Logger object'
-	property name : 'event', type : javax.servlet.http.HttpSessionBindingEvent, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'HttpSessionBindingEvent object'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'HttpSession object'
+	property name : 'event', type : jakarta.servlet.http.HttpSessionBindingEvent, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'HttpSessionBindingEvent object'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'HttpSession object'
 	property name : 'name', type : java.lang.String, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'attribute name'
 	property name : 'value', type : java.lang.Object, provider : 'org.gservlet.AbstractSessionBindingListener', doc : 'attribute value'
 }
@@ -249,8 +249,8 @@ contribute(currentType(annos: annotatedBy(SessionBindingListener))) {
 
 contribute(currentType(annos: annotatedBy(SessionIdListener))) {
 	property name : 'logger', type : java.util.logging.Logger, provider : 'org.gservlet.AbstractListener', doc : 'Logger object'
-	property name : 'event', type : javax.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'HttpSessionEvent object'
-	property name : 'session', type : javax.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'HttpSession object'
+	property name : 'event', type : jakarta.servlet.http.HttpSessionEvent, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'HttpSessionEvent object'
+	property name : 'session', type : jakarta.servlet.http.HttpSession, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'HttpSession object'
 	property name : 'oldSessionId', type : java.lang.String, provider : 'org.gservlet.AbstractSessionIdListener', doc : 'old session id'
 }
 

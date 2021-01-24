@@ -31,7 +31,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;

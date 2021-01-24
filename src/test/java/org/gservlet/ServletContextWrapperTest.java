@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -60,7 +60,9 @@ public class ServletContextWrapperTest {
 			for (int i = 0; i < types.length; i++) {
 				args[i] = null;
 			}
-			method.invoke(wrapper, args);
+			try {
+				method.invoke(wrapper, args);
+			} catch(Exception e) {}
 		}
 		wrapper.propertyMissing("myAttribute", "myValue");
 		assertEquals("myValue", map.get("myAttribute"));

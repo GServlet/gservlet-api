@@ -26,17 +26,17 @@ import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.Filter;
-import javax.servlet.FilterRegistration;
-import javax.servlet.FilterRegistration.Dynamic;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.Servlet;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
-import javax.servlet.SessionCookieConfig;
-import javax.servlet.SessionTrackingMode;
-import javax.servlet.descriptor.JspConfigDescriptor;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterRegistration;
+import jakarta.servlet.FilterRegistration.Dynamic;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRegistration;
+import jakarta.servlet.SessionCookieConfig;
+import jakarta.servlet.SessionTrackingMode;
+import jakarta.servlet.descriptor.JspConfigDescriptor;
 
 /**
 * 
@@ -66,15 +66,15 @@ public class ServletContextWrapper implements ServletContext {
 	/**
      * Adds the given filter instance with the given name and class name to this ServletContext.
      * The registered filter may be further configured via the returned
-     * {@link javax.servlet.FilterRegistration} object
+     * {@link jakarta.servlet.FilterRegistration} object
      *
      *
      * @param filterName the name of the filter
      * @param className the fully qualified class name of the filter
      *
-     * @return a {@link javax.servlet.FilterRegistration} object that may be used to further
+     * @return a {@link jakarta.servlet.FilterRegistration} object that may be used to further
      * configure the registered filter, or <tt>null</tt> if this
-     * ServletContext already contains a complete {@link javax.servlet.FilterRegistration} for
+     * ServletContext already contains a complete {@link jakarta.servlet.FilterRegistration} for
      * a filter with the given <tt>filterName</tt>
      *
      * @throws IllegalStateException if this ServletContext has already
@@ -84,10 +84,10 @@ public class ServletContextWrapper implements ServletContext {
      * an empty String
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -99,7 +99,7 @@ public class ServletContextWrapper implements ServletContext {
 	/**
      * Adds the given filter instance with this ServletContext
      * under the given <tt>filterName</tt>. The registered filter may be further configured via the returned
-     * {@link javax.servlet.FilterRegistration} object.
+     * {@link jakarta.servlet.FilterRegistration} object.
      *
      *
      * @param filterName the name of the filter
@@ -119,10 +119,10 @@ public class ServletContextWrapper implements ServletContext {
      * an empty String
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -134,15 +134,15 @@ public class ServletContextWrapper implements ServletContext {
 	/**
      * Adds the filter with the given name and class type to this servlet
      * context. The registered filter may be further configured via the returned
-     * {@link javax.servlet.FilterRegistration} object.
+     * {@link jakarta.servlet.FilterRegistration} object.
      *
      * @param filterName the name of the filter
      * @param filterClass the class object from which the filter will be
      * instantiated
      *
-     * @return a {@link javax.servlet.FilterRegistration} object that may be used to further
+     * @return a {@link jakarta.servlet.FilterRegistration} object that may be used to further
      * configure the registered filter, or <tt>null</tt> if this
-     * ServletContext already contains a complete {@link javax.servlet.FilterRegistration} for a
+     * ServletContext already contains a complete {@link jakarta.servlet.FilterRegistration} for a
      * filter with the given <tt>filterName</tt>
      *
      * @throws IllegalStateException if this ServletContext has already
@@ -152,10 +152,10 @@ public class ServletContextWrapper implements ServletContext {
      * an empty String
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -171,17 +171,17 @@ public class ServletContextWrapper implements ServletContext {
      *
      * @throws IllegalArgumentException if the class with the given name
      * does not implement any of the above interfaces, or if it implements
-     * {@link javax.servlet.ServletContextListener} and this ServletContext was not
-     * passed to {@link javax.servlet.ServletContainerInitializer#onStartup}
+     * {@link jakarta.servlet.ServletContextListener} and this ServletContext was not
+     * passed to {@link jakarta.servlet.ServletContainerInitializer#onStartup}
      *
      * @throws IllegalStateException if this ServletContext has already
      * been initialized
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -198,17 +198,17 @@ public class ServletContextWrapper implements ServletContext {
      *
      * @throws IllegalArgumentException if the given listener is not
      * an instance of any of the above interfaces, or if it is an instance
-     * of {@link javax.servlet.ServletContextListener} and this ServletContext was not
-     * passed to {@link javax.servlet.ServletContainerInitializer#onStartup}
+     * of {@link jakarta.servlet.ServletContextListener} and this ServletContext was not
+     * passed to {@link jakarta.servlet.ServletContainerInitializer#onStartup}
      *
      * @throws IllegalStateException if this ServletContext has already
      * been initialized
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -224,17 +224,17 @@ public class ServletContextWrapper implements ServletContext {
      *
      * @throws IllegalArgumentException if the given <tt>listenerClass</tt>
      * does not implement any of the above interfaces, or if it implements
-     * {@link javax.servlet.ServletContextListener} and this ServletContext was not passed
-     * to {@link javax.servlet.ServletContainerInitializer#onStartup}
+     * {@link jakarta.servlet.ServletContextListener} and this ServletContext was not passed
+     * to {@link jakarta.servlet.ServletContainerInitializer#onStartup}
      *
      * @throws IllegalStateException if this ServletContext has already
      * been initialized
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -262,15 +262,15 @@ public class ServletContextWrapper implements ServletContext {
      * or an empty String
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
 	@Override
-	public javax.servlet.ServletRegistration.Dynamic addServlet(String servletName, String className) {
+	public jakarta.servlet.ServletRegistration.Dynamic addServlet(String servletName, String className) {
 		return context.addServlet(servletName, className);
 	}
 
@@ -293,19 +293,19 @@ public class ServletContextWrapper implements ServletContext {
      * been initialized
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @throws IllegalArgumentException if the given servlet instance
-     * implements {@link javax.servlet.SingleThreadModel}, or <code>servletName</code> is null
+     * implements {@link jakarta.servlet.SingleThreadModel}, or <code>servletName</code> is null
      * or an empty String
      *
      * @since Servlet 3.0
      */
 	@Override
-	public javax.servlet.ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet) {
+	public jakarta.servlet.ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet) {
 		return context.addServlet(servletName, servlet);
 	}
 
@@ -329,15 +329,15 @@ public class ServletContextWrapper implements ServletContext {
      * or an empty String
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
 	@Override
-	public javax.servlet.ServletRegistration.Dynamic addServlet(String servletName, Class<? extends Servlet> servletClass) {
+	public jakarta.servlet.ServletRegistration.Dynamic addServlet(String servletName, Class<? extends Servlet> servletClass) {
 		return context.addServlet(servletName, servletClass);
 	}
 
@@ -353,10 +353,10 @@ public class ServletContextWrapper implements ServletContext {
      * instantiated
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -378,19 +378,19 @@ public class ServletContextWrapper implements ServletContext {
      * instantiated
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @throws IllegalArgumentException if the specified EventListener class
      * does not implement any of the
-     * {@link javax.servlet.ServletContextListener},
-     * {@link javax.servlet.ServletContextAttributeListener},
-     * {@link javax.servlet.ServletRequestListener},
-     * {@link javax.servlet.ServletRequestAttributeListener},
-     * {@link javax.servlet.http.HttpSessionAttributeListener},
-     * {@link javax.servlet.http.HttpSessionListener}
+     * {@link jakarta.servlet.ServletContextListener},
+     * {@link jakarta.servlet.ServletContextAttributeListener},
+     * {@link jakarta.servlet.ServletRequestListener},
+     * {@link jakarta.servlet.ServletRequestAttributeListener},
+     * {@link jakarta.servlet.http.HttpSessionAttributeListener},
+     * {@link jakarta.servlet.http.HttpSessionListener}
      * interfaces.
      *
      * @since Servlet 3.0
@@ -412,10 +412,10 @@ public class ServletContextWrapper implements ServletContext {
      * instantiated
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -436,10 +436,10 @@ public class ServletContextWrapper implements ServletContext {
      * @param roleNames the role names being declared
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @throws IllegalArgumentException if any of the argument roleNames is
      * null or the empty string
@@ -499,10 +499,10 @@ public class ServletContextWrapper implements ServletContext {
      * ServletContext
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @throws SecurityException if a security manager denies access to
      * the requested class loader
@@ -539,7 +539,7 @@ public class ServletContextWrapper implements ServletContext {
      * @return The context path of the web application, or "" for the
      * root context
      *
-     * @see javax.servlet.http.HttpServletRequest#getContextPath()
+     * @see jakarta.servlet.http.HttpServletRequest#getContextPath()
      *
      * @since Servlet 2.5
      */
@@ -556,10 +556,10 @@ public class ServletContextWrapper implements ServletContext {
      * this <tt>ServletContext</tt>
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -577,10 +577,10 @@ public class ServletContextWrapper implements ServletContext {
      * application represented by this ServletContext is based on
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -598,10 +598,10 @@ public class ServletContextWrapper implements ServletContext {
      * application represented by this ServletContext is based on
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -618,10 +618,10 @@ public class ServletContextWrapper implements ServletContext {
      * <tt>ServletContext</tt>
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -640,10 +640,10 @@ public class ServletContextWrapper implements ServletContext {
      * FilterRegistration exists under that name
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -663,10 +663,10 @@ public class ServletContextWrapper implements ServletContext {
      * ServletContext
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -691,7 +691,7 @@ public class ServletContextWrapper implements ServletContext {
      * @throws NullPointerException if the argument {@code name} is
      * {@code null}
      *
-     * @see javax.servlet.ServletConfig#getInitParameter
+     * @see jakarta.servlet.ServletConfig#getInitParameter
      */
 	@Override
 	public String getInitParameter(String name) {
@@ -706,7 +706,7 @@ public class ServletContextWrapper implements ServletContext {
 	 * @return an <code>Enumeration</code> of <code>String</code> objects containing
 	 *         the names of the context's initialization parameters
 	 *
-	 * @see javax.servlet.ServletConfig#getInitParameter
+	 * @see jakarta.servlet.ServletConfig#getInitParameter
 	 */
 	@Override
 	public Enumeration<String> getInitParameterNames() {
@@ -726,12 +726,12 @@ public class ServletContextWrapper implements ServletContext {
      * exists
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
-     * @see javax.servlet.descriptor.JspConfigDescriptor
+     * @see jakarta.servlet.descriptor.JspConfigDescriptor
      *
      * @since Servlet 3.0
      */
@@ -792,7 +792,7 @@ public class ServletContextWrapper implements ServletContext {
 	 *
 	 * @see RequestDispatcher
 	 * @see ServletContext#getContext
-	 * @see javax.servlet.ServletConfig#getServletName
+	 * @see jakarta.servlet.ServletConfig#getServletName
 	 */
 	@Override
 	public RequestDispatcher getNamedDispatcher(String name) {
@@ -906,7 +906,7 @@ public class ServletContextWrapper implements ServletContext {
      * from a <code>ServletContext</code>.
      * 
      * @param name the servlet name
-     * @return the {@code javax.servlet.Servlet Servlet} with the given name
+     * @return the {@code jakarta.servlet.Servlet Servlet} with the given name
      * @throws ServletException if an exception has occurred that interfaces
      * with servlet's normal operation
      */
@@ -937,7 +937,7 @@ public class ServletContextWrapper implements ServletContext {
      * <code>Enumeration</code>
      * of all the servlet names known to this context.
      *
-     * @return an <code>Enumeration</code> of {@code javax.servlet.Servlet Servlet} names
+     * @return an <code>Enumeration</code> of {@code jakarta.servlet.Servlet Servlet} names
      */
 	@Deprecated
 	public Enumeration<String> getServletNames() {
@@ -953,10 +953,10 @@ public class ServletContextWrapper implements ServletContext {
      * ServletRegistration exists under that name
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @param servletName the name of a servlet
      * @since Servlet 3.0
@@ -976,10 +976,10 @@ public class ServletContextWrapper implements ServletContext {
      * ServletContext
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -995,7 +995,7 @@ public class ServletContextWrapper implements ServletContext {
      * <code>Enumeration</code> of all the servlets known to this servlet
      * context.
      *
-     * @return an <code>Enumeration</code> of {@code javax.servlet.Servlet Servlet}
+     * @return an <code>Enumeration</code> of {@code jakarta.servlet.Servlet Servlet}
      */
 	@Deprecated
 	public Enumeration<Servlet> getServlets() {
@@ -1015,10 +1015,10 @@ public class ServletContextWrapper implements ServletContext {
      * behalf of this <tt>ServletContext</tt> may be configured
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -1122,10 +1122,10 @@ public class ServletContextWrapper implements ServletContext {
      * @throws NullPointerException if the name parameter is {@code null}
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.0
      */
@@ -1146,10 +1146,10 @@ public class ServletContextWrapper implements ServletContext {
      * been initialized
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @throws IllegalArgumentException if <tt>sessionTrackingModes</tt>
      * specifies a combination of <tt>SessionTrackingMode.SSL</tt> with a
@@ -1173,10 +1173,10 @@ public class ServletContextWrapper implements ServletContext {
      * logical host on which the servlet context is deployed.
      *
      * @throws UnsupportedOperationException if this ServletContext was
-     * passed to the {@link javax.servlet.ServletContextListener#contextInitialized} method
-     * of a {@link javax.servlet.ServletContextListener} that was neither declared in
+     * passed to the {@link jakarta.servlet.ServletContextListener#contextInitialized} method
+     * of a {@link jakarta.servlet.ServletContextListener} that was neither declared in
      * <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated
-     * with {@link javax.servlet.annotation.WebListener}
+     * with {@link jakarta.servlet.annotation.WebListener}
      *
      * @since Servlet 3.1
      */
@@ -1206,6 +1206,153 @@ public class ServletContextWrapper implements ServletContext {
 	public Object propertyMissing(String name) {
 		Object value = getAttribute(name);
 		return value != null ? value : getInitParameter(name);
+	}
+
+
+    /**
+     * Adds the servlet with the given jsp file to this servlet context.
+     *
+     * <p>
+     * The registered servlet may be further configured via the returned {@link ServletRegistration} object.
+     *
+     * <p>
+     * If this ServletContext already contains a preliminary ServletRegistration for a servlet with the given
+     * <tt>servletName</tt>, it will be completed (by assigning the given <tt>jspFile</tt> to it) and returned.
+     *
+     * @param servletName the name of the servlet
+     * @param jspFile the full path to a JSP file within the web application beginning with a `/'.
+     *
+     * @return a ServletRegistration object that may be used to further configure the registered servlet, or <tt>null</tt>
+     * if this ServletContext already contains a complete ServletRegistration for a servlet with the given
+     * <tt>servletName</tt>
+     *
+     * @throws IllegalStateException if this ServletContext has already been initialized
+     *
+     * @throws IllegalArgumentException if <code>servletName</code> is null or an empty String
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
+	@Override
+	public ServletRegistration.Dynamic addJspFile(String servletName, String jspFile) {
+		return context.addJspFile(servletName, jspFile);
+	}
+
+	/**
+     * Gets the session timeout in minutes that are supported by default for this <tt>ServletContext</tt>.
+     *
+     * @return the session timeout in minutes that are supported by default for this <tt>ServletContext</tt>
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
+	@Override
+	public int getSessionTimeout() {
+		return context.getSessionTimeout();
+	}
+
+	/**
+     * Sets the session timeout in minutes for this ServletContext.
+     *
+     * @param sessionTimeout session timeout in minutes
+     *
+     * @throws IllegalStateException if this ServletContext has already been initialized
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
+	@Override
+	public void setSessionTimeout(int sessionTimeout) {
+		context.setSessionTimeout(sessionTimeout);
+		
+	}
+
+	/**
+     * Gets the request character encoding that are supported by default for this <tt>ServletContext</tt>. This method
+     * returns null if no request encoding character encoding has been specified in deployment descriptor or container
+     * specific configuration (for all web applications in the container).
+     *
+     * @return the request character encoding that are supported by default for this <tt>ServletContext</tt>
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
+	@Override
+	public String getRequestCharacterEncoding() {
+		return context.getRequestCharacterEncoding();
+	}
+
+	/**
+     * Sets the request character encoding for this ServletContext.
+     *
+     * @param encoding request character encoding
+     *
+     * @throws IllegalStateException if this ServletContext has already been initialized
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
+	@Override
+	public void setRequestCharacterEncoding(String encoding) {
+		context.setRequestCharacterEncoding(encoding);
+	}
+
+	 /**
+     * Gets the response character encoding that are supported by default for this <tt>ServletContext</tt>. This method
+     * returns null if no response encoding character encoding has been specified in deployment descriptor or container
+     * specific configuration (for all web applications in the container).
+     *
+     * @return the request character encoding that are supported by default for this <tt>ServletContext</tt>
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
+	@Override
+	public String getResponseCharacterEncoding() {
+		return context.getResponseCharacterEncoding();
+	}
+
+	/**
+     * Sets the response character encoding for this ServletContext.
+     *
+     * @param encoding response character encoding
+     *
+     * @throws IllegalStateException if this ServletContext has already been initialized
+     *
+     * @throws UnsupportedOperationException if this ServletContext was passed to the
+     * {@link jakarta.servlet.ServletContextListener#contextInitialized} method of a {@link jakarta.servlet.ServletContextListener} that was neither
+     * declared in <code>web.xml</code> or <code>web-fragment.xml</code>, nor annotated with
+     * {@link jakarta.servlet.annotation.WebListener}
+     *
+     * @since Servlet 4.0
+     */
+	@Override
+	public void setResponseCharacterEncoding(String encoding) {
+		context.setResponseCharacterEncoding(encoding);
 	}
 
 }
