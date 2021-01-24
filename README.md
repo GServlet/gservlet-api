@@ -21,6 +21,8 @@
 1. [Building from source](#building-from-source)
 1. [Versioning](#versioning)
 1. [Status](#status)
+1. [Relase Plan](#release-plan)
+1. [Snapshot builds](#snapshot-builds)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -248,6 +250,12 @@ We version GServlet by following the [Semantic Versioning](https://semver.org), 
 ## Status
 
 The current version of GServlet is 2.0.0. You can search for previous releases on [Maven Central](https://mvnrepository.com/artifact/org.gservlet/gservlet-api)
+
+## Release Plan
+
+1.0.x : Java EE 8 and Jakarta EE 8 support
+2.0.x : Jakarta EE 9 support
+3.0.x : Jakarta EE 10 support
 
 ## Snapshot builds
 You can access snapshot builds from the sonatype snapshot repository by adding the following to your `repositories`:
