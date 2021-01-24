@@ -80,7 +80,7 @@ class SessionCounterServlet {
 }
 ```
 
-More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0.0) for a particular release can be browsed as well.
+More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/2.0.0) for the lasted release can be browsed as well.
 
 ## Main Features
 
@@ -258,6 +258,7 @@ The current version of GServlet is 2.0.0. You can search for previous releases o
 * 3.0.x : Jakarta EE 10 support
 
 ## Snapshot builds
+
 You can access snapshot builds from the sonatype snapshot repository by adding the following to your `repositories`:
 ```xml
 <repository>
