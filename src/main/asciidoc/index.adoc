@@ -2585,7 +2585,7 @@ public class SpringConfiguration implements ServletContextInitializer {
 }
 ----
 
-NOTE: Your Groovy scripts must be created in the *_src/main/resources_* folder if your application is packaged as a jar.
+NOTE: Your Groovy scripts must be created in the *_src/main/resources/groovy_* folder if your application is packaged as a jar. There is a minor issue as the _gservlet.properties_ file is required for the Spring Boot application to start successfully. It will be fixed in the next releases. Just create it empty in the *_src/main/resources_* folder if you have not the requirement to set up a database connection.
 
 === Other Java web frameworks 
 
