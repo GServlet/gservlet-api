@@ -103,7 +103,7 @@ public class GServletApplication {
 			initDatabaseManager();
 			logger.info("application started on context " + context.getContextPath());
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "exception during contextInitialized method", e);
+			logger.log(Level.SEVERE, "exception during starting the application ", e);
 		}
 	}
 
@@ -250,19 +250,17 @@ public class GServletApplication {
 			List<Path> paths = getClassPathResources(folder);
 			for (Path resourcePath : paths) {
 				String resource = resourcePath.toString();
-				if (resource.startsWith("/")) {
-					resource = resource.substring(1, resource.length());
-				}
+				resource = resource.startsWith("/") ? resource.substring(1, resource.length()) : resource;
 				if (resource.indexOf(".") != -1)
 					try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resource)) {
 						File file = new File(root + File.separator + resource);
-						if (!file.getParentFile().exists()) {
-							file.getParentFile().mkdirs();
+						file.getParentFile().mkdirs();
+						if(inputStream !=null) {
+							logger.log(Level.FINE, "exploding classpath resource: {}", file.toPath());
+							Files.copy(inputStream, file.toPath());
 						}
-						Files.copy(inputStream, file.toPath());
 					}
 			}
-
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "exception encountered while exploding the classpath resources", e);
 		}
@@ -337,11 +335,7 @@ public class GServletApplication {
 	 * @return the list of script listeners
 	 */
 	public List<ScriptListener> getScriptListeners() {
-		if(containerManager != null) {
-			return containerManager.getScriptManager().getScriptListeners();
-		} else {
-			return listeners;
-		}
+		return containerManager != null ? containerManager.getScriptManager().getScriptListeners() : listeners;
 	}
 
 }

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.gservlet</groupId>
 	<artifactId>gservlet-api</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>GServlet</name>
 	<url>https://gservlet.org</url>
@@ -38,7 +38,7 @@
 	<properties>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<groovy.version>3.0.7</groovy.version>
-		<javassist.version>3.12.1.GA</javassist.version>
+		<javassist.version>3.27.0-GA</javassist.version>
 		<servlet.version>3.1.0</servlet.version>
 		<commons.dbcp.version>2.2.0</commons.dbcp.version>
 		<junit.version>4.13.1</junit.version>
@@ -54,7 +54,7 @@
 		<resources.version>2.6</resources.version>
 		<asciidoctor.version>1.5.6</asciidoctor.version>
 		<asciidoctorj.diagram.version>1.5.8</asciidoctorj.diagram.version>
-		<release.version>1.0.0</release.version>
+		<release.version>1.0.1</release.version>
 		<docs.directory>../gservlet-site/static/docs/${release.version}</docs.directory>
 		<javadoc.version>2.9.1</javadoc.version>
 		<javadocs.directory>../gservlet-site/static/javadocs/${release.version}</javadocs.directory>
@@ -95,9 +95,9 @@
 			<version>${groovy.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>${javassist.version}</version>
+		    <groupId>org.javassist</groupId>
+		    <artifactId>javassist</artifactId>
+		    <version>${javassist.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -213,7 +213,7 @@
 								<link>https://docs.oracle.com/javase/7/docs/api/</link>
 								<link>https://docs.oracle.com/javaee/7/api/</link>
 								<link>http://docs.groovy-lang.org/2.5.4/html/gapi/</link>
-								<link>https://javadoc.io/static/javassist/javassist/3.12.1.GA/</link>
+								<link>https://javadoc.io/doc/org.javassist/javassist/3.26.0-GA/</link>
 							</links>
 						</configuration>
 						<executions>
