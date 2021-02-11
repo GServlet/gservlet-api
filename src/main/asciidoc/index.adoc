@@ -1658,12 +1658,13 @@ Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/j
 [#src-listing] 
 [source,java]  
 ---- 
+import java.io.Serializable;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 import javax.servlet.annotation.WebListener;
 
 @WebListener
-public class MyHttpSessionBindingListener implements HttpSessionBindingListener {
+public class MyHttpSessionBindingListener implements HttpSessionBindingListener, Serializable {
 
     public void valueBound(HttpSessionBindingEvent event) {
         System.out.println("attr " + event.getName() + " bounded with value " + event.getValue());
