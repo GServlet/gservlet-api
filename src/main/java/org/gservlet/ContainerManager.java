@@ -46,7 +46,6 @@ import javax.servlet.ServletRequestListener;
 import javax.servlet.ServletSecurityElement;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.ServletSecurity;
-import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionIdListener;
 import javax.servlet.http.HttpSessionListener;
@@ -281,9 +280,6 @@ public class ContainerManager {
 		} else if (object instanceof HttpSessionAttributeListener) {
 			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
 					new Class[] { HttpSessionAttributeListener.class }, handler);
-		} else if (object instanceof HttpSessionActivationListener) {
-			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { HttpSessionActivationListener.class }, handler);
 		} else if (object instanceof HttpSessionIdListener) {
 			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
 					new Class[] { HttpSessionIdListener.class }, handler);

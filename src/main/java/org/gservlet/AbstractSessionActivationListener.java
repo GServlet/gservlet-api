@@ -19,6 +19,7 @@
 
 package org.gservlet;
 
+import java.io.Serializable;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionEvent;
@@ -30,7 +31,12 @@ import javax.servlet.http.HttpSessionEvent;
 * @author Mamadou Lamine Ba
 * 
 */
-public abstract class AbstractSessionActivationListener extends AbstractListener implements HttpSessionActivationListener {
+public abstract class AbstractSessionActivationListener extends AbstractListener implements HttpSessionActivationListener, Serializable {
+
+	/**
+	 *  generated serialVersionUID
+	 */
+	private static final long serialVersionUID = 7536153893905073671L;
 
 	/**
 	* 
