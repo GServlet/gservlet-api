@@ -11,7 +11,7 @@ initParams = [
 	@InitParam(name = "location", value = "D:/Uploads"),
 	@InitParam(name = "maxUploadSize", value = "9900000")
 ])
-@MultipartConfig( fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 25 )
+@MultipartConfig( fileSizeThreshold = 1048576, maxFileSize = 5242880L, maxRequestSize = 26214400L )
 @ServletSecurity(
  httpMethodConstraints = [
   @HttpMethodConstraint(value = "GET", rolesAllowed = "admin"),

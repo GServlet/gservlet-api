@@ -56,9 +56,7 @@ import org.gservlet.annotation.InitParam;
 import org.gservlet.annotation.RequestAttributeListener;
 import org.gservlet.annotation.RequestListener;
 import org.gservlet.annotation.Servlet;
-import org.gservlet.annotation.SessionActivationListener;
 import org.gservlet.annotation.SessionAttributeListener;
-import org.gservlet.annotation.SessionBindingListener;
 import org.gservlet.annotation.SessionIdListener;
 import org.gservlet.annotation.SessionListener;
 import groovy.util.ScriptException;
@@ -165,11 +163,7 @@ public class ContainerManager {
 				addServlet(object);
 			} else if (annotation instanceof Filter) {
 				addFilter(object);
-			} else if (annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
-					|| annotation instanceof RequestListener || annotation instanceof RequestAttributeListener
-					|| annotation instanceof SessionListener || annotation instanceof SessionAttributeListener
-					|| annotation instanceof SessionActivationListener || annotation instanceof SessionBindingListener
-					|| annotation instanceof SessionIdListener) {
+			} else if (isListenerAnnotation(annotation)) {
 				addListener(object);
 			}
 		}
@@ -340,10 +334,12 @@ public class ContainerManager {
 			Object object = scriptManager.createObject(script);
 			Annotation[] annotations = object.getClass().getAnnotations();
 			for (Annotation annotation : annotations) {
-				if (annotation instanceof RequestListener || annotation instanceof ContextAttributeListener
-						|| annotation instanceof RequestAttributeListener || annotation instanceof SessionListener
-						|| annotation instanceof SessionAttributeListener) {
+				if (isListenerAnnotation(annotation)) {
 					reload(object);
+					if (object instanceof AbstractContextListener) {
+						AbstractContextListener contextListener = (AbstractContextListener) object;
+						contextListener.contextInitialized(new ServletContextEvent(context));
+					}
 				} else if(annotation instanceof Servlet) {
 					reloadServlet((AbstractServlet) object);
 					
@@ -446,5 +442,19 @@ public class ContainerManager {
 		return scriptManager;
 	}	
 	
-
+	/**
+	 * 
+	 * Checks if the given annotation declares a listener
+	 * 
+	 * @param annotation the given annotation
+	 * 
+	 * @return true if the given annotation declares a listener
+	 */
+	private boolean isListenerAnnotation(Annotation annotation) {
+		return annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
+				|| annotation instanceof RequestListener || annotation instanceof RequestAttributeListener
+				|| annotation instanceof SessionListener || annotation instanceof SessionAttributeListener
+				|| annotation instanceof SessionIdListener;
+	}
+	
 }

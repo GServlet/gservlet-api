@@ -52,7 +52,7 @@ public class ContainerManagerTest {
 				.thenReturn(mock(ServletRegistration.Dynamic.class));
 		ContainerManager manager = new ContainerManager(context);
 		manager.init("src/test/resources", new ArrayList<ScriptListener>());
-		assertEquals(11, manager.getHandlers().size());
+		assertEquals(9, manager.getHandlers().size());
 		for (DynamicInvocationHandler handler : manager.getHandlers().values()) {
 			assertNotNull(handler.getTarget());
 		}
@@ -64,7 +64,7 @@ public class ContainerManagerTest {
 		printWriter.println("class HttpServlet {}");
 		printWriter.close();
 		wait(2000);
-		assertEquals(11, manager.getHandlers().size());
+		assertEquals(9, manager.getHandlers().size());
 		file.delete();
 		manager.shutDown();
 		assertEquals(0, manager.getHandlers().size());

@@ -55,7 +55,7 @@ public class StartupListenerTest {
 		ServletContextEvent event = new ServletContextEvent(context);
 		listener.contextInitialized(event);
 		assertNotNull(listener.getApplication().getContainerManager());
-		assertEquals(11, listener.getApplication().getContainerManager().getHandlers().size());
+		assertEquals(9, listener.getApplication().getContainerManager().getHandlers().size());
 		assertNotNull(listener.getApplication().getDatabaseManager());
 		wait(2000);
 		File configuration = new File(folder + File.separator + APP_CONFIG_FILE);
