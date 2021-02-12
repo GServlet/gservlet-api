@@ -3,6 +3,7 @@ branches:
   only:
     - develop
     - master
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 git:
   depth: false
 env:
