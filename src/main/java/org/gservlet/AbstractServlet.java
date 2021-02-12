@@ -20,6 +20,7 @@
 package org.gservlet;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -154,13 +155,12 @@ public abstract class AbstractServlet extends HttpServlet implements RequestHand
 	 * @param method   the http method
 	 * @throws ServletException the ServletException
 	 */
-	public void service(HttpServletRequest request, HttpServletResponse response, String method)
-			throws ServletException {
+	public void service(HttpServletRequest request, HttpServletResponse response, String method) throws ServletException {
 		try {
 			requestContext.set(new RequestContext(request, response));
 			getClass().getDeclaredMethod(method).invoke(this);
 		} catch (NoSuchMethodException e) {
-			logger.info("no method " + method + " has been declared for the servlet " + this.getClass().getName());
+			logger.log(Level.INFO, "no method {0} has been declared for the servlet {1}", new Object[]{method, getClass().getName()});
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}

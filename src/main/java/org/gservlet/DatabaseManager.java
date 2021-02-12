@@ -186,7 +186,7 @@ public class DatabaseManager {
 				basicDataSource.close();	
 			}
 		} catch (SQLException e) {
-			logger.log(Level.INFO, "exception during destroy method", e);
+			logger.log(Level.SEVERE, "exception when closing the data source", e);
 		}
 	}
 	

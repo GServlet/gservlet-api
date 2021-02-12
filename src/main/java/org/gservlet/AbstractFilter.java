@@ -107,10 +107,13 @@ public abstract class AbstractFilter implements Filter, RequestHandler {
 	 * A convenience method which can be overridden so that there's no need to implement the
 	 * <code>doFilter(request, response, chain)</code> method
 	 * 
+	 * @throws ServletException 
+	 * @throws IOException 
+	 * 
 	 * 
 	 */
-	public void filter() {
-		// no implementation provided
+	public void filter() throws IOException, ServletException {
+		getChain().doFilter(getRequest(), getResponse());
 	}
 
 	/**

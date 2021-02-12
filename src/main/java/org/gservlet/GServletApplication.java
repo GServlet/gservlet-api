@@ -101,9 +101,9 @@ public class GServletApplication {
 		try {
 			initContainerManager();
 			initDatabaseManager();
-			logger.info("application started on context " + context.getContextPath());
+			logger.log(Level.INFO, "application started on context {0}", context.getContextPath());
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "exception during starting the application ", e);
+			logger.log(Level.SEVERE, "exception when starting the application", e);
 		}
 	}
 
@@ -183,7 +183,7 @@ public class GServletApplication {
 					try {
 						databaseManager.setupDataSource(loadConfiguration(file));
 					} catch (IOException e) {
-						logger.log(Level.INFO, "exception during reload", e);
+						logger.log(Level.SEVERE, "exception when reloading the configuration file", e);
 					}
 				}
 			}
@@ -256,13 +256,13 @@ public class GServletApplication {
 						File file = new File(root + File.separator + resource);
 						file.getParentFile().mkdirs();
 						if(inputStream !=null) {
-							logger.log(Level.FINE, "exploding classpath resource: {}", file.toPath());
+							logger.log(Level.FINE, "exploding classpath resource: {0}", file.toPath());
 							Files.copy(inputStream, file.toPath());
 						}
 					}
 			}
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, "exception encountered while exploding the classpath resources", e);
+			logger.log(Level.SEVERE, "exception when exploding the classpath resources", e);
 		}
 	}
 

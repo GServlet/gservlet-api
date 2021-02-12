@@ -314,7 +314,7 @@ public class ContainerManager {
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
 				if (file.isFile()) {
-					logger.info("processing script " + file.getName());
+					logger.log(Level.INFO, "processing script {0}", file.getName());
 					process(file);
 				}
 			}
@@ -352,7 +352,7 @@ public class ContainerManager {
 				}
 			}
 		} catch (Exception e) {
-			logger.log(Level.INFO, "exception during reload", e);
+			logger.log(Level.SEVERE, "exception when reloading script", e);
 		}
 	}
 
