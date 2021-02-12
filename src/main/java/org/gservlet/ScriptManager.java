@@ -237,7 +237,7 @@ public class ScriptManager {
 	}
 
 	/**
-	 * Registers a new ScriptListener
+	 * Registers a new script listener
 	 * 
 	 * @param listener the ScriptListener object
 	 */
@@ -246,9 +246,9 @@ public class ScriptManager {
 	}
 
 	/**
-	 * Registers a ScriptListener list
+	 * Registers a list of script listeners
 	 * 
-	 * @param listeners the ScriptListener list
+	 * @param listeners the list of script listeners
 	 * 
 	 */
 	public void addScriptListeners(List<ScriptListener> listeners) {

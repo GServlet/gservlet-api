@@ -134,7 +134,7 @@ public class GServletApplication {
 	}
 
 	/**
-	 * Starts the initialization process on a SpringBoot application
+	 * Starts the initialization process on a Spring Boot application
 	 *
 	 */
 	public void startOnSpringBoot() {
@@ -179,7 +179,7 @@ public class GServletApplication {
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
 				if (file.getName().equals(APP_CONFIG_FILE)) {
-					logger.info("processing configuration file " + file.getName());
+					logger.log(Level.INFO, "processing configuration file {0}", file.getName());
 					try {
 						databaseManager.setupDataSource(loadConfiguration(file));
 					} catch (IOException e) {
@@ -301,7 +301,7 @@ public class GServletApplication {
 	}
 	
 	/**
-	 *  Registers a new ScriptListener
+	 *  Registers a new script listener
 	 * 
 	 * @param listener the ScriptListener
 	 * 
@@ -315,9 +315,9 @@ public class GServletApplication {
 	}
 	
 	/**
-	 *  Registers a ScriptListener list
+	 *  Registers a list of script listeners
 	 * 
-	 * @param listeners the ScriptListener list
+	 * @param listeners the list of script listeners
 	 * 
 	 */
 	public void addScriptListeners(List<ScriptListener> listeners) {
