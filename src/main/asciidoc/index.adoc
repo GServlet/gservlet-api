@@ -985,7 +985,7 @@ Its Groovy version with the GServlet API looks like this:
 import org.gservlet.annotation.ContextListener
 
 @ContextListener
-public class MyServletContextListener {
+class MyServletContextListener {
 	
 	void contextInitialized() {
 	   println "context started"	
@@ -1097,7 +1097,7 @@ Its Groovy version with the GServlet API looks like this:
 import org.gservlet.annotation.ContextAttributeListener
 
 @ContextAttributeListener
-public class MyServletContextAttributeListener {
+class MyServletContextAttributeListener {
 
     void attributeAdded() {
         println "attr $name added with value $value"
@@ -1217,7 +1217,7 @@ Its Groovy version with the GServlet API looks like this:
 import org.gservlet.annotation.RequestListener
 
 @RequestListener
-public class MyServletRequestListener {
+class MyServletRequestListener {
 
     void requestInitialized() {
         println "request initialized"
@@ -1337,7 +1337,7 @@ Its Groovy version with the GServlet API looks like this:
 import org.gservlet.annotation.RequestAttributeListener
 
 @RequestAttributeListener
-public class MyServletRequestAttributeListener {
+class MyServletRequestAttributeListener {
 
     void attributeAdded() {
         println "attr $name added with value $value"
@@ -1448,7 +1448,7 @@ Its Groovy version with the GServlet API looks like this:
 import org.gservlet.annotation.SessionListener
 
 @SessionListener
-public class MyHttpSessionListener {
+class MyHttpSessionListener {
 	
 	void sessionCreated() {
 	   println "session created"	
@@ -1569,7 +1569,7 @@ Its Groovy version with the GServlet API looks like this:
 import org.gservlet.annotation.SessionAttributeListener
 
 @SessionAttributeListener
-public class MyHttpSessionAttributeListener {
+class MyHttpSessionAttributeListener {
 
     void attributeAdded() {
         println "attr $name added with value $value"
@@ -1686,7 +1686,7 @@ Its Groovy version with the GServlet API looks like this:
 import org.gservlet.annotation.SessionBindingListener
 
 @SessionBindingListener
-public class MyHttpSessionBindingListener {
+class MyHttpSessionBindingListener {
 
     void valueBound() {
         println "attr $name bounded with value $value"
@@ -1791,7 +1791,7 @@ Its Groovy version with the GServlet API looks like this:
 import org.gservlet.annotation.SessionActivationListener
 
 @SessionActivationListener
-public class MyHttpSessionActivationListener {
+class MyHttpSessionActivationListener {
 
     void sessionDidActivate() {
         println "session activated"
@@ -1887,7 +1887,7 @@ Its Groovy version with the GServlet API looks like this:
 import org.servlet.annotation.SessionIdListener
 
 @SessionIdListener
-public class MyHttpSessionIdListener {
+class MyHttpSessionIdListener {
 
     void sessionIdChanged() {
         println "the session id was $oldSessionId"
