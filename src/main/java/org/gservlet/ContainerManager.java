@@ -189,8 +189,7 @@ public class ContainerManager {
 		ServletRegistration registration = context.getServletRegistration(name);
 		if (registration == null) {
 			DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
-			Object servlet = Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { javax.servlet.Servlet.class }, handler);
+			Object servlet = createProxy(handler, javax.servlet.Servlet.class);
 			handlers.put(name, handler);
 			ServletRegistration.Dynamic dynamic = context.addServlet(name, (javax.servlet.Servlet) servlet);
 			dynamic.setLoadOnStartup(annotation.loadOnStartup());
@@ -233,8 +232,7 @@ public class ContainerManager {
 		FilterRegistration registration = context.getFilterRegistration(name);
 		if (registration == null) {
 			DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
-			Object filter = Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { javax.servlet.Filter.class }, handler);
+			Object filter = createProxy(handler, javax.servlet.Filter.class);
 			handlers.put(name, handler);
 			FilterRegistration.Dynamic dynamic = context.addFilter(name, (javax.servlet.Filter) filter);
 		    dynamic.setAsyncSupported(annotation.asyncSupported());
@@ -264,33 +262,42 @@ public class ContainerManager {
 	 */
 	protected void addListener(Object object) {
 		DynamicInvocationHandler handler = new DynamicInvocationHandler(object);
-		EventListener listener = null;
+		Object listener = null;
 		if (object instanceof ServletContextAttributeListener) {
-			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { ServletContextAttributeListener.class }, handler);
+			listener = createProxy(handler, ServletContextAttributeListener.class);
 		} else if (object instanceof ServletRequestListener) {
-			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { ServletRequestListener.class }, handler);
+			listener = createProxy(handler, ServletRequestListener.class);
 		} else if (object instanceof ServletRequestAttributeListener) {
-			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { ServletRequestAttributeListener.class }, handler);
+			listener = createProxy(handler, ServletRequestAttributeListener.class);
 		} else if (object instanceof HttpSessionListener) {
-			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { HttpSessionListener.class }, handler);
+			listener = createProxy(handler, HttpSessionListener.class);
 		} else if (object instanceof HttpSessionAttributeListener) {
-			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { HttpSessionAttributeListener.class }, handler);
+			listener = createProxy(handler, HttpSessionAttributeListener.class);
 		} else if (object instanceof HttpSessionIdListener) {
-			listener = (EventListener) Proxy.newProxyInstance(this.getClass().getClassLoader(),
-					new Class[] { HttpSessionIdListener.class }, handler);
+			listener = createProxy(handler, HttpSessionIdListener.class);
 		}
 		if (listener != null) {
-			context.addListener(listener);
+			context.addListener((EventListener) listener);
 		} else if (object instanceof AbstractContextListener) {
 			AbstractContextListener contextListener = (AbstractContextListener) object;
 			contextListener.contextInitialized(new ServletContextEvent(context));
 		}
 		handlers.put(object.getClass().getName(), handler);
+	}
+	
+	/**
+	 * 
+	 * Creates a Proxy object
+	 * 
+	 * @param handler the handler
+	 * 
+	 * @param clazz the class
+	 * 
+	 * @return the Proxy object
+	 * 
+	 */
+	protected Object createProxy(DynamicInvocationHandler handler, Class<?> clazz) {
+		return Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[] { clazz }, handler);
 	}
 
 	/**
