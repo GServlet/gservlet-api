@@ -1604,7 +1604,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 === HttpSessionBindingListener
 
-This interface is for receiving notification events about when an object is bound to or unbound from a session. This may be as a result of a servlet programmer explicitly unbinding an attribute from a session, due to a session being invalidated, or due to a session timing out.
+This interface can be implemented by a class to get notified when its instance is added to the session or when it is removed from the session.
 
 [plantuml, httpsessionbindinglistener-diagram, png]     
 ----
