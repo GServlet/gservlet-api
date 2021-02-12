@@ -303,7 +303,7 @@ public class GServletApplication {
 	/**
 	 *  Registers a new script listener
 	 * 
-	 * @param listener the ScriptListener
+	 * @param listener the ScriptListener object
 	 * 
 	 */
 	public void addScriptListener(ScriptListener listener) {
