@@ -19,7 +19,9 @@
 
 package org.gservlet;
 
-import static java.nio.file.StandardWatchEventKinds.*;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static org.gservlet.Constants.RELOAD;
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +35,6 @@ import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 
@@ -116,7 +117,6 @@ public class FileWatcher implements Runnable {
 	private boolean pollEvents(WatchService watchService) throws InterruptedException {
 		WatchKey key = watchService.take();
 		Path path = (Path) key.watchable();
-		TimeUnit.MILLISECONDS.sleep(500);
 		for (WatchEvent<?> event : key.pollEvents()) {
 			notifyFileListeners(event.kind(), path.resolve((Path) event.context()).toFile());
 		}
