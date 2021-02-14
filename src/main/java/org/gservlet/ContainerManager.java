@@ -121,6 +121,7 @@ public class ContainerManager {
 		scriptManager = new ScriptManager(folder);
 		scriptManager.addScriptListeners(listeners);
 		loadScripts(folder);
+		watch(folder);
 	}
 
 	/**
@@ -144,7 +145,6 @@ public class ContainerManager {
 					}
 				}
 			}
-			watch(folder);
 		}
 	}
 
