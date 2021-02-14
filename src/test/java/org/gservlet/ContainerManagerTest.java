@@ -66,7 +66,7 @@ public class ContainerManagerTest {
 		wait(2000);
 		assertEquals(9, manager.getHandlers().size());
 		file.delete();
-		manager.shutDown();
+		manager.stop();
 		assertEquals(0, manager.getHandlers().size());
 		when(context.getServletRegistration(isA(String.class)))
 		.thenReturn(mock(ServletRegistration.Dynamic.class));

@@ -67,8 +67,8 @@ public class FileWatcherTest {
 		listeners.add(listener);
 		watcher.addFileListeners(listeners);
 		assertEquals(1, watcher.getFileListeners().size());
-		assertNotNull(FileWatcher.getWatchServices());
-		assertTrue(FileWatcher.getWatchServices().size() >= 1);
+		assertNotNull(FileWatcher.getInstances());
+		assertTrue(FileWatcher.getInstances().size() >= 1);
 	}
 
 	public void wait(int time) throws InterruptedException {

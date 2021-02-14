@@ -4,7 +4,8 @@
 
 ### Changed
 
-- Replace the retired javassist 3.12.1.GA version with 3.27.0-GA
+- [Issue #148] (https://github.com/GServlet/gservlet-api/issues/148) Replace the retired javassist 3.12.1.GA artifact with 3.27.0-GA
+- [Issue #149] (https://github.com/GServlet/gservlet-api/issues/149) Replace the Java 7 WatchService with Apache Commons IO
 
 ### Fixed 
 

@@ -308,7 +308,6 @@ public class ContainerManager {
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
 				if (file.isFile()) {
-					logger.log(Level.INFO, "processing script {0}", file.getName());
 					process(file);
 				}
 			}
@@ -331,6 +330,7 @@ public class ContainerManager {
 	 */
 	protected void process(File script) {
 		try {
+			logger.log(Level.INFO, "processing script {0}", script.getName());
 			Object object = scriptManager.createObject(script);
 			Annotation[] annotations = object.getClass().getAnnotations();
 			for (Annotation annotation : annotations) {
@@ -410,7 +410,7 @@ public class ContainerManager {
 	 * ServletContext is about to be shutdown
 	 * 
 	 */
-	public void shutDown() {
+	public void stop() {
 		for (DynamicInvocationHandler handler : handlers.values()) {
 			Object target = handler.getTarget();
 			if (target instanceof AbstractContextListener) {

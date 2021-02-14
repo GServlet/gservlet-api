@@ -65,7 +65,7 @@ public class DatabaseManagerTest {
 		BasicDataSource dataSource = new BasicDataSource();
 		databaseManager.setupDataSource(dataSource);
 		assertEquals(map.get(DATASOURCE), dataSource);
-		databaseManager.shutDown();
+		databaseManager.stop();
 	}
 
 }

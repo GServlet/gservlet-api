@@ -175,10 +175,10 @@ public class DatabaseManager {
 	}
 
 	/**
-	 * Closes the data source
+	 * Closes the data source if it is an instance of BasicDataSource
 	 * 
 	 */
-	public void shutDown() {
+	public void stop() {
 		try {
 			Object dataSource = context.getAttribute(DATASOURCE);
 			if(dataSource instanceof BasicDataSource) {

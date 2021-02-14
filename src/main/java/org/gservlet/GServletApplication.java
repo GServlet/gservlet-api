@@ -29,7 +29,6 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -129,7 +128,8 @@ public class GServletApplication {
 	private void initDatabaseManager() throws IOException {
 		databaseManager = new DatabaseManager(context);
 		File root = new File(realPath);
-		databaseManager.setupDataSource(loadConfiguration(new File(root + File.separator + APP_CONFIG_FILE)));
+		File configuration = new File(root + File.separator + APP_CONFIG_FILE);
+		databaseManager.setupDataSource(loadConfiguration(configuration));
 		watch(root);
 	}
 
@@ -202,15 +202,9 @@ public class GServletApplication {
 	 *  
 	 */
 	public void stop() {
-		containerManager.shutDown();
-		databaseManager.shutDown();
-		for (WatchService watchService : FileWatcher.getWatchServices()) {
-			try {
-				watchService.close();
-			} catch (IOException e) {
-				// the exception is ignored
-			}
-		}
+		containerManager.stop();
+		databaseManager.stop();
+		FileWatcher.getInstances().forEach(watcher -> watcher.stop());
 	}
 
 	/**
