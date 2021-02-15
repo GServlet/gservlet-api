@@ -44,7 +44,7 @@ import groovy.util.ScriptException;
 
 /**
  * 
- * The Groovy Servlet Application starts the registration of the servlets,
+ * The GServlet Application starts the registration of the servlets,
  * filters, listeners into the web container and the data source configuration
  * 
  * @author Mamadou Lamine Ba
@@ -93,14 +93,14 @@ public class GServletApplication {
 	}
 
 	/**
-	 * Starts the initialization process
+	 * Starts the application
 	 *
 	 */
 	public void start() {
 		try {
 			initContainerManager();
 			initDatabaseManager();
-			logger.log(Level.INFO, "application started on context {0}", context.getContextPath());
+			logger.log(Level.INFO, "application started with context path {0}", context.getContextPath());
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "exception when starting the application", e);
 		}
@@ -134,7 +134,7 @@ public class GServletApplication {
 	}
 
 	/**
-	 * Starts the initialization process on a Spring Boot application
+	 * Starts the application on a Spring Boot application
 	 *
 	 */
 	public void startOnSpringBoot() {
