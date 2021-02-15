@@ -21,6 +21,8 @@
 1. [Building from source](#building-from-source)
 1. [Versioning](#versioning)
 1. [Status](#status)
+1. [Relase Plan](#release-plan)
+1. [Snapshot builds](#snapshot-builds)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -249,7 +251,14 @@ We version GServlet by following the [Semantic Versioning](https://semver.org), 
 
 The current version of GServlet is 1.0.0.
 
+## Release Plan
+
+* 1.x.x : Java EE 7+ and Jakarta EE 8 support
+* 2.x.x : Jakarta EE 9 support
+* 3.x.x : Jakarta EE 10 support
+
 ## Snapshot builds
+
 You can access snapshot builds from the sonatype snapshot repository by adding the following to your `repositories`:
 ```xml
 <repository>
