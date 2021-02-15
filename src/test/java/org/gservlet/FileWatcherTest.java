@@ -48,6 +48,12 @@ public class FileWatcherTest {
 				super.onDeleted(event);
 				map.put("file.deleted", event.getFile().getName());
 			}
+			
+			@Override
+			public void onModified(FileEvent event) {
+				super.onModified(event);
+				map.put("file.modified", event.getFile().getName());
+			}
 		};
 		watcher.addFileListener(listener).watch();
 		assertEquals(1, watcher.getFileListeners().size());
@@ -57,9 +63,14 @@ public class FileWatcherTest {
 			writer.write("Some String");
 		}
 		wait(2000);
+		try (FileWriter writer = new FileWriter(file)) {
+			writer.write("Another String");
+		}
+		wait(2000);
 		file.delete();
 		wait(2000);
 		assertEquals(file.getName(), map.get("file.created"));
+		assertEquals(file.getName(), map.get("file.modified"));
 		assertEquals(file.getName(), map.get("file.deleted"));
 		watcher.removeFileListener(listener);
 		assertEquals(0, watcher.getFileListeners().size());
