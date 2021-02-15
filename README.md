@@ -80,7 +80,7 @@ class SessionCounterServlet {
 }
 ```
 
-More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0.0) for a particular release can be browsed as well.
+More information can be found on the project [homepage](https://gservlet.org) where you can find the online [documentation](https://gservlet.org/documentation) and the [Javadocs](https://gservlet.org/javadocs/1.0.1) for a particular release can be browsed as well.
 
 ## Main Features
 
@@ -104,7 +104,7 @@ If you are just getting started with GServlet, you may want to begin by creating
 <dependency>
  <groupId>org.gservlet<groupId/>
  <artifactId>gservlet-api</artifactId>
- <version>1.0.0</version>
+ <version>1.0.1</version>
 </dependency>
 ```
 
@@ -116,7 +116,7 @@ If you are just getting started with GServlet, you may want to begin by creating
 }
 
 dependencies {
-    compile("org.gservlet:gservlet-api:1.0.0")
+    compile("org.gservlet:gservlet-api:1.0.1")
 }
 ```
 
@@ -215,7 +215,7 @@ class ServletRequestListener {
 }
 ```
 
-For a deep insight of how to write your Groovy artifacts, please refer to the [developer guide](https://gservlet.org/docs/1.0.0).
+For a deep insight of how to write your Groovy artifacts, please refer to the [developer guide](https://gservlet.org/docs/1.0.1).
 
 ## Code Examples
 
@@ -249,7 +249,7 @@ We version GServlet by following the [Semantic Versioning](https://semver.org), 
 
 ## Status
 
-The current version of GServlet is 1.0.0.
+The current version of GServlet is 1.0.1.
 
 ## Release Plan
 
