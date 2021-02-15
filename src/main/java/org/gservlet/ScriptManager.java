@@ -153,6 +153,7 @@ public class ScriptManager {
 		classPool.insertClassPath(new LoaderClassPath(scriptEngine.getParentClassLoader()));
 		CompilerConfiguration configuration = new CompilerConfiguration();
 		configuration.setBytecodePostprocessor(createBytecodeProcessor());
+		configuration.setTargetBytecode(CompilerConfiguration.JDK8);
 		scriptEngine.setConfig(configuration);
 		return scriptEngine;
 	}
