@@ -90,7 +90,7 @@ More information can be found on the project [homepage](https://gservlet.org) wh
 
 ## Requirements
 
-* Java 8+
+* Java 8
 * Java IDE (Eclipse, IntelliJ IDEA, NetBeans..)
 * Java EE 7+ compliant WebServer (Tomcat, Wildfly, Glassfish, Payara..)
 
