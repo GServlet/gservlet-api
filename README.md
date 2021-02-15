@@ -259,7 +259,7 @@ The current version of GServlet is 2.0.0. You can search for previous releases o
 
 ## Snapshot builds
 
-You can access snapshot builds from the sonatype snapshot repository by adding the following to your `repositories`:
+You can access snapshot builds from the sonatype snapshot repository by adding the following to your repositories:
 ```xml
 <repository>
 	<id>sonatype-nexus-snapshots</id>
