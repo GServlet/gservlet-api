@@ -57,7 +57,7 @@ public class FileWatcher {
 	/**
 	 * The FileAlterationMonitor instance
 	 */
-	protected FileAlterationMonitor monitor = new FileAlterationMonitor(1000);
+	private FileAlterationMonitor monitor = new FileAlterationMonitor(1000);
 
 	/**
 	 * 

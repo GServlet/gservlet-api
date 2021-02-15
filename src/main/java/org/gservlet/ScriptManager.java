@@ -187,7 +187,7 @@ public class ScriptManager {
 	 * @throws CannotCompileException the CannotCompileException
 	 * @throws NotFoundException      the NotFoundException
 	 */
-	protected void processClass(CtClass ctClass) throws CannotCompileException, NotFoundException {
+	private void processClass(CtClass ctClass) throws CannotCompileException, NotFoundException {
 		ClassPool classPool = ClassPool.getDefault();
 		if (ctClass.hasAnnotation(Servlet.class)) {
 			ctClass.setSuperclass(classPool.get(AbstractServlet.class.getName()));
