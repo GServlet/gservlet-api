@@ -296,13 +296,15 @@ public class ContainerManager {
 	protected void watch(File folder) {
 		new FileWatcher(folder).addFileListener(new FileAdapter() {
 			
+			@Override
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
 				if (file.isFile()) {
 					process(file);
 				}
 			}
-		
+			
+			@Override
 			public void onModified(FileEvent event) {
 				onCreated(event);
 			}

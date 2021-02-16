@@ -175,6 +175,7 @@ public class GServletApplication {
 	protected void watch(File folder) {
 		new FileWatcher(folder).addFileListener(new FileAdapter() {
 			
+			@Override
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
 				if (file.getName().equals(APP_CONFIG_FILE)) {
@@ -187,6 +188,7 @@ public class GServletApplication {
 				}
 			}
 
+			@Override
 			public void onModified(FileEvent event) {
 				onCreated(event);
 			}
