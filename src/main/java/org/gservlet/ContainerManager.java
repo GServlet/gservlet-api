@@ -296,20 +296,16 @@ public class ContainerManager {
 	protected void watch(File folder) {
 		new FileWatcher(folder).addFileListener(new FileAdapter() {
 			
-			@Override
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
 				if (file.isFile()) {
 					process(file);
 				}
 			}
-			
-			@Override
+		
 			public void onModified(FileEvent event) {
 				onCreated(event);
 			}
-			
-
 		}).watch();
 	}
 
@@ -395,13 +391,13 @@ public class ContainerManager {
 	 * 
 	 */
 	public void stop() {
-		for (DynamicInvocationHandler handler : handlers.values()) {
+		handlers.values().forEach(handler -> {
 			Object target = handler.getTarget();
 			if (target instanceof AbstractContextListener) {
 				AbstractContextListener contextListener = (AbstractContextListener) target;
 				contextListener.contextDestroyed(new ServletContextEvent(context));
 			}
-		}
+		});
 		handlers.clear();
 	}
 
