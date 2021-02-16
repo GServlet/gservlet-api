@@ -43,7 +43,7 @@ public class FileWatcher {
 	/**
 	 * The list of file listeners
 	 */
-	protected List<FileListener> listeners = new ArrayList<>();
+	protected final List<FileListener> listeners = new ArrayList<>();
 	/**
 	 * The folder to be watched
 	 */
@@ -57,7 +57,7 @@ public class FileWatcher {
 	/**
 	 * The FileAlterationMonitor instance
 	 */
-	private FileAlterationMonitor monitor = new FileAlterationMonitor(1000);
+	private final FileAlterationMonitor monitor = new FileAlterationMonitor(1000);
 
 	/**
 	 * 
@@ -117,7 +117,7 @@ public class FileWatcher {
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Stops the watch process
@@ -177,7 +177,7 @@ public class FileWatcher {
 	 * 
 	 */
 	public FileWatcher addFileListeners(List<FileListener> listeners) {
-		this.listeners = listeners;
+		this.listeners.addAll(listeners);
 		return this;
 	}
 

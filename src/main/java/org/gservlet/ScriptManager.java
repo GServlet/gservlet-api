@@ -213,28 +213,6 @@ public class ScriptManager {
 	}
 
 	/**
-	 * 
-	 * Checks if the declared annotation on the given class is supported
-	 * 
-	 * @param clazz the given class
-	 * @return true if the declared annotation on the given class is supported
-	 * 
-	 */
-
-	protected boolean isClassSupported(Class<?> clazz) {
-		return clazz.getAnnotation(Servlet.class) != null || clazz.getAnnotation(Filter.class) != null
-				|| clazz.getAnnotation(ContextListener.class) != null
-				|| clazz.getAnnotation(RequestListener.class) != null
-				|| clazz.getAnnotation(ContextAttributeListener.class) != null
-				|| clazz.getAnnotation(RequestAttributeListener.class) != null
-				|| clazz.getAnnotation(SessionListener.class) != null
-				|| clazz.getAnnotation(SessionAttributeListener.class) != null
-				|| clazz.getAnnotation(SessionBindingListener.class) != null
-				|| clazz.getAnnotation(SessionActivationListener.class) != null
-				|| clazz.getAnnotation(SessionIdListener.class) != null;
-	}
-
-	/**
 	 * Registers a new script listener
 	 * 
 	 * @param listener the ScriptListener object

@@ -25,6 +25,7 @@ import java.io.File;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -411,7 +412,7 @@ public class ContainerManager {
 	 * @return the map of dynamic invocation handlers
 	 */
 	public Map<String, DynamicInvocationHandler> getHandlers() {
-		return handlers;
+		return Collections.unmodifiableMap(handlers);
 	}
 
 
