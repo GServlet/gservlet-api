@@ -22,7 +22,6 @@ package org.gservlet;
 import static org.gservlet.Constants.HANDLERS;
 import static org.gservlet.Constants.SCRIPTS_FOLDER;
 import java.io.File;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.Collection;
@@ -52,7 +51,6 @@ import javax.servlet.http.HttpSessionListener;
 import org.gservlet.annotation.ContextAttributeListener;
 import org.gservlet.annotation.ContextListener;
 import org.gservlet.annotation.Filter;
-import org.gservlet.annotation.InitParam;
 import org.gservlet.annotation.RequestAttributeListener;
 import org.gservlet.annotation.RequestListener;
 import org.gservlet.annotation.Servlet;
@@ -157,15 +155,12 @@ public class ContainerManager {
 	 * 
 	 */
 	public void register(Object object) throws ServletException {
-		Annotation[] annotations = object.getClass().getAnnotations();
-		for (Annotation annotation : annotations) {
-			if (annotation instanceof Servlet) {
-				addServlet(object);
-			} else if (annotation instanceof Filter) {
-				addFilter(object);
-			} else if (isListenerAnnotation(annotation)) {
-				addListener(object);
-			}
+		if(isServlet(object)) {
+			addServlet(object);
+		} else if(isFilter(object)) {
+			addFilter(object);
+		} else if (isListener(object)) {
+			addListener(object);
 		}
 	}
 
@@ -194,9 +189,7 @@ public class ContainerManager {
 			if (annotation.urlPatterns().length > 0) {
 				dynamic.addMapping(annotation.urlPatterns());
 			}
-			for (InitParam param : annotation.initParams()) {
-				dynamic.setInitParameter(param.name(), param.value());
-			}
+			Arrays.stream(annotation.initParams()).forEach(param -> dynamic.setInitParameter(param.name(), param.value()));
 			MultipartConfig multiPartConfig = object.getClass().getAnnotation(MultipartConfig.class);
 			if(multiPartConfig != null) {
 				dynamic.setMultipartConfig(new MultipartConfigElement(multiPartConfig));
@@ -237,9 +230,7 @@ public class ContainerManager {
 			if (annotation.urlPatterns().length > 0) {
 				dynamic.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.urlPatterns());
 			}
-			for (InitParam param : annotation.initParams()) {
-				dynamic.setInitParameter(param.name(), param.value());
-			}
+			Arrays.stream(annotation.initParams()).forEach(param -> dynamic.setInitParameter(param.name(), param.value()));
 		} else {
 			String message = "The filter with the name " + name
 					+ " has already been registered. Please use a different name or package";
@@ -332,19 +323,15 @@ public class ContainerManager {
 		try {
 			logger.log(Level.INFO, "processing script {0}", script.getName());
 			Object object = scriptManager.createObject(script);
-			Annotation[] annotations = object.getClass().getAnnotations();
-			for (Annotation annotation : annotations) {
-				if (isListenerAnnotation(annotation)) {
-					reload(object);
-					if (object instanceof AbstractContextListener) {
-						AbstractContextListener contextListener = (AbstractContextListener) object;
-						contextListener.contextInitialized(new ServletContextEvent(context));
-					}
-				} else if(annotation instanceof Servlet) {
-					reloadServlet((AbstractServlet) object);
-					
-				} else if(annotation instanceof Filter) {
-					reloadFilter((AbstractFilter) object);
+			if(isServlet(object)) {
+				reloadServlet((AbstractServlet) object);
+			} else if(isFilter(object)) {
+				reloadFilter((AbstractFilter) object);
+			} else if (isListener(object)) {
+				reload(object);
+				if (object instanceof AbstractContextListener) {
+					AbstractContextListener contextListener = (AbstractContextListener) object;
+					contextListener.contextInitialized(new ServletContextEvent(context));
 				}
 			}
 		} catch (Exception e) {
@@ -379,9 +366,7 @@ public class ContainerManager {
 		DefaultServletConfig config = new DefaultServletConfig();
 		config.setServletContext(context);
 		Servlet annotation = servlet.getClass().getAnnotation(Servlet.class);
-		for (InitParam param : annotation.initParams()) {
-			config.addInitParameter(param.name(), param.value());
-		}
+		Arrays.stream(annotation.initParams()).forEach(param -> config.addInitParameter(param.name(), param.value()));
 		servlet.init(config);
 	}
 	
@@ -398,9 +383,7 @@ public class ContainerManager {
 		DefaultFilterConfig config = new DefaultFilterConfig();
 		config.setServletContext(context);
 		Filter annotation = filter.getClass().getAnnotation(Filter.class);
-		for (InitParam param : annotation.initParams()) {
-			config.addInitParameter(param.name(), param.value());
-		}
+		Arrays.stream(annotation.initParams()).forEach(param -> config.addInitParameter(param.name(), param.value()));
 		filter.init(config);
 	}
 
@@ -440,21 +423,49 @@ public class ContainerManager {
 	 */
 	public ScriptManager getScriptManager() {
 		return scriptManager;
-	}	
+	}
 	
 	/**
 	 * 
-	 * Checks if the given annotation declares a listener
+	 * Checks if the given object is a servlet
 	 * 
-	 * @param annotation the given annotation
+	 * @param object the given object
 	 * 
-	 * @return true if the given annotation declares a listener
+	 * @return true if the given object is a servlet
 	 */
-	private boolean isListenerAnnotation(Annotation annotation) {
-		return annotation instanceof ContextListener || annotation instanceof ContextAttributeListener
-				|| annotation instanceof RequestListener || annotation instanceof RequestAttributeListener
-				|| annotation instanceof SessionListener || annotation instanceof SessionAttributeListener
-				|| annotation instanceof SessionIdListener;
+	protected boolean isServlet(Object object) {
+		return object.getClass().isAnnotationPresent(Servlet.class);
+	}
+	
+	/**
+	 * 
+	 * Checks if the given object is a filter
+	 * 
+	 * @param object the given object
+	 * 
+	 * @return true if the given object is a filter
+	 */
+	protected boolean isFilter(Object object) {
+		return object.getClass().isAnnotationPresent(Filter.class);
+	}
+	
+	/**
+	 * 
+	 * Checks if the given object is a listener
+	 * 
+	 * @param object the given object
+	 * 
+	 * @return true if the given object is a listener
+	 */
+	protected boolean isListener(Object object) {
+		Class<?> clazz = object.getClass(); 
+		return clazz.isAnnotationPresent(ContextListener.class)
+		|| clazz.isAnnotationPresent(ContextAttributeListener.class)
+		|| clazz.isAnnotationPresent(RequestListener.class)
+		|| clazz.isAnnotationPresent(RequestAttributeListener.class)
+		|| clazz.isAnnotationPresent(SessionListener.class)
+		|| clazz.isAnnotationPresent(SessionAttributeListener.class)
+		|| clazz.isAnnotationPresent(SessionIdListener.class);
 	}
 	
 }

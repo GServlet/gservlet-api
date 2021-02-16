@@ -106,13 +106,10 @@ public class ScriptManager {
 	public Object createObject(File script) throws ScriptException {
 		try {
 			Class<?> clazz = loadClass(script);
-			if (!clazz.isInterface() && isClassSupported(clazz)) {
+			if (!clazz.isInterface() && Stream.of(clazz.getConstructors()).anyMatch(c -> c.getParameterCount() == 0)) {
 				Object object = clazz.getConstructor().newInstance();
 				listeners.forEach(listener -> listener.onCreated(object));
 				return object;
-			} else if (!clazz.isInterface()
-					&& Stream.of(clazz.getConstructors()).anyMatch(c -> c.getParameterCount() == 0)) {
-				return clazz.getConstructor().newInstance();
 			}
 			return new Object();
 		} catch (Exception e) {
@@ -264,6 +261,16 @@ public class ScriptManager {
 	 */
 	public List<ScriptListener> getScriptListeners() {
 		return listeners;
+	}
+	
+	/**
+	 * 
+	 * Returns the scripts folder
+	 * 
+	 * @return the scripts folder
+	 */
+	public File getFolder() {
+		return folder;
 	}
 
 }
