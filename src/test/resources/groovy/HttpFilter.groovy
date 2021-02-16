@@ -11,17 +11,23 @@ class HttpFilter extends AbstractFilter {
 	
 	void init() {
 		super.init()
-		request.setAttribute("state","init")
+		if(requestContext) {
+			request.setAttribute("state","init")
+		}
 	}
 	
 	void filter() {
 		super.filter()
-		request.setAttribute("state","filtering")
+		if(requestContext) {
+			request.setAttribute("state","filtering")
+		}
 	}
 	
 	void destroy() {
 		super.destroy()
-		request.setAttribute("state","destroy")
+		if(requestContext) {
+			request.setAttribute("state","destroy")
+		}
 	}
 	
 }

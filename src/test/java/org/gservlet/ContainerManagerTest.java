@@ -53,16 +53,17 @@ public class ContainerManagerTest {
 		ContainerManager manager = new ContainerManager(context);
 		manager.init("src/test/resources", new ArrayList<ScriptListener>());
 		assertEquals(9, manager.getHandlers().size());
-		for (DynamicInvocationHandler handler : manager.getHandlers().values()) {
-			assertNotNull(handler.getTarget());
-		}
+		manager.getHandlers().values().forEach( handler -> assertNotNull(handler.getTarget()));
 		wait(2000);
+		manager.process(new File(folder + "/groovy/listeners/" + "ServletContextListener.groovy"));
+		manager.process(new File(folder + "/groovy/" + "HttpFilter.groovy"));
+		manager.process(new File(folder + "/groovy/" + "HttpServlet.groovy"));
 		File file = new File(folder + "/groovy/script.groovy");
-		PrintWriter printWriter = new PrintWriter(new FileWriter(file));
-		printWriter.println("import org.gservlet.annotation.Servlet");
-		printWriter.println("@Servlet(\"/servlet\")");
-		printWriter.println("class HttpServlet {}");
-		printWriter.close();
+		try(PrintWriter printWriter = new PrintWriter(new FileWriter(file))) {
+			printWriter.println("import org.gservlet.annotation.Servlet");
+			printWriter.println("@Servlet(\"/servlet\")");
+			printWriter.println("class HttpServlet {}");
+		}
 		wait(2000);
 		assertEquals(9, manager.getHandlers().size());
 		file.delete();
