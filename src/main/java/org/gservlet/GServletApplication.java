@@ -204,7 +204,7 @@ public class GServletApplication {
 	public void stop() {
 		containerManager.stop();
 		databaseManager.stop();
-		FileWatcher.getInstances().forEach(watcher -> watcher.stop());
+		FileWatcher.getInstances().forEach(FileWatcher::stop);
 	}
 
 	/**
