@@ -31,12 +31,8 @@ import javax.servlet.http.HttpSessionEvent;
 * @author Mamadou Lamine Ba
 * 
 */
+@SuppressWarnings("serial")
 public abstract class AbstractSessionActivationListener extends AbstractListener implements HttpSessionActivationListener, Serializable {
-
-	/**
-	 *  generated serialVersionUID
-	 */
-	private static final long serialVersionUID = 7536153893905073671L;
 
 	/**
 	* 
