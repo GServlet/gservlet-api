@@ -42,11 +42,11 @@ public abstract class AbstractServlet extends HttpServlet implements RequestHand
 	/**
 	 * The RequestContext object
 	 */
-	protected final ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
+	protected final transient ThreadLocal<RequestContext> requestContext = new ThreadLocal<>();
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(getClass().getName());
+	protected final transient Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * 
