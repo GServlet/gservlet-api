@@ -35,11 +35,11 @@ public abstract class AbstractListener implements EventListener {
 	/**
 	 * The event holder object
 	 */
-	protected final ThreadLocal<Object> eventHolder = new ThreadLocal<>();
+	protected final transient ThreadLocal<Object> eventHolder = new ThreadLocal<>();
 	/**
 	 * The logger object
 	 */
-	protected final Logger logger = Logger.getLogger(getClass().getName());
+	protected final transient Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	* 
