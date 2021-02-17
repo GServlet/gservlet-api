@@ -62,7 +62,7 @@ import groovy.util.ScriptException;
 
 /**
  * 
- * Manages the registration and the reloading of
+ * The ContainerManager manages the registration and the reloading of
  * a servlet, filter or listener into the web container
  * 
  * @author Mamadou Lamine Ba
@@ -146,7 +146,7 @@ public class ContainerManager {
 			}
 		}
 	}
-
+	
 	/**
 	 * 
 	 * Registers a servlet, filter or listener into the web container
@@ -243,7 +243,7 @@ public class ContainerManager {
 	 * 
 	 * Registers a listener into the web container
 	 * 
-	 * @param object  the listener object
+	 * @param object the listener object
 	 * 
 	 */
 	protected void addListener(Object object) {
@@ -321,20 +321,34 @@ public class ContainerManager {
 	protected void process(File script) {
 		try {
 			logger.log(Level.INFO, "processing script {0}", script.getName());
-			Object object = scriptManager.createObject(script);
-			if(isServlet(object)) {
-				reloadServlet((AbstractServlet) object);
-			} else if(isFilter(object)) {
-				reloadFilter((AbstractFilter) object);
-			} else if (isListener(object)) {
-				reload(object);
-				if (object instanceof AbstractContextListener) {
-					AbstractContextListener contextListener = (AbstractContextListener) object;
-					contextListener.contextInitialized(new ServletContextEvent(context));
-				}
-			}
+			process(scriptManager.createObject(script));
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "exception when reloading script", e);
+		}
+	}
+	
+	/**
+	 * 
+	 * Processes an object
+	 * 
+	 * @param object the given object
+	 * @throws ServletException the ServletException
+	 * @throws ScriptException  the ScriptException
+	 * 
+	 */
+	protected void process(Object object) throws ServletException, ScriptException {
+		if(isServlet(object)) {
+			reloadServlet((AbstractServlet) object);
+		} else if(isFilter(object)) {
+			reloadFilter((AbstractFilter) object);
+		} else if (isListener(object)) {
+			reload(object);
+			if (object instanceof AbstractContextListener) {
+				AbstractContextListener contextListener = (AbstractContextListener) object;
+				contextListener.contextInitialized(new ServletContextEvent(context));
+			}
+		} else {
+			reloadScripts(scriptManager.getFolder());
 		}
 	}
 
@@ -384,6 +398,34 @@ public class ContainerManager {
 		Filter annotation = filter.getClass().getAnnotation(Filter.class);
 		Arrays.stream(annotation.initParams()).forEach(param -> config.addInitParameter(param.name(), param.value()));
 		filter.init(config);
+	}
+	
+
+	/**
+	 * 
+	 * Reloads the servlets, filters or listeners
+	 * 
+	 * @param folder the scripts folder
+	 * @throws ServletException the ServletException
+	 * @throws ScriptException  the ScriptException
+	 * 
+	 */
+	protected void reloadScripts(File folder) throws ServletException, ScriptException {
+		if (folder.exists()) {
+			File[] files = folder.listFiles();
+			if (files != null) {
+				for (File file : files) {
+					if (file.isFile()) {
+						Object object = scriptManager.createObject(file);
+						if(isServlet(object) || isFilter(object) || isListener(object)) {
+							process(object);
+						}
+					} else {
+						reloadScripts(file);
+					}
+				}
+			}
+		}
 	}
 
 	/**

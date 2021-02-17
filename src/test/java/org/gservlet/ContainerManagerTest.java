@@ -58,6 +58,8 @@ public class ContainerManagerTest {
 		manager.process(new File(folder + "/groovy/listeners/" + "ServletContextListener.groovy"));
 		manager.process(new File(folder + "/groovy/" + "HttpFilter.groovy"));
 		manager.process(new File(folder + "/groovy/" + "HttpServlet.groovy"));
+		manager.process(new File(folder + "/groovy/" + "InvocationHandler.groovy"));
+		assertEquals(9, manager.getHandlers().size());
 		File file = new File(folder + "/groovy/script.groovy");
 		try(PrintWriter printWriter = new PrintWriter(new FileWriter(file))) {
 			printWriter.println("import org.gservlet.annotation.Servlet");
