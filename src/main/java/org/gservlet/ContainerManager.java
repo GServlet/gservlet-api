@@ -62,8 +62,8 @@ import groovy.util.ScriptException;
 
 /**
  * 
- * The ContainerManager manages the registration and the reloading of
- * a servlet, filter or listener into the web container
+ * The ContainerManager manages the registration and the reloading of a servlet,
+ * filter or listener into the web container
  * 
  * @author Mamadou Lamine Ba
  * 
@@ -86,7 +86,7 @@ public class ContainerManager {
 	 * The logger object
 	 */
 	protected final Logger logger = Logger.getLogger(getClass().getName());
-	
+
 	/**
 	 * 
 	 * Constructs a ContainerManager for the given servlet context
@@ -104,7 +104,6 @@ public class ContainerManager {
 		}
 	}
 
-
 	/**
 	 * 
 	 * Initializes the application for the given directory
@@ -119,8 +118,10 @@ public class ContainerManager {
 		File folder = new File(directory + File.separator + SCRIPTS_FOLDER);
 		scriptManager = new ScriptManager(folder);
 		scriptManager.addScriptListeners(listeners);
-		loadScripts(folder);
-		watch(folder);
+		if (folder.exists()) {
+			loadScripts(folder);
+			watch(folder);
+		}
 	}
 
 	/**
@@ -133,20 +134,16 @@ public class ContainerManager {
 	 * 
 	 */
 	protected void loadScripts(File folder) throws ServletException, ScriptException {
-		if (folder.exists()) {
-			File[] files = folder.listFiles();
-			if (files != null) {
-				for (File file : files) {
-					if (file.isFile()) {
-						register(scriptManager.createObject(file));
-					} else {
-						loadScripts(file);
-					}
-				}
+		File[] files = folder.listFiles();
+		for (File file : files) {
+			if (file.isFile()) {
+				register(scriptManager.createObject(file));
+			} else {
+				loadScripts(file);
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Registers a servlet, filter or listener into the web container
@@ -156,9 +153,9 @@ public class ContainerManager {
 	 * 
 	 */
 	public void register(Object object) throws ServletException {
-		if(isServlet(object)) {
+		if (isServlet(object)) {
 			addServlet(object);
-		} else if(isFilter(object)) {
+		} else if (isFilter(object)) {
 			addFilter(object);
 		} else if (isListener(object)) {
 			addListener(object);
@@ -190,13 +187,14 @@ public class ContainerManager {
 			if (annotation.urlPatterns().length > 0) {
 				dynamic.addMapping(annotation.urlPatterns());
 			}
-			Arrays.stream(annotation.initParams()).forEach(param -> dynamic.setInitParameter(param.name(), param.value()));
+			Arrays.stream(annotation.initParams())
+					.forEach(param -> dynamic.setInitParameter(param.name(), param.value()));
 			MultipartConfig multiPartConfig = object.getClass().getAnnotation(MultipartConfig.class);
-			if(multiPartConfig != null) {
+			if (multiPartConfig != null) {
 				dynamic.setMultipartConfig(new MultipartConfigElement(multiPartConfig));
 			}
 			ServletSecurity servletSecurity = object.getClass().getAnnotation(ServletSecurity.class);
-			if(servletSecurity != null) {
+			if (servletSecurity != null) {
 				dynamic.setServletSecurity(new ServletSecurityElement(servletSecurity));
 			}
 		} else {
@@ -210,7 +208,7 @@ public class ContainerManager {
 	 * 
 	 * Registers a filter into the web container
 	 * 
-	 * @param object  the filter object
+	 * @param object the filter object
 	 * @throws ServletException the ServletException
 	 * 
 	 */
@@ -223,7 +221,7 @@ public class ContainerManager {
 			Object filter = createProxy(handler, javax.servlet.Filter.class);
 			handlers.put(name, handler);
 			FilterRegistration.Dynamic dynamic = context.addFilter(name, (javax.servlet.Filter) filter);
-		    dynamic.setAsyncSupported(annotation.asyncSupported());
+			dynamic.setAsyncSupported(annotation.asyncSupported());
 			Collection<DispatcherType> dispatcherTypes = Arrays.asList(annotation.dispatcherTypes());
 			if (annotation.value().length > 0) {
 				dynamic.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.value());
@@ -231,7 +229,8 @@ public class ContainerManager {
 			if (annotation.urlPatterns().length > 0) {
 				dynamic.addMappingForUrlPatterns(EnumSet.copyOf(dispatcherTypes), true, annotation.urlPatterns());
 			}
-			Arrays.stream(annotation.initParams()).forEach(param -> dynamic.setInitParameter(param.name(), param.value()));
+			Arrays.stream(annotation.initParams())
+					.forEach(param -> dynamic.setInitParameter(param.name(), param.value()));
 		} else {
 			String message = "The filter with the name " + name
 					+ " has already been registered. Please use a different name or package";
@@ -270,14 +269,14 @@ public class ContainerManager {
 		}
 		handlers.put(object.getClass().getName(), handler);
 	}
-	
+
 	/**
 	 * 
 	 * Creates a Proxy object
 	 * 
 	 * @param handler the handler
 	 * 
-	 * @param clazz the class
+	 * @param clazz   the class
 	 * 
 	 * @return the Proxy object
 	 * 
@@ -295,7 +294,7 @@ public class ContainerManager {
 	 */
 	protected void watch(File folder) {
 		new FileWatcher(folder).addFileListener(new FileAdapter() {
-			
+
 			@Override
 			public void onCreated(FileEvent event) {
 				File file = event.getFile();
@@ -303,7 +302,7 @@ public class ContainerManager {
 					process(file);
 				}
 			}
-			
+
 			@Override
 			public void onModified(FileEvent event) {
 				onCreated(event);
@@ -326,7 +325,7 @@ public class ContainerManager {
 			logger.log(Level.SEVERE, "exception when reloading script", e);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Processes an object
@@ -337,9 +336,9 @@ public class ContainerManager {
 	 * 
 	 */
 	protected void process(Object object) throws ServletException, ScriptException {
-		if(isServlet(object)) {
+		if (isServlet(object)) {
 			reloadServlet((AbstractServlet) object);
-		} else if(isFilter(object)) {
+		} else if (isFilter(object)) {
 			reloadFilter((AbstractFilter) object);
 		} else if (isListener(object)) {
 			reload(object);
@@ -365,7 +364,7 @@ public class ContainerManager {
 			handler.setTarget(object);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Reloads a servlet
@@ -382,7 +381,7 @@ public class ContainerManager {
 		Arrays.stream(annotation.initParams()).forEach(param -> config.addInitParameter(param.name(), param.value()));
 		servlet.init(config);
 	}
-	
+
 	/**
 	 * 
 	 * Reloads a filter
@@ -399,7 +398,6 @@ public class ContainerManager {
 		Arrays.stream(annotation.initParams()).forEach(param -> config.addInitParameter(param.name(), param.value()));
 		filter.init(config);
 	}
-	
 
 	/**
 	 * 
@@ -411,19 +409,15 @@ public class ContainerManager {
 	 * 
 	 */
 	protected void reloadScripts(File folder) throws ServletException, ScriptException {
-		if (folder.exists()) {
-			File[] files = folder.listFiles();
-			if (files != null) {
-				for (File file : files) {
-					if (file.isFile()) {
-						Object object = scriptManager.createObject(file);
-						if(isServlet(object) || isFilter(object) || isListener(object)) {
-							process(object);
-						}
-					} else {
-						reloadScripts(file);
-					}
+		File[] files = folder.listFiles();
+		for (File file : files) {
+			if (file.isFile()) {
+				Object object = scriptManager.createObject(file);
+				if (isServlet(object) || isFilter(object) || isListener(object)) {
+					process(object);
 				}
+			} else {
+				reloadScripts(file);
 			}
 		}
 	}
@@ -455,7 +449,6 @@ public class ContainerManager {
 		return Collections.unmodifiableMap(handlers);
 	}
 
-
 	/**
 	 * 
 	 * Returns the script manager
@@ -465,7 +458,7 @@ public class ContainerManager {
 	public ScriptManager getScriptManager() {
 		return scriptManager;
 	}
-	
+
 	/**
 	 * 
 	 * Checks if the given object is a servlet
@@ -477,7 +470,7 @@ public class ContainerManager {
 	protected boolean isServlet(Object object) {
 		return object.getClass().isAnnotationPresent(Servlet.class);
 	}
-	
+
 	/**
 	 * 
 	 * Checks if the given object is a filter
@@ -489,7 +482,7 @@ public class ContainerManager {
 	protected boolean isFilter(Object object) {
 		return object.getClass().isAnnotationPresent(Filter.class);
 	}
-	
+
 	/**
 	 * 
 	 * Checks if the given object is a listener
@@ -499,14 +492,14 @@ public class ContainerManager {
 	 * @return true if the given object is a listener
 	 */
 	protected boolean isListener(Object object) {
-		Class<?> clazz = object.getClass(); 
+		Class<?> clazz = object.getClass();
 		return clazz.isAnnotationPresent(ContextListener.class)
-		|| clazz.isAnnotationPresent(ContextAttributeListener.class)
-		|| clazz.isAnnotationPresent(RequestListener.class)
-		|| clazz.isAnnotationPresent(RequestAttributeListener.class)
-		|| clazz.isAnnotationPresent(SessionListener.class)
-		|| clazz.isAnnotationPresent(SessionAttributeListener.class)
-		|| clazz.isAnnotationPresent(SessionIdListener.class);
+				|| clazz.isAnnotationPresent(ContextAttributeListener.class)
+				|| clazz.isAnnotationPresent(RequestListener.class)
+				|| clazz.isAnnotationPresent(RequestAttributeListener.class)
+				|| clazz.isAnnotationPresent(SessionListener.class)
+				|| clazz.isAnnotationPresent(SessionAttributeListener.class)
+				|| clazz.isAnnotationPresent(SessionIdListener.class);
 	}
-	
+
 }
