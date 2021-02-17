@@ -109,7 +109,7 @@ public class ContainerManager {
 	 * Initializes the application for the given directory
 	 *
 	 * @param directory the scripts parent directory
-	 * @param listeners the ScriptListener list
+	 * @param listeners the list of script listeners 
 	 * @throws ServletException the ServletException
 	 * @throws ScriptException  the ScriptException
 	 * 
