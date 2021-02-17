@@ -134,8 +134,7 @@ public class ContainerManager {
 	 * 
 	 */
 	protected void loadScripts(File folder) throws ServletException, ScriptException {
-		File[] files = folder.listFiles();
-		for (File file : files) {
+		for (File file : folder.listFiles()) {
 			if (file.isFile()) {
 				register(scriptManager.createObject(file));
 			} else {
@@ -314,13 +313,13 @@ public class ContainerManager {
 	 * 
 	 * Processes a script file
 	 * 
-	 * @param script the script file
+	 * @param file the given file
 	 * 
 	 */
-	protected void process(File script) {
+	protected void process(File file) {
 		try {
-			logger.log(Level.INFO, "processing script {0}", script.getName());
-			process(scriptManager.createObject(script));
+			logger.log(Level.INFO, "processing script {0}", file.getName());
+			process(scriptManager.createObject(file));
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "exception when reloading script", e);
 		}
@@ -409,8 +408,7 @@ public class ContainerManager {
 	 * 
 	 */
 	protected void reloadScripts(File folder) throws ServletException, ScriptException {
-		File[] files = folder.listFiles();
-		for (File file : files) {
+		for (File file : folder.listFiles()) {
 			if (file.isFile()) {
 				Object object = scriptManager.createObject(file);
 				if (isServlet(object) || isFilter(object) || isListener(object)) {

@@ -98,14 +98,14 @@ public class ScriptManager {
 	 * 
 	 * Creates an object from a groovy script file
 	 * 
-	 * @param script the groovy script file
+	 * @param file the groovy script file
 	 * @return the instantiated object
 	 * @throws ScriptException the ScriptException
 	 * 
 	 */
-	public Object createObject(File script) throws ScriptException {
+	public Object createObject(File file) throws ScriptException {
 		try {
-			Class<?> clazz = loadClass(script);
+			Class<?> clazz = loadClass(file);
 			if (!clazz.isInterface() && Stream.of(clazz.getConstructors()).anyMatch(c -> c.getParameterCount() == 0)) {
 				Object object = clazz.getConstructor().newInstance();
 				listeners.forEach(listener -> listener.onCreated(object));
