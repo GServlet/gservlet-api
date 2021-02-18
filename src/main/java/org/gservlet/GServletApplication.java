@@ -147,7 +147,6 @@ public class GServletApplication {
 			realPath = context.getRealPath("/") + folder;
 			start();
 		}
-		context.addListener(new DefaultRequestListener());
 	}
 
 	/**

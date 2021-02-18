@@ -99,6 +99,7 @@ public class ContainerManager {
 		try {
 			this.context = context;
 			context.setAttribute(HANDLERS, handlers);
+			context.addListener(new DefaultRequestListener());
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}

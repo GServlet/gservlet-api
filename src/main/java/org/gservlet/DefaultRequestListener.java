@@ -23,7 +23,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
-import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 import groovy.sql.Sql;
 
@@ -34,7 +33,6 @@ import groovy.sql.Sql;
 * @author Mamadou Lamine Ba
 * 
 */
-@WebListener
 public class DefaultRequestListener implements ServletRequestListener {
 
 	/**

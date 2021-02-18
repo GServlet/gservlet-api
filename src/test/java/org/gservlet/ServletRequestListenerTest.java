@@ -75,7 +75,7 @@ public class ServletRequestListenerTest {
 	@Test
 	public void testDefaultListener() {
 		DefaultRequestListener listener = new DefaultRequestListener();
-		assertTrue(listener.getClass().isAnnotationPresent(WebListener.class));
+		assertFalse(listener.getClass().isAnnotationPresent(WebListener.class));
 		ServletContext context = mock(ServletContext.class);
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getAttribute(DB_CONNECTION)).thenReturn(new Sql(new BasicDataSource()));
