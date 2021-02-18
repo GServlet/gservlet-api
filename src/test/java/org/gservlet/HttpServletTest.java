@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -51,7 +52,7 @@ import groovy.sql.Sql;
 public class HttpServletTest {
 
 	@SuppressWarnings("rawtypes")
-	@Test
+	@Test(expected = ServletException.class)
 	public void testMethods() throws Exception {
 		File folder = new File("src/test/resources/" + SCRIPTS_FOLDER);
 		ScriptManager scriptManager = new ScriptManager(folder);
@@ -102,11 +103,13 @@ public class HttpServletTest {
 		assertEquals("trace", map.get("state"));
 		servlet.doHead(request, response);
 		assertEquals("head", map.get("state"));
+		servlet.service(request, response, "connect");
 		assertEquals(RequestWrapper.class, servlet.getRequest().getClass());
 		assertEquals(SessionWrapper.class, servlet.getSession().getClass());
 		assertEquals(ServletContextWrapper.class, servlet.getContext().getClass());
 		assertNotNull(servlet.getConfig());
 		assertNotNull(servlet.getSql());
+		servlet.service(request, response, "patch");
 	}
 
 	@SuppressWarnings("rawtypes")

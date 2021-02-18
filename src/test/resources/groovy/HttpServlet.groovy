@@ -47,4 +47,8 @@ class HttpServlet {
 	void head() {
 		request.setAttribute("state","head")
 	}
+	
+	void patch() {
+		throw new UnsupportedOperationException()
+	}
 }
