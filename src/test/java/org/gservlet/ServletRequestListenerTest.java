@@ -70,7 +70,6 @@ public class ServletRequestListenerTest {
 		assertEquals(SessionWrapper.class, listener.getSession().getClass());
 		assertEquals(ServletContextWrapper.class, listener.getContext().getClass());
 		assertNotNull(listener.getLogger());
-		listener.invoke("requestRemoved", event);
 	}
 
 	@Test
