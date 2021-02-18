@@ -65,10 +65,12 @@ public class ServletRequestListenerTest {
 		assertEquals("requestInitialized", map.get("state"));
 		listener.requestDestroyed(event);
 		assertEquals("requestDestroyed", map.get("state"));
+		listener.invoke("requestInit", event);
 		assertEquals(RequestWrapper.class, listener.getRequest().getClass());
 		assertEquals(SessionWrapper.class, listener.getSession().getClass());
 		assertEquals(ServletContextWrapper.class, listener.getContext().getClass());
 		assertNotNull(listener.getLogger());
+		listener.invoke("requestRemoved", event);
 	}
 
 	@Test

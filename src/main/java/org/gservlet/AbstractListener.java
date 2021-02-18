@@ -56,7 +56,7 @@ public abstract class AbstractListener implements EventListener {
 		} catch (NoSuchMethodException e) {
 			logger.log(Level.INFO, "no method {0} has been declared for the listener {1}", new Object[]{method, getClass().getName()});
 		} catch (Exception e) {
-			logger.log(Level.INFO, "exception during invoke method", e);
+			logger.log(Level.SEVERE, "exception during invoke method", e);
 		}
 	}
 

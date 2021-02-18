@@ -13,4 +13,8 @@ class ServletRequestListener {
 		context.setAttribute("state","requestDestroyed")
 	}
 	
+	void requestRemoved() {
+		throw new UnsupportedOperationException();
+	}
+	
 }
