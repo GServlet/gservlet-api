@@ -15,7 +15,7 @@
 - [Issue #147] (https://github.com/GServlet/gservlet-api/issues/145) The HttpSessionActivationListener interface was not used correctly
 
 
-## [1.0.0] - 2021-01-04
+## [1.0.0] - 2021-01-02
 
 ### Added
 
