@@ -27,9 +27,7 @@ import java.lang.annotation.Retention;
 
 /**
 * 
-* This annotation is used to declare a {@link javax.servlet.http.HttpServlet}
-*
-* This annotation is processed at deployment time,
+* This annotation is used to declare a {@link javax.servlet.http.HttpServlet}. It is processed at deployment time,
 * and the corresponding servlet made available at the specified URL
 * patterns.
 * 

@@ -35,7 +35,7 @@ public class FilterConfigWrapper implements FilterConfig {
 	/**
 	 * The filter config object
 	 */
-	private final FilterConfig filterConfig;
+	protected final FilterConfig filterConfig;
 
 	/**
 	 * 
