@@ -28,9 +28,7 @@ import javax.servlet.DispatcherType;
 
 /**
 * 
-* This annotation is used to declare a {@link javax.servlet.Filter} 
-*
-* This annotation is processed at deployment time,
+* This annotation is used to declare a {@link javax.servlet.Filter}. It is processed at deployment time,
 * and the corresponding filter applied to the specified URL patterns,
 * servlets, and dispatcher types.
 * 

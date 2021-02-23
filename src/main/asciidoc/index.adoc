@@ -103,7 +103,7 @@ To get started with GServlet, you may want to begin by creating your first proje
 <dependency>
 	<groupId>org.gservlet</groupId>
 	<artifactId>gservlet-api</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 </dependency>
 ----
 
@@ -118,7 +118,7 @@ repositories {
 }
 
 dependencies {
-    compile("org.gservlet:gservlet-api:1.0.0")
+    compile("org.gservlet:gservlet-api:1.0.1")
 }
 ----
 
@@ -472,7 +472,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 === Servlet methods
 
-For an exhaustive list of the supported methods, please read the https://gservlet.org/javadocs/1.0.0/org/gservlet/abstractservlet[Javadocs].
+For an exhaustive list of the supported methods, please read the https://gservlet.org/javadocs/1.0.1/org/gservlet/abstractservlet[Javadocs].
 
 |===
 |Method |Description
@@ -838,7 +838,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 
 === Filter methods
 
-For an exhaustive list of the supported methods, please read the https://gservlet.org/javadocs/1.0.0/org/gservlet/abstractfilter[Javadocs]. 
+For an exhaustive list of the supported methods, please read the https://gservlet.org/javadocs/1.0.1/org/gservlet/abstractfilter[Javadocs]. 
 
 |===
 |Method |Description
@@ -2549,7 +2549,7 @@ public class SpringConfiguration implements ServletContextInitializer {
 }
 ----
 
-To enable Spring autowiring, you can use an implementation of the https://gservlet.org/javadocs/1.0.0/org/gservlet/scriptlistener[ScriptListener] interface like this:
+To enable Spring autowiring, you can use an implementation of the https://gservlet.org/javadocs/1.0.1/org/gservlet/scriptlistener[ScriptListener] interface like this:
 
 .SpringConfiguration.java 
 [#src-listing] 

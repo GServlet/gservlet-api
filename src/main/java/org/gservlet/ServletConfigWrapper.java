@@ -35,7 +35,7 @@ public class ServletConfigWrapper implements ServletConfig {
 	/**
 	 * The servlet config object
 	 */
-	private final ServletConfig servletConfig;
+	protected final ServletConfig servletConfig;
 
 	/**
 	 * 

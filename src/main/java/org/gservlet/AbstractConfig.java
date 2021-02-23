@@ -43,7 +43,7 @@ public class AbstractConfig {
 	/**
 	 * The servlet context
 	 */
-	private ServletContext servletContext;
+	protected ServletContext servletContext;
 	
 
 	/**
