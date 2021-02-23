@@ -11,8 +11,8 @@
 ### Fixed 
 
 - [Issue #145] (https://github.com/GServlet/gservlet-api/issues/145) Make the gservlet.properties optional for Spring Boot applications
-- [Issue #146] (https://github.com/GServlet/gservlet-api/issues/145) The HttpSessionBindingListener interface was not used correctly
-- [Issue #147] (https://github.com/GServlet/gservlet-api/issues/145) The HttpSessionActivationListener interface was not used correctly
+- [Issue #146] (https://github.com/GServlet/gservlet-api/issues/146) The HttpSessionBindingListener interface was not used correctly
+- [Issue #147] (https://github.com/GServlet/gservlet-api/issues/147) The HttpSessionActivationListener interface was not used correctly
 
 
 ## [1.0.0] - 2021-01-02
