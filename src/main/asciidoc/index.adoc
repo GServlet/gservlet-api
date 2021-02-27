@@ -2628,7 +2628,7 @@ We have created several code examples on https://github.com/GServlet/gservlet-ex
 
 == Copyright and License
 
-Copyright @2020. Free use of this software is granted under the terms of the https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0] License.
+Copyright @2021. Free use of this software is granted under the terms of the https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0] License.
 
 == Authors
 
