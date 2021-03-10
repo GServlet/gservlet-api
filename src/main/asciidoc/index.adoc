@@ -1661,9 +1661,7 @@ Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/j
 import java.io.Serializable;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
-import javax.servlet.annotation.WebListener;
 
-@WebListener
 public class MyHttpSessionBindingListener implements HttpSessionBindingListener, Serializable {
 
     public void valueBound(HttpSessionBindingEvent event) {
@@ -1766,9 +1764,7 @@ Below is a Java class that implements the https://docs.oracle.com/javaee/7/api/j
 import java.io.Serializable; 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionActivationListener;
-import javax.servlet.annotation.WebListener;
 
-@WebListener
 public class MyHttpSessionActivationListener implements HttpSessionActivationListener, Serializable {
 
     public void sessionDidActivate(HttpSessionEvent event) {
