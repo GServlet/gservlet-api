@@ -448,7 +448,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_config_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletConfig.html[ServletConfig] object
 
@@ -812,7 +812,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_config_ | https://docs.oracle.com/javaee/7/api/javax/servlet/FilterConfig.html[FilterConfig] object
 
@@ -1003,7 +1003,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
@@ -1119,7 +1119,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_context_ | https://docs.oracle.com/javaee/7/api/javax/servlet/ServletContext.html[ServletContext] object
 
@@ -1235,7 +1235,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_request_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
@@ -1359,7 +1359,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_request_ |  https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html[HttpServletRequest] object
 
@@ -1466,7 +1466,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
@@ -1591,7 +1591,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
@@ -1704,7 +1704,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
@@ -1809,7 +1809,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
@@ -1901,7 +1901,7 @@ The implicit variables made available to a https://docs.oracle.com/javaee/7/api/
 |===
 |Variable |Description
 
-|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[logger] object
+|_logger_ | https://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html[Logger] object
 
 |_session_ | https://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html[HttpSession] object
 
